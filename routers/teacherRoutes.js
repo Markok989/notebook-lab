@@ -5,7 +5,7 @@ const path = require('path');
 // res sand file to the path with join __dirname + /index.html
 var teacherRoutes = (app) => {
     app.get('/teacher', function (req, res) {
-        return res.sendFile(path.join(__dirname + '/index.html'));
+        return res.sendFile(path.join(__dirname + '../index.html'));
     });
 };
 

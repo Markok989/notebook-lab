@@ -52,6 +52,6 @@ loggedOutRoutes(app);
 studentRoutes(app);
 teacherRoutes(app);
 
-app.listen(8080, function () {
+app.listen(7070, function () {
     console.log("I'm listening.")
 });
