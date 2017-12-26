@@ -10,22 +10,23 @@ const plugins = [
 
 if (process.env.NODE_ENV == 'production') {
     plugins.push(new webpack.optimize.UglifyJsPlugin({
-        compose: {
-            warning: false
+        compress: {
+            warnings: false
         }
     }));
 }
 
 const conf = {
-    entry: ['babel-polyfil', __dirname + 'src/start.js'],
+    entry: ['babel-polyfill', __dirname + '/src/start.js'],
     output: {
         path: __dirname + '/public/',
-        filename: 'bundle.js',
+        filename: 'bundle.js'
     },
     plugins: plugins,
     module: {
         loaders: [{
             test: /\.js$/,
+            loader: 'babel-loader',
             query: {
                 presets: [['es2015'], ['react']],
                 plugins: ['transform-async-to-generator']
@@ -38,8 +39,9 @@ if (require.main == module) {
     webpack(conf, function (err, info) {
         if (err) {
             console.log(err);
-        } if (info && info.complication.errors.length) {
-            console.log(info.complication.errors);
+        }
+        if (info && info.compilation.errors.length) {
+            console.log(info.compilation.errors);
         }
     });
 } else {
@@ -50,4 +52,3 @@ if (require.main == module) {
         publicPath: '/'
     });
 }
-

@@ -2,12 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 ReactDOM.render(
-    <HelloWolrd />,
-    document.querySelector("main")
-)
+    <HelloWorld />,
+    document.querySelector('main')
+);
 
-function HelloWolrd() {
+function HelloWorld() {
     return (
-        <div>Hello World</div>
+        <div>Hello, World!</div>
     );
 }
