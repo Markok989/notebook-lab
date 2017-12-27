@@ -4,6 +4,8 @@ import { createStore, applyMiddleware } from 'redux';
 import reduxPromise from 'redux-promise';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
+import { connect } from 'react-redux';
+
 class App extends React.Component {
     render() {
 
@@ -13,7 +15,9 @@ class App extends React.Component {
                 {
                     // shows property of chhildren components
                 }
-                {props.children}
+                {
+                    //    { props.children }
+                }
             </div>
         );
 
