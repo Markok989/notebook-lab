@@ -45,11 +45,13 @@ const loggedOutRouter = (
 
 // studentRouter component with routhes
 const studentRouter = (
-    <Router history={browserHistory}>
-        <Route path="/" component={StudentApp}>
-            <IndexRoute component={StudentDashboard} />
-        </Route>
-    </Router>
+    <Provider store={store}>
+        <Router history={browserHistory}>
+            <Route path="/" component={StudentApp}>
+                <IndexRoute component={StudentDashboard} />
+            </Route>
+        </Router>
+    </Provider>
 )
 
 // function HelloWorld() {
@@ -140,7 +142,7 @@ if (location.pathname == '/student') {
 }
 
 ReactDOM.render(
-   // <HelloWorld />,
+    // <HelloWorld />,
     route,
     document.querySelector('main')
 );
