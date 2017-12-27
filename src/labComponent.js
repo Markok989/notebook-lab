@@ -1,3 +1,4 @@
+/*
 import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
@@ -21,17 +22,21 @@ class Lab extends React.Component {
         return (
             <div>
                 {
-                    /*
-                    take value from state.question and shows component Question ,
-                    Question has attribute question with string value
-                    */
+                    
+                   // take value from state.question and shows component Question ,
+                   // Question has attribute question with string value
+                    
                 }
                 {this.state.question && <Question question={'Find the relationship between pressure and volume.'} />}
 
-                {/*  take value from state.variables and shows component Variables*/}
+                {
+                    //  take value from state.variables and shows component Variables
+                }
                 {this.state.variables && <Variables />}
 
-                {/* take value from state.hypothesis and shows component  Hypothesis*/}
+                {
+                    // take value from state.hypothesis and shows component  Hypothesis
+                }
                 {this.state.hypothesis && <Hypothesis />}
             </div>
         );
@@ -73,13 +78,11 @@ function LabSectionWrapper(Component, url) {
         // render method for LabSection
         render() {
             return (
-                {
-                    /*
-                        component "Component" with attribute:
-                            -handleInput
-                            -save
-                            -error
-                    */
+                {                    
+                    //    component "Component" with attribute:
+                    //        -handleInput
+                    //        -save
+                    //        -error
                 }
                 <Component
                     handleInput={this.handleInput}
@@ -94,10 +97,8 @@ function LabSectionWrapper(Component, url) {
 // function QuestionForm with parameters: handleInput, save, error
 function QuestionForm({ handleInput, save, error }) {
     return (
-        {
-            /*
-            error and show div with className "error" with property error
-            */
+        {            
+           // error and show div with className "error" with property error
         }
         { error && <div className="error">error</div> }
 
@@ -111,9 +112,8 @@ function QuestionForm({ handleInput, save, error }) {
 function Variables({ handleInput, save, error }) {
     return {
             {
-                /*
-                error and show div with className "error" with property error
-                */
+               // error and show div with className "error" with property error
+               
             }
              { error && <div className="error">error</div> }
 
@@ -140,3 +140,4 @@ function Variables({ handleInput, save, error }) {
             <button type="submit" onClick={save}>Save</submit>
         }
     }
+*/

@@ -2,13 +2,43 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, Link, IndexRoute, browserHistory } from 'react-router';
 
+import { createStore, applyMiddleware } from 'redux';
 
-function HelloWorld() {
-    return (
-        <div>Hello, World!</div>
-    );
-}
+// components
+import Welcome from './auth/welcome';
+import Registration from './auth/registration';
+import StudentApp from './student/app';
+import StudentDashboard from './student/dashboard';
+import TeacherApp from './teacher/views/app';
+import TeacherDashboard from './teacher/views/dashboard';
 
+
+// const store = createStore(reducers, composeWithDevTools(applyMiddleware(reduxPromise)));
+
+// loggedOutRouter component with routhes
+const loggedOutRouter = (
+    <Router history={browserHistory}>
+        <Route path="/" component={Welcome}>
+            <IndexRoute component={Registration} />
+        </Route>
+    </Router>
+);
+
+// studentRouter component with routhes
+const studentRouter = (
+    <Router history={browserHistory}>
+        <Route path="/" component={StudentApp}>
+            <IndexRoute component={StudentDashboard} />
+        </Route>
+    </Router>
+)
+
+// function HelloWorld() {
+//    return (
+//        <div>Hello, World!</div>
+//   );
+//}
+//
 //
 //
 // const authRouter = (
@@ -61,6 +91,14 @@ function HelloWorld() {
 //     </Router>
 // )
 //
+// <Provider store={store}>
+//     <Router history={browserHistory}>
+//         <Route path="/teacher" component={TeacherApp}>
+//             <IndexRoute component={TeacherDashboard}/>
+//         </Route>
+//     </Router>
+// </Provider>
+//
 // let route = loggedOutRouter;
 // if (location.pathname == '/student') {
 //     route = studentRouter;
@@ -68,7 +106,19 @@ function HelloWorld() {
 //     route = teacherRouter;
 // }
 
+
+// route
+// condition if location.pathname have same path as /student,
+// in console shows text "using student router" and 
+// route has value of studentRouter
+let route = loggedOutRouter;
+if (location.pathname == '/student') {
+    console.log("using student router");
+    route = studentRouter;
+}
+
 ReactDOM.render(
     <HelloWorld />,
+    route,
     document.querySelector('main')
 );
