@@ -14,10 +14,15 @@ import studentReducer from './student/reducer';
 // components
 import Welcome from './auth/welcome';
 import Registration from './auth/registration';
+
+// Students components
 import StudentApp from './student/app';
 import StudentDashboard from './student/dashboard';
+
+// Teachers components
 import TeacherApp from './teacher/views/app';
 import TeacherDashboard from './teacher/views/dashboard';
+import TeacherCourses from './teacher/views/courses';
 
 import { composeWithDevTools } from 'redux-devtools-extension';
 
@@ -45,7 +50,7 @@ const loggedOutRouter = (
 
 // studentRouter component with routhes
 const studentRouter = (
-    
+
     <Provider store={store}>{/* Provider use store*/}
         <Router history={browserHistory}>
             <Route path="/" component={StudentApp}>
@@ -104,15 +109,16 @@ const studentRouter = (
 // )
 //
 
-// studentRouter component with routhes
+// teacherRouter component with routhes
 const teacherRouter = (
-    <Router history={browserHistory}>
-        <Route path="/" component={AdminApp}>
-            <Route path="/admin/profile" component={AdminProfile} />
-
-            <IndexRoute component={AdminHome} />
-        </Route>
-    </Router>
+    <Provider store={store}>
+        <Router history={browserHistory}>
+            <Route path="/teacher" component={TeacherApp}>
+                <Route path="/teacher/courses" component={TeacherCourses} />
+                <IndexRoute component={TeacherDashboard} />
+            </Route>
+        </Router>
+    </Provider>
 )
 
 //
