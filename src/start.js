@@ -45,7 +45,8 @@ const loggedOutRouter = (
 
 // studentRouter component with routhes
 const studentRouter = (
-    <Provider store={store}>
+    
+    <Provider store={store}>{/* Provider use store*/}
         <Router history={browserHistory}>
             <Route path="/" component={StudentApp}>
                 <IndexRoute component={StudentDashboard} />
