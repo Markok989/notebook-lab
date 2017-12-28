@@ -4,7 +4,23 @@ import axios from '../api/axios';
 //var SAVE_NEW_COURSE = 'SAVE_NEW_COURSE';
 var SAVE_COURSE_COURSE = 'SAVE_COURSE_COURSE';
 
+// function getCourseList
 export function getCourseList() {
+
+    // return axios get with path '/api/teacher/courses',
+    // then with "then" with parameter results access next code,
+    //  - log: 'Actions: back from getting courses'
+    //  - return  type: SAVE_COURSE_LIST,
+    //            payload: results.data.courses
+    return axios.get('/api/teacher/courses').then((results) => {
+
+        console.log('Actions: back from getting courses');
+        
+        return{
+            type: SAVE_COURSE_LIST,
+            payload: results.data.courses
+        };
+    });
 
 }
 

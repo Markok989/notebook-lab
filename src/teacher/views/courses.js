@@ -19,9 +19,11 @@ class TeacherCourses extends React.Component {
 
     }
 
+    // component did mount: is invoked immediately after a component is mounted
     componentDidMount() {
 
-        //this.props.dispatch(getCourseList());
+        // access props of TeacherCourses, dispatch actions(Teacher actions) getCourseList
+        this.props.dispatch(getCourseList());
 
     }
 
