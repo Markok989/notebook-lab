@@ -4,7 +4,7 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
-import { saveNewCourse } from '../actions';
+import { saveNewCourse, getCourseList } from '../actions';
 
 import { Link } from 'react-router';
 
@@ -16,6 +16,12 @@ class TeacherCourses extends React.Component {
 
         this.handleInput = this.handleInput.bind(this);
         this.submit = this.submit.bind(this);
+
+    }
+
+    componentDidMount() {
+
+        //this.props.dispatch(getCourseList());
 
     }
 

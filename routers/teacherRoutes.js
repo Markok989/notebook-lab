@@ -26,15 +26,16 @@ var teacherRoutes = (app) => {
                 error: e
             });
         })
-    })
+    });
 
-    // app get with path /api/teacher/courses/:teacherId, and use parameters req and res
+    // app get with path /api/teacher/courses, and use parameters req and res
     // data has value array [req.params.teacherId],
     // return saveNewCourse (from file teacherRoutes.js), then with "then" with parameter results access next line of code
     // res with json access to success with value true
     // "catch" catch errors, with parameter e res with json access to error with e
-    app.get('/api/teacher/courses/:teacherId', (req, res) => {
-        let data = [req.params.teacherId];
+    app.get('/api/teacher/courses', (req, res) => {
+          //need to change to req.session.id once there's a session
+        let data = ['1'];
         // call db
         return getCoursesByTeacher(data).then((results) => {
             res.json({
