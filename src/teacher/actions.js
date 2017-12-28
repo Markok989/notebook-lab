@@ -38,11 +38,12 @@ export function saveNewCourse(name, desc) {
 
         // condition if results.data.success next line of code is working :
         // log string: 'success adding new course',
-        // return axios get path '/api/teacher/courses'
+        // return getCourseList
         if (results.data.success) {
             console.log('success adding new course');
 
-            return axios.get('/api/teacher/courses');
+            // return axios.get('/api/teacher/courses');
+            return getCourseList();
         }
 
         // return axios get with path '/api/teacher/courses/' combine with '1',
@@ -55,12 +56,14 @@ export function saveNewCourse(name, desc) {
         //      type SAVE_NEW_COURSE,
         //      payload: results.data.courses
 
-    }).then((results) => {
+        /*
+        }).then((results) => {
         console.log('Actions:back from getting coursrs');
 
         return {
             type: SAVE_COURSE_LIST,
             payload: results.data.courses
         };
+        */
     });
 }
