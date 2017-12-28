@@ -6,11 +6,12 @@ export default function (state = {}, action) {
 
     // condition if action.type and SAVE_NEW_COURSE are the same,
     // log REDUCER: saving new course,
-    // and
+    // and creating copy object:
+    //      - first goes empty object "{}", then state with property courseList: action.courseList
     if (action.type == SAVE_NEW_COURSE) {
         console.log('REDUCER: saving new course');
         Object.assign({}, state, {
-
+            courseList: action.courseList
         });
     }
     return state;
