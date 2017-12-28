@@ -1,7 +1,8 @@
 import axios from '../api/axios';
 
 // action Type
-var SAVE_NEW_COURSE = 'SAVE_NEW_COURSE';
+//var SAVE_NEW_COURSE = 'SAVE_NEW_COURSE';
+var SAVE_COURSE_COURSE = 'SAVE_COURSE_COURSE';
 
 export function saveNewCourse(name, desc) {
 
@@ -24,13 +25,16 @@ export function saveNewCourse(name, desc) {
         // return axios get with path '/api/teacher/courses/' combine with '1',
         // then with "then" with paremeter results access next line of code:
         //      log string: 'Actions:back from getting coursrs',
-        // return type SAVE_NEW_COURSE
+        // return:
+        //      type SAVE_NEW_COURSE,
+        //      payload: results.data.courses
         return axios.get('/api/teacher/courses/' + '1');
     }).then((results) => {
         console.log('Actions:back from getting coursrs');
 
         return {
-            type: SAVE_NEW_COURSE,
+            type: SAVE_COURSE_LIST,
+            payload: results.data.courses
         };
     });
 }

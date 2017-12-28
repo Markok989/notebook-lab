@@ -30,7 +30,7 @@ class TeacherCourses extends React.Component {
 
     // method submit,
     // take props.dispatch, than use action saveNewCourse,
-   
+
     submit() {
         this.props.dispatch(saveNewCourse(this.state.courseName));
     }
@@ -45,7 +45,7 @@ class TeacherCourses extends React.Component {
                 <input type="text" placeholder="Name of course" />
                 <button type="submit">Save new course</button>
                 <input type="text" name="courseName" placeholder="Name of course" onChange={this.handleInput} />
-               
+
                 <button type="submit" onClick={this.submit}>Save new course</button>
             </div>
         );
@@ -54,9 +54,10 @@ class TeacherCourses extends React.Component {
 
 {/********* CONNECTED COMPONENT ********/ }
 
-// conect component with store and take state(state.sections)
+// conect component with store and takes state(state.courses) and state(state.sections)
 const mapStateToProps = function (state) {
     return {
+        courses: state.courses,
         sections: state.sections
     };
 }
