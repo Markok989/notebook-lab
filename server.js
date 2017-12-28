@@ -14,13 +14,14 @@ const studentRoutes = require("./routers/studentRoutes.js");
 const teacherRoutes = require("./routers/teacherRoutes.js");
 
 
-/* Start bundle-server.js in terminal to have webpack compile bundle.js
+/* 
+    Start bundle-server.js in terminal to have webpack compile bundle.js
     Then start server.js in another terminal which will get bundle.js from the proxy.s
 */
 if (process.env.NODE_ENV != 'production') {
     // app.use(require('./build'));
     app.use('/bundle.js', require('http-proxy-middleware')({
-        target: 'http://localhost:8081'
+        target: 'http://localhost:7071'
     }));
 }
 

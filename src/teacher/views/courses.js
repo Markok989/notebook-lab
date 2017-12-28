@@ -30,9 +30,9 @@ class TeacherCourses extends React.Component {
 
     // method submit,
     // take props.dispatch, than use action saveNewCourse,
-    // action use for state courseName and CourseDesc
+   
     submit() {
-        this.props.dispatch(saveNewCourse(this.state.courseName, this.state.CourseDesc));
+        this.props.dispatch(saveNewCourse(this.state.courseName));
     }
 
     render() {
@@ -45,7 +45,7 @@ class TeacherCourses extends React.Component {
                 <input type="text" placeholder="Name of course" />
                 <button type="submit">Save new course</button>
                 <input type="text" name="courseName" placeholder="Name of course" onChange={this.handleInput} />
-                <input type="text" name="courseDesc" placeholder="Description (optional)" onChange={this.handleInput} />
+               
                 <button type="submit" onClick={this.submit}>Save new course</button>
             </div>
         );
