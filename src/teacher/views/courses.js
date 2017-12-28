@@ -6,6 +6,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { saveNewCourse } from '../actions';
 
+import { Link } from 'react-router';
+
 // component TeacherCourses
 class TeacherCourses extends React.Component {
 
@@ -37,6 +39,24 @@ class TeacherCourses extends React.Component {
 
     render() {
 
+        // courses, sections are props from TeacherCoursesF
+        var { courses, sections } = this.props;
+
+        // condition if courses, next code is working,
+        //   - courseList has value:
+        //      - course use .map with parameter course ,
+        //      - link has value path '/course/' combine with course.id,
+        //      - return :
+        //          - li element with Link element with path to={link} and property {course.name}
+        if (courses) {
+            var courseList = courses.map((course) => {
+                var link = '/course/' + course.id;
+                return (
+                    <li><Link to={link}>{course.name}</Link></li>
+                );
+            })
+        }
+
         return (
             <div>
                 <header>
@@ -44,6 +64,21 @@ class TeacherCourses extends React.Component {
                 </header>
                 <input type="text" placeholder="Name of course" />
                 <button type="submit">Save new course</button>
+                {
+                    /*
+                    - courses and 
+                    - element div with properties header and ul with property {courseList}
+                    */
+                    courses &&
+                    <div>
+                        <header>
+                            Course List
+                        </header>
+                        <ul>
+                            {courseList}
+                        </ul>
+                    </div>
+                }
                 <input type="text" name="courseName" placeholder="Name of course" onChange={this.handleInput} />
 
                 <button type="submit" onClick={this.submit}>Save new course</button>
@@ -54,11 +89,11 @@ class TeacherCourses extends React.Component {
 
 {/********* CONNECTED COMPONENT ********/ }
 
-// conect component with store and takes state(state.courses) and state(state.sections)
+// conect component with store and takes state(state.teachers.courses) and state(state.teachers.sections)
 const mapStateToProps = function (state) {
     return {
-        courses: state.courses,
-        sections: state.sections
+        courses: state.teachers.courses,
+        sections: state.teachers.sections
     };
 }
 // conect can combine component with mapStateToProps

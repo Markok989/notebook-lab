@@ -5,7 +5,7 @@ import reduxPromise from 'redux-promise';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { Link } from 'react-router';
 
-import { connect } from 'react-redux';
+//import { connect } from 'react-redux';
 
 class App extends React.Component {
     render() {
