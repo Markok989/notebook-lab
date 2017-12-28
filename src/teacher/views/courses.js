@@ -40,9 +40,10 @@ class TeacherCourses extends React.Component {
 
     // method submit,
     // take props.dispatch, than use action saveNewCourse,
-
+    // this.courseNameInput.value has value '' (empty string)
     submit() {
         this.props.dispatch(saveNewCourse(this.state.courseName));
+        this.courseNameInput.value = '';
     }
 
     render() {
@@ -88,6 +89,8 @@ class TeacherCourses extends React.Component {
                     </div>
                 }
                 <input type="text" name="courseName" placeholder="Name of course" onChange={this.handleInput} />
+                <input type="text" name="courseName" placeholder="Name of course" onChange={this.handleInput}
+                    ref={el => this.courseNameInput = el} />
 
                 <button type="submit" onClick={this.submit}>Save new course</button>
             </div>

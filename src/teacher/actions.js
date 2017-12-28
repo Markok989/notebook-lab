@@ -15,8 +15,8 @@ export function getCourseList() {
     return axios.get('/api/teacher/courses').then((results) => {
 
         console.log('Actions: back from getting courses');
-        
-        return{
+
+        return {
             type: SAVE_COURSE_LIST,
             payload: results.data.courses
         };
