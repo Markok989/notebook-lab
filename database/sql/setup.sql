@@ -100,6 +100,7 @@ CREATE TABLE assignments
     procedures VARCHAR(100),
     default_procedures TEXT,
     data VARCHAR(100),
+    default_data TEXT,
     calculations VARCHAR(100),
     default_calc TEXT,
     discussion VARCHAR(100),

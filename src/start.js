@@ -36,7 +36,10 @@ const reducers = combineReducers({
 });
 
 // store
-const store = createStore(reducers, composeWithDevTools(applyMiddleware(reduxPromise)));
+const store = createStore(
+    reducers,
+    composeWithDevTools(applyMiddleware(reduxPromise))
+);
 
 
 // loggedOutRouter component with routhes
@@ -50,7 +53,6 @@ const loggedOutRouter = (
 
 // studentRouter component with routhes
 const studentRouter = (
-
     <Provider store={store}>{/* Provider use store*/}
         <Router history={browserHistory}>
             <Route path="/" component={StudentApp}>
@@ -60,11 +62,14 @@ const studentRouter = (
     </Provider>
 )
 
-// function HelloWorld() {
-//    return (
-//        <div>Hello, World!</div>
-//   );
-//}
+/*
+function HelloWorld() {
+    return (
+        <div>Hello, World!</div>
+    );
+}
+*/
+
 //
 //
 //
@@ -110,6 +115,7 @@ const studentRouter = (
 //
 
 // teacherRouter component with routhes
+
 const teacherRouter = (
     <Provider store={store}>
         <Router history={browserHistory}>
@@ -142,14 +148,16 @@ const teacherRouter = (
 // condition if location.pathname have same path as /student,
 // in console shows text "using student router" and 
 // route has value of studentRouter
+
 let route = loggedOutRouter;
 if (location.pathname == '/student') {
-    console.log("using student router");
+    console.log('using student router');
     route = studentRouter;
+} else if (location.pathname == '/teacher') {
+    route = teacherRouter;
 }
 
 ReactDOM.render(
-    // <HelloWorld />,
     route,
     document.querySelector('main')
 );

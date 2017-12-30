@@ -7,7 +7,7 @@ var localUrl = '';
 //     `postgres:${secrets.dbUser}:${secrets.pass}@localhost:5432/labnb`
 //      -postgress:value of secrets.dbUser:value of secrets.pass@localhost:5432/labnb
 if (!process.env.DATABASE_URL) {
-    const secrets = require('../secrets.json');
+    var secrets = 'test';
     localUrl = `postgres:${secrets.dbUser}:${secrets.pass}@localhost:5432/labnb`;
 }
 

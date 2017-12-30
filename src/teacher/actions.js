@@ -34,6 +34,7 @@ export function saveNewCourse(name, desc) {
     //      - log string : Actions: back from creating new course, and
     //      return type  SAVE_NEW_COURSE
     return axios.post('api/teacher/course', { name, desc }).then((result) => {
+        
         // console.log('Actions: back from creating new course');
 
         // condition if results.data.success next line of code is working :

@@ -3,7 +3,7 @@ const path = require('path');
 // app get have path "/" and function with parameters: req and res,
 // res sand file to the path with join __dirname + /index.html
 var loggedOutRoutes = (app) => {
-    app.get('/', function (req, res) {
+    app.get('/', (req, res) => {
         return res.sendFile(path.join(__dirname + '../index.html'));
     });
 };

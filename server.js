@@ -1,4 +1,3 @@
-
 const express = require('express');
 const app = express();
 
@@ -14,9 +13,9 @@ const studentRoutes = require("./routers/studentRoutes.js");
 const teacherRoutes = require("./routers/teacherRoutes.js");
 
 
-/* 
-    Start bundle-server.js in terminal to have webpack compile bundle.js
-    Then start server.js in another terminal which will get bundle.js from the proxy.s
+/*
+ Start bundle-server.js in terminal to have webpack compile bundle.js
+ Then start server.js in another terminal which will get bundle.js from the proxy.s
 */
 if (process.env.NODE_ENV != 'production') {
     // app.use(require('./build'));
@@ -25,7 +24,8 @@ if (process.env.NODE_ENV != 'production') {
     }));
 }
 
-var secret = process.env.SESSION_SECRET || require('./secrets.json').sessionSecret;
+// var secret = process.env.SESSION_SECRET || require('./secrets.json').sessionSecret;
+var secret = 'test';
 
 //use middleware here
 app.use(compression());
