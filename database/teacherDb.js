@@ -23,11 +23,11 @@ var db = spicedPg(dbUrl);
 
 // function getAllSections with parameter data,
 // log string: 'DBQUERY: getAllSections, ' and parameter data,
-// queryStr has value of string : 'INSERT INTO course (teacher_id, name) VALUES ($1, $2)',
+// queryStr has value of string : 'SELECT sections.id, sections.name, sections.start_date, sections.end_date, courses.teacher_id FROM sections JOIN courses ON courses.id = sections.course_id WHERE courses.teacher_id = $1',
 // return db query with parameters : queryStr and data
 function getAllSections(data) {
     console.log('DBQUERY: getAllSections, ', data);
-    let queryStr = 'INSERT INTO course (teacher_id, name) VALUES ($1, $2)';
+    let queryStr = 'SELECT sections.id, sections.name, sections.start_date, sections.end_date, courses.teacher_id FROM sections JOIN courses ON courses.id = sections.course_id WHERE courses.teacher_id = $1';
     return db.query(queryStr, data);
 }
 
@@ -99,6 +99,6 @@ module.exports.getAllSections = getAllSections;
 // deleteCourse([5]);
 
 // 
-getSectionsByCourseId([1]).then((results) => {
+getAllSections([1]).then((results) => {
     console.log(results.rows);
 }).catch(e => console.error(e));
