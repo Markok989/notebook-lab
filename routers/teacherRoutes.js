@@ -18,7 +18,64 @@ var teacherRoutes = (app) => {
 
     /********** SECTIONS *********/
 
+    // get all the sections a teaher has
+    // app get with path 'app/teacher/sections',
+    // arrow function with parameters req and res
+    app.get('app/teacher/sections', (req, res) => {
 
+        // FIX: reset to req.session.id
+
+        // data has value of array: [1],
+        // return getAllSections (function from file teacherDb.js),
+        // then with word "then" access return res.json with parameter results,
+        // return res.json contains success with boolean value true and
+        // sections with value results.row
+        // after then goes word "catch" for errors,
+        // catch with parameter e access res.json ,
+        // res.json contains error with value e
+        let data = [1];
+        return getAllSections(data).then((results) => {
+            return res.json({
+                success: true,
+                sections: results.rows
+            });
+        }).catch((e) => {
+            res.json({
+                error: e
+            });
+        });
+    });
+
+    // get only the sections for a particular course
+    // app get with path '/api/teacher/sections/:courseId',
+    // arrow function with parameters req and res
+    app.get('/api/teacher/sections/:courseId', (req, res) => {
+
+        // data has value of array [req.params.id],
+        // return getSectionsByCourseId (function from file teacherDb.js),
+        // then with word "then" access return res.json with parameter results,
+        // return res.json contains success with boolean value true and
+        // sections with value results.row
+        // after then goes word "catch" for errors,
+        // catch with parameter e access res.json ,
+        // res.json contains error with value e
+        let data = [req.params.id];
+        return getSectionsByCourseId(data).then((results) => {
+            return res.json({
+                success: true,
+                sections: results.rows
+            });
+        }).catch((e) => {
+            res.json({
+                error: e
+            });
+        });
+    });
+
+
+
+
+    /******** COURSES ***********/
 
     // app post with path /api/teacher/course, and use parameters req and res
     // data has value array [1, req.body.name],
@@ -27,6 +84,8 @@ var teacherRoutes = (app) => {
     // res with json access to success with value true
     // "catch" catch errors, with parameter e res with json access to error with e
     app.post('/api/teacher/course', (req, res) => {
+
+        // FIX: rest num to req.session.id
         let data = [1, req.body.name];
         return saveNewCourse(data).then(() => {
             res.json({
@@ -46,7 +105,8 @@ var teacherRoutes = (app) => {
     // res with json access to success with value true
     // "catch" catch errors, with parameter e res with json access to error with e
     app.get('/api/teacher/courses', (req, res) => {
-        //need to change to req.session.id once there's a session
+
+        //FIX to req.session.id once there's a session
         let data = ['1'];
         // call db
         return getCoursesByTeacher(data).then((results) => {
@@ -59,6 +119,29 @@ var teacherRoutes = (app) => {
                 error: e
             });
         })
+    });
+
+    // app delete with path '/app/teacher/course/:id'
+    // arrow function with parameters req and res
+    app.delete('/app/teacher/course/:id', (req, res) => {
+
+        // data has value of array [req.params.id],
+        // return deleteCourse (function from file teacherDb.js),
+        // then with word "then" access return res.json,
+        // return res.json contains success with boolean value true
+        // after then goes word "catch" for errors,
+        // catch with parameter e access res.json ,
+        // res.json contains error with value e
+        let data = [req.params.id];
+        return deleteCourse(data).then(() => {
+            res.json({
+                success: true
+            });
+        }).catch((e) => {
+            res.json({
+                error: e
+            });
+        });
     });
 
 };
