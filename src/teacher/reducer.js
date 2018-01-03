@@ -31,7 +31,7 @@ export default function (state = {}, action) {
         state = Object.assign({}, state, {
             courses: action.payload
         });
-    }f
+    }
     // log state
     console.log(state);
     return state;
