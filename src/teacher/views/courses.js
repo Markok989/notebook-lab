@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { saveNewCourse, getCourseList, getAllSections } from '../actions';
 
 import { Link } from 'react-router';
+import { filterList } from '../utils/makeList';
 
 // component TeacherCourses
 class TeacherCourses extends React.Component {
@@ -58,33 +59,26 @@ class TeacherCourses extends React.Component {
         //      - course use .map with parameter course ,
         //      - link has value path '/teacher/course/' combine with course.id,
         //      - condition if sections, next code is working,
-        //          - sectionForThisCourse has value :
-        //              - sections is filtering with word "filtrer" with parameter section,
-        //                return section.course when is course.id
-        //
-        //          - sectionList has value :
-        //              - sectionForThisCourse is filtering with word "filtrer" with parameter section,
-        //                return <li> element with attributie key={section.id.toString()},
-        //                and elemment Link with attributie to for path {`/teacher/section/${section.section_id}`,
-        //                with property {section.name}
-        //
-        //      - return :
-        //          - li element with Link element with path to={link} and property {course.name}
+        //          - log string: 'There are sections',
+        //          - sectionsForThisCourse has value of function sectionsForThisCourse with parameters section and course.id
+        //          - log: sectionsForThisCourse,
+        //          - sectionList has value function makeList with parameter sectionsForThisCourse
+        //          - return :
+        //              - li element with Link element with path to={link} and property {course.name}
+        //              - ul element with property {sectionList}
+        //          - else/otherwise:
+        //              - returns li element with attribute key {course.id.toString()}
+        //                with property element Link with attribute path to {link} ,
+        //              - Link has property of {course.name}  
         if (courses) {
             var courseList = courses.map((course) => {
                 var link = '/teacher/course/' + course.id;
+
                 if (sections) {
-                    var sectionForThisCourse = sections.filter(section => {
-                        return section.course_id = course.id;
-                    });
-                    var sectionList = sectionForThisCourse.map(section => {
-                        return (
-                            <li key={section.id.toString()}>
-                                <Link to={`/teacher/section/${section.section_id}`}>{section.name}
-                                </Link>
-                            </li>
-                        );
-                    });
+                    console.log('There are sections');
+                    var sectionsForThisCourse = filterListByCourseId(sections, course.id);
+                    console.log(sectionsForThisCourse);
+                    var sectionList = makeList(sectionsForThisCourse);
 
                     return (
                         <li key={course.id.toString()}>
@@ -94,6 +88,10 @@ class TeacherCourses extends React.Component {
                             </ul>
                         </li>
                     );
+                } else {
+                    <li key={course.id.toString()}>
+                        <Link to={link}>{course.name}</Link>
+                    </li>
                 }
             })
         }
@@ -141,3 +139,47 @@ const mapStateToProps = function (state) {
 }
 // conect can combine component with mapStateToProps
 export default connect(mapStateToProps)(TeacherCourses);
+
+/*
+- function filterListByCourseId with parameters section and courseId
+    - log: string:sections, and parameter sections
+    - log: string:id, and parameter courseId
+    - filteredList has value of section which one is filtered with parameter section,
+        - and returns section.course_id when has same value as courseId
+    - un the end returns filteredList
+*/
+function filterListByCourseId(sections, courseId) {
+    console.log('sectios: ', sections);
+    console.log('id: ', courseId);
+    var filteredList = sections.filter((section) => {
+        return section.course_id == courseId;
+    });
+    return filteredList;
+}
+
+/*
+- function makeList with paramerer items
+    - itemList has value of items which goes through .map with parameter item,
+        - log: string 'item' and parameter from map item
+        - return:
+            - element li with attribute key {item.id.toString()} (use item from map's parameter),
+                - Link element with path to={`/teacher/section/${item.id}` and property {item.name}
+        - return element ul with property {itemList}
+*/
+function makeList(items) {
+    var itemList = items.map((item) => {
+        console.log('item', item);
+        return (
+            <li key={item.id.toString()}>
+                <Link to={`/teacher/section/${item.id}`}>
+                    {item.name}
+                </Link>
+            </li>
+        );
+    });
+    return (
+        <ul>
+            {itemList}
+        </ul>
+    );
+}

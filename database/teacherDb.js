@@ -23,11 +23,11 @@ var db = spicedPg(dbUrl);
 
 // function getAllSections with parameter data,
 // log string: 'DBQUERY: getAllSections, ' and parameter data,
-// queryStr has value of string : 'SELECT sections.id, sections.name, sections.start_date, sections.end_date, courses.teacher_id FROM sections JOIN courses ON courses.id = sections.course_id WHERE courses.teacher_id = $1',
+// queryStr has value of string : 'SELECT sections.id, sections.name, sections.start_date, sections.end_date, courses.teacher_id, courses.id AS course_id FROM sections JOIN courses ON courses.id = sections.course_id WHERE courses.teacher_id = $1',
 // return db query with parameters : queryStr and data
 function getAllSections(data) {
     console.log('DBQUERY: getAllSections, ', data);
-    let queryStr = 'SELECT sections.id AS section_id, sections.name, sections.start_date, sections.end_date, courses.teacher_id, courses.id AS course_id FROM sections JOIN courses ON courses.id = sections.course_id WHERE courses.teacher_id = $1';
+    let queryStr = 'SELECT sections.id, sections.name, sections.start_date, sections.end_date, courses.teacher_id, courses.id AS course_id FROM sections JOIN courses ON courses.id = sections.course_id WHERE courses.teacher_id = $1';
     return db.query(queryStr, data);
 }
 
@@ -99,6 +99,6 @@ module.exports.getAllSections = getAllSections;
 // deleteCourse([5]);
 
 // 
-getAllSections([1]).then((results) => {
-    console.log(results.rows);
-}).catch(e => console.error(e));
+// getAllSections([1]).then((results) => {
+//     console.log(results.rows);
+// }).catch(e => console.error(e));
