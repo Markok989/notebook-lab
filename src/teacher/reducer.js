@@ -25,13 +25,13 @@ export default function (state = {}, action) {
     // state has value: 
     //      - create new obejct (Object.assign), empty object {}, with state,
     //          -state has value of courses: action.payload
-    if (action.type == SAVE_COURSE_COURSE) {
+    if (action.type == SAVE_COURSE_LIST) {
         console.log('REDUCER: saving course list');
 
         state = Object.assign({}, state, {
             courses: action.payload
         });
-    }
+    }f
     // log state
     console.log(state);
     return state;

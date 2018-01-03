@@ -13,6 +13,7 @@ import studentReducer from './student/reducer';
 
 // components
 import Welcome from './auth/welcome';
+import Main from './auth/main'
 import Registration from './auth/registration';
 
 // Students components
@@ -46,7 +47,8 @@ const store = createStore(
 const loggedOutRouter = (
     <Router history={browserHistory}>
         <Route path="/" component={Welcome}>
-            <IndexRoute component={Registration} />
+            <IndexRoute component={Main} />
+            <Route path="/register" component={Registration} />
         </Route>
     </Router>
 );
