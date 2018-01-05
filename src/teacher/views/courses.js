@@ -53,10 +53,10 @@ class TeacherCourses extends React.Component {
         var { courses, sections } = this.props;
 
         // condition if courses, next code is working,
-        //   - courseList has value:
+        //   - courseList has value of function makeCourseList with parameteres
+        //     courses and sections
 
         if (courses) {
-
             var courseList = makeCourseList(courses, sections);
         }
 
@@ -88,11 +88,15 @@ class TeacherCourses extends React.Component {
                         </ul>
                     </div>
                 }
-                <input type="text" name="courseName" placeholder="Name of course" onChange={this.handleInput} />
-                <input type="text" name="courseName" placeholder="Name of course" onChange={this.handleInput}
-                    ref={el => this.courseNameInput = el} />
-
-                <button type="submit" onClick={this.submit}>Save new course</button>
+                {
+                    /*  
+                      <input type="text" name="courseName" placeholder="Name of course" onChange={this.handleInput} />
+                      <input type="text" name="courseName" placeholder="Name of course" onChange={this.handleInput}
+                          ref={el => this.courseNameInput = el} />
+      
+                      <button type="submit" onClick={this.submit}>Save new course</button>
+                    */
+                }
             </div>
         );
     }
@@ -157,8 +161,28 @@ function makeList(items) {
     );
 }
 
+/*
+-function makeCourseList with parameters courses and sections
+    - return courses with .map with parameter courses
+        - link has value/path: '/teacher/course/' and plus(+) courses.id
+        - condition if sections
+            - sectionsForThisCourse has value of function filterListByCourseId with
+              parameters sections and course.id,
+            - sectionList has value of function makeList with parameter sectionsForThisCourse
+            - return :
+                - element li with attribute key={course.id.toString()} and properties:
+                    - Linik element with attribute to/path {link} and property {course.name}
+                    - component AddSection with attribute courseId={course.id}
+                    - element ul with property {sectionList}
+        
+        - else
+            - return:
+                - element li with attribute key={course.id.toString()} and property:
+                    - Linik element with attribute to/path {link} and property {course.name}
+
+*/
 function makeCourseList(courses, sections) {
-    return courses.map(course => {
+    return courses.map((course) => {
         var link = '/teacher/course/' + course.id;
         if (sections) {
             var sectionsForThisCourse = filterListByCourseId(sections, course.id);

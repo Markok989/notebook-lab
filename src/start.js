@@ -40,16 +40,8 @@ const reducers = combineReducers({
 // store
 const store = createStore(reducers, composeWithDevTools(applyMiddleware(reduxPromise)));
 
-//Routers
-/*
-const loggedOutRouter = (
-    <Router history={browserHistory}>
-        <Route path="/" component={Welcome}>
-            <IndexRoute component={Registration} />
-        </Route>
-    </Router>
-);
-*/
+
+// loggedOutRouter component with routhes
 const loggedOutRouter = (
     <Router history={browserHistory}>
         <Route path="/" component={Welcome}>
@@ -59,6 +51,7 @@ const loggedOutRouter = (
     </Router>
 );
 
+// studentRouter component with routhes
 const studentRouter = (
     <Provider store={store}>
         <Router history={browserHistory}>
@@ -69,6 +62,7 @@ const studentRouter = (
     </Provider>
 )
 
+// teacherRouter component with routhes
 const teacherRouter = (
     <Provider store={store}>
         <Router history={browserHistory}>
@@ -80,6 +74,10 @@ const teacherRouter = (
     </Provider>
 )
 
+// route
+// condition if location.pathname have same path as /student,
+// in console shows text "using student router" and 
+// route has value of studentRouter
 let route = loggedOutRouter;
 if (location.pathname == '/student') {
     console.log('using student router');
