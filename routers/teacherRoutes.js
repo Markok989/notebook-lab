@@ -13,7 +13,7 @@ const {
 // res sand file to the path with join __dirname + /index.html
 var teacherRoutes = (app) => {
     app.get('/teacher', (req, res) => {
-        return res.sendFile(path.join(__dirname + '../index.html'));
+        return res.sendFile(path.join(__dirname, '../index.html'));
     });
 
     /********** SECTIONS *********/
@@ -21,7 +21,8 @@ var teacherRoutes = (app) => {
     // get all the sections a teaher has
     // app get with path 'app/teacher/sections',
     // arrow function with parameters req and res
-    app.get('app/teacher/sections', (req, res) => {
+
+    app.get('/api/teacher/sections', (req, res) => {
 
         // FIX: reset to req.session.id
 
@@ -39,7 +40,7 @@ var teacherRoutes = (app) => {
                 success: true,
                 sections: results.rows
             });
-        }).catch((e) => {
+        }).catch(e => {
             res.json({
                 error: e
             });
@@ -83,6 +84,7 @@ var teacherRoutes = (app) => {
     // then with "then" with anonymous function access next line of code
     // res with json access to success with value true
     // "catch" catch errors, with parameter e res with json access to error with e
+
     app.post('/api/teacher/course', (req, res) => {
 
         // FIX: rest num to req.session.id
@@ -123,7 +125,7 @@ var teacherRoutes = (app) => {
 
     // app delete with path '/app/teacher/course/:id'
     // arrow function with parameters req and res
-    app.delete('/app/teacher/course/:id', (req, res) => {
+    app.delete('/api/teacher/course/:id', (req, res) => {
 
         // data has value of array [req.params.id],
         // return deleteCourse (function from file teacherDb.js),
@@ -143,7 +145,6 @@ var teacherRoutes = (app) => {
             });
         });
     });
-
 };
 
 // export module 

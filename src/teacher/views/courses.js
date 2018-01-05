@@ -8,6 +8,7 @@ import { saveNewCourse, getCourseList, getAllSections } from '../actions';
 
 import { Link } from 'react-router';
 import { filterList } from '../utils/makeList';
+import AddSection from '../components/addSection';
 
 // component TeacherCourses
 class TeacherCourses extends React.Component {
@@ -35,9 +36,6 @@ class TeacherCourses extends React.Component {
     handleInput(e) {
         this.setState({
             [e.target.name]: e.target.value
-        }, () => {
-            // log for state of this(TeacherCourses) component
-            console.log('COURSES: handleInput state', this.state);
         });
     }
 
@@ -56,44 +54,10 @@ class TeacherCourses extends React.Component {
 
         // condition if courses, next code is working,
         //   - courseList has value:
-        //      - course use .map with parameter course ,
-        //      - link has value path '/teacher/course/' combine with course.id,
-        //      - condition if sections, next code is working,
-        //          - log string: 'There are sections',
-        //          - sectionsForThisCourse has value of function sectionsForThisCourse with parameters section and course.id
-        //          - log: sectionsForThisCourse,
-        //          - sectionList has value function makeList with parameter sectionsForThisCourse
-        //          - return :
-        //              - li element with Link element with path to={link} and property {course.name}
-        //              - ul element with property {sectionList}
-        //          - else/otherwise:
-        //              - returns li element with attribute key {course.id.toString()}
-        //                with property element Link with attribute path to {link} ,
-        //              - Link has property of {course.name}  
+
         if (courses) {
-            var courseList = courses.map((course) => {
-                var link = '/teacher/course/' + course.id;
 
-                if (sections) {
-                    console.log('There are sections');
-                    var sectionsForThisCourse = filterListByCourseId(sections, course.id);
-                    console.log(sectionsForThisCourse);
-                    var sectionList = makeList(sectionsForThisCourse);
-
-                    return (
-                        <li key={course.id.toString()}>
-                            <Link to={link}>{course.name}</Link>
-                            <ul>
-                                {sectionList}
-                            </ul>
-                        </li>
-                    );
-                } else {
-                    <li key={course.id.toString()}>
-                        <Link to={link}>{course.name}</Link>
-                    </li>
-                }
-            })
+            var courseList = makeCourseList(courses, sections);
         }
 
         return (
@@ -101,8 +65,14 @@ class TeacherCourses extends React.Component {
                 <header>
                     Make a new course
                 </header>
-                <input type="text" placeholder="Name of course" />
-                <button type="submit">Save new course</button>
+                <input
+                    type="text"
+                    cname="courseName"
+                    placeholder="Name of course"
+                    onChange={this.handleInput}
+                    ref={el => this.courseNameInput = el} />
+
+                <button type="submit" onClick={this.submit}>Save new course</button>
                 {
                     /*
                     - courses and 
@@ -140,6 +110,10 @@ const mapStateToProps = function (state) {
 // conect can combine component with mapStateToProps
 export default connect(mapStateToProps)(TeacherCourses);
 
+
+/********** LIST MAKING FUNCTIONS ************/
+
+
 /*
 - function filterListByCourseId with parameters section and courseId
     - log: string:sections, and parameter sections
@@ -149,14 +123,13 @@ export default connect(mapStateToProps)(TeacherCourses);
     - un the end returns filteredList
 */
 function filterListByCourseId(sections, courseId) {
-    console.log('sectios: ', sections);
+    console.log('sections: ', sections);
     console.log('id: ', courseId);
     var filteredList = sections.filter((section) => {
         return section.course_id == courseId;
     });
     return filteredList;
 }
-
 /*
 - function makeList with paramerer items
     - itemList has value of items which goes through .map with parameter item,
@@ -182,4 +155,29 @@ function makeList(items) {
             {itemList}
         </ul>
     );
+}
+
+function makeCourseList(courses, sections) {
+    return courses.map(course => {
+        var link = '/teacher/course/' + course.id;
+        if (sections) {
+            var sectionsForThisCourse = filterListByCourseId(sections, course.id);
+            var sectionList = makeList(sectionsForThisCourse);
+            return (
+                <li key={course.id.toString()}>
+                    <Link to={link}>{course.name}</Link>
+                    <AddSection courseId={course.id} />
+                    <ul>
+                        {sectionList}
+                    </ul>
+                </li>
+            );
+        } else {
+            return (
+                <li key={course.id.toString()}>
+                    <Link to={link}>{course.name}</Link>
+                </li>
+            );
+        }
+    });
 }

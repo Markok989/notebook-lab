@@ -4,10 +4,9 @@ var localUrl = '';
 // condition if not process.env.DATABASE_URL, next line of code is working,
 // secrets use secrets from path 'test'
 // localUrl has value js template: `postgres:${secrets.dbUser}:${secrets.pass}@localhost:5432/labnb`
-
 if (!process.env.DATABASE_URL) {
-    var secrets = 'test';
-    // const secrets = require('test');
+    // const secrets = require('../secrets.json');
+    const secrets = 'test';
     localUrl = `postgres:${secrets.dbUser}:${secrets.pass}@localhost:5432/labnb`;
 }
 
@@ -17,8 +16,6 @@ var dbUrl = process.env.DATABASE_URL || localUrl;
 // db has value spicedPg with parameter dbUrl
 var db = spicedPg(dbUrl);
 
-
-
 /********** SECTIONS ************/
 
 // function getAllSections with parameter data,
@@ -26,20 +23,22 @@ var db = spicedPg(dbUrl);
 // queryStr has value of string : 'SELECT sections.id, sections.name, sections.start_date, sections.end_date, courses.teacher_id, courses.id AS course_id FROM sections JOIN courses ON courses.id = sections.course_id WHERE courses.teacher_id = $1',
 // return db query with parameters : queryStr and data
 function getAllSections(data) {
-    console.log('DBQUERY: getAllSections, ', data);
+    console.log('DBQUERY: getAllSections,', data);
     let queryStr = 'SELECT sections.id, sections.name, sections.start_date, sections.end_date, courses.teacher_id, courses.id AS course_id FROM sections JOIN courses ON courses.id = sections.course_id WHERE courses.teacher_id = $1';
     return db.query(queryStr, data);
 }
+
 
 // function getSectionsByCourseId with parameter data,
 // log string: DBQUERY: getSectionsByCourseId ' and parameter data,
 // queryStr has value of string : 'SELECT sections.id, sections.name, sections.start_date, sections.end_date, courses.id FROM sections JOIN courses ON courses.id = sections.course_id WHERE courses.id = $1',
 // return db query with parameters : queryStr and data
 function getSectionsByCourseId(data) {
-    console.log('DBQUERY: getSectionsByCourseId ', data);
+    console.log('DBQUERY: getSectionsByCourseId', data);
     let queryStr = 'SELECT sections.id, sections.name, sections.start_date, sections.end_date, courses.id FROM sections JOIN courses ON courses.id = sections.course_id WHERE courses.id = $1';
     return db.query(queryStr, data);
 }
+
 
 /********** COURSES ************/
 
@@ -48,11 +47,10 @@ function getSectionsByCourseId(data) {
 // queryStr has value of string 'INSERT INTO courses (teacher_id, name) VALUES ($1, $2)',
 // return db.query with parameters queryStr and data
 function saveNewCourse(data) {
-    console.log('DBQUERY: saveNewCourse, ', data);
+    console.log('DBQUERY: saveNewCourse,', data);
     let queryStr = 'INSERT INTO courses (teacher_id, name) VALUES ($1, $2)';
     return db.query(queryStr, data);
 }
-
 
 // function getCoursesByTeacher with parameter data,
 // log string: 'DBQUERY: saveNewCourse.',
@@ -69,11 +67,10 @@ function getCoursesByTeacher(data) {
 // queryStr has value of string 'DELETE FROM courses WHERE id=$1',
 // return db.query with parameters queryStr and data
 function deleteCourse(id) {
-    console.log('DBQUERY: deleteCourse. ');
+    console.log('DBQUERY: deleteCourse.');
     let queryStr = 'DELETE FROM courses WHERE id=$1';
     return db.query(queryStr, id);
 }
-
 
 
 // module export for saveNewCourse with value saveNewCourse
@@ -92,13 +89,11 @@ module.exports.getSectionsByCourseId = getSectionsByCourseId;
 module.exports.getAllSections = getAllSections;
 
 
-// saveNewCourse([1, 'Biology']);
+//saveNewCourse([1, 'Biology']);
 // getCoursesByTeacher([1]).then((results) => {
 //     console.log(results.rows);
 // }).catch(e => console.error(e));
-// deleteCourse([5]);
-
-// 
+//deleteCourse([5]);
 // getAllSections([1]).then((results) => {
 //     console.log(results.rows);
 // }).catch(e => console.error(e));

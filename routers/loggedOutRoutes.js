@@ -1,5 +1,5 @@
-import { hashPassword } from '../database/hashing';
-import { error } from 'util';
+//import { hashPassword } from '../database/hashing';
+//import { error } from 'util';
 
 const path = require('path');
 const dbHashing = require('../database/hashing');
@@ -12,7 +12,7 @@ var loggedOutRoutes = (app) => {
     // res sand file to the path with join __dirname + /index.html
     app.get('/', (req, res) => {
 
-        return res.sendFile(path.join(__dirname + '../index.html'));
+        return res.sendFile(path.join(__dirname, '../index.html'));
     });
 
     // app.get('/register', (req, res) => {

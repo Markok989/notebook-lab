@@ -1,10 +1,10 @@
 import React from 'react';
 import axios from 'axios';
 import { Link } from 'react-router';
-import { error } from 'util';
+//import { error } from 'util';
 
 // component Registration
-class Registration extends React.Component {
+export default class Registration extends React.Component {
 
     constructor(props) {
         super(props);
@@ -125,12 +125,8 @@ class Registration extends React.Component {
 
         return (
             <div>
-                HELLO
+                HELLO, registration form success
             </div>
         );
-
     }
-
 }
-
-export default Registration;

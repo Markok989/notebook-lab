@@ -12,13 +12,12 @@ export function getAllSections() {
     // then with word "then" access next line of code with parameter results,
     //      type with value SAVE_SECTION_LIST,
     //      payload with value results.data.sections
-    return axios.get('/api/teacher/section').then((results) => {
+    return axios.get('/api/teacher/sections').then((results) => {
         return {
             type: SAVE_SECTION_LIST,
             payload: results.data.sections
-        }
-    })
-
+        };
+    });
 }
 
 
@@ -31,15 +30,12 @@ export function getCourseList() {
     //  - return  type: SAVE_COURSE_LIST,
     //            payload: results.data.courses
     return axios.get('/api/teacher/courses').then((results) => {
-
         console.log('Actions: back from getting courses');
-
         return {
             type: SAVE_COURSE_LIST,
             payload: results.data.courses
         };
     });
-
 }
 
 export function saveNewCourse(name, desc) {
@@ -51,7 +47,7 @@ export function saveNewCourse(name, desc) {
     // afther that with than with parameter results , next line of code is working:
     //      - log string : Actions: back from creating new course, and
     //      return type  SAVE_NEW_COURSE
-    return axios.post('api/teacher/course', { name, desc }).then((result) => {
+    return axios.post('/api/teacher/course', { name, desc }).then((results) => {
 
         // console.log('Actions: back from creating new course');
 
@@ -64,25 +60,5 @@ export function saveNewCourse(name, desc) {
             // return axios.get('/api/teacher/courses');
             return getCourseList();
         }
-
-        // return axios get with path '/api/teacher/courses/' combine with '1',
-        // return axios.get('/api/teacher/courses/' + '1');
-
-
-        // then with "then" with paremeter results access next line of code:
-        //      log string: 'Actions:back from getting coursrs',
-        // return:
-        //      type SAVE_NEW_COURSE,
-        //      payload: results.data.courses
-
-        /*
-        }).then((results) => {
-        console.log('Actions:back from getting coursrs');
- 
-        return {
-            type: SAVE_COURSE_LIST,
-            payload: results.data.courses
-        };
-        */
     });
 }

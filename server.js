@@ -13,9 +13,8 @@ const studentRoutes = require("./routers/studentRoutes.js");
 const teacherRoutes = require("./routers/teacherRoutes.js");
 
 
-/*
- Start bundle-server.js in terminal to have webpack compile bundle.js
- Then start server.js in another terminal which will get bundle.js from the proxy.s
+/* Start bundle-server.js in terminal to have webpack compile bundle.js
+    Then start server.js in another terminal which will get bundle.js from the proxy.s
 */
 if (process.env.NODE_ENV != 'production') {
     // app.use(require('./build'));
@@ -46,8 +45,6 @@ app.use(function (req, res, next) {
 
 //get static files from public directory
 app.use(express.static(__dirname + '/public'));
-
-
 
 loggedOutRoutes(app);
 studentRoutes(app);

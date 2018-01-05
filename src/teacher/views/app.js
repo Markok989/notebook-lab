@@ -14,7 +14,7 @@ class App extends React.Component {
             // return div with property Loadinig...
         }
         if (false) {
-            return <div className="loading">Loading...</div>
+            return <div className='loading'>Loading...</div>;
         } else {
             {
                 // else

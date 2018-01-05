@@ -59,10 +59,10 @@ class Main extends React.Component {
                 <h3>Please select one of the following:</h3>
 
                 {/* on clik use method handleTeacherSubmit */}
-                <button className={teacher - button} onClick={(e) => this.handleTeacherSubmit(e)}> TEACHER </button>
+                <button className="teacher-button" onClick={(e) => this.handleTeacherSubmit(e)}> TEACHER </button>
 
                 {/* on clik use method handleStudentSubmit */}
-                <button className={teacher - button} onClick={(e) => this.handleStudentSubmit(e)}> STUDENT </button>
+                <button className="teacher-button" onClick={(e) => this.handleStudentSubmit(e)}> STUDENT </button>
 
             </div>
         );
