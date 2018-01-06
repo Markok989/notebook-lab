@@ -1,7 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { saveNewSection } from '../actions';
 
 // Add Section Component
-export default class AddSection extends React.Component {
+class AddSection extends React.Component {
 
     // constructor
     constructor(props) {
@@ -41,8 +43,22 @@ export default class AddSection extends React.Component {
     }
 
     // method submit
+    // via dispatch access saveNewSection (function form actions)
+    // and take as props courseId, as state take: sectionName, startDate, endDate  
+    // this.sectionNameInput.value has value of empty string
+    // this.startDateInput.value has value of empty string
+    // this.endDateInput.value has value of empty string
     // this method has mathod (call) toggleShowDialog
     submit() {
+        this.props.dispatch(saveNewSection(
+            this.props.courseId,
+            this.state.sectionName,
+            this.state.startDate,
+            this.state.endDate
+        ));
+        this.sectionNameInput.value = '';
+        this.startDateInput.value = '';
+        this.endDateInput.value = '';
         this.toggleShowDialog();
     }
 
@@ -88,9 +104,46 @@ export default class AddSection extends React.Component {
                 }
                 {this.state.showDialog &&
                     <div>
-                        <input type="text" name="sectionName" placeholder="Section Name" onChange={this.handleInput} />
-                        <input type="text" name="startDate" placeholder="Start Date (optional)" />
-                        <input type="text" name="endDate" placeholder="End Date (optional)" />
+                        {
+                            /*
+                            onChange use method handleInput
+                            ref with parameter el sccess next code
+                                - sectionNameInput has value of el
+                            */
+                        }
+                        <input
+                            type="text"
+                            name="sectionName"
+                            placeholder="Section Name"
+                            onChange={this.handleInput}
+                            ref={el => this.sectionNameInput = el}
+                        />
+
+                        {
+                            /*
+                            ref with parameter el sccess next code
+                                - startDateInput has value of el
+                            */
+                        }
+                        <input
+                            type="text"
+                            name="startDate"
+                            placeholder="Start Date (optional)"
+                            ref={el => this.startDateInput = el}
+                        />
+
+                        {
+                            /*
+                            ref with parameter el sccess next code
+                                - endDateInput has value of el
+                            */
+                        }
+                        <input
+                            type="text"
+                            name="endDate"
+                            placeholder="End Date (optional)"
+                            ref={el => this.endDateInput = el}
+                        />
                         {
                             /*
                                 onClick use method submit
@@ -103,3 +156,6 @@ export default class AddSection extends React.Component {
         );
     }
 }
+
+/********* CONNECTED COMPONENT ********/
+export default connect()(AddSection);

@@ -5,6 +5,17 @@ import axios from '../api/axios';
 const SAVE_COURSE_LIST = 'SAVE_COURSE_LIST',
     SAVE_SECTION_LIST = 'SAVE_SECTION_LIST';
 
+/************ SECTIONS *************/
+
+// function saveNewSection with parameters: courseId, name, start, end
+//  - return axios post with path /api/teacher/section and properties: courseId, name, start, end,
+//  - then with word "then" return function getAllSections
+export function saveNewSection(courseId, name, start, end) {
+    return axios.post('/api/teacher/section', { courseId, name, start, end }).then(() => {
+        return getAllSections();
+    });
+}
+
 // function getAllSections
 export function getAllSections() {
 
@@ -12,14 +23,19 @@ export function getAllSections() {
     // then with word "then" access next line of code with parameter results,
     //      type with value SAVE_SECTION_LIST,
     //      payload with value results.data.sections
+    // after that goes catch with parameter e
+    //      log: string "error: " and aparameter e
     return axios.get('/api/teacher/sections').then((results) => {
         return {
             type: SAVE_SECTION_LIST,
             payload: results.data.sections
         };
+    }).catch((e) => {
+        console.log('error: ', e);
     });
 }
 
+/************ COURSES *************/
 
 // function getCourseList
 export function getCourseList() {

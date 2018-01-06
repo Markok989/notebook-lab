@@ -5,7 +5,8 @@ const {
     getCoursesByTeacher,
     deleteCourse,
     getAllSections,
-    getSectionsByCourseId
+    getSectionsByCourseId,
+    saveNewSection
 } = require("../database/teacherDb.js");
 
 // component teacherRoutes with parameter app,
@@ -17,6 +18,25 @@ var teacherRoutes = (app) => {
     });
 
     /********** SECTIONS *********/
+
+    // app post with path /api/teacher/section, and use parameters req and res
+    // data has value array [req.body.courseId, req.body.name, req.body.start, req.body.end],
+    // return saveNewSection (from file teacherDb.js),
+    // then with "then" with anonymous function access next line of code
+    // res with json access to success with value true
+    // "catch" catch errors, with parameter e res with json access to error with e
+    app.post('/api/teacher/section', (req, res) => {
+        let data = [req.body.courseId, req.body.name, req.body.start, req.body.end];
+        return saveNewSection(data).then(() => {
+            res.json({
+                success: true
+            });
+        }).catch(e => {
+            res.json({
+                error: e
+            });
+        });
+    });
 
     // get all the sections a teaher has
     // app get with path 'app/teacher/sections',
