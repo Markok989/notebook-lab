@@ -10,11 +10,18 @@ export default class AddSection extends React.Component {
         // state
         // showAddSectionDialog has value false
         this.state = {
-            showAddSectionDialog: false
+            showDialog: false
         }
 
         this.handleInput = this.handleInput.bind(this);
+        this.toggleShowDialog = this.toggleShowDialog.bind(this);
 
+    }
+
+    toggleShowDialog() {
+        this.setState({
+            showDialog: !this.state.showDialog
+        });
     }
 
     // handleInput method with parameter e
@@ -49,7 +56,8 @@ export default class AddSection extends React.Component {
                     button element with property Add New Section
                     */
                 }
-                {this.state.showAddSectionDialog || <button>Add New Section</button>}
+                {this.state.showDialog || <button onClick={this.toggleShowDialog}>Add New Section</button>}
+
                 {
                     /*
                     shows:
@@ -67,7 +75,7 @@ export default class AddSection extends React.Component {
                     - button with property Save New Course
                     */
                 }
-                {this.state.showAddSectionDialog &&
+                {this.state.showDialog &&
                     <div>
                         <input type="text" name="sectionName" placeholder="Section Name" onChange={this.handleInput} />
                         <input type="text" name="startDate" placeholder="Start Date (optional)" />
