@@ -8,16 +8,20 @@ export default class AddSection extends React.Component {
         super(props);
 
         // state
-        // showAddSectionDialog has value false
+        // showDialog has value false
         this.state = {
             showDialog: false
         }
 
         this.handleInput = this.handleInput.bind(this);
         this.toggleShowDialog = this.toggleShowDialog.bind(this);
+        this.submit = this.submit.bind(this);
 
     }
 
+    // method toggleShowDialog 
+    // set the state
+    //      - showDialog is not this.state.showDialog
     toggleShowDialog() {
         this.setState({
             showDialog: !this.state.showDialog
@@ -36,6 +40,13 @@ export default class AddSection extends React.Component {
         });
     }
 
+    // method submit
+    // this method has mathod (call) toggleShowDialog
+    submit() {
+        this.toggleShowDialog();
+    }
+
+
     // render method
     render() {
 
@@ -48,7 +59,7 @@ export default class AddSection extends React.Component {
                     /*
                     shows:
                     this(AddSection).state(state of AddSection in constructor).
-                    showAddSectionDialog(has the value of false)
+                    showDialog(has the value of false)
 
                     or
 
@@ -62,7 +73,7 @@ export default class AddSection extends React.Component {
                     /*
                     shows:
                     this(AddSection).state(state of AddSection in constructor).
-                    showAddSectionDialog(has the value of false)
+                    showDialog(has the value of false)
 
                     and
 
@@ -80,7 +91,12 @@ export default class AddSection extends React.Component {
                         <input type="text" name="sectionName" placeholder="Section Name" onChange={this.handleInput} />
                         <input type="text" name="startDate" placeholder="Start Date (optional)" />
                         <input type="text" name="endDate" placeholder="End Date (optional)" />
-                        <button>Save New Course</button>
+                        {
+                            /*
+                                onClick use method submit
+                            */
+                        }
+                        <button onClick={this.submit}>Save New Course</button>
                     </div>
                 }
             </div>
