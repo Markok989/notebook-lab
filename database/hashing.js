@@ -2,7 +2,7 @@ var spicedPg = require('spiced-pg');
 var bcrypt = require('bcryptjs');
 //const secrets = require('../secrets.json');
 const secrets = 'test';
-const db = spicedPg(`postgres:${secrets.dbUser}:${secrets.pass}@localhost:5432/labnotebook`);
+const db = spicedPg(`postgres:${secrets.dbuser}:${secrets.dbpassword}@localhost:5432/labnb`);
 
 
 
@@ -64,28 +64,28 @@ module.exports.checkPassword = function (textEnteredInLoginForm, hashedPasswordF
 };
 
 /*
-- module export - addStudent has value of function which one have next parameters:first, last, email, password, course,
-    - insert has value of string : `INSERT INTO users (first_name, last_name, email, password, course, role) VALUES ($1, $2, $3, $4, $5, 'student') RETURNING id, first_name, last_name, email, role`
-    - result has value of db.query(insert, [first, last, email, password, course])
+- module export - addStudent has value of function which one have next parameters: first_name, last_name, email, password,
+    - insert has value of string : `INSERT INTO users (first_name, last_name, email, password, role) VALUES ($1, $2, $3, $4, 'student') RETURNING id, first_name, last_name, email, role `;
+    - result has value of db.query(insert, [first_name, last_name, email, password])
     - returns result 
 */
-module.exports.addStudent = function (first, last, email, password, course) {
+module.exports.addStudent = function (first_name, last_name, email, password) {
 
-    const insert = `INSERT INTO users (first_name, last_name, email, password, course, role) VALUES ($1, $2, $3, $4, $5, 'student') RETURNING id, first_name, last_name, email, role`;
-    const result = db.query(insert, [first, last, email, password, course]);
+    const insert = `INSERT INTO users (first_name, last_name, email, password, role) VALUES ($1, $2, $3, $4, 'student') RETURNING id, first_name, last_name, email, role `;
+    const result = db.query(insert, [first_name, last_name, email, password]);
     return result;
 }
 
 /*
-- module export - addTeacher has value of function which one have next parameters:first, last, email, password,
-    - insert has value of string : `INSERT INTO users (first_name, last_name, email, password, role) VALUES ($1, $2, $3, $4, 'teacher') RETURNING id, first_name, last_name, email, role`
-    - result has value of db.query(insert, [first, last, email, password])
+- module export - addTeacher has value of function which one have next parameters: first_name, last_name, email, password,
+    - insert has value of string : `INSERT INTO users (first_name, last_name, email, password, role) VALUES ($1, $2, $3, $4, 'teacher') RETURNING id, first_name, last_name, email, role `,
+    - result has value of db.query(insert, [first_name, last_name, email, password])
     - returns result 
 */
-module.exports.addTeacher = function (first, last, email, password) {
+module.exports.addTeacher = function (first_name, last_name, email, password) {
 
-    const insert = `INSERT INTO users (first_name, last_name, email, password, role) VALUES ($1, $2, $3, $4, 'teacher') RETURNING id, first_name, last_name, email, role`;
-    const result = db.query(insert, [first, last, email, password]);
+    const insert = `INSERT INTO users (first_name, last_name, email, password, role) VALUES ($1, $2, $3, $4, 'teacher') RETURNING id, first_name, last_name, email, role `;
+    const result = db.query(insert, [first_name, last_name, email, password]);
     return result;
 }
 

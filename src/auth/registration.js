@@ -60,27 +60,27 @@ export default class Registration extends React.Component {
 
     /*
     - method handleStudentRegistration with parameter e
-        - first, last, email, password, course belong to state of component Registration
-        - condition if first and last and email and password and course
-            - axios post has path '/student/register' and properties: first, last, email, password, course
+        - first_name, last_name, email, password, course belong to state of component Registration
+        - condition if first_name and last_name and email and password and course
+            - axios post has path '/student/register' and properties: first_name, last_name, email, password, course
             - then with word "then" access function with parameter res
                 - data has value of  res.data
                 - condition if not data.success
                     - error has value of true
-                - else location is replace with "/"
+                - else browserHistory is push('/student')
             - catch use function with parameter err
                 - log parameter err;
         - else 
             - alert string "Something went wrong. Please try again."
     */
     handleStudentRegistration(e) {
-        const { first, last, email, password, course } = this.state;
+        const { first_name, last_name, email, password, course } = this.state;
 
 
-        if (first && last && email && password && course) {
+        if (first_name && last_name && email && password && course) {
 
-            axios.post('/student/register', {
-                first, last, email, password, course
+            axios.post('/api/student/register', {
+                first_name, last_name, email, password, course
             })
                 .then((res) => {
 
@@ -90,7 +90,7 @@ export default class Registration extends React.Component {
                         error: true
                     } else {
 
-                        location.replace('/');
+                        browserHistory.push('/student');
                     }
                 })
                 .catch((err) => {
@@ -105,27 +105,27 @@ export default class Registration extends React.Component {
 
     /*
      - method handleStudentRegistration with parameter e
-         - first, last, email, password, course belong to state of component Registration
-         - condition if first and last and email and password and course
-             - axios post has path '/teacher/register' and properties: first, last, email, password, course
+         - first_name, last_name, email, password, course belong to state of component Registration
+         - condition if first_name and last_name and email and password and course
+             - axios post has path '/teacher/register' and properties: first_name, last_name, email, password, course
              - then with word "then" access function with parameter res
                  - data has value of  res.data
                  - condition if not data.success
                      - error has value of true
-                 - else location is replace with "/"
+                 - else browserHistory is push('/student')
              - catch use function with parameter err
                  - log parameter err;
          - else 
              - alert string "Something went wrong. Please try again."
     */
     handleTeacherRegistration(e) {
-        const { first, last, email, password, course } = this.state;
+        const { first_name, last_name, email, password, course } = this.state;
 
 
-        if (first && last && email && password) {
+        if (first_name && last_name && email && password) {
 
             axios.post('/teacher/register', {
-                first, last, email, password
+                first_name, last_name, email, password
             })
                 .then((res) => {
 
@@ -134,8 +134,7 @@ export default class Registration extends React.Component {
                     if (!data.success) {
                         error: true
                     } else {
-
-                        location.replace('/');
+                        browserHistory.push('/student');
                     }
                 })
                 .catch((err) => {
@@ -152,8 +151,8 @@ export default class Registration extends React.Component {
             <div>
                 <h3 className="singup-title">PLEASE SING UP</h3>
                 {/* onChange - use method handleChange */}
-                <input className="reg-input" name="first" placeholder="First Name" onChange={(e) => this.handleChange(e)} />
-                <input className="reg-input" name="last" placeholder="Last Name" onChange={(e) => this.handleChange(e)} />
+                <input className="reg-input" name="first_name" placeholder="First Name" onChange={(e) => this.handleChange(e)} />
+                <input className="reg-input" name="last_name" placeholder="Last Name" onChange={(e) => this.handleChange(e)} />
                 <input className="reg-input" name="email" placeholder="E-mail" onChange={(e) => this.handleChange(e)} />
                 <input className="reg-input" name="password" placeholder="Password" type="password" onChange={(e) => this.handleChange(e)} />
                 <input className="reg-input" name="course" placeholder="Course Code" onChange={(e) => this.handleChange(e)} />
@@ -168,8 +167,8 @@ export default class Registration extends React.Component {
 
                 <h3 className="singup-title">PLEASE SING UP</h3>
                 {/* onChange - use method handleChange */}
-                <input className="reg-input" name="first" placeholder="First Name" onChange={(e) => this.handleChange(e)} />
-                <input className="reg-input" name="last" placeholder="Last Name" onChange={(e) => this.handleChange(e)} />
+                <input className="reg-input" name="first_name" placeholder="First Name" onChange={(e) => this.handleChange(e)} />
+                <input className="reg-input" name="last_name" placeholder="Last Name" onChange={(e) => this.handleChange(e)} />
                 <input className="reg-input" name="email" placeholder="E-mail" onChange={(e) => this.handleChange(e)} />
                 <input className="reg-input" name="password" placeholder="Password" type="password" onChange={(e) => this.handleChange(e)} />
 
