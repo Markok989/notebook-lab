@@ -1,3 +1,4 @@
+/*
 import React from 'react';
 
 // component Main
@@ -18,6 +19,7 @@ class Main extends React.Component {
             - role has string "teacher"
                 - then with anonymous function log state of handleTeacherSubmit
     */
+    /*
     handleTeacherSubmit(e) {
 
         location.replace('/register');
@@ -39,6 +41,7 @@ class Main extends React.Component {
             - role has string "student"
                 - then with anonymous function log state of handleStudentSubmit
     */
+    /*
     handleStudentSubmit() {
 
         location.replace('/register');
@@ -58,10 +61,10 @@ class Main extends React.Component {
 
                 <h3>Please select one of the following:</h3>
 
-                {/* on clik use method handleTeacherSubmit */}
+                {/* on clik use method handleTeacherSubmit/}
                 <button className="teacher-button" onClick={(e) => this.handleTeacherSubmit(e)}> TEACHER </button>
 
-                {/* on clik use method handleStudentSubmit */}
+                {/* on clik use method handleStudentSubmit }
                 <button className="teacher-button" onClick={(e) => this.handleStudentSubmit(e)}> STUDENT </button>
 
             </div>
@@ -71,3 +74,4 @@ class Main extends React.Component {
 
 
 export default Main;
+*/

@@ -1,19 +1,10 @@
 var spicedPg = require('spiced-pg');
-var localUrl = '';
+var bcrypt = require('bcryptjs');
+//const secrets = require('../secrets.json');
+const secrets = 'test';
+const db = spicedPg(`postgres:${secrets.dbUser}:${secrets.pass}@localhost:5432/labnotebook`);
 
-// condition if not process.env.DATABASE_URL, next line of code is working
-// secrets has value of string 'test'
-// localUrl has value of path `postgres:${secrets.dbUser}:${secrets.pass}@localhost:5432/labnb`
-if (!process.env.DATABASE_URL) {
-    // const secrets = require('../secrets.json');
-    const secrets = 'test';
-    localUrl = `postgres:${secrets.dbUser}:${secrets.pass}@localhost:5432/labnb`;
-}
-// dbUrl has value process.env.DATABASE_URL or localUrl;
-var dbUrl = process.env.DATABASE_URL || localUrl;
 
-// db has value spicedPg with parameter dbUrl
-var db = spicedPg(dbUrl);
 
 /*
 - module export - hashPassword has value of function which one have plainTextPassword for parameter,
@@ -31,7 +22,7 @@ var db = spicedPg(dbUrl);
                 - log: string: 'users.js: hashPassword successful' and hash parameter
 */
 module.exports.hashPassword = function (plainTextPassword) {
-    console.log("about to hash", plainTextPassword);
+    //  console.log("about to hash", plainTextPassword);
     return new Promise(function (resolve, reject) {
         bcrypt.genSalt(function (err, salt) {
             if (err) {
@@ -43,8 +34,7 @@ module.exports.hashPassword = function (plainTextPassword) {
                     return reject(err);
                 }
                 resolve(hash);
-                console.log('users.js: hashPassword successful', hash)
-
+                // console.log('users.js: hashPassword successful', hash)
             });
         });
     });
@@ -74,16 +64,39 @@ module.exports.checkPassword = function (textEnteredInLoginForm, hashedPasswordF
 };
 
 /*
-- module export - addUser has value of function which one have next parameters:first, last, email, password, course, role,
-    - insert has value of string : `INSERT INTO users (first_name, last_name, email, password, course, role ) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id, first_name, last_name, email, role`
-    - result has value of db.query with parameter insert
+- module export - addStudent has value of function which one have next parameters:first, last, email, password, course,
+    - insert has value of string : `INSERT INTO users (first_name, last_name, email, password, course, role) VALUES ($1, $2, $3, $4, $5, 'student') RETURNING id, first_name, last_name, email, role`
+    - result has value of db.query(insert, [first, last, email, password, course])
     - returns result 
 */
-module.exports.addUser = function (first, last, email, password, course, role) {
+module.exports.addStudent = function (first, last, email, password, course) {
 
-    const insert = `INSERT INTO users (first_name, last_name, email, password, course, role ) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id, first_name, last_name, email, role`;
+    const insert = `INSERT INTO users (first_name, last_name, email, password, course, role) VALUES ($1, $2, $3, $4, $5, 'student') RETURNING id, first_name, last_name, email, role`;
+    const result = db.query(insert, [first, last, email, password, course]);
+    return result;
+}
 
-    const result = db.query(insert);
+/*
+- module export - addTeacher has value of function which one have next parameters:first, last, email, password,
+    - insert has value of string : `INSERT INTO users (first_name, last_name, email, password, role) VALUES ($1, $2, $3, $4, 'teacher') RETURNING id, first_name, last_name, email, role`
+    - result has value of db.query(insert, [first, last, email, password])
+    - returns result 
+*/
+module.exports.addTeacher = function (first, last, email, password) {
 
+    const insert = `INSERT INTO users (first_name, last_name, email, password, role) VALUES ($1, $2, $3, $4, 'teacher') RETURNING id, first_name, last_name, email, role`;
+    const result = db.query(insert, [first, last, email, password]);
+    return result;
+}
+
+/*
+- module export - getUserByEmail has value of function which one have next parameter email,
+    - insert has value of string : `SELECT * FROM users WHERE email=$1`
+    - result has value of db.query(select, [email]);
+    - returns result 
+*/
+module.exports.getUserByEmail = function (email) {
+    const select = `SELECT * FROM users WHERE email=$1`;
+    const result = db.query(select, [email]);
     return result;
 }
