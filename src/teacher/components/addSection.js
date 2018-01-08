@@ -123,12 +123,14 @@ class AddSection extends React.Component {
                             /*
                             ref with parameter el sccess next code
                                 - startDateInput has value of el
+                            onChange use method handleInput
                             */
                         }
                         <input
                             type="text"
                             name="startDate"
                             placeholder="Start Date (optional)"
+                            onChange={this.handleInput}
                             ref={el => this.startDateInput = el}
                         />
 
@@ -136,12 +138,14 @@ class AddSection extends React.Component {
                             /*
                             ref with parameter el sccess next code
                                 - endDateInput has value of el
+                            onChange use method handleInput
                             */
                         }
                         <input
                             type="text"
                             name="endDate"
                             placeholder="End Date (optional)"
+                            onChange={this.handleInput}
                             ref={el => this.endDateInput = el}
                         />
                         {

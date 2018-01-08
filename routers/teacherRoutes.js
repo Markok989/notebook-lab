@@ -27,6 +27,7 @@ var teacherRoutes = (app) => {
     // "catch" catch errors, with parameter e res with json access to error with e
     app.post('/api/teacher/section', (req, res) => {
         let data = [req.body.courseId, req.body.name, req.body.start, req.body.end];
+        console.log(data);
         return saveNewSection(data).then(() => {
             res.json({
                 success: true

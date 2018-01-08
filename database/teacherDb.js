@@ -3,11 +3,12 @@ var localUrl = '';
 
 // condition if not process.env.DATABASE_URL, next line of code is working,
 // secrets use secrets from path 'test'
-// localUrl has value js template: `postgres:${secrets.dbUser}:${secrets.pass}@localhost:5432/labnb`
+// localUrl has value js template: `postgres:${secrets.dbuser}:${secrets.dbpassword}@localhost:5432/labnb`
 if (!process.env.DATABASE_URL) {
     // const secrets = require('../secrets.json');
     const secrets = 'test';
-    localUrl = `postgres:${secrets.dbUser}:${secrets.pass}@localhost:5432/labnb`;
+    localUrl = `postgres:${secrets.dbuser}:${secrets.dbpassword}@localhost:5432/labnb`;
+
 }
 
 // dbUrl has value process.env.DATABASE_URL or localUrl
