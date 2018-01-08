@@ -3,17 +3,29 @@ import axios from '../api/axios';
 // action Type
 //var SAVE_NEW_COURSE = 'SAVE_NEW_COURSE';
 const SAVE_COURSE_LIST = 'SAVE_COURSE_LIST',
-    SAVE_SECTION_LIST = 'SAVE_SECTION_LIST';
+    SAVE_SECTION_LIST = 'SAVE_SECTION_LIST',
+    ERROR = 'ERROR';
+
 
 /************ SECTIONS *************/
 
 // function saveNewSection with parameters: courseId, name, start, end
-//  - return axios post with path /api/teacher/section and properties: courseId, name, start, end,
-//  - then with word "then" return function getAllSections
+//  - condition if name 
+//      - return axios post with path /api/teacher/section and properties: courseId, name, start, end,
+//      - then with word "then" return function getAllSections
+//  - else 
+//      - return type: ERROR and payload with string "You must give a name for the section"
 export function saveNewSection(courseId, name, start, end) {
-    return axios.post('/api/teacher/section', { courseId, name, start, end }).then(() => {
-        return getAllSections();
-    });
+    if (name) {
+        return axios.post('/api/teacher/section', { courseId, name, start, end }).then(() => {
+            return getAllSections();
+        });
+    } else {
+        return {
+            type: ERROR,
+            payload: "You must give a name for the section"
+        };
+    }
 }
 
 // function getAllSections
@@ -24,14 +36,17 @@ export function getAllSections() {
     //      type with value SAVE_SECTION_LIST,
     //      payload with value results.data.sections
     // after that goes catch with parameter e
-    //      log: string "error: " and aparameter e
+    //      return type: ERROR and payload with parameter e  
     return axios.get('/api/teacher/sections').then((results) => {
         return {
             type: SAVE_SECTION_LIST,
             payload: results.data.sections
         };
     }).catch((e) => {
-        console.log('error: ', e);
+        return {
+            type: ERROR,
+            payload: e
+        }
     });
 }
 

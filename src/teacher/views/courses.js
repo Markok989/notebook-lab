@@ -16,6 +16,11 @@ class TeacherCourses extends React.Component {
     constructor(props) {
         super(props);
 
+        // state
+        this.state = {
+            courseName: ''
+        }
+
         this.handleInput = this.handleInput.bind(this);
         this.submit = this.submit.bind(this);
 
@@ -40,17 +45,31 @@ class TeacherCourses extends React.Component {
     }
 
     // method submit,
-    // take props.dispatch, than use action saveNewCourse,
-    // this.courseNameInput.value has value '' (empty string)
+    // condition if this.state.courseName
+    //      - access props of TeacherCourses, dispatch actions(Teacher actions) saveNewCourse
+    //          - take state courseName,
+    //      - this.courseNameInput.value has value '' (empty string),
+    //      - set the state courseName is empty string,
+    // else
+    //      - set the state error has string 'Please provide a course name.'
     submit() {
-        this.props.dispatch(saveNewCourse(this.state.courseName));
-        this.courseNameInput.value = '';
+        if (this.state.courseName) {
+            this.props.dispatch(saveNewCourse(this.state.courseName));
+            this.courseNameInput.value = '';
+            this.setState({
+                courseName: ''
+            });
+        } else {
+            this.setState({
+                error: 'Please provide a course name.'
+            })
+        }
     }
 
     render() {
 
-        // courses, sections are props from TeacherCoursesF
-        var { courses, sections } = this.props;
+        // courses, sections, error are props from TeacherCoursesF
+        var { courses, sections, error } = this.props;
 
         // condition if courses, next code is working,
         //   - courseList has value of function makeCourseList with parameteres
@@ -65,6 +84,20 @@ class TeacherCourses extends React.Component {
                 <header>
                     Make a new course
                 </header>
+
+                {
+                    /*
+                    state eroor and shows element p with property {this.state.error}
+                    */
+                }
+                {this.state.error && <p>{this.state.error}</p>}
+
+                {
+                    /*
+                     eroor and shows element p with property {error}
+                    */
+                }
+                {error && <p>{error}</p>}
                 <input
                     type="text"
                     cname="courseName"
@@ -104,11 +137,14 @@ class TeacherCourses extends React.Component {
 
 {/********* CONNECTED COMPONENT ********/ }
 
-// conect component with store and takes state(state.teachers.courses) and state(state.teachers.sections)
+// conect component with store and takes 
+//      state(state.teachers.courses), state(state.teachers.sections) 
+//      error(state.teachers.error)
 const mapStateToProps = function (state) {
     return {
         courses: state.teachers.courses,
-        sections: state.teachers.sections
+        sections: state.teachers.sections,
+        error: state.teachers.error
     };
 }
 // conect can combine component with mapStateToProps

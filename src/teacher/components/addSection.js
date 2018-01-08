@@ -67,10 +67,16 @@ class AddSection extends React.Component {
     render() {
 
         // courseId is props of AddSection component
-        const { courseId } = this.props;
+        const { courseId, error } = this.props;
 
         return (
             <div>
+                {
+                    /*
+                    - error and show paragraph element with property {error}
+                    */
+                }
+                {error && <p>{error}</p>}
                 {
                     /*
                     shows:
@@ -161,5 +167,11 @@ class AddSection extends React.Component {
     }
 }
 
+const mapStateToProps = function (state) {
+    return {
+        error: state.teachers.error
+    };
+}
+
 /********* CONNECTED COMPONENT ********/
-export default connect()(AddSection);
+export default connect(mapStateToProps)(AddSection);
