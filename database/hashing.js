@@ -22,17 +22,23 @@ const db = spicedPg(`postgres:${secrets.dbuser}:${secrets.dbpassword}@localhost:
                 - log: string: 'users.js: hashPassword successful' and hash parameter
 */
 module.exports.hashPassword = function (plainTextPassword) {
+
     //  console.log("about to hash", plainTextPassword);
     return new Promise(function (resolve, reject) {
         bcrypt.genSalt(function (err, salt) {
+
             if (err) {
                 return reject(err);
             }
+
             console.log('plainTextPassword', plainTextPassword, 'salt', salt);
+
             bcrypt.hash(plainTextPassword, salt, function (err, hash) {
+
                 if (err) {
                     return reject(err);
                 }
+
                 resolve(hash);
                 // console.log('users.js: hashPassword successful', hash)
             });
@@ -52,13 +58,17 @@ module.exports.hashPassword = function (plainTextPassword) {
                 - resolve has parameter doesMath    
 */
 module.exports.checkPassword = function (textEnteredInLoginForm, hashedPasswordFromDatabase) {
+
     return new Promise(function (resolve, reject) {
+
         bcrypt.compare(textEnteredInLoginForm, hashedPasswordFromDatabase, function (err, doesMatch) {
+
             if (err) {
                 reject(err);
             } else {
                 resolve(doesMatch);
             }
+            
         });
     });
 };

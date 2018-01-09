@@ -84,12 +84,17 @@ const teacherRouter = (
 // in console shows text "using student router" and 
 // route has value of studentRouter
 let route = loggedOutRouter;
+
 if (location.pathname == '/student') {
+
     console.log('using student router');
     route = studentRouter;
+
 } else if (location.pathname == '/teacher') {
+
     console.log('using teacher router');
     route = teacherRouter;
+
 }
 
 ReactDOM.render(

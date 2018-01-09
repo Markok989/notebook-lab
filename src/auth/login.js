@@ -20,6 +20,7 @@ export default class Login extends React.Component {
         this.setState({
             [e.target.name]: e.target.value
         });
+        
     }
 
     // method handleLogin with parameter e
