@@ -1,12 +1,13 @@
 const path = require('path');
 const dbHashing = require('../database/hashing');
 const dbStudent = require('../database/student');
+const mw = require('./middleware');
 
 var loggedOutRoutes = (app) => {
 
-    // app get have path "/" and function with parameters: req and res,
+    // app get have path "/", mw.registerLoginCheck(from middleware) and function with parameters: req and res,
     // res sand file to the path with join __dirname + /index.html
-    app.get('/', (req, res) => {
+    app.get('/', mw.registerLoginCheck, (req, res) => {
         return res.sendFile(path.join(__dirname, '../index.html'));
     });
 

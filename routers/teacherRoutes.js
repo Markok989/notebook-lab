@@ -20,13 +20,13 @@ var teacherRoutes = (app) => {
 
     /********** SECTIONS *********/
 
-    // app post with path /api/teacher/section, and use parameters req and res
+    // app post with path /api/teacher/section, mw.loggedInCheck(from middleware) and use parameters req and res
     // data has value array [req.body.courseId, req.body.name, req.body.start, req.body.end],
     // return saveNewSection (from file teacherDb.js),
     // then with "then" with anonymous function access next line of code
     // res with json access to success with value true
     // "catch" catch errors, with parameter e res with json access to error with e
-    app.post('/api/teacher/section', (req, res) => {
+    app.post('/api/teacher/section', mw.loggedInCheck, (req, res) => {
         let data = [req.body.courseId, req.body.name, req.body.start, req.body.end];
         console.log(data);
         return saveNewSection(data).then(() => {
@@ -41,10 +41,10 @@ var teacherRoutes = (app) => {
     });
 
     // get all the sections a teaher has
-    // app get with path 'app/teacher/sections',
+    // app get with path 'app/teacher/sections', mw loggedInCheck(from midlleware)
     // arrow function with parameters req and res
 
-    app.get('/api/teacher/sections', (req, res) => {
+    app.get('/api/teacher/sections', mw.loggedInCheck, (req, res) => {
 
         // FIX: reset to req.session.id
 
@@ -70,9 +70,9 @@ var teacherRoutes = (app) => {
     });
 
     // get only the sections for a particular course
-    // app get with path '/api/teacher/sections/:courseId',
+    // app get with path '/api/teacher/sections/:courseId', mw loggedInCheck(from midlleware)
     // arrow function with parameters req and res
-    app.get('/api/teacher/sections/:courseId', (req, res) => {
+    app.get('/api/teacher/sections/:courseId', mw.loggedInCheck, (req, res) => {
 
         // data has value of array [req.params.id],
         // return getSectionsByCourseId (function from file teacherDb.js),
@@ -100,14 +100,14 @@ var teacherRoutes = (app) => {
 
     /******** COURSES ***********/
 
-    // app post with path /api/teacher/course, and use parameters req and res
+    // app post with path /api/teacher/course, mw loggedInCheck(from midlleware) and use parameters req and res
     // data has value array [1, req.body.name],
     // return saveNewCourse (from file teacherDb.js),
     // then with "then" with anonymous function access next line of code
     // res with json access to success with value true
     // "catch" catch errors, with parameter e res with json access to error with e
 
-    app.post('/api/teacher/course', (req, res) => {
+    app.post('/api/teacher/course', mw.loggedInCheck, (req, res) => {
 
         // FIX: rest num to req.session.id
         let data = [1, req.body.name];
@@ -122,13 +122,13 @@ var teacherRoutes = (app) => {
         })
     });
 
-    // app get with path /api/teacher/courses, and use parameters req and res
+    // app get with path /api/teacher/courses, mw loggedInCheck(from midlleware) and use parameters req and res
     // data has value array [req.params.teacherId],
     // return saveNewCourse (from file teacherRoutes.js),
     // then with "then" with parameter results access next line of code
     // res with json access to success with value true
     // "catch" catch errors, with parameter e res with json access to error with e
-    app.get('/api/teacher/courses', (req, res) => {
+    app.get('/api/teacher/courses', mw.loggedInCheck, (req, res) => {
 
         //FIX to req.session.id once there's a session
         let data = ['1'];
@@ -145,9 +145,9 @@ var teacherRoutes = (app) => {
         })
     });
 
-    // app delete with path '/app/teacher/course/:id'
+    // app delete with path '/app/teacher/course/:id' , mw loggedInCheck(from midlleware)
     // arrow function with parameters req and res
-    app.delete('/api/teacher/course/:id', (req, res) => {
+    app.delete('/api/teacher/course/:id', mw.loggedInCheck, (req, res) => {
 
         // data has value of array [req.params.id],
         // return deleteCourse (function from file teacherDb.js),
