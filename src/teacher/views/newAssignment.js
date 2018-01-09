@@ -39,22 +39,28 @@ class TeacherNewAssignment extends React.Component {
 
         // variable assignmentOptions has value :
         // function: which on has div element with properties
-        var assignmentOptions = function () {
-            return (
-                <div>
-                    createAssignmentCategoryDiv('Title');
-                     createAssignmentCategoryDiv('Question');
-                     createAssignmentCategoryDiv('Abstract');
-                     createAssignmentCategoryDiv('Hypothesis');
-                     createAssignmentCategoryDiv('Variables');
-                     createAssignmentCategoryDiv('Materials');
-                     createAssignmentCategoryDiv('Procedures');
-                     createAssignmentCategoryDiv('Data');
-                     createAssignmentCategoryDiv('Calculations');
-                     createAssignmentCategoryDiv('Discussion');
-                 </div>
-            );
-        }
+        var assignmentOptions =
+            <div >
+                <div style={assignmentGridStyle}>
+                    <p>Include</p>
+                    <p>Category</p>
+                    <p>Default values</p>
+                    <p>Students can edit?</p>
+                    <p>Shared amongst groups?</p>
+                </div>
+
+                {createAssignmentCategoryDiv('Title')}
+                {createAssignmentCategoryDiv('Question')}
+                {createAssignmentCategoryDiv('Abstract')}
+                {createAssignmentCategoryDiv('Hypothesis')}
+                {createAssignmentCategoryDiv('Variables')}
+                {createAssignmentCategoryDiv('Materials')}
+                {createAssignmentCategoryDiv('Procedures')}
+                {createAssignmentCategoryDiv('Data')}
+                {createAssignmentCategoryDiv('Calculations')}
+                {createAssignmentCategoryDiv('Discussion')}
+
+            </div>;
 
         return (
             <div>
@@ -101,7 +107,7 @@ export default connect(mapStateToProps)(TeacherNewAssignment);
 */
 function createAssignmentCategoryDiv(category) {
     return (
-        <div>
+        <div style={assignmentGridStyle}>
             <input type="checkbox" name={`include${category}checkbox`} />
 
             <label forHtml={`for${category}`}>{`${category}`}</label>
@@ -112,6 +118,13 @@ function createAssignmentCategoryDiv(category) {
             <input type="checkbox" name={`${category}Editable`} />
 
             <input type="checkbox" name={`${category}Share`} />
-        </div>
+        </div >
     );
+}
+
+/************** STYLES ****************/
+
+var assignmentGridStyle = {
+    display: "grid",
+    gridTemplateColumns: '100px 100px auto 100px 100px'
 }
