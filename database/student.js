@@ -32,12 +32,12 @@ module.exports.makeCourse = function (user_id, code) {
 
 // module export getStudentData
 // use function with parameter email,
-//      - insert has value of string SELECT first_name, last_name, email, role, section_id FROM users JOIN users_sections ON users.id = users_sections.user_id WHERE email = $1`,
+//      - insert has value of string `SELECT first_name, last_name, email, role, section_id, sections.id FROM users JOIN users_sections  ON users.id = users_sections.user_id JOIN sections ON section_id = sections.id WHERE email = $1`,
 //      - result has value of db.query(select, [email]); 
 //      - return result
 module.exports.getStudentData = function (email) {
 
-    const select = `SELECT first_name, last_name, email, role, section_id FROM users JOIN users_sections ON users.id = users_sections.user_id WHERE email = $1`;
+    const select = `SELECT first_name, last_name, email, role, section_id, sections.id FROM users JOIN users_sections  ON users.id = users_sections.user_id JOIN sections ON section_id = sections.id WHERE email = $1`
     const result = db.query(select, [email]);
     return result;
 

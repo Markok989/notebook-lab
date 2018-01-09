@@ -1,15 +1,47 @@
 import React from 'react';
+import axios from 'axios';
 
-export default function StudentApp(props) {
+// component App (for student)
+class App extends React.Component {
 
-    return (
-        <div id="studentApp">
-            <h3>Welcome to Student App</h3>
-            {
-                // props.children,
-                // shows property of chhildren components
-            }
-            {props.children}
-        </div>
-    );
+    render() {
+
+        return (
+            <div>
+
+                <nav>
+                    <ul>
+                        <li>Home</li>
+                        <li>Courses</li>
+                        <li>Gradebook</li>
+                        <li>Account</li>
+                        <li>Logout</li>
+                    </ul>
+                </nav>
+
+                <sidebar>
+
+                    <header>
+                        Menu
+                    </header>
+
+                    <ul>
+                        <li>Assignments</li>
+                        <li><Link to="/teacher/courses">Courses</Link></li>
+                        <li>Gradebook</li>
+                        <li>Students</li>
+                        <li>Messages</li>
+                    </ul>
+
+                </sidebar>
+
+                {props.children}
+
+            </div>
+        );
+
+    }
+
 }
+
+export default App;
