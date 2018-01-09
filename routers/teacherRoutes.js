@@ -46,9 +46,7 @@ var teacherRoutes = (app) => {
 
     app.get('/api/teacher/sections', mw.loggedInCheck, (req, res) => {
 
-        // FIX: reset to req.session.id
-
-        // data has value of array: [1],
+        // data has value of array: [req.session.user.id],
         // return getAllSections (function from file teacherDb.js),
         // then with word "then" access return res.json with parameter results,
         // return res.json contains success with boolean value true and
@@ -56,7 +54,7 @@ var teacherRoutes = (app) => {
         // after then goes word "catch" for errors,
         // catch with parameter e access res.json ,
         // res.json contains error with value e
-        let data = [1];
+        let data = [req.session.user.id];
         return getAllSections(data).then((results) => {
             return res.json({
                 success: true,
@@ -101,7 +99,7 @@ var teacherRoutes = (app) => {
     /******** COURSES ***********/
 
     // app post with path /api/teacher/course, mw loggedInCheck(from midlleware) and use parameters req and res
-    // data has value array [1, req.body.name],
+    // data has value array [req.session.user.id, req.body.name],
     // return saveNewCourse (from file teacherDb.js),
     // then with "then" with anonymous function access next line of code
     // res with json access to success with value true
@@ -109,8 +107,7 @@ var teacherRoutes = (app) => {
 
     app.post('/api/teacher/course', mw.loggedInCheck, (req, res) => {
 
-        // FIX: rest num to req.session.id
-        let data = [1, req.body.name];
+        let data = [req.session.user.id, req.body.name];
         return saveNewCourse(data).then(() => {
             res.json({
                 success: true
@@ -123,15 +120,14 @@ var teacherRoutes = (app) => {
     });
 
     // app get with path /api/teacher/courses, mw loggedInCheck(from midlleware) and use parameters req and res
-    // data has value array [req.params.teacherId],
+    // data has value array [req.session.user.id]
     // return saveNewCourse (from file teacherRoutes.js),
     // then with "then" with parameter results access next line of code
     // res with json access to success with value true
     // "catch" catch errors, with parameter e res with json access to error with e
     app.get('/api/teacher/courses', mw.loggedInCheck, (req, res) => {
 
-        //FIX to req.session.id once there's a session
-        let data = ['1'];
+        let data = [req.session.user.id];
         // call db
         return getCoursesByTeacher(data).then((results) => {
             res.json({
