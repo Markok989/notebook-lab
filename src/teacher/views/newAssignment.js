@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
+import { getAllSections } from '../actions';
 
 // TeacherNewAssignment component
 class TeacherNewAssignment extends React.Component {
@@ -27,6 +28,15 @@ class TeacherNewAssignment extends React.Component {
             console.log('Add Section: handleInput state: ', this.state);
         })
 
+    }
+
+    // componentDidMount() is invoked immediately after a component is mounted.
+    // condition if not !this.props.sections
+    //      props dispatch access to function getAllSections from teacher actions
+    componentDidMount() {
+        if (!this.props.sections) {
+            this.props.dispatch(getAllSections());
+        }
     }
 
     // method submit 
@@ -65,6 +75,13 @@ class TeacherNewAssignment extends React.Component {
         return (
             <div>
                 <div>Section List</div>
+                {
+                    /*
+                    - function makeSectionList use property sections of this cpomponent 
+                    */
+                }
+                {makeSectionList(this.props.sections)}
+
                 <label forHtml="assignmentName">Assignment Name</label>
                 <input type="text" name="assignmentName" onChange={this.handleInput} />
 
@@ -95,7 +112,8 @@ class TeacherNewAssignment extends React.Component {
 const mapStateToProps = function (state) {
     // state
     return {
-        error: state.teachers.error
+        error: state.teachers.error,
+        sections: state.teachers.sections
     };
 }
 export default connect(mapStateToProps)(TeacherNewAssignment);
@@ -119,6 +137,33 @@ function createAssignmentCategoryDiv(category) {
 
             <input type="checkbox" name={`${category}Share`} />
         </div >
+    );
+}
+
+/*
+- function makeSectionList with parameter items
+    - variable itemList has value of item with map with parameter item
+        - log parameter item
+        - return 
+            - element li with attribute key={item.id.toString()}
+                - input element
+    - return element ul with property {itemList}
+*/
+function makeSectionList(items) {
+
+    var itemList = items.map((item) => {
+        console.log(item);
+
+        return (
+            <li key={item.id.toString()}>
+                <input type="checkbox" name={`section${item.id}`} />{item.name}
+            </li>
+        );
+    });
+    return (
+        <ul>
+            {itemList}
+        </ul>
     );
 }
 
