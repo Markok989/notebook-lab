@@ -67,7 +67,7 @@ export default class Registration extends React.Component {
                 - data has value of  res.data
                 - condition if not data.success
                     - error has value of true
-                - else browserHistory is push('/student')
+                - else location.replace('/student');
             - catch use function with parameter err
                 - log parameter err;
         - else 
@@ -90,7 +90,7 @@ export default class Registration extends React.Component {
                         error: true
                     } else {
 
-                        browserHistory.push('/student');
+                        location.replace('/student');
                     }
                 })
                 .catch((err) => {
@@ -112,7 +112,7 @@ export default class Registration extends React.Component {
                  - data has value of  res.data
                  - condition if not data.success
                      - error has value of true
-                 - else browserHistory is push('/student')
+                 - else location.replace('/teacher');
              - catch use function with parameter err
                  - log parameter err;
          - else 
@@ -134,7 +134,7 @@ export default class Registration extends React.Component {
                     if (!data.success) {
                         error: true
                     } else {
-                        browserHistory.push('/student');
+                        location.replace('/teacher');
                     }
                 })
                 .catch((err) => {
