@@ -192,6 +192,16 @@ var loggedOutRoutes = (app) => {
                 console.log(err);
             })
     })
+
+    /*
+    - app post have path '/logout' and function with parameters: req and res,
+        - req session has value null,
+        - res redirect to '/'
+    */
+    app.get('/logout', (req, res) => {
+        req.session = null;
+        res.redirect('/');
+    });
 };
 
 // export module 

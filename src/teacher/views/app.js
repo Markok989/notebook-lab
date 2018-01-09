@@ -4,6 +4,7 @@ import { createStore, applyMiddleware } from 'redux';
 import reduxPromise from 'redux-promise';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { Link } from 'react-router';
+import Logout from '../../auth/logout';
 
 //import { connect } from 'react-redux';
 
@@ -35,7 +36,7 @@ class App extends React.Component {
                             <li>New Assignment</li>
                             <li>Help</li>
                             <li>Account</li>
-                            <li>Logout</li>
+                            <li><Logout /></li>
                         </ul>
                     </nav>
                     <sidebar>
