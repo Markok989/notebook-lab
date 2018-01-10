@@ -190,12 +190,13 @@ var loggedOutRoutes = (app) => {
                                 success: true,
                                 role: role
                             });
-
+                            /*
                             if (role === 'student') {
                                 res.redirect('/api/student');
                             } else {
                                 res.redirect('/api/teacher');
                             }
+                            */
 
                         }
                     }).catch((err) => {
