@@ -14,8 +14,6 @@ class App extends React.Component {
         // state
         this.state = {};
 
-        // binding
-        this.dispatch = this.props.dispatch.bind(this);
     }
 
     // componentDidMount is invoked immediately after a component is mounted,
@@ -31,9 +29,12 @@ class App extends React.Component {
         // data belong to this.props
         const { data } = this.props;
 
-        // if(!data) {
-        //     return null
-        // }
+        console.log('render component', data);
+
+        // condition if not data, return null
+        if (!data) {
+            return null
+        }
 
         return (
             <div>
@@ -78,11 +79,11 @@ class App extends React.Component {
 const mapStateToProps = function (state) {
 
     // log 'mapStateToProps'
-    console.log('mapStateToProps');
+    console.log('mapStateToProps', state);
 
     // return data with state.data
     return {
-        data: state.data
+        data: state.students.data
     }
 }
 
