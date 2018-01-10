@@ -28,12 +28,12 @@ INSERT INTO sections
 VALUES
     ('2nd Period', 1);
 
-INSERT INTO user_sections
+INSERT INTO users_sections
     (user_id, section_id)
 VALUES
     (2, 1);
 
-INSERT INTO user_sections
+INSERT INTO users_sections
     (user_id, section_id)
 VALUES
     (3, 1);
