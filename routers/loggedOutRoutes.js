@@ -153,10 +153,15 @@ var loggedOutRoutes = (app) => {
             - with word "then" we use function with parameter doesMatch
                 - condition if not doesMatch
                     - throw string 'Password is incorrect.'
+                    - alert: 'Your email or password are incorrect'
                 - elese:
                     - log string: 'password is correct' and result.rows, 
                     - req.session.user has properties: id, first, last, email, role
                     - res.json has property success with value true and role has value role
+                    - condition if role is strictly the same as ;student
+                        - res redirect to '/api/student'
+                    - else 
+                        - res redirect to '/api/teacher'
             - catch access function with parameter err      
                 - log parameter err 
         - catch access function with parameter err      
@@ -170,7 +175,8 @@ var loggedOutRoutes = (app) => {
                 dbHashing.checkPassword(password, result.rows[0].password)
                     .then((doesMatch) => {
                         if (!doesMatch) {
-                            throw 'Password is incorrect.'
+                            throw 'Password is incorrect.';
+                            alert('Your email or password are incorrect');
                         } else {
                             console.log('password is correct', result.rows);
 
@@ -183,7 +189,14 @@ var loggedOutRoutes = (app) => {
                             res.json({
                                 success: true,
                                 role: role
-                            })
+                            });
+
+                            if (role === 'student') {
+                                res.redirect('/api/student');
+                            } else {
+                                res.redirect('/api/teacher');
+                            }
+
                         }
                     }).catch((err) => {
                         console.log(err);
@@ -203,6 +216,8 @@ var loggedOutRoutes = (app) => {
         res.redirect('/');
     });
 };
+
+//should put app.get with restrictions for req.session.user to not access the teacher side and vice versa.
 
 // export module 
 // module.exports.loggedOutRoutes = loggedOutRoutes;
