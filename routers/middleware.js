@@ -41,6 +41,8 @@ function loggedInCheck(req, res, next) {
     }
 }
 
+//add student check and teacher check.
+
 // export as modul
 module.exports.loggedInCheck = loggedInCheck;
 module.exports.registerLoginCheck = registerLoginCheck; 
