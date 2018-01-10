@@ -41,6 +41,8 @@ class TeacherCourses extends React.Component {
     handleInput(e) {
         this.setState({
             [e.target.name]: e.target.value
+        }, () => {
+            console.log('state', this.state);
         });
     }
 
