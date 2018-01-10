@@ -16,17 +16,34 @@ class TeacherNewAssignment extends React.Component {
 
     }
 
-    // methode handleInput with parameter e
-    // set the state :
-    //      [e.target.name] has value/path e.target.value
-    // log string 'Add Section: handleInput state: ' and state of component
-    handleInput(e) {
+
+    // - method handleInput with parameter event
+    //      - target has value of event.target,
+    //      - condition if target.type is the same as 'checkbox'
+    //          - log target.checked
+    //      - 'value' has value of 
+    //          target.type strictly the same as 'checkbox'
+    //          and this const has two values based on condition
+    //          first is target.checked and second is target.value
+    //      - name has value as target.name
+    // - set the state, 
+    //      - property [name] has value 'value'
+    //      - log string 'New Assignment: handleInput state: ' and this.state
+    handleInput(event) {
+
+        const target = event.target;
+        if (target.type == 'checkbox') {
+            console.log(target.checked)
+        }
+
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const name = target.name;
 
         this.setState({
-            [e.target.name]: e.target.value
+            [name]: value
         }, () => {
-            console.log('Add Section: handleInput state: ', this.state);
-        })
+            console.log('New Assignment: handleInput state: ', this.state);
+        });
 
     }
 
@@ -51,15 +68,7 @@ class TeacherNewAssignment extends React.Component {
     //          and this const has two values based on condition
     //          first is target.checked and second is target.value
     // set the state, property [name] has value 'value'
-    handleInputChange(event) {
-        const target = event.target;
-        const value = target.type === 'checkbox' ? target.checked : target.value;
-        const name = target.name;
 
-        this.setState({
-            [name]: value
-        });
-    }
 
     render() {
 
@@ -77,16 +86,16 @@ class TeacherNewAssignment extends React.Component {
                     <p>Shared amongst groups?</p>
                 </div>
 
-                {createAssignmentCategoryDiv('Title')}
-                {createAssignmentCategoryDiv('Question')}
-                {createAssignmentCategoryDiv('Abstract')}
-                {createAssignmentCategoryDiv('Hypothesis')}
-                {createAssignmentCategoryDiv('Variables')}
-                {createAssignmentCategoryDiv('Materials')}
-                {createAssignmentCategoryDiv('Procedures')}
-                {createAssignmentCategoryDiv('Data')}
-                {createAssignmentCategoryDiv('Calculations')}
-                {createAssignmentCategoryDiv('Discussion')}
+                {createAssignmentCategoryDiv('Title', this.handleInput)}
+                {createAssignmentCategoryDiv('Question', this.handleInput)}
+                {createAssignmentCategoryDiv('Abstract', this.handleInput)}
+                {createAssignmentCategoryDiv('Hypothesis', this.handleInput)}
+                {createAssignmentCategoryDiv('Variables', this.handleInput)}
+                {createAssignmentCategoryDiv('Materials', this.handleInput)}
+                {createAssignmentCategoryDiv('Procedures', this.handleInput)}
+                {createAssignmentCategoryDiv('Data', this.handleInput)}
+                {createAssignmentCategoryDiv('Calculations', this.handleInput)}
+                {createAssignmentCategoryDiv('Discussion', this.handleInput)}
 
             </div>;
         /* 
@@ -103,10 +112,10 @@ class TeacherNewAssignment extends React.Component {
                     <div>Section List</div>
                     {
                         /*
-                        - function makeSectionList use property sections of this cpomponent 
+                        - function makeSectionList use sections and property sections of this cpomponent 
                         */
                     }
-                    {makeSectionList(this.props.sections)}
+                    {makeSectionList(sections, this.makeSectionList)}
 
                     <label forHtml="assignmentName">Assignment Name</label>
                     <input type="text" name="assignmentName" onChange={this.handleInput} />
@@ -151,19 +160,20 @@ export default connect(mapStateToProps)(TeacherNewAssignment);
     - return div element with properties
         - 
 */
-function createAssignmentCategoryDiv(category) {
+function createAssignmentCategoryDiv(category, save) {
     return (
         <div style={assignmentGridStyle}>
-            <input type="checkbox" name={`include${category}checkbox`} />
+            <input type="checkbox" name={`include${category}`} onChange={save} />
 
             <label forHtml={`for${category}`}>{`${category}`}</label>
 
-            <input type="textbox" name={`${category}Input`}
-                placeholder="Type default text here that will appear on all student assignments" />
+            <input type="text" name={`${category}Input`}
+                placeholder="Type default text here that will appear on all student assignments"
+                onChange={save} style={inputStyle} />
 
-            <input type="checkbox" name={`${category}Editable`} />
+            <input type="checkbox" name={`${category}Editable`} onChange={save} />
 
-            <input type="checkbox" name={`${category}Share`} />
+            <input type="checkbox" name={`${category}Share`} onChange={save} />
         </div >
     );
 }
@@ -177,14 +187,14 @@ function createAssignmentCategoryDiv(category) {
                 - input element
     - return element ul with property {itemList}
 */
-function makeSectionList(items) {
+function makeSectionList(items, save) {
 
     var itemList = items.map((item) => {
         console.log(item);
 
         return (
             <li key={item.id.toString()}>
-                <input type="checkbox" name={`section${item.id}`} />{item.name}
+                <input type="checkbox" name={`section${item.id}`} onChange={save} />{item.name}
             </li>
         );
     });
@@ -200,4 +210,8 @@ function makeSectionList(items) {
 var assignmentGridStyle = {
     display: "grid",
     gridTemplateColumns: '100px 100px auto 100px 100px'
+}
+
+var inputStyle = {
+    width: '400px'
 }
