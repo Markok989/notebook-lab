@@ -3,6 +3,7 @@
 //var SAVE_NEW_COURSE = 'SAVE_NEW_COURSE';
 const SAVE_COURSE_LIST = 'SAVE_COURSE_LIST',
     SAVE_SECTION_LIST = 'SAVE_SECTION_LIST',
+    UPDATE_RECENT_ASSIGNMENTS = 'UPDATE_RECENT_ASSIGNMENTS',
     ERROR = 'ERROR';
 
 // reducer for teacher, take state and action, on end give new state 
@@ -11,6 +12,19 @@ export default function (state = {}, action) {
     // log :
     //      string 'REDCUER: the action is: ' and action
     console.log('REDUCER: the action is: ', action);
+
+    /*
+    - condtion if action.type is strictly the same as UPDATE_RECENT_ASSIGNMENTS
+        - log string 'REDUCER: getting assignment list'
+        - state has value of Object
+            - empty object, state with property latestAssignment as action.payload
+    */
+    if (action.type == UPDATE_RECENT_ASSIGNMENTS) {
+        console.log('REDUCER: getting assignment list');
+        state = Object.assign({}, state, {
+            latestAssignment: action.payload
+        });
+    }
 
     // condition if action.type is the same as SAVE_SECTION_LIST next line of code is working,
     // log string : 'REDUCER: saving section list',

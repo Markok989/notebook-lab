@@ -4,7 +4,43 @@ import axios from '../api/axios';
 //var SAVE_NEW_COURSE = 'SAVE_NEW_COURSE';
 const SAVE_COURSE_LIST = 'SAVE_COURSE_LIST',
     SAVE_SECTION_LIST = 'SAVE_SECTION_LIST',
+    UPDATE_RECENT_ASSIGNMENTS = 'UPDATE_RECENT_ASSIGNMENTS',
     ERROR = 'ERROR';
+
+
+/************ ASSIGNMENTS *************/
+
+/*
+- function saveNewAssignment with property assignmentInfo
+    - condition if parameter assignmentInfo
+        - return axios post with path '/api/teacher/assignment',
+        - then with word then with parameter results we access to function
+            - condition if results.data.success
+                - return next properties
+                    - type as UPDATE_RECENT_ASSIGNMENTS,
+                    - payload as results.data.assignmentId
+        - catch with parameter e
+            - return next properties
+                - type as ERROR,
+                - payload as e
+*/
+export function saveNewAssignment(assignmentInfo) {
+    if (assignmentInfo) {
+        return axios.post('/api/teacher/assignment').then((results) => {
+            if (results.data.success) {
+                return {
+                    type: UPDATE_RECENT_ASSIGNMENTS,
+                    payload: results.data.assignmentId
+                };
+            }
+        }).catch((e) => {
+            return {
+                type: ERROR,
+                payload: e
+            };
+        });
+    }
+}
 
 
 /************ SECTIONS *************/
@@ -38,6 +74,7 @@ export function getAllSections() {
     // after that goes catch with parameter e
     //      return type: ERROR and payload with parameter e  
     return axios.get('/api/teacher/sections').then((results) => {
+        console.log('ACTIONS getAllSections', results);
         return {
             type: SAVE_SECTION_LIST,
             payload: results.data.sections
@@ -61,7 +98,7 @@ export function getCourseList() {
     //  - return  type: SAVE_COURSE_LIST,
     //            payload: results.data.courses
     return axios.get('/api/teacher/courses').then((results) => {
-        console.log('Actions: back from getting courses');
+        console.log('Actions: back from getting courses', results);
         return {
             type: SAVE_COURSE_LIST,
             payload: results.data.courses
