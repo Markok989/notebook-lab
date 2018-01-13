@@ -12,7 +12,50 @@ class TeacherNewAssignment extends React.Component {
 
         // state
         this.state = {
-            assignmentInfo: {}
+            AbstractEditable: true,
+            AbstractInput: "",
+            AbstractShare: false,
+            CalculationsEditable: true,
+            CalculationsInput: "",
+            CalculationsShare: false,
+            DataEditable: true,
+            DataInput: "",
+            DataShare: false,
+            DiscussionEditable: true,
+            DiscussionInput: "",
+            DiscussionShare: false,
+            HypothesisEditable: true,
+            HypothesisInput: "",
+            HypothesisShare: false,
+            MaterialsEditable: true,
+            MaterialsInput: "",
+            MaterialsShare: false,
+            ProceduresEditable: true,
+            ProceduresInput: "",
+            ProceduresShare: false,
+            QuestionInput: "",
+            QuestionShare: false,
+            TitleInput: "",
+            TitleShare: false,
+            VariablesEditable: true,
+            VariablesInput: "",
+            VariablesShare: false,
+            assignmentName: "",
+            dueDate: "",
+            includeAbstract: false,
+            includeCalculations: false,
+            includeData: false,
+            includeDiscussion: false,
+            includeHypothesis: false,
+            includeMaterials: false,
+            includeProcedures: false,
+            includeQuestion: false,
+            includeTitle: false,
+            includeVariables: false,
+            instructions: "",
+            QuestionEditable: true,
+            sectioncb3: false,
+            TitleEditable: true
         }
 
         // binding methodes
@@ -37,8 +80,6 @@ class TeacherNewAssignment extends React.Component {
     //          and this const has two values based on condition
     //          first is target.checked and second is target.value
     //      - name has value as target.name
-    // - newState has value of
-    //      - new empty object, state of assignmentInfo and [name] has value of 'value'
     // - set the state, 
     //      - property [name] has value 'value'
     //      - log string 'New Assignment: handleInput state: ' and this.state
@@ -52,12 +93,10 @@ class TeacherNewAssignment extends React.Component {
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
 
-        var newState = Object.assign({}, this.state.assignmentInfo, {
-            [name]: value
-        });
+
 
         this.setState({
-            assignmentInfo: newState
+            [name]: value
         }, () => {
             console.log('New Assignment: handleInput state: ', this.state);
         });
@@ -74,19 +113,12 @@ class TeacherNewAssignment extends React.Component {
 
         this.props.dispatch(saveNewAssignment(this.state.assignmentInfo));
         // validation!
-        
+
         // console.log(this.state);
         // browserHistory.push('/teacher/assignments');
 
     }
 
-    // method handleInputChange with parameter event
-    // target has value of event.target,
-    // 'value' has value of 
-    //          target.type strictly the same as 'checkbox'
-    //          and this const has two values based on condition
-    //          first is target.checked and second is target.value
-    // set the state, property [name] has value 'value'
 
 
     render() {
@@ -145,6 +177,10 @@ class TeacherNewAssignment extends React.Component {
                     <label forHtml="instructions">Instructions (optional)</label>
                     <input type="text" name="instructions" onChange={this.handleInput} />
 
+                    <label forHtml="groupLabCb">Group Lab?</label>
+
+                    <input type="checkbox" name="groupLabCb" onChange={this.handleInput} checked />
+
                     <h3>Assignment Details</h3>
 
                     {
@@ -190,7 +226,7 @@ function createAssignmentCategoryDiv(category, save) {
                 placeholder="Type default text here that will appear on all student assignments"
                 onChange={save} style={inputStyle} />
 
-            <input type="checkbox" name={`${category}Editable`} onChange={save} />
+            <input type="checkbox" name={`${category}Editable`} checked onChange={save} />
 
             <input type="checkbox" name={`${category}Share`} onChange={save} />
         </div >
