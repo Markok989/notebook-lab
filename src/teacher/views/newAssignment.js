@@ -211,14 +211,24 @@ class TeacherNewAssignment extends React.Component {
 
     }
 
-    // method submit 
-    // props dispatch access to function getAllSections from teacher actions with parameter
-    // and this.state
-    // log : state of this(TeacherNewAssignment) component
-    // browserHistory push to path '/teacher/assignments'
+    /*
+    - method submit 
+        - condition if this.checkSections
+            - props dispatch access to function getAllSections from teacher actions with parameter
+              and this.state
+        - else 
+            - set the state with propsery sectionError wich one has value of
+              string "Please select a class"
+    */
     submit() {
 
-        this.props.dispatch(saveNewAssignment(this.state));
+        if (this.checkSections()) {
+            this.props.dispatch(saveNewAssignment(this.state));
+        } else {
+            this.setState({
+                sectionError: "Please select a class"
+            });
+        }
         // validation!
 
         // console.log(this.state);
@@ -226,6 +236,18 @@ class TeacherNewAssignment extends React.Component {
 
     }
 
+    /*
+    - method checkSections
+        - condition if this.state.sections.length > 0
+            - return true
+        - return false
+    */
+    checkSections() {
+        if (this.state.sections.length > 0) {
+            return true;
+        }
+        return false;
+    }
 
 
     render() {
@@ -276,6 +298,13 @@ class TeacherNewAssignment extends React.Component {
             return (
                 <div>
                     <div>Section List</div>
+                    {
+                        /*
+                        - shows this.state.sectionError and p element with property
+                          {this.state.sectionError}
+                        */
+                    }
+                    {this.state.sectionError && <p>{this.state.sectionError}</p>}
                     {
                         /*
                         - function makeSectionList use sections and property sections of this cpomponent 
