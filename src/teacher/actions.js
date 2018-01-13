@@ -11,9 +11,10 @@ const SAVE_COURSE_LIST = 'SAVE_COURSE_LIST',
 /************ ASSIGNMENTS *************/
 
 /*
-- function saveNewAssignment with property assignmentInfo
-    - condition if parameter assignmentInfo
-        - return axios post with path '/api/teacher/assignment',
+- function saveNewAssignment with property info
+    - log string "ACTIONS: in save assignment" and parameter info
+    - condition if parameter info
+        - return axios post with path '/api/teacher/assignment', and object {info}
         - then with word then with parameter results we access to function
             - condition if results.data.success
                 - return next properties
@@ -24,9 +25,10 @@ const SAVE_COURSE_LIST = 'SAVE_COURSE_LIST',
                 - type as ERROR,
                 - payload as e
 */
-export function saveNewAssignment(assignmentInfo) {
-    if (assignmentInfo) {
-        return axios.post('/api/teacher/assignment').then((results) => {
+export function saveNewAssignment(info) {
+    console.log('ACTIONS: in save assignment', info);
+    if (info) {
+        return axios.post('/api/teacher/assignment', { info }).then((results) => {
             if (results.data.success) {
                 return {
                     type: UPDATE_RECENT_ASSIGNMENTS,

@@ -42,6 +42,7 @@ class TeacherNewAssignment extends React.Component {
             VariablesShare: false,
             assignmentName: "",
             dueDate: "",
+            groupLabCb: false,
             includeAbstract: false,
             includeCalculations: false,
             includeData: false,
@@ -106,12 +107,12 @@ class TeacherNewAssignment extends React.Component {
 
     // method submit 
     // props dispatch access to function getAllSections from teacher actions with parameter
-    // and this.state.assignmentInfo
+    // and this.state
     // log : state of this(TeacherNewAssignment) component
     // browserHistory push to path '/teacher/assignments'
     submit() {
 
-        this.props.dispatch(saveNewAssignment(this.state.assignmentInfo));
+        this.props.dispatch(saveNewAssignment(this.state));
         // validation!
 
         // console.log(this.state);

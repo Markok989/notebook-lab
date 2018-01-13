@@ -25,8 +25,22 @@ var teacherRoutes = (app) => {
     // res with json access to success with value true and assignmentId with value of results.rows[0]
     app.post('/api/teacher/assignment', mw.loggedInCheck, (req, res) => {
         //make assignment row in assignments database.
+        /*
+            - section has value of getSectionsFromAssignmentData with parameter res.body.info
+            - section use forEach loop with section parameter
+                - makeNewAssignment has parameters
+                    - sectiion and
+                    - res.body.info
+        */
+        var sections = getSectionsFromAssignmentData(res.body.info);
+        sections.forEach((section) => {
+            makeNewAssignment(section, res.body.info);
+        })
+
         //then for each section clicked, get list of students and for each student make a student report
         //for each student make a row in the appropriate category's table and return the id to the student report.
+
+        console.log(req.body.info);
 
         res.json({
             success: true,
@@ -185,3 +199,78 @@ var teacherRoutes = (app) => {
 // export module 
 // module.exports.teacherRoutes = teacherRoutes;
 module.exports = teacherRoutes;
+
+/*************** UTILITY FUNCTIONS *****************/
+
+/* 
+- function getSectionsFromAssignmentData with parameter info
+    - sections has value of empty array
+    - for loop use key in info , then
+        - condition if key.substring(substring - Returns the substring at the 
+            specified location within a String object.) sith parameters 0 (zero) and 9
+            is same as 'sectionb'
+                - condition if info[key] is the same as true , then
+                - sections push key.subsubstring with with parameters number 9 and
+                  key.length
+    - return sections 
+*/
+function getSectionsFromAssignmentData(info) {
+
+    var sectiions = [];
+    for (var key in info) {
+
+        if (key.substring(0, 9) == 'sectionb') {
+
+            if (info[key] == true) {
+                sections.push(key.substring(9, key.length));
+            }
+
+        }
+
+    }
+
+    return sections;
+
+}
+
+/*
+- function makeNewAssignment with parameters sectionId and info
+    - data has parameters
+    - log: data
+    - return data
+*/
+function makeNewAssignment(sectionId, info) {
+
+    var data = [
+        sectionId,
+        info.groupLabCb,
+        info.assignmentName,
+        info.instructions,
+        info.dueDate,
+        info.includeTitle,
+        info.TitleInput,
+        info.includeAbstract,
+        info.AbstractInput,
+        info.QuestionInput,
+        info.includeQuestion,
+        info.HypothesisInput,
+        info.includeHypothesis,
+        info.VariablesInput,
+        info.includeVariables,
+        info.MaterialsInput,
+        info.includeMaterials,
+        info.ProceduresInput,
+        info.includeProcedures,
+        info.DataInput,
+        info.includeData,
+        info.CalculationsInput,
+        info.includeCalculations,
+        info.DiscussionInput,
+        info.includeDiscussion
+    ];
+
+    console.log(data);
+
+    return data;
+
+}
