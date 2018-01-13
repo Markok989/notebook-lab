@@ -18,6 +18,26 @@ var dbUrl = process.env.DATABASE_URL || localUrl;
 // db has value spicedPg with parameter dbUrl
 var db = spicedPg(dbUrl);
 
+
+/********** ASSIGNMENTS *********/
+
+
+
+/********** STUDENTS ************/
+
+// function getStudentsBySectionId with parameter data
+// log: string "DBQUERY: getStudentsBySection, " and data parameter,
+// queryStr has value of string 'SELECT users_sections.user_id, users.first_name, users.last_name, users.profile_pic FROM users_sections JOIN users ON users_sections.user_id = users.id WHERE section_id = $1'
+// return db query with parameters: queryStr and data
+function getStudentsBySectionId(data) {
+
+    console.log('DBQUERY: getStudentsBySection, ', data);
+    let queryStr = 'SELECT users_sections.user_id, users.first_name, users.last_name, users.profile_pic FROM users_sections JOIN users ON users_sections.user_id = users.id WHERE section_id = $1';
+    return db.query(queryStr, data);
+
+}
+
+
 /********** SECTIONS ************/
 
 // function saveNewSection with parameter data
@@ -85,6 +105,9 @@ function deleteCourse(id) {
     return db.query(queryStr, id);
 }
 
+
+// module export for getStudentsBySectionId with value getStudentsBySectionId
+module.exports.getStudentsBySectionId = getStudentsBySectionId;
 
 // module export for saveNewCourse with value saveNewCourse
 module.exports.saveNewCourse = saveNewCourse;
