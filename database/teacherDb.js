@@ -23,13 +23,18 @@ var db = spicedPg(dbUrl);
 
 // function saveNewAssignmentTemplate with parameter data
 // log: string "DBQUERY: saveNewAssignmentTemplate, " and data parameter,
-// queryStr has value of string 'INSERT INTO assignments (section_id, group_lab, name, instructions, title, abstract, question, hypothesis, variables, materials, procedures, data, calculations, discussion) VALUES ($1, $2, $3, #4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25)'
+// queryStr has value of string 'INSERT INTO assignments (section_id, group_lab, name, instructions, due, title, default_title, abstract, default_abstract, question, default_question, hypothesis, default_hypothesis, variables, default_variables, materials, default_materials, procedures, default_procedures, data, default_data, calculations, default_calc, discussion, default_discussion) VALUES ($1, $2, $3, #4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25)'
 // return db query with parameters: queryStr and data
 function saveNewAssignmentTemplate(data) {
     console.log('DBQUERY: saveNewAssignmentTemplate,', data);
-    let queryStr = 'INSERT INTO assignments (section_id, group_lab, name, instructions, title, abstract, question, hypothesis, variables, materials, procedures, data, calculations, discussion) VALUES ($1, $2, $3, #4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25)';
+    let queryStr = 'INSERT INTO assignments (section_id, group_lab, name, instructions, due, title, default_title, abstract, default_abstract, question, default_question, hypothesis, default_hypothesis, variables, default_variables, materials, default_materials, procedures, default_procedures, data, default_data, calculations, default_calc, discussion, default_discussion) VALUES ($1, $2, $3, #4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25)';
     return db.query(queryStr, data);
 }
+
+// Test
+// aveNewAssignmentTemplate([1, false, '3koolaid', '4no instructions', '1999-01-01', '$6', '$7', '$8', '$9', '10', '11', '12', '13', '14', '$15', '$16', '$17', '$18', '$19', '$20', '$21', '$22', '$23', '$24', '$25']);
+// INSERT INTO assignments (section_id, group_lab, name, instructions, due, title, default_title, abstract, default_abstract, question, default_question, hypothesis, default_hypothesis, variables, default_variables, materials, default_materials, procedures, default_procedures, data, default_data, calculations, default_calc, discussion, default_discussion) VALUES (1, false, '3koolaid', '4no instructions', '1999-01-01', '$6', '$7', '$8', '$9', '10', '11', '12', '13', '14', '$15', '$16', '$17', '$18', '$19', '$20', '$21', '$22', '$23', '$24', '$25');
+
 
 // module export for saveNewAssignmentTemplate with value saveNewAssignmentTemplate
 module.exports.saveNewAssignmentTemplate - saveNewAssignmentTemplate;
@@ -150,11 +155,11 @@ module.exports.deleteCourse = deleteCourse;
 
 
 
-//saveNewCourse([1, 'Biology']);
-// getCoursesByTeacher([1]).then((results) => {
+// saveNewCourse([1, 'Biology']);
+//  getCoursesByTeacher([1]).then((results) => {
 //     console.log(results.rows);
 // }).catch(e => console.error(e));
-//deleteCourse([5]);
-// getAllSections([1]).then((results) => {
+// deleteCourse([5]);
+//  getAllSections([1]).then((results) => {
 //     console.log(results.rows);
 // }).catch(e => console.error(e));
