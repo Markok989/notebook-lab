@@ -12,56 +12,21 @@ class TeacherNewAssignment extends React.Component {
 
         // state
         this.state = {
-            AbstractEditable: true,
-            AbstractInput: "",
-            AbstractShare: false,
-            CalculationsEditable: true,
-            CalculationsInput: "",
-            CalculationsShare: false,
-            DataEditable: true,
-            DataInput: "",
-            DataShare: false,
-            DiscussionEditable: true,
-            DiscussionInput: "",
-            DiscussionShare: false,
-            HypothesisEditable: true,
-            HypothesisInput: "",
-            HypothesisShare: false,
-            MaterialsEditable: true,
-            MaterialsInput: "",
-            MaterialsShare: false,
-            ProceduresEditable: true,
-            ProceduresInput: "",
-            ProceduresShare: false,
-            QuestionInput: "",
-            QuestionShare: false,
-            TitleInput: "",
-            TitleShare: false,
-            VariablesEditable: true,
-            VariablesInput: "",
-            VariablesShare: false,
-            assignmentName: "",
-            dueDate: "",
-            groupLabCb: false,
-            includeAbstract: false,
-            includeCalculations: false,
-            includeData: false,
-            includeDiscussion: false,
-            includeHypothesis: false,
-            includeMaterials: false,
-            includeProcedures: false,
-            includeQuestion: false,
-            includeTitle: false,
-            includeVariables: false,
-            instructions: "",
-            QuestionEditable: true,
-            sectioncb3: false,
-            TitleEditable: true
+            sections: [],
+            include: {},
+            editable: {},
+            shared: {},
+            defaults: {}
         }
 
         // binding methodes
         this.handleInput = this.handleInput.bind(this);
         this.submit = this.submit.bind(this);
+        this.handleSectionInput = this.handleSectionInput.bind(this);
+        this.handleIncludeInput = this.handleIncludeInput.bind(this);
+        this.handleDefaults = this.handleDefaults.bind(this);
+        this.handleEditable = this.handleEditable.bind(this);
+        this.handleShared = this.handleShared.bind(this);
 
     }
 
@@ -71,30 +36,82 @@ class TeacherNewAssignment extends React.Component {
         this.props.dispatch(getAllSections());
     }
 
+    /*
+    - method handleSectionInput with parameter event
+        - name has value of event.target.name
+        - sections has value of array
+            - spread operator(take all values of array) for this.state.sections,
+              nam.substring with parameter 9 and name.length
 
-    // - method handleInput with parameter event
-    //      - target has value of event.target,
-    //      - condition if target.type is the same as 'checkbox'
-    //          - log target.checked
-    //      - 'value' has value of 
-    //          target.type strictly the same as 'checkbox'
-    //          and this const has two values based on condition
-    //          first is target.checked and second is target.value
-    //      - name has value as target.name
-    // - set the state, 
-    //      - property [name] has value 'value'
-    //      - log string 'New Assignment: handleInput state: ' and this.state
-    handleInput(event) {
+        - set the state
+            - sections
+            - log state
+    */
+    handleSectionInput(event) {
+
+        var name = event.target.name;
+        var sections = [...this.state.sections, name.substring(9, name.length)];
+
+        this.setState({
+            sections
+        }, () => {
+            console.log(this.state);
+        });
+
+    }
+
+    /*
+    - method handleIncludeInput with parameter event
+        - target has value of event.target
+        - "value" has value of target.checked
+        - name has value of target.name.substring with parameters:
+            - 0(zero)
+            - name.substring with parameters 7 and name length
+
+        - include has value of object
+            - empty object, this.state.include and property
+              [name] with value "value"
+        
+        - set the state with property include and function
+            - log this.state
+    */
+    handleIncludeInput(event) {
 
         const target = event.target;
+        const value = target.checked;
+        const name = target.name.substring(0, name.substring(7, name.length));
+
+        var include = Object.assign({}, this.state.include, {
+            [name]: value
+        });
+
+        this.setState({ include }, () => {
+            console.log(this.state);
+        });
+
+    }
+
+    /* 
+     - method handleInput with parameter event
+          - target has value of event.target,
+          - condition if target.type is the same as 'checkbox'
+              - log target.checked
+          - 'value' has value of 
+              target.type strictly the same as 'checkbox'
+              and this const has two values based on condition
+              first is target.checked and second is target.value
+          - name has value as target.name
+     - set the state, 
+          - property [name] has value 'value'
+          - log string 'New Assignment: handleInput state: ' and this.state 
+    */
+    handleInput(event) {
+
         if (target.type == 'checkbox') {
             console.log(target.checked)
         }
-
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
-
-
 
         this.setState({
             [name]: value
@@ -104,6 +121,95 @@ class TeacherNewAssignment extends React.Component {
 
     }
 
+    /*
+    - method handleDefaults with 
+        - "value" has value of event.target.value
+        - name has value of event.target.name.substring with parameters:
+            - 0(zero)
+            - event.target.name.substring with parameters 
+                - 0(zero) and event.target.name.substring -(minus) 5
+
+        - defaults has value of object
+            - empty object, this.state.defaults and property
+              [name] with value "value"
+        
+        - set the state with property defaults and function
+            - log this.state
+    */
+    handleDefaults() {
+
+        const value = event.target.value;
+        const name = event.target.name.substring(0, event.target.name.length - 5);
+
+        var defaults = Object.assign({}, this.state.defaults, {
+            [name]: value
+        });
+        this.setState({ defaults }, () => {
+            console.log(this.state);
+        });
+
+    }
+
+    /*
+    - method handleEditable 
+        - target has value of event.target,
+        - "value" has value of target
+        - name has value of target.name.substring with parameters:
+            - 0(zero)
+            - name.substring with parameters 7 and name length -(minus) 8
+    
+            - editable has value of object
+                - empty object, this.state.editable and property
+                  [name] with value "value"
+            
+            - set the state with property editable and function
+                - log this.state
+    */
+    handleEditable() {
+
+        const target = event.target;
+        const value = target.checked;
+        const name = target.name.substring(0, target.name.length - 8);
+
+        var editable = Object.assign({}, this.state.editable, {
+            [name]: value
+        });
+        this.setState({ editable }, () => {
+            console.log(this.state);
+        });
+
+    }
+
+    /*
+    - method handleShared 
+        - target has value of event.target,
+        - "value" has value of target.checked
+       - name has value of target.name.substring with parameters:
+            - 0(zero)
+            - event.target.name.substring with parameters 
+                - 0(zero) and event.target.name.substring -(minus) 5
+    
+            - shared has value of object
+                - empty object, this.state.shared and property
+                  [name] with value "value"
+            
+            - set the state with property shared and function
+                - log this.state
+    */
+    handleShared() {
+
+        const target = event.target;
+        const value = target.checked;
+        const name = target.name.substring(0, target.name.length - 5);
+
+        var shared = Object.assign({}, this.state.shared, {
+            [name]: value
+        });
+        this.setState({ shared }, () => {
+            console.log(this.state);
+        });
+
+    }
 
     // method submit 
     // props dispatch access to function getAllSections from teacher actions with parameter
@@ -126,6 +232,14 @@ class TeacherNewAssignment extends React.Component {
 
         const { sections } = this.props;
 
+        // events with properties
+        var events = {
+            include: this.handleIncludeInput,
+            defaults: this.handleDefaults,
+            editable: this.handleEditable,
+            shared: this.handleShared
+        }
+
         // variable assignmentOptions has value :
         // function: which on has div element with properties
         var assignmentOptions =
@@ -138,16 +252,16 @@ class TeacherNewAssignment extends React.Component {
                     <p>Shared amongst groups?</p>
                 </div>
 
-                {createAssignmentCategoryDiv('Title', this.handleInput)}
-                {createAssignmentCategoryDiv('Question', this.handleInput)}
-                {createAssignmentCategoryDiv('Abstract', this.handleInput)}
-                {createAssignmentCategoryDiv('Hypothesis', this.handleInput)}
-                {createAssignmentCategoryDiv('Variables', this.handleInput)}
-                {createAssignmentCategoryDiv('Materials', this.handleInput)}
-                {createAssignmentCategoryDiv('Procedures', this.handleInput)}
-                {createAssignmentCategoryDiv('Data', this.handleInput)}
-                {createAssignmentCategoryDiv('Calculations', this.handleInput)}
-                {createAssignmentCategoryDiv('Discussion', this.handleInput)}
+                {createAssignmentCategoryDiv('Title', events)}
+                {createAssignmentCategoryDiv('Question', events)}
+                {createAssignmentCategoryDiv('Abstract', events)}
+                {createAssignmentCategoryDiv('Hypothesis', events)}
+                {createAssignmentCategoryDiv('Variables', events)}
+                {createAssignmentCategoryDiv('Materials', events)}
+                {createAssignmentCategoryDiv('Procedures', events)}
+                {createAssignmentCategoryDiv('Data', events)}
+                {createAssignmentCategoryDiv('Calculations', events)}
+                {createAssignmentCategoryDiv('Discussion', events)}
 
             </div>;
         /* 
@@ -167,7 +281,7 @@ class TeacherNewAssignment extends React.Component {
                         - function makeSectionList use sections and property sections of this cpomponent 
                         */
                     }
-                    {makeSectionList(sections, this.makeSectionList)}
+                    {makeSectionList(sections, this.handleSectionInput)}
 
                     <label forHtml="assignmentName">Assignment Name</label>
                     <input type="text" name="assignmentName" onChange={this.handleInput} />
@@ -180,7 +294,7 @@ class TeacherNewAssignment extends React.Component {
 
                     <label forHtml="groupLabCb">Group Lab?</label>
 
-                    <input type="checkbox" name="groupLabCb" onChange={this.handleInput} checked />
+                    <input type="checkbox" name="groupLabCb" onChange={this.handleInput} />
 
                     <h3>Assignment Details</h3>
 
@@ -216,20 +330,20 @@ export default connect(mapStateToProps)(TeacherNewAssignment);
     - return div element with properties
         - 
 */
-function createAssignmentCategoryDiv(category, save) {
+function createAssignmentCategoryDiv(category, events) {
     return (
         <div style={assignmentGridStyle}>
-            <input type="checkbox" name={`include${category}`} onChange={save} />
+            <input type="checkbox" name={`include${category}`} onChange={events.include} />
 
             <label forHtml={`for${category}`}>{`${category}`}</label>
 
             <input type="text" name={`${category}Input`}
                 placeholder="Type default text here that will appear on all student assignments"
-                onChange={save} style={inputStyle} />
+                onChange={events.defaults} style={inputStyle} />
 
-            <input type="checkbox" name={`${category}Editable`} checked onChange={save} />
+            <input type="checkbox" name={`${category}Editable`} checked onChange={events.editable} />
 
-            <input type="checkbox" name={`${category}Share`} onChange={save} />
+            <input type="checkbox" name={`${category}Share`} onChange={events.shared} />
         </div >
     );
 }
