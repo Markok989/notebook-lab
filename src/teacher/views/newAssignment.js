@@ -10,10 +10,21 @@ class TeacherNewAssignment extends React.Component {
     constructor(props) {
         super(props);
 
+        // state
+        this.state = {
+            assignmentInfo: {}
+        }
+
         // binding methodes
         this.handleInput = this.handleInput.bind(this);
         this.submit = this.submit.bind(this);
 
+    }
+
+    // componentDidMount() is invoked immediately after a component is mounted.
+    //      props dispatch access to function getAllSections from teacher actions
+    componentDidMount() {
+        this.props.dispatch(getAllSections());
     }
 
 
@@ -26,6 +37,8 @@ class TeacherNewAssignment extends React.Component {
     //          and this const has two values based on condition
     //          first is target.checked and second is target.value
     //      - name has value as target.name
+    // - newState has value of
+    //      - new empty object, state of assignmentInfo and [name] has value of 'value'
     // - set the state, 
     //      - property [name] has value 'value'
     //      - log string 'New Assignment: handleInput state: ' and this.state
@@ -39,26 +52,31 @@ class TeacherNewAssignment extends React.Component {
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
 
-        this.setState({
+        var newState = Object.assign({}, this.state.assignmentInfo, {
             [name]: value
+        });
+
+        this.setState({
+            assignmentInfo: newState
         }, () => {
             console.log('New Assignment: handleInput state: ', this.state);
         });
 
     }
 
-    // componentDidMount() is invoked immediately after a component is mounted.
-    //      props dispatch access to function getAllSections from teacher actions
-    componentDidMount() {
-        this.props.dispatch(getAllSections());
-    }
 
     // method submit 
+    // props dispatch access to function getAllSections from teacher actions with parameter
+    // and this.state.assignmentInfo
+    // log : state of this(TeacherNewAssignment) component
+    // browserHistory push to path '/teacher/assignments'
     submit() {
-        // this.props.dispatch(saveNewAssignment());
+
+        this.props.dispatch(saveNewAssignment(this.state.assignmentInfo));
         // validation!
         console.log(this.state);
-        // browserHistory.push('/teacher/assignments');
+        browserHistory.push('/teacher/assignments');
+
     }
 
     // method handleInputChange with parameter event

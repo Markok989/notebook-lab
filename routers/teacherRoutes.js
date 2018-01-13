@@ -20,17 +20,19 @@ var teacherRoutes = (app) => {
 
 
     /********** ASSIGNMENTS *********/
-    //creates a new assignment.
-    // app.post('/api/teacher/assignment', mw.loggedInCheck, (req,res) {
-    //     //make assignment row in assignments database.
-    //     //then for each section clicked, get list of students and for each student make a student report
-    //         //for each student make a row in the appropriate category's table and return the id to the student report.
-    //
-    //         res.json({
-    //             success: true,
-    //             assignmentId: results.rows[0]
-    //         });
-    // });
+    // creates a new assignment.
+    // app post with path '/api/teacher/assignment', mw.loggedInCheck(from middleware) and use parameters req and res
+    // res with json access to success with value true and assignmentId with value of results.rows[0]
+    app.post('/api/teacher/assignment', mw.loggedInCheck, (req, res) => {
+        //make assignment row in assignments database.
+        //then for each section clicked, get list of students and for each student make a student report
+        //for each student make a row in the appropriate category's table and return the id to the student report.
+
+        res.json({
+            success: true,
+            assignmentId: results.rows[0]
+        });
+    });
 
 
     /********** SECTIONS *********/

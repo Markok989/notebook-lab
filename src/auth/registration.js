@@ -184,13 +184,14 @@ export default class Registration extends React.Component {
 
                 {/* onClick - use method handleTeacherSubmit */}
                 <button className="teacher-button" onClick={e => this.handleTeacherSubmit(e)}> TEACHER </button>
-
+                {'       '}
                 {/* onClick - use method handleStudentSubmit */}
                 <button className="teacher-button" onClick={e => this.handleStudentSubmit(e)}> STUDENT </button>
 
                 {this.state.role == 'student' && studentRegistration}
                 {this.state.role === 'teacher' && teacherRegistration}
-
+                <br />
+                <br />
                 <div>If already a member, please<Link to="/login"> LOGIN</Link></div>
 
             </div>

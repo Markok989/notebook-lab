@@ -6,7 +6,8 @@ var localUrl = '';
 // localUrl has value js template: `postgres:${secrets.dbuser}:${secrets.dbpassword}@localhost:5432/labnb`
 if (!process.env.DATABASE_URL) {
     // const secrets = require('../secrets.json');
-    const secrets = 'test';
+    // const secrets = 'test';
+    const secrets = 'postgres://qdzpwmxf:4QKHT0tKxYTWp02dCMPk6sCg0RExLYwj@dumbo.db.elephantsql.com:5432/qdzpwmxf';
     localUrl = `postgres:${secrets.dbuser}:${secrets.dbpassword}@localhost:5432/labnb`;
 
 }

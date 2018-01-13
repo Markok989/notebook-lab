@@ -13,6 +13,8 @@ const loggedOutRoutes = require("./routers/loggedOutRoutes.js");
 const studentRoutes = require("./routers/studentRoutes.js");
 const teacherRoutes = require("./routers/teacherRoutes.js");
 
+// ZA BAZU
+// DBUrl: postgres://qdzpwmxf:4QKHT0tKxYTWp02dCMPk6sCg0RExLYwj@dumbo.db.elephantsql.com:5432/qdzpwmxf
 
 /* Start bundle-server.js in terminal to have webpack compile bundle.js
     Then start server.js in another terminal which will get bundle.js from the proxy.s
@@ -25,7 +27,8 @@ if (process.env.NODE_ENV != 'production') {
 }
 
 // var secret = process.env.SESSION_SECRET || require('./secrets.json').sessionSecret;
-var secret = 'test';
+// var secret = 'test';
+var secret = 'postgres://qdzpwmxf:4QKHT0tKxYTWp02dCMPk6sCg0RExLYwj@dumbo.db.elephantsql.com:5432/qdzpwmxf';
 
 //use middleware here
 app.use(compression());

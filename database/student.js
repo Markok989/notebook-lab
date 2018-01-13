@@ -1,7 +1,8 @@
 var spicedPg = require('spiced-pg');
 var bcrypt = require('bcryptjs');
 //const secrets = require('../secrets.json');
-const secrets = 'test';
+//const secrets = 'test';
+const secrets = 'postgres://qdzpwmxf:4QKHT0tKxYTWp02dCMPk6sCg0RExLYwj@dumbo.db.elephantsql.com:5432/qdzpwmxf';
 const db = spicedPg(`postgres:${secrets.dbuser}:${secrets.dbpassword}@localhost:5432/labnb`);
 
 // module export makeCourse
