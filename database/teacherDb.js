@@ -21,7 +21,18 @@ var db = spicedPg(dbUrl);
 
 /********** ASSIGNMENTS *********/
 
+// function saveNewAssignmentTemplate with parameter data
+// log: string "DBQUERY: saveNewAssignmentTemplate, " and data parameter,
+// queryStr has value of string 'INSERT INTO assignments (section_id, group_lab, name, instructions, title, abstract, question, hypothesis, variables, materials, procedures, data, calculations, discussion) VALUES ($1, $2, $3, #4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25)'
+// return db query with parameters: queryStr and data
+function saveNewAssignmentTemplate(data) {
+    console.log('DBQUERY: saveNewAssignmentTemplate,', data);
+    let queryStr = 'INSERT INTO assignments (section_id, group_lab, name, instructions, title, abstract, question, hypothesis, variables, materials, procedures, data, calculations, discussion) VALUES ($1, $2, $3, #4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25)';
+    return db.query(queryStr, data);
+}
 
+// module export for saveNewAssignmentTemplate with value saveNewAssignmentTemplate
+module.exports.saveNewAssignmentTemplate - saveNewAssignmentTemplate;
 
 /********** STUDENTS ************/
 
@@ -37,6 +48,17 @@ function getStudentsBySectionId(data) {
 
 }
 
+function getStudentDataBySectionId(data) {
+    console.log('DBQUERY: getStudentDataBySection,', data);
+    let queryStr = 'SELECT users_sections.user_id, users.first_name, users.last_name, users.profile_pic FROM users_sections JOIN users ON users_sections.user_id = users.id WHERE section_id = $1';
+    return db.query(queryStr, data);
+}
+
+// module export for getStudentsBySectionId with value getStudentsBySectionId
+module.exports.getStudentsBySectionId = getStudentsBySectionId;
+
+// module export for getStudentDataBySectionId with value getStudentDataBySectionId
+module.exports.getStudentDataBySectionId = getStudentDataBySectionId;
 
 /********** SECTIONS ************/
 
@@ -72,6 +94,15 @@ function getSectionsByCourseId(data) {
     return db.query(queryStr, data);
 }
 
+// module export for saveNewSection with value saveNewSection
+module.exports.saveNewSection = saveNewSection;
+
+// module export for getAllSections with value getAllSections
+module.exports.getAllSections = getAllSections;
+
+// module export for getSectionsByCourseId with value getSectionsByCourseId
+module.exports.getSectionsByCourseId = getSectionsByCourseId;
+
 
 /********** COURSES ************/
 
@@ -106,8 +137,6 @@ function deleteCourse(id) {
 }
 
 
-// module export for getStudentsBySectionId with value getStudentsBySectionId
-module.exports.getStudentsBySectionId = getStudentsBySectionId;
 
 // module export for saveNewCourse with value saveNewCourse
 module.exports.saveNewCourse = saveNewCourse;
@@ -118,14 +147,7 @@ module.exports.getCoursesByTeacher = getCoursesByTeacher;
 // module export for deleteCourse with value deleteCourse
 module.exports.deleteCourse = deleteCourse;
 
-// module export for saveNewSection with value saveNewSection
-module.exports.saveNewSection = saveNewSection;
 
-// module export for getSectionsByCourseId with value getSectionsByCourseId
-module.exports.getSectionsByCourseId = getSectionsByCourseId;
-
-// module export for getAllSections with value getAllSections
-module.exports.getAllSections = getAllSections;
 
 
 //saveNewCourse([1, 'Biology']);
