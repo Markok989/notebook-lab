@@ -74,8 +74,9 @@ class TeacherNewAssignment extends React.Component {
 
         this.props.dispatch(saveNewAssignment(this.state.assignmentInfo));
         // validation!
-        console.log(this.state);
-        browserHistory.push('/teacher/assignments');
+        
+        // console.log(this.state);
+        // browserHistory.push('/teacher/assignments');
 
     }
 
