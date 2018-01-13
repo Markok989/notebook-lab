@@ -16,7 +16,18 @@ class TeacherNewAssignment extends React.Component {
             include: {},
             editable: {},
             shared: {},
-            defaults: {}
+            defaults: {
+                Title: "",
+                Question: "",
+                Abstract: "",
+                Hypothesis: "",
+                Variables: "",
+                Materials: "",
+                Procecures: "",
+                Data: "",
+                Calculations: "",
+                Discussion: "",
+            }
         }
 
         // binding methodes
