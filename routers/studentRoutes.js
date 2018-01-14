@@ -10,7 +10,7 @@ var studentRoutes = (app) => {
     app.get('/student', (req, res) => {
 
         console.log('req.session.user.email: ', req.session.user.email);
-        return res.sendFile(path.join(__dirname, '../index.html'));
+        return res.sendFile(path.join(__dirname, '../public/index.html'));
     });
 
     /*

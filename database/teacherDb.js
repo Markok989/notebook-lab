@@ -6,9 +6,9 @@ var localUrl = '';
 // localUrl has value js template: `postgres:${secrets.dbuser}:${secrets.dbpassword}@localhost:5432/labnb`
 if (!process.env.DATABASE_URL) {
     // const secrets = require('../secrets.json');
-    // const secrets = 'test';
-    const secrets = 'postgres://qdzpwmxf:4QKHT0tKxYTWp02dCMPk6sCg0RExLYwj@dumbo.db.elephantsql.com:5432/qdzpwmxf';
-    localUrl = `postgres:${secrets.dbuser}:${secrets.dbpassword}@localhost:5432/labnb`;
+    const secrets = 'test';
+    // const secrets = 'postgres://qdzpwmxf:4QKHT0tKxYTWp02dCMPk6sCg0RExLYwj@dumbo.db.elephantsql.com:5432/qdzpwmxf';
+    localUrl = `postgres://qdzpwmxf:4QKHT0tKxYTWp02dCMPk6sCg0RExLYwj@dumbo.db.elephantsql.com:5432/qdzpwmxf`;
 
 }
 
@@ -39,6 +39,7 @@ function saveNewAssignmentTemplate(data) {
 - with word "catch" and parameter e we access to function
     - log: parameter e
 */
+/* 
 saveNewAssignmentTemplate([
     1,
     false,
@@ -70,6 +71,7 @@ saveNewAssignmentTemplate([
     }).catch(e => {
         console.log(e);
     });
+*/
 
 // INSERT INTO assignments (section_id, group_lab, name, instructions, due, title, default_title, abstract, default_abstract, question, default_question, hypothesis, default_hypothesis, variables, default_variables, materials, default_materials, procedures, default_procedures, data, default_data, calculations, default_calc, discussion, default_discussion) VALUES (1, false, '3koolaid', '4no instructions', '1999-01-01', '$6', '$7', '$8', '$9', '10', '11', '12', '13', '14', '$15', '$16', '$17', '$18', '$19', '$20', '$21', '$22', '$23', '$24', '$25');
 

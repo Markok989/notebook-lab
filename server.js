@@ -27,8 +27,8 @@ if (process.env.NODE_ENV != 'production') {
 }
 
 // var secret = process.env.SESSION_SECRET || require('./secrets.json').sessionSecret;
-// var secret = 'test';
-var secret = 'postgres://qdzpwmxf:4QKHT0tKxYTWp02dCMPk6sCg0RExLYwj@dumbo.db.elephantsql.com:5432/qdzpwmxf';
+var secret = 'test';
+// var secret = 'postgres://qdzpwmxf:4QKHT0tKxYTWp02dCMPk6sCg0RExLYwj@dumbo.db.elephantsql.com:5432/qdzpwmxf';
 
 //use middleware here
 app.use(compression());
@@ -58,7 +58,7 @@ teacherRoutes(app);
 // 404.html
 app.get('*', mw.loggedInCheck, function (req, res) {
     console.log('file not found');
-    return res.sendFile(__dirname + '/404.html');
+    return res.sendFile(__dirname + './public/404.html');
 });
 
 app.listen(7070, function () {

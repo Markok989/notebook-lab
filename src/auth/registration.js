@@ -28,10 +28,12 @@ export default class Registration extends React.Component {
             - role has value of string 'teacher'
     */
     handleTeacherSubmit(e) {
+
         console.log('teacher button selected');
         this.setState({
             role: 'teacher'
         })
+
     };
 
     /*
@@ -41,11 +43,13 @@ export default class Registration extends React.Component {
            - role has value of string 'student'
     */
     handleStudentSubmit() {
+
         console.log('student button selected');
         this.setState({
             role: 'student'
         })
-    }
+
+    };
 
     /*
     - method handleChange with parameter e
@@ -53,10 +57,12 @@ export default class Registration extends React.Component {
             - [e.target.name] has value of e.target.value
     */
     handleChange(e) {
+
         this.setState({
             [e.target.name]: e.target.value
         });
-    }
+
+    };
 
     /*
     - method handleStudentRegistration with parameter e
@@ -73,7 +79,9 @@ export default class Registration extends React.Component {
         - else 
             - alert string "Something went wrong. Please try again."
     */
+    // problem
     handleStudentRegistration(e) {
+
         const { first_name, last_name, email, password, course } = this.state;
 
 
@@ -101,6 +109,7 @@ export default class Registration extends React.Component {
             //change aler to adding a <div> w/ error message
             alert('Something went wrong. Please try again.');
         }
+
     }
 
     /*
@@ -119,12 +128,13 @@ export default class Registration extends React.Component {
              - alert string "Something went wrong. Please try again."
     */
     handleTeacherRegistration(e) {
+
         const { first_name, last_name, email, password, course } = this.state;
 
 
         if (first_name && last_name && email && password) {
 
-            axios.post('/teacher/register', {
+            axios.post('/api/teacher/register', {
                 first_name, last_name, email, password
             })
                 .then((res) => {
@@ -134,15 +144,18 @@ export default class Registration extends React.Component {
                     if (!data.success) {
                         error: true
                     } else {
+
                         location.replace('/teacher');
                     }
                 })
                 .catch((err) => {
                     console.log(err);
                 });
+
         }
 
     }
+
 
     // render method
     render() {
@@ -150,6 +163,7 @@ export default class Registration extends React.Component {
         const studentRegistration = (
             <div>
                 <h3 className="singup-title">PLEASE SING UP</h3>
+                <h4>For Student</h4>
                 {/* onChange - use method handleChange */}
                 <input className="reg-input" name="first_name" placeholder="First Name" onChange={(e) => this.handleChange(e)} />
                 <input className="reg-input" name="last_name" placeholder="Last Name" onChange={(e) => this.handleChange(e)} />
@@ -161,11 +175,11 @@ export default class Registration extends React.Component {
                 <button className="reg-button" onClick={(e) => this.handleStudentRegistration(e)}> Submit </button>
             </div>
         );
-
         const teacherRegistration = (
             <div>
 
                 <h3 className="singup-title">PLEASE SING UP</h3>
+                <h4>For Teacher</h4>
                 {/* onChange - use method handleChange */}
                 <input className="reg-input" name="first_name" placeholder="First Name" onChange={(e) => this.handleChange(e)} />
                 <input className="reg-input" name="last_name" placeholder="Last Name" onChange={(e) => this.handleChange(e)} />
@@ -173,10 +187,11 @@ export default class Registration extends React.Component {
                 <input className="reg-input" name="password" placeholder="Password" type="password" onChange={(e) => this.handleChange(e)} />
 
                 {/* onClick - use method handleStudentRegistration */}
-                <button className="reg-button" onClick={(e) => this.handleStudentRegistration(e)}> Submit </button>
-            </div>
-        )
+                <button className="reg-button" onClick={(e) => this.handleTeacherRegistration(e)}> Submit </button>
 
+            </div>
+        );
+        console.log(this.handleStudentRegistration);
         return (
             <div>
 
@@ -190,8 +205,10 @@ export default class Registration extends React.Component {
 
                 {this.state.role == 'student' && studentRegistration}
                 {this.state.role === 'teacher' && teacherRegistration}
+
                 <br />
                 <br />
+
                 <div>If already a member, please<Link to="/login"> LOGIN</Link></div>
 
             </div>

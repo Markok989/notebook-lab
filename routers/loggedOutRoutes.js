@@ -8,7 +8,7 @@ var loggedOutRoutes = (app) => {
     // app get have path "/", mw.registerLoginCheck(from middleware) and function with parameters: req and res,
     // res sand file to the path with join __dirname + /index.html
     app.get('/', mw.registerLoginCheck, (req, res) => {
-        return res.sendFile(path.join(__dirname, '../index.html'));
+        return res.sendFile(path.join(__dirname, '../public/index.html'));
     });
 
     /*

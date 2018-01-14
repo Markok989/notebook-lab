@@ -7,7 +7,8 @@ const {
     deleteCourse,
     getAllSections,
     getSectionsByCourseId,
-    saveNewSection
+    saveNewSection,
+    saveNewAssignment
 } = require("../database/teacherDb.js");
 
 // component teacherRoutes with parameter app,
@@ -15,7 +16,7 @@ const {
 // res sand file to the path with join __dirname + /index.html
 var teacherRoutes = (app) => {
     app.get('/teacher', mw.loggedInCheck, (req, res) => {
-        return res.sendFile(path.join(__dirname, '../index.html'));
+        return res.sendFile(path.join(__dirname, '../public/index.html'));
     });
 
 
@@ -32,15 +33,20 @@ var teacherRoutes = (app) => {
                     - sectiion and
                     - res.body.info
         */
-        var sections = getSectionsFromAssignmentData(res.body.info);
-        sections.forEach((section) => {
-            makeNewAssignment(section, res.body.info);
-        })
+        // var sections = getSectionsFromAssignmentData(res.body.info);
+        // sections.forEach((section) => {
+        //     makeNewAssignment(section, res.body.info);
+        // })
+        //
+        // req.body.assignmentInfo.sections.forEach((section) => {
+        //     makeNewAssignment(section, req.body.info);
+        // });
+
 
         //then for each section clicked, get list of students and for each student make a student report
         //for each student make a row in the appropriate category's table and return the id to the student report.
 
-        console.log(req.body.info);
+        console.log(req.body);
 
         res.json({
             success: true,
@@ -214,63 +220,48 @@ module.exports = teacherRoutes;
                   key.length
     - return sections 
 */
-function getSectionsFromAssignmentData(info) {
+function makeNewAssignment(sectionId, info) {
 
-    var sectiions = [];
-    for (var key in info) {
+    const { include, editable, shared, defaults } = info;
 
-        if (key.substring(0, 9) == 'sectionb') {
-
-            if (info[key] == true) {
-                sections.push(key.substring(9, key.length));
+    for (var key in include) {
+        if (include[key]) {
+            if (shared[key]) {
+                include[key] = 'group';
+            } else {
+                include[key] = 'individual';
             }
-
+        } else {
+            include[key] = null;
         }
-
     }
 
-    return sections;
+    console.log(include);
 
-}
 
-/*
-- function makeNewAssignment with parameters sectionId and info
-    - data has parameters
-    - log: data
-    - return data
-*/
-function makeNewAssignment(sectionId, info) {
+
+    /*
+    - function makeNewAssignment with parameters sectionId and info
+        - data has parameters
+        - log: data
+        - return data
+    */
+
 
     var data = [
         sectionId,
-        info.groupLabCb,
+        info.group_lab,
         info.assignmentName,
         info.instructions,
-        info.dueDate,
-        info.includeTitle,
-        info.TitleInput,
-        info.includeAbstract,
-        info.AbstractInput,
-        info.QuestionInput,
-        info.includeQuestion,
-        info.HypothesisInput,
-        info.includeHypothesis,
-        info.VariablesInput,
-        info.includeVariables,
-        info.MaterialsInput,
-        info.includeMaterials,
-        info.ProceduresInput,
-        info.includeProcedures,
-        info.DataInput,
-        info.includeData,
-        info.CalculationsInput,
-        info.includeCalculations,
-        info.DiscussionInput,
-        info.includeDiscussion
+        info.due,
+        title, default_title, abstract, default_abstract, question, default_question, hypothesis, default_hypothesis, variables, default_variables, materials, default_materials, procedures, default_procedures, data, default_data, calculations, default_calc, discussion, default_discussion
     ];
 
-    console.log(data);
-
-    return data;
+    //
+    // console.log(data);
+    //
+    // return saveNewAssignment(data).then((results) => {
+    //     var assignmentId = results[0].id;
+    // });
 
 }
