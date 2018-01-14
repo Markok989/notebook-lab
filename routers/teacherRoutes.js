@@ -8,7 +8,7 @@ const {
     getAllSections,
     getSectionsByCourseId,
     saveNewSection,
-    saveNewAssignment
+    saveNewAssignmentTemplate
 } = require("../database/teacherDb.js");
 
 // component teacherRoutes with parameter app,
@@ -26,21 +26,17 @@ var teacherRoutes = (app) => {
     // res with json access to success with value true and assignmentId with value of results.rows[0]
     app.post('/api/teacher/assignment', mw.loggedInCheck, (req, res) => {
         //make assignment row in assignments database.
+
         /*
-            - section has value of getSectionsFromAssignmentData with parameter res.body.info
-            - section use forEach loop with section parameter
-                - makeNewAssignment has parameters
+            -  req.body.assignmentInfo.section use forEach loop with section parameter
+                - assignmentId has value of makeNewAssignment with parameters
                     - sectiion and
-                    - res.body.info
+                    - res.body.assignmentInfo
         */
-        // var sections = getSectionsFromAssignmentData(res.body.info);
-        // sections.forEach((section) => {
-        //     makeNewAssignment(section, res.body.info);
-        // })
-        //
-        // req.body.assignmentInfo.sections.forEach((section) => {
-        //     makeNewAssignment(section, req.body.info);
-        // });
+        req.body.assignmentInfo.sections.forEach((section) => {
+            var assignmentId = makeNewAssignment(section, req.body.assignmentInfo);
+            console.log('assignmentId', assignmentId);
+        });
 
 
         //then for each section clicked, get list of students and for each student make a student report
@@ -209,43 +205,45 @@ module.exports = teacherRoutes;
 /*************** UTILITY FUNCTIONS *****************/
 
 /* 
-- function getSectionsFromAssignmentData with parameter info
-    - sections has value of empty array
-    - for loop use key in info , then
-        - condition if key.substring(substring - Returns the substring at the 
-            specified location within a String object.) sith parameters 0 (zero) and 9
-            is same as 'sectionb'
-                - condition if info[key] is the same as true , then
-                - sections push key.subsubstring with with parameters number 9 and
-                  key.length
-    - return sections 
+- function makeNewAssignment with parameters sectionId and info
+    - include, shared, defaults belongs to info
+    - condition if not info.group_lab
+        - info.group_lab is flase
+   
+    - condition if not info.due
+        - info.due is null
+   
+    - condition if not info.instructions
+        - info.instructions is null
+
+    - newInclude has value of massageIncludeObject with parameters include and shared
+
+    - data has own properties
+
+    - return saveNewAssignmentTemplate with parameter data,
+        - then with word "then" with parameter results access to function
+            - log string :"Resulting AssignmentId: " and parameter results
+            - return results
+        - catch with parameter e access to function
+            - log parameter e
 */
 function makeNewAssignment(sectionId, info) {
 
-    const { include, editable, shared, defaults } = info;
+    const { include, shared, defaults } = info;
 
-    for (var key in include) {
-        if (include[key]) {
-            if (shared[key]) {
-                include[key] = 'group';
-            } else {
-                include[key] = 'individual';
-            }
-        } else {
-            include[key] = null;
-        }
+    if (!info.group_lab) {
+        info.group_lab = false;
     }
 
-    console.log(include);
+    if (!info.due) {
+        info.due = null;
+    }
 
+    if (info.instructions) {
+        info.instructions = null;
+    }
 
-
-    /*
-    - function makeNewAssignment with parameters sectionId and info
-        - data has parameters
-        - log: data
-        - return data
-    */
+    var newInclude = massageIncludeObject(include, shared);
 
 
     var data = [
@@ -254,14 +252,65 @@ function makeNewAssignment(sectionId, info) {
         info.assignmentName,
         info.instructions,
         info.due,
-        title, default_title, abstract, default_abstract, question, default_question, hypothesis, default_hypothesis, variables, default_variables, materials, default_materials, procedures, default_procedures, data, default_data, calculations, default_calc, discussion, default_discussion
+        newInclude.title, defaults.default_title,
+        newInclude.abstract, defaults.default_abstract,
+        newInclude.question, defaults.default_question,
+        newInclude.hypothesis, defaults.default_hypothesis,
+        newInclude.variables, defaults.default_variables,
+        newInclude.materials, defaults.default_materials,
+        newInclude.procedures, defaults.default_procedures,
+        newInclude.data, defaults.default_data,
+        newInclude.calculations, defaults.default_calc,
+        newInclude.discussion, defaults.default_discussion
     ];
 
-    //
-    // console.log(data);
-    //
-    // return saveNewAssignment(data).then((results) => {
-    //     var assignmentId = results[0].id;
-    // });
 
+    return saveNewAssignmentTemplate(data).then((results) => {
+
+        console.log('Resulting AssignmentId: ', results)
+        return results;
+    }).catch(e => {
+        console.log(e);
+    });
+
+}
+
+/* 
+- function massageIncludeObject with parameters include and shared
+    - for loop var key in include
+        - condition if include[key]
+
+            - condition if shared[key]
+                - include[key] has value of string 'group'
+            - else
+                - include[key] has value of string 'individual'
+
+        - else
+            - include[key] has value of null
+            
+    - log include
+                  
+    - return include 
+ */
+function massageIncludeObject(include, shared) {
+
+    for (var key in include) {
+
+        if (include[key]) {
+
+            if (shared[key]) {
+                include[key] = 'group';
+            } else {
+                include[key] = 'individual';
+            }
+
+        } else {
+            include[key] = null;
+        }
+
+    }
+
+    console.log(include);
+
+    return include;
 }
