@@ -8,7 +8,8 @@ const {
     getAllSections,
     getSectionsByCourseId,
     saveNewSection,
-    saveNewAssignmentTemplate
+    saveNewAssignmentTemplate,
+    getStudentIdsBySectionId
 } = require("../database/teacherDb.js");
 
 // component teacherRoutes with parameter app,
@@ -28,18 +29,45 @@ var teacherRoutes = (app) => {
         //make assignment row in assignments database.
 
         /*
-            -  req.body.assignmentInfo.section use forEach loop with section parameter
-                - assignmentId has value of makeNewAssignment with parameters
-                    - sectiion and
-                    - res.body.assignmentInfo
-        */
+        - req.body.assignmentInfo.section use forEach loop with section parameter
+            - return makeNewAssignment with parameters
+                - section
+                - req.body.assignmentInfo
+            - then with word 'then' with parameter assignmentId we access to function
+                - log string:"assignmentId" and parameter assignmentId
+                - log string:"sectionId" and parameter section
+
+                - return getStudentIdsBySectionId with parameter [section]
+                - then with word 'then' with paramerer results we access to function
+                    - students has value results.rows
+                    - log string:'students' and variable students
+            - catch with paramerter e we access to function
+                - log parameter e
+       */
         req.body.assignmentInfo.sections.forEach((section) => {
-            var assignmentId = makeNewAssignment(section, req.body.assignmentInfo);
-            console.log('assignmentId', assignmentId);
+
+            return makeNewAssignment(section, req.body.assignmentInfo).then((assignmentId) => {
+
+                console.log('assignmentId', assignmentId);
+                console.log('sectionId', section);
+
+                //now get list of students and for each student make a student report, using user_id make student assignment
+                return getStudentIdsBySectionId([section]).then(results => {
+
+                    var students = results.rows;
+                    console.log('students', students);
+
+                }).catch(e => {
+                    console.log(e);
+                });
+
+                //then for each include make a row in each categorie's table with student_id and stuff
+            });
+
         });
 
 
-        //then for each section clicked, get list of students and for each student make a student report
+
         //for each student make a row in the appropriate category's table and return the id to the student report.
 
         console.log(req.body);
@@ -222,8 +250,8 @@ module.exports = teacherRoutes;
 
     - return saveNewAssignmentTemplate with parameter data,
         - then with word "then" with parameter results access to function
-            - log string :"Resulting AssignmentId: " and parameter results
-            - return results
+            - log string :"Resulting AssignmentId: " and parameter results.rows[0].id
+            - return results.rows[0].id
         - catch with parameter e access to function
             - log parameter e
 */
@@ -267,8 +295,8 @@ function makeNewAssignment(sectionId, info) {
 
     return saveNewAssignmentTemplate(data).then((results) => {
 
-        console.log('Resulting AssignmentId: ', results)
-        return results;
+        console.log('Resulting AssignmentId: ', results.rows[0].id)
+        return results.rows[0].id;
     }).catch(e => {
         console.log(e);
     });
@@ -314,3 +342,137 @@ function massageIncludeObject(include, shared) {
 
     return include;
 }
+
+
+/*
+- function makeNewAssignmentAll with parameter req
+    -  req.body.assignmentInfo.sections use forEach loop with parameter section
+        - makeNewAssignment with parameters section and req.body.assignmentInfo
+        - then with word 'then' with parameter assignmentId we access to function
+            - return getStudentIdsBySectionId with parameter [section]
+        - then with word 'then' with parameter results we access to function
+            - students has value of results.row
+            - log string 'students' and parameter students
+        - "catch" word with parameter e
+            - log parameter e 
+*/
+function makeNewAssignmentAll(req) {
+    req.body.assignmentInfo.sections.forEach((section) => {
+
+        makeNewAssignment(section, req.body.assignmentInfo).then((assignmentId) => {
+
+            //now get list of students and for each student make a student report, using user_id make student assignment
+            return getStudentIdsBySectionId([section]);
+
+        }).then((results) => {
+
+            //then for each include make a row in each categorie's table with student_id and stuff
+            var students = results.row;
+            console.log('students', students);
+
+        }).catch((e) => {
+
+            console.log(e);
+
+        });
+
+    });
+}
+
+
+//TESTS
+const req = {
+    session: {
+        user: {
+            id: 1
+        }
+    },
+    body1: {
+        assignmentInfo: {
+            sections: ['4'],
+            include: {
+                title: 'individual',
+                question: null,
+                abstract: null,
+                hypothesis: null,
+                variables: null,
+                materials: null,
+                procedures: null,
+                data: null,
+                calculations: null,
+                discussion: null
+            },
+            editable: {},
+            shared: {},
+            defaults: {
+                defaults_title: '',
+                defaults_question: '',
+                defaults_abstract: '',
+                defaults_hypothesis: '',
+                defaults_variables: '',
+                defaults_materials: '',
+                defaults_procecures: '',
+                defaults_data: '',
+                defaults_calculations: '',
+                defaults_discussion: '',
+                default_title: 'sdfasdf'
+            },
+            assignmentName: 'asd',
+            instructions: null,
+            group_lab: false,
+            due: null
+        }
+    },
+    body: {
+        assignmentInfo: {
+            sections: ['3', '4'],
+            include: {
+                title: 'group',
+                question: 'group',
+                abstract: null,
+                hypothesis: null,
+                variables: null,
+                materials: 'group',
+                procedures: 'group',
+                data: 'group',
+                calculations: 'individual',
+                discussion: null
+            },
+            editable: {
+                materials: true,
+                procedures: true,
+                data: true,
+                calculations: true,
+                title: true,
+                question: true
+            },
+            shared: {
+                title: true,
+                question: true,
+                materials: true,
+                procedures: true,
+                data: true
+            },
+            defaults: {
+                defaults_title: '',
+                defaults_question: '',
+                defaults_abstract: '',
+                defaults_hypothesis: '',
+                defaults_variables: '',
+                defaults_materials: '',
+                defaults_procecures: '',
+                defaults_data: '',
+                defaults_calculations: '',
+                defaults_discussion: '',
+                default_procedures: 'Follow the procedures on the handout.'
+            },
+            assignmentName: 'Soap lab',
+            due: '2017-10-10',
+            instructions: null,
+            group_lab: true
+        }
+    }
+};
+
+
+makeNewAssignmentAll(req);
