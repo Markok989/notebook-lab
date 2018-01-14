@@ -187,6 +187,39 @@ function newDiscussion(data) {
 
 }
 
+// modul export saveNewStudentReport has value saveNewStudentReport
+module.exports.saveNewStudentReport = saveNewStudentReport;
+
+// modul export newTitle has value newTitle
+module.exports.newTitle = newTitle;
+
+// modul export newQuestion has value newQuestion
+module.exports.newQuestion = newQuestion
+
+// modul export newAbstract has value newAbstract
+module.exports.newAbstract = newAbstract;
+
+// modul export newHypothesis has value newHypothesis
+module.exports.newHypothesis = newHypothesis;
+
+// modul export newVariables has value newVariables
+module.exports.newVariables = newVariables;
+
+// modul export newMaterials has value newMaterials
+module.exports.newMaterials = newMaterials;
+
+// modul export newProcedure has value newProcedure
+module.exports.newProcedure = newProcedure;
+
+// modul export newData has value newData
+module.exports.newData = newData;
+
+// modul export newCalculations has value newCalculations
+module.exports.newCalculations = newCalculations;
+
+// modul export newDiscussion has value newDiscussion
+module.exports.newDiscussion = newDiscussion;
+
 
 // TEST:
 
@@ -218,6 +251,7 @@ function saveNewAssignmentTemplate(data) {
     let queryStr = 'INSERT INTO assignments (section_id, group_lab, name, instructions, due, title, default_title, abstract, default_abstract, question, default_question, hypothesis, default_hypothesis, variables, default_variables, materials, default_materials, procedures, default_procedures, data, default_data, calculations, default_calc, discussion, default_discussion ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25) RETURNING id';
     return db.query(queryStr, data);
 }
+
 //Test
 // saveNewAssignmentTemplate([1, false, '3moles', 'instructions', '1999-01-01', 'word', 'word', 'word8', 'word9', 'word9','word11', 'word9','word13', 'word9', 'word15', 'word9', 'word17', 'word9', 'word19', 'word20', 'word21', 'word22', 'word23', 'word24', 'word25'])
 //     .then((results) => {

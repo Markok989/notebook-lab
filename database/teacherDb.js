@@ -19,82 +19,23 @@ var dbUrl = process.env.DATABASE_URL || localUrl;
 var db = spicedPg(dbUrl);
 
 
-/********** ASSIGNMENTS *********/
-
-// function saveNewAssignmentTemplate with parameter data
-// log: string "DBQUERY: saveNewAssignmentTemplate, " and data parameter,
-// queryStr has value of string 'INSERT INTO assignments (section_id, group_lab, name, instructions, due, title, default_title, abstract, default_abstract, question, default_question, hypothesis, default_hypothesis, variables, default_variables, materials, default_materials, procedures, default_procedures, data, default_data, calculations, default_calc, discussion, default_discussion ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25) RETURNING id'
-// return db query with parameters: queryStr and data
-function saveNewAssignmentTemplate(data) {
-    console.log('DBQUERY: saveNewAssignmentTemplate,', data);
-    let queryStr = 'INSERT INTO assignments (section_id, group_lab, name, instructions, due, title, default_title, abstract, default_abstract, question, default_question, hypothesis, default_hypothesis, variables, default_variables, materials, default_materials, procedures, default_procedures, data, default_data, calculations, default_calc, discussion, default_discussion ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25) RETURNING id';
-    return db.query(queryStr, data);
-}
-
-// Test
-/*
-- function saveNewAssignmentTemplate
-- with word "then" and parameter results we access to function
-    - log: results.rows
-- with word "catch" and parameter e we access to function
-    - log: parameter e
-*/
-/* 
-saveNewAssignmentTemplate([
-    1,
-    false,
-    '3moles',
-    'instructions',
-    '1999-01-01',
-    'word', 'word',
-    'word8',
-    'word9',
-    'word9',
-    'word11',
-    'word9',
-    'word13',
-    'word9',
-    'word15',
-    'word9',
-    'word17',
-    'word9',
-    'word19',
-    'word20',
-    'word21',
-    'word22',
-    'word23',
-    'word24',
-    'word25'
-])
-    .then((results) => {
-        console.log(results.rows);
-    }).catch(e => {
-        console.log(e);
-    });
-*/
-
-// INSERT INTO assignments (section_id, group_lab, name, instructions, due, title, default_title, abstract, default_abstract, question, default_question, hypothesis, default_hypothesis, variables, default_variables, materials, default_materials, procedures, default_procedures, data, default_data, calculations, default_calc, discussion, default_discussion) VALUES (1, false, '3koolaid', '4no instructions', '1999-01-01', '$6', '$7', '$8', '$9', '10', '11', '12', '13', '14', '$15', '$16', '$17', '$18', '$19', '$20', '$21', '$22', '$23', '$24', '$25');
-
-
-// module export for saveNewAssignmentTemplate with value saveNewAssignmentTemplate
-module.exports.saveNewAssignmentTemplate - saveNewAssignmentTemplate;
 
 /********** STUDENTS ************/
 
 // function getStudentsBySectionId with parameter data
-// log: string "DBQUERY: getStudentsBySection, " and data parameter,
+// log: string "TEACHER_DB: getStudentsBySection, " and data parameter,
 // queryStr has value of string 'SELECT users_sections.user_id, users.first_name, users.last_name, users.profile_pic FROM users_sections JOIN users ON users_sections.user_id = users.id WHERE section_id = $1'
 // return db query with parameters: queryStr and data
 function getStudentsBySectionId(data) {
 
-    console.log('DBQUERY: getStudentsBySection, ', data);
+    console.log('TEACHER_DB: getStudentsBySection, ', data);
     let queryStr = 'SELECT users_sections.user_id, users.first_name, users.last_name, users.profile_pic FROM users_sections JOIN users ON users_sections.user_id = users.id WHERE section_id = $1';
     return db.query(queryStr, data);
 
 }
 
 function getStudentDataBySectionId(data) {
-    console.log('DBQUERY: getStudentDataBySection,', data);
+    console.log('TEACHER_DB: getStudentDataBySection,', data);
     let queryStr = 'SELECT users_sections.user_id, users.first_name, users.last_name, users.profile_pic FROM users_sections JOIN users ON users_sections.user_id = users.id WHERE section_id = $1';
     return db.query(queryStr, data);
 }
@@ -108,33 +49,33 @@ module.exports.getStudentDataBySectionId = getStudentDataBySectionId;
 /********** SECTIONS ************/
 
 // function saveNewSection with parameter data
-// log: string "DBQUERY: saveNewSection," and data parameter,
+// log: string "TEACHER_DB: saveNewSection," and data parameter,
 // queryStr has value of string 'INSERT INTO sections (course_id, name, start_date, end_date) VALUES ($1, $2, $3, $4)'
 // return db query with parameters: queryStr and data
 function saveNewSection(data) {
-    console.log('DBQUERY: saveNewSection, ', data);
+    console.log('TEACHER_DB: saveNewSection, ', data);
     let queryStr = 'INSERT INTO sections (course_id, name, start_date, end_date) VALUES ($1, $2, $3, $4)';
     return db.query(queryStr, data);
 }
 
 
 // function getAllSections with parameter data,
-// log string: 'DBQUERY: getAllSections, ' and parameter data,
+// log string: 'TEACHER_DB: getAllSections, ' and parameter data,
 // queryStr has value of string : 'SELECT sections.id, sections.name, sections.start_date, sections.end_date, courses.teacher_id, courses.id AS course_id FROM sections JOIN courses ON courses.id = sections.course_id WHERE courses.teacher_id = $1',
 // return db query with parameters : queryStr and data
 function getAllSections(data) {
-    console.log('DBQUERY: getAllSections,', data);
+    console.log('TEACHER_DB: getAllSections,', data);
     let queryStr = 'SELECT sections.id, sections.name, sections.start_date, sections.end_date, courses.teacher_id, courses.id AS course_id FROM sections JOIN courses ON courses.id = sections.course_id WHERE courses.teacher_id = $1';
     return db.query(queryStr, data);
 }
 
 
 // function getSectionsByCourseId with parameter data,
-// log string: DBQUERY: getSectionsByCourseId ' and parameter data,
+// log string: TEACHER_DB: getSectionsByCourseId ' and parameter data,
 // queryStr has value of string : 'SELECT sections.id, sections.name, sections.start_date, sections.end_date, courses.id FROM sections JOIN courses ON courses.id = sections.course_id WHERE courses.id = $1',
 // return db query with parameters : queryStr and data
 function getSectionsByCourseId(data) {
-    console.log('DBQUERY: getSectionsByCourseId', data);
+    console.log('TEACHER_DB: getSectionsByCourseId', data);
     let queryStr = 'SELECT sections.id, sections.name, sections.start_date, sections.end_date, courses.id FROM sections JOIN courses ON courses.id = sections.course_id WHERE courses.id = $1';
     return db.query(queryStr, data);
 }
@@ -152,31 +93,31 @@ module.exports.getSectionsByCourseId = getSectionsByCourseId;
 /********** COURSES ************/
 
 // function saveNewCourse with parameter data,
-// log string : 'DBQUERY: saveNewCourse, ' and data(parameter),
+// log string : 'TEACHER_DB: saveNewCourse, ' and data(parameter),
 // queryStr has value of string 'INSERT INTO courses (teacher_id, name) VALUES ($1, $2)',
 // return db.query with parameters queryStr and data
 function saveNewCourse(data) {
-    console.log('DBQUERY: saveNewCourse,', data);
+    console.log('TEACHER_DB: saveNewCourse,', data);
     let queryStr = 'INSERT INTO courses (teacher_id, name) VALUES ($1, $2)';
     return db.query(queryStr, data);
 }
 
 // function getCoursesByTeacher with parameter data,
-// log string: 'DBQUERY: saveNewCourse.',
+// log string: ' TEACHER_DB: saveNewCourse.',
 // queryStr has value of string: 'SELECT * FROM courses WHERE teacher_id = $1',
 // return db.query with parameters queryStr and data
 function getCoursesByTeacher(data) {
-    console.log('DBQUERY: saveNewCourse.');
+    console.log(' TEACHER_DB: saveNewCourse.');
     let queryStr = 'SELECT * FROM courses WHERE teacher_id = $1';
     return db.query(queryStr, data);
 };
 
 // function deleteCourse with parameter id,
-// log string: 'DBQUERY: deleteCourse. '
+// log string: ' TEACHER_DB: deleteCourse. '
 // queryStr has value of string 'DELETE FROM courses WHERE id=$1',
 // return db.query with parameters queryStr and data
 function deleteCourse(id) {
-    console.log('DBQUERY: deleteCourse.');
+    console.log(' TEACHER_DB: deleteCourse.');
     let queryStr = 'DELETE FROM courses WHERE id=$1';
     return db.query(queryStr, id);
 }
