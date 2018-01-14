@@ -8,9 +8,23 @@ const {
     getAllSections,
     getSectionsByCourseId,
     saveNewSection,
-    saveNewAssignmentTemplate,
     getStudentIdsBySectionId
-} = require("../database/teacherDb.js");
+    } = require("../database/teacherDb");
+
+const {
+    saveNewAssignmentTemplate,
+    saveNewStudentReport,
+    newTitle, newQuestion,
+    newAbstract,
+    newHypothesis,
+    newVariables,
+    newMaterials,
+    newProcedure,
+    newData,
+    newCalculations,
+    newDiscussion
+            } = require("../database/assignmentsDb")
+
 
 // component teacherRoutes with parameter app,
 // app get have path "/teacher", mw loggedInCheck(from midlleware) and function with parameters: req and res,
@@ -345,30 +359,98 @@ function massageIncludeObject(include, shared) {
 
 
 /*
+ saveNewStudentReport, newTitle, newQuestion, newAbstract, newHypothesis,newVariables, newMaterials, newProcedure, newData, newCalculations, newDiscussion
+ 
+ include: {
+     title: 'group',
+     question: 'group',
+     abstract: null,
+     hypothesis: null,
+     variables: null,
+     materials: 'group',
+     procedures: 'group',
+     data: 'group',
+     calculations: 'individual',
+     discussion: null
+ },
+ 
+ */
+
+
+ /*
+ - function makeStudentAssignments with parameters students and includes
+    - for loop key in includes
+        - condition if include[key]
+            - function name has value
+                - string 'new' +(plus) key.charAt(0).toUpperCase() +(plus) key.slice(1)
+            - log string "functionName" and variable functionName
+ */
+function makeStudentAssignments(students, includes) {
+
+    students.forEach((student) => {
+
+        // need to know what to include...
+        for (var key in includes) {
+
+            if (includes[key]) {
+
+                var functionName = 'new' + key.charAt(0).toUpperCase() + key.slice(1);
+                console.log('functionName, ', functionName);
+
+            }
+
+        }
+
+    })
+
+}
+
+
+// TESTS
+
+/*
 - function makeNewAssignmentAll with parameter req
-    -  req.body.assignmentInfo.sections use forEach loop with parameter section
+    - assignments has value of empty array []
+    - req.body.assignmentInfo.sections use forEach loop with parameter section
         - makeNewAssignment with parameters section and req.body.assignmentInfo
         - then with word 'then' with parameter assignmentId we access to function
+
+            - assignments push to objects: section, assignmentId 
+
             - return getStudentIdsBySectionId with parameter [section]
+
         - then with word 'then' with parameter results we access to function
+        
+            - log string:'assignments: ' and variable assignments,
             - students has value of results.row
-            - log string 'students' and parameter students
+
+            - includes hs value of req.body.assignmentInfo.include
+            - function makeStudentAssignments with parameters: students, includes
         - "catch" word with parameter e
             - log parameter e 
 */
 function makeNewAssignmentAll(req) {
+
+    var assignments = [];
     req.body.assignmentInfo.sections.forEach((section) => {
 
         makeNewAssignment(section, req.body.assignmentInfo).then((assignmentId) => {
 
             //now get list of students and for each student make a student report, using user_id make student assignment
+            assignments.push({ section, assignmentId });
+
             return getStudentIdsBySectionId([section]);
 
         }).then((results) => {
 
-            //then for each include make a row in each categorie's table with student_id and stuff
+            //then for each include make a row in each category's table with student_id and stuff
+            console.log('assignments: ', assignments);
             var students = results.row;
-            console.log('students', students);
+
+
+            //get the list of items that are supposed to be included and then include them.
+            var includes = req.body.assignmentInfo.include
+            makeStudentAssignments(students, includes);
 
         }).catch((e) => {
 
@@ -380,7 +462,7 @@ function makeNewAssignmentAll(req) {
 }
 
 
-//TESTS
+
 const req = {
     session: {
         user: {
