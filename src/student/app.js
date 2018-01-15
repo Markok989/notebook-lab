@@ -2,7 +2,8 @@ import React from 'react';
 import { Router, Route, Link, IndexRoute, browserHistory, hashHistory } from 'react-router';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { getStudentData } from './actions';
+import { getStudentData, addNewClass, getAssignmentList } from './actions';
+import AssignmentView from './components/AssignmentView';
 
 // component App (for student)
 class App extends React.Component {
@@ -18,26 +19,107 @@ class App extends React.Component {
 
     // componentDidMount is invoked immediately after a component is mounted,
     // props dipsatch to getStudentData
-    // log string "DATA" and this.props.data
     componentDidMount() {
         this.props.dispatch(getStudentData());
-        console.log("DATA: ", this.props.data);
+        // this.props.dispatch(getAssignmentList())
     }
+
+
+    /*
+    - method handleChange with parameter e
+        - set the state
+            -  [e.target.name] has value/path e.target.value
+    */
+    handleChange(e) {
+
+        this.setState({
+            [e.target.name]: e.target.value
+        });
+    }
+
+    /*
+    - method newClass with parameter e
+        - e.preventDefault (The preventDefault() method cancels the event if it is cancelable,
+          meaning that the default action that belongs to the event will not occur.)
+        
+        - props dispatch to addNewClass(from actions) with property this.state.course
+
+        - use method emptyField with parameter e
+    */
+    newClass(e) {
+
+        e.preventDefault();
+
+        this.props.dispatch(addNewClass(this.state.course));
+
+        this.emptyField(e);
+    }
+
+    /*
+    -method emitMessage wiht parameter e
+        - condtition if e.key strictly the same as 'Enter'
+            - e.preventDefault (The preventDefault() method cancels the event if it is cancelable,
+              meaning that the default action that belongs to the event will not occur.)
+
+            - props dispatch to addNewClass(from actions) with property this.state.course
+
+            - use method emptyField with parameter e
+    */
+    emitMessage(e) {
+
+        if (e.key === 'Enter') {
+
+            e.preventDefault();
+
+            this.props.dispatch(addNewClass(this.state.course));
+
+
+            this.emptyField(e);
+        }
+    }
+
+    /*
+    - method emptyField with parameter e
+        - e.target.value has value of empty string
+        - log string 'e' 
+    */
+    emptyField(e) {
+
+        e.target.value = '';
+        console.log('e');
+    }
+
+    /*
+    - method showAssignment
+        - set the state
+            - assignmentVisible has value true
+
+            -log this.state.assignmentVisible
+    */
+    showAssignment() {
+        this.setState({
+            assignmentVisible: true
+
+        }, () => {
+            console.log(this.state.assignmentVisible);
+        })
+    }
+
 
     render() {
 
-        // data belong to this.props
-        const { data } = this.props;
+        // studentInfo belong to this.props
+        const { studentInfo } = this.props;
 
-        console.log('render component', data);
-
-        // condition if not data, return null
-        if (!data) {
+        // condition if not studentInfo, return null
+        if (!studentInfo) {
             return null
         }
 
         return (
             <div>
+                {/* student First name - student Last name */}
+                {studentInfo.first_name} {studentInfo.last_name}
 
                 <nav>
                     <ul>
@@ -55,17 +137,72 @@ class App extends React.Component {
                         Menu
                     </header>
 
-                    <ul>
-                        <li>Assignments</li>
-                        <li><Link to="/teacher/courses">Courses</Link></li>
-                        <li>Gradebook</li>
-                        <li>Students</li>
-                        <li>Messages</li>
-                    </ul>
+                    <div>
+                        <ul>
+                            {
+                                /*
+                                - studentInfo.course use .map with parameter course to access
+                                    - li element with property {course.course_name}
+                                        - ul element with property course.assignments use .map with parameter assignment to access
+                                            - li element with attribute onClick
+                                                - e parmater use showAssignment with parameter e
+                                                - property of element
+                                                    - {assignment.assignment_name}
+                                */
+                            }
+                            {studentInfo.courses.map(course => (
 
+                                <li>{course.course_name}
+                                    <ul>
+                                        {course.assignments.map(assignment => (
+                                            <li onClick={e => this.showAssignment(e)}>{assignment.assignment_name}</li>
+                                        )
+                                        )}
+                                    </ul>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
                 </sidebar>
 
+                {
+                    /*
+                    - input element with attribute 
+                       - className
+                       - name
+                       - placeholder
+                       - onChange - with parmaeter e , use handleChange with parmeter e
+                       - onKeyPress - with parmaeter e , use emitMessage with parmeter e
+                    */
+                }
+
+                <input className="reg-input" name="course" placeholder="Course Code"
+                    onChange={e => this.handleChange(e)}
+                    onKeyPress={e => this.emitMessage(e)} />
+
+                {
+                    /*
+                    - button element with attribute 
+                        - onClick - with parmaeter e , use newClass with parmeter e
+                    */
+                }
+                <button className="new-class-button" onClick={e => this.newClass(e)}> Submit </button>
+
+                {
+                    /*
+                    - this is App component
+                    - props as property
+                    - children, show children components
+                    */
+                }
                 {this.props.children}
+
+                {
+                    /*
+                    - {this.state.assignmentVisible and component AssignmentView}
+                    */
+                }
+                {this.state.assignmentVisible && <AssignmentView />}
 
             </div>
         );
@@ -81,9 +218,9 @@ const mapStateToProps = function (state) {
     // log 'mapStateToProps'
     console.log('mapStateToProps', state);
 
-    // return data with state.data
+    // return studentInfo with state.students.studentInfo
     return {
-        data: state.students.data
+        studentInfo: state.students.studentInfo
     }
 }
 

@@ -28,7 +28,7 @@ var loggedOutRoutes = (app) => {
                                 last_name: last_name,
                                 email: email,
                                 role: role
-                        - dbStudent makeCourse has parameters (id, course);
+                        - dbStudent addNewClass has parameters (id, course);
                         - res.json has property success with value true
                 - catch access function with parameter err      
                     - log parameter err
@@ -62,7 +62,7 @@ var loggedOutRoutes = (app) => {
                                 role: role
                             }
 
-                            dbStudent.makeCourse(id, course);
+                            dbStudent.addNewClass(id, course);
 
                             res.json({
                                 success: true

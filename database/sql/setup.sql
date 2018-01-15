@@ -232,8 +232,10 @@ CREATE TABLE students_reports
 (
     id SERIAL PRIMARY KEY,
     student_id INTEGER REFERENCES users(id) NOT NULL,
+    section_id INTEGER REFERENCES sections(id) NOT NULL,
     assignment_id INTEGER REFERENCES assignments(id) NOT NULL,
     group_id INTEGER REFERENCES groups(id),
+    title_id INTEGER REFERENCES titles(id),
     abstract_id INTEGER REFERENCES abstracts(id),
     question_id INTEGER REFERENCES questions(id),
     hypothesis_id INTEGER REFERENCES hypotheses(id),

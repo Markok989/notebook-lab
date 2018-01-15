@@ -18,6 +18,21 @@ INSERT INTO courses
 VALUES
     ('Chemistry 2017', 1);
 
+INSERT INTO courses
+    (name, teacher_id)
+VALUES
+    ('Biology 2017', 2);
+
+INSERT INTO courses
+    (name, teacher_id)
+VALUES
+    ('Math 2017', 1);
+
+INSERT INTO courses
+    (name, teacher_id)
+VALUES
+    ('History 2017', 1);
+
 INSERT INTO sections
     (name, course_id )
 VALUES
@@ -28,15 +43,55 @@ INSERT INTO sections
 VALUES
     ('2nd Period', 1);
 
-INSERT INTO users_sections
-    (user_id, section_id)
+INSERT INTO sections
+    (name, course_id )
 VALUES
-    (2, 1);
+    ('3rd Period', 2);
+
+INSERT INTO sections
+    (name, course_id )
+VALUES
+    ('4th Period', 3);
+
+INSERT INTO sections
+    (name, course_id )
+VALUES
+    ('1sr Period', 4);
 
 INSERT INTO users_sections
     (user_id, section_id)
 VALUES
-    (3, 1);
+    (4, 1);
+
+INSERT INTO users_sections
+    (user_id, section_id)
+VALUES
+    (4, 2);
+
+INSERT INTO users_sections
+    (user_id, section_id)
+VALUES
+    (4, 3);
+
+INSERT INTO users_sections
+    (user_id, section_id)
+VALUES
+    (4, 4);
+
+INSERT INTO users_sections
+    (user_id, section_id)
+VALUES
+    (4, 1);
+
+INSERT INTO students_reports
+    (student_id, section_id, assignment_id)
+VALUES
+    (4, 1, 1);
+
+INSERT INTO students_reports
+    (student_id, section_id, assignment_id)
+VALUES
+    (4, 2, 2);
 
 INSERT INTO assignments
     (section_id, group_lab, name, instructions, title, abstract, question, hypothesis, variables, materials, procedures, data, calculations, discussion)
