@@ -628,7 +628,9 @@ function makeStudentAssignments(students, assignmentId, include, editable, defau
 
     - variable categories has array of strings
 
-    - variable data has value of array with parameters studentId, assignmentId
+    - variable group_id has value of null;
+
+    - variable data has value of array with parameters studentId, assignmentId, group_id
 
     - categories use forEach loop with parameter category, and acceess to function
         
@@ -638,10 +640,12 @@ function makeStudentAssignments(students, assignmentId, include, editable, defau
             - log: stirng 'id' and parameter id
 
             - condition if id[category](category-from parameter in forEach loop)
-                - variable gotOne has boolean value true
+                - gotOne has boolean value true
+                - log string 'got one',
                 - data push to id[category](category-from parameter in forEach loop)
 
         - condition if not gotOne
+            - log string 'got one',
             - data push to null
 
     log: string STUDENT REPORT DATA:' and variable data
@@ -661,8 +665,9 @@ function newStudentReport(studentId, assignmentId, categoryIds) {
         "discussion",
     ];
 
+    var group_id = null;
 
-    var data = [studentId, assignmentId];
+    var data = [studentId, assignmentId, group_id];
 
     categories.forEach((category) => {
 
@@ -673,13 +678,15 @@ function newStudentReport(studentId, assignmentId, categoryIds) {
 
             if (id[category]) {
 
-                var gotOne = true;
+                gotOne = true;
+                console.log('got one');
                 data.push(id[category]);
 
             }
         });
 
         if (!gotOne) {
+            console.log('pusshing null');
             data.push(null);
         }
 
@@ -687,6 +694,7 @@ function newStudentReport(studentId, assignmentId, categoryIds) {
 
     console.log('STUDENT REPORT DATA:', data);
 
+    //cdreturn saveNewStudentReport(data);
 
 }
 
