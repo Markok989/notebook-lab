@@ -34,7 +34,7 @@ class TeacherNewAssignment extends React.Component {
                 defaults_hypothesis: "",
                 defaults_variables: "",
                 defaults_materials: "",
-                defaults_procecures: "",
+                defaults_procedures: "",
                 defaults_data: "",
                 defaults_calculations: "",
                 defaults_discussion: "",
@@ -389,7 +389,7 @@ function createAssignmentCategoryDiv(category, events) {
 
             <label forHtml={`${category}`}>{`${category}`}</label>
 
-            <input type="text" name={`default_${category.toLowerCase()}`}
+            <input type="text" name={`defaults_${category.toLowerCase()}`}
                 placeholder="Type default text here that will appear on all student assignments"
                 onChange={events.defaults} style={inputStyle} />
 
