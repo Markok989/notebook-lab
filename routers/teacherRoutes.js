@@ -377,34 +377,246 @@ function massageIncludeObject(include, shared) {
  */
 
 
- /*
- - function makeStudentAssignments with parameters students and includes
-    - for loop key in includes
-        - condition if include[key]
-            - function name has value
-                - string 'new' +(plus) key.charAt(0).toUpperCase() +(plus) key.slice(1)
-            - log string "functionName" and variable functionName
- */
-function makeStudentAssignments(students, includes) {
+/*
+- function makeStudentAssignments with parameters students, assignmentId, includes, editable, defaults
+    - students use forEach loop with prameter student
+
+        - categoryIds has value of empty array [],
+        - promiseArr has value of empty array [],
+        
+        - for loop key in includes
+        
+            - condition if include[key]
+
+                - group_id has value null;
+                - function name has value
+                
+                - editableBoolean has value of editable key 
+                    - first result: editable[key]
+                    - second result: false
+                
+                - data has own parameters assignmentId, group_id, editableBoolean, defaults[key]
+                    
+                - log string: 'make student assignment data' and variable data
+
+                - condition if key is the same as string 'title'
+                    - promiseArr push to newTitle with parameter data,
+                    - when with word 'then' with parameter results we access to function
+                        - categoryIds push to object
+                            - title has value results.rows[0].id
+                            
+                - condition if key is the same as string 'question'
+                    - promiseArr push to newQuestion with parameter data,
+                    - when with word 'then' with parameter results we access to function
+                        - categoryIds push to object
+                            - title has value results.rows[0].id
+                            
+                - condition if key is the same as string 'abstract'
+                    - promiseArr push to newAbstract with parameter data,
+                    - when with word 'then' with parameter results we access to function
+                        - categoryIds push to object
+                            - title has value results.rows[0].id
+                            
+                - condition if key is the same as string 'hypothesis'
+                    - promiseArr push to newHypothesis with parameter data,
+                    - when with word 'then' with parameter results we access to function
+                        - categoryIds push to object
+                            - title has value results.rows[0].id
+                            
+                - condition if key is the same as string 'variables'
+                    - promiseArr push to newData with parameter data,
+                    - when with word 'then' with parameter results we access to function
+                        - categoryIds push to object
+                            - title has value results.rows[0].id
+                            
+                - condition if key is the same as string 'materials'
+                    - promiseArr push to newMaterials with parameter data,
+                    - when with word 'then' with parameter results we access to function
+                        - categoryIds push to object
+                            - title has value results.rows[0].id
+
+                - condition if key is the same as string 'procedures'
+                    - promiseArr push to newProcedure with parameter data,
+                    - when with word 'then' with parameter results we access to function
+                        - categoryIds push to object
+                            - title has value results.rows[0].id
+
+                - condition if key is the same as string 'data'
+                    - promiseArr push to newData with parameter data,
+                    - when with word 'then' with parameter results we access to function
+                        - categoryIds push to object
+                            - title has value results.rows[0].id
+
+                - condition if key is the same as string 'caluclations'
+                    - promiseArr push to newCalculations with parameter data,
+                    - when with word 'then' with parameter results we access to function
+                        - categoryIds push to object
+                            - title has value results.rows[0].id
+
+                - condition if key is the same as string 'discussion'
+                    - promiseArr push to newDiscussion with parameter data,
+                    - when with word 'then' with parameter results we access to function
+                        - categoryIds push to object
+                            - title has value results.rows[0].id
+
+        
+        - returns Promise.all with parameter promiseArr,
+        - then with word 'then' with parameter results we access to function
+            - log string: 'Results from Promise.all' and parmeter results,
+            - log string: 'Category Ids' and categoryIds,
+        - then with word "chatch" with parameter e we access to function
+            - log: string 'Promise.all error: ' and parameter e
+
+*/
+function makeStudentAssignments(students, assignmentId, includes, editable, defaults) {
 
     students.forEach((student) => {
 
-        // need to know what to include...
+        var categoryIds = [];
+        var promiseArr = [];
+
         for (var key in includes) {
 
             if (includes[key]) {
 
-                var functionName = 'new' + key.charAt(0).toUpperCase() + key.slice(1);
-                console.log('functionName, ', functionName);
+                //set data for this key
+                var group_id = null;
 
-            }
+                var editableBoolean = editable[key] ? editable[key] : false;
 
-        }
+                var data = [
+                    assignmentId,
+                    group_id,
+                    editableBoolean,
+                    defaults[key]
+                ];
 
-    })
+                console.log('make student assignment data', data);
+
+                if (key == 'title') {
+
+                    promiseArr.push(newTitle(data).then(results => {
+                        categoryIds.push({
+                            title: results.rows[0].id
+                        });
+                    }));
+
+                }
+
+
+                if (key == 'question') {
+
+                    promiseArr.push(newQuestion(data).then(results => {
+                        categoryIds.push({
+                            title: results.rows[0].id
+                        });
+                    }));
+
+                }
+
+
+                if (key == "abstract") {
+
+                    promiseArr.push(newAbstract(data).then(results => {
+                        categoryIds.push({
+                            title: results.rows[0].id
+                        });
+                    }));
+
+                }
+
+
+                if (key == "hypothesis") {
+
+                    promiseArr.push(newHypothesis(data).then(results => {
+                        categoryIds.push({
+                            title: results.rows[0].id
+                        });
+                    }));
+
+                }
+
+
+                if (key == "variables") {
+
+                    promiseArr.push(newData(data).then(results => {
+                        categoryIds.push({
+                            title: results.rows[0].id
+                        });
+                    }));
+
+                }
+
+
+                if (key == "materials") {
+
+                    promiseArr.push(newMaterials(data).then(results => {
+                        categoryIds.push({
+                            title: results.rows[0].id
+                        });
+                    }));
+
+                }
+
+
+                if (key == "procedures") {
+
+                    promiseArr.push(newProcedure(data).then(results => {
+                        categoryIds.push({
+                            title: results.rows[0].id
+                        });
+                    }));
+
+                }
+
+
+                if (key == "data") {
+
+                    promiseArr.push(newData(data).then(results => {
+                        categoryIds.push({
+                            title: results.rows[0].id
+                        });
+                    }));
+
+                }
+
+
+                if (key == "caluclations") {
+
+                    promiseArr.push(newCalculations(data).then(results => {
+                        categoryIds.push({
+                            title: results.rows[0].id
+                        });
+                    }));
+
+                }
+
+
+                if (key == "discussion") {
+
+                    promiseArr.push(newDiscussion(data).then(results => {
+                        categoryIds.push({
+                            title: results.rows[0].id
+                        });
+                    }));
+
+                } //end long if check
+
+            } //end if(includes[key])
+        } //end for loop
+        //make new student assignment with categoryIds, student_id and assignment_id
+
+
+        return Promise.all(promiseArr).then((results) => {
+            console.log('Results from Promise.all', results);
+            console.log('Category Ids', categoryIds);
+        }).catch((e) => {
+            console.log('Promise.all error: ', e);
+        }); // ent catch for promise.all
+
+    }); // end forEach
 
 }
-
 
 // TESTS
 
@@ -414,18 +626,17 @@ function makeStudentAssignments(students, includes) {
     - req.body.assignmentInfo.sections use forEach loop with parameter section
         - makeNewAssignment with parameters section and req.body.assignmentInfo
         - then with word 'then' with parameter assignmentId we access to function
-
+ 
             - assignments push to objects: section, assignmentId 
-
-            - return getStudentIdsBySectionId with parameter [section]
-
-        - then with word 'then' with parameter results we access to function
-        
-            - log string:'assignments: ' and variable assignments,
-            - students has value of results.row
-
-            - includes hs value of req.body.assignmentInfo.include
-            - function makeStudentAssignments with parameters: students, includes
+ 
+            - return getStudentIdsBySectionId with parameter [section],
+            - then with word 'then' with parameter assignmentId we access to function
+                - log string: assignments and variable assignments
+ 
+                - students  has value of results.rows,
+                - includes, editable, defaults belongs to req.body.assignmentInfo,
+                - function makeStudentAssignments with parameters students, assignmentId, includes, editable, defaults
+                
         - "catch" word with parameter e
             - log parameter e 
 */
@@ -439,26 +650,22 @@ function makeNewAssignmentAll(req) {
             //now get list of students and for each student make a student report, using user_id make student assignment
             assignments.push({ section, assignmentId });
 
-            return getStudentIdsBySectionId([section]);
-
-        }).then((results) => {
-
-            //then for each include make a row in each category's table with student_id and stuff
-            console.log('assignments: ', assignments);
-            var students = results.row;
+            return getStudentIdsBySectionId([section]).then((ressults) => {
+                console.log('assignments', assignments);
+            })
 
 
-            //get the list of items that are supposed to be included and then include them.
-            var includes = req.body.assignmentInfo.include
-            makeStudentAssignments(students, includes);
+            var students = results.rows;
+            var { includes, editable, defaults } = req.body.assignmentInfo;
+            makeStudentAssignments(students, assignmentId, includes, editable, defaults);
 
         }).catch((e) => {
 
-            console.log(e);
+            console.log(e); // end makeNewAssignment
 
         });
 
-    });
+    }); // end forEach
 }
 
 

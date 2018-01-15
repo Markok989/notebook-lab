@@ -194,7 +194,7 @@ module.exports.saveNewStudentReport = saveNewStudentReport;
 module.exports.newTitle = newTitle;
 
 // modul export newQuestion has value newQuestion
-module.exports.newQuestion = newQuestion
+module.exports.newQuestion = newQuestion;
 
 // modul export newAbstract has value newAbstract
 module.exports.newAbstract = newAbstract;
@@ -230,11 +230,11 @@ module.exports.newDiscussion = newDiscussion;
 - word "catch" with parameter e
     - log parameter e
 */
-newAbstract([42, null, true, "Starting Abstract"]).then(results => {
-    console.log(results.rows);
-}).catch(e => {
-    console.log(e);
-});
+// newAbstract([42, null, true, "Starting Abstract"]).then(results => {
+//     console.log(results.rows);
+// }).catch(e => {
+//     console.log(e);
+// });
 
 //saveNewStudentReport([])
 
