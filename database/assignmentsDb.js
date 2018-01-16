@@ -26,16 +26,28 @@ var db = spicedPg(dbUrl);
 /*
 - function saveNewStudentReport with parameter data
     - log string 'TEACHER_DB: saveNewStudentReport',
-    - queryStr has value of string `INSERT INTO student_reports (student_id, assignment_id, group_id, abstract_id, question_id, hypothesis_id, variables_id, materials_id, procedures_id, data_id, calculations_id, discussion_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)`;
+    - queryStr has value of string `INSERT INTO students_reports (student_id, assignment_id, group_id, title_id, question_id, abstract_id, hypothesis_id, variables_id, materials_id, procedures_id, data_id, calculations_id, discussion_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)`
     - return db query with parameters queryStr and data
 */
 function saveNewStudentReport(data) {
 
     console.log('TEACHER_DB: saveNewStudentReport');
-    let queryStr = `INSERT INTO student_reports (student_id, assignment_id, group_id, abstract_id, question_id, hypothesis_id, variables_id, materials_id, procedures_id, data_id, calculations_id, discussion_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)`;
+    let queryStr = `INSERT INTO students_reports (student_id, assignment_id, group_id, title_id, question_id, abstract_id, hypothesis_id, variables_id, materials_id, procedures_id, data_id, calculations_id, discussion_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)`;
     return db.query(queryStr, data);
 
 }
+
+// TEST
+
+saveNewStudentReport([7, 116, null, 137, 137, null, 92, null, 137, 137, 137, null, null]).then((result) => {
+
+    console.log(result);
+
+}).catch((e) => {
+
+    console.log(e);
+
+});
 
 
 /*
