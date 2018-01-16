@@ -8,7 +8,8 @@ const {
     getAllSections,
     getSectionsByCourseId,
     saveNewSection,
-    getStudentIdsBySectionId
+    getStudentIdsBySectionId,
+    getTeacherInfoById
     } = require("../database/teacherDb");
 
 const {
@@ -32,6 +33,37 @@ const {
 var teacherRoutes = (app) => {
     app.get('/teacher', mw.loggedInCheck, (req, res) => {
         return res.sendFile(path.join(__dirname, '../public/index.html'));
+    });
+
+
+    /********** USERS *********/
+
+    /*
+    - app get with path '/api/teacher', and use parameters req and res
+        
+        - return getTeacherInfoById(from teacherDb) with parameter [req.session.user.id]
+        - then with word 'then' with parameter results access to function
+            
+            - res.json contains success with boolean value true and
+              teacherInfo with value teacherInfo.rows
+    */
+    app.get('/api/teacher', (req, res) => {
+
+        return getTeacherInfoById([req.session.user.id]).then((results) => {
+
+            res.json({
+                success: true,
+                teacherInfo: results.rows
+            });
+
+        }).catch(e => {
+
+            console.log(e);
+            res.json({
+                error: e
+            });
+
+        });
     });
 
 

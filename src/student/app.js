@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { getStudentData, addNewClass, getAssignmentList } from './actions';
 import AssignmentView from './components/AssignmentView';
 
-// component App (for student)
+// component App (for student) STUDENT APP
 class App extends React.Component {
 
     // constructor
@@ -115,6 +115,8 @@ class App extends React.Component {
         if (!studentInfo) {
             return null
         }
+
+        console.log('ucenik');
 
         return (
             <div>

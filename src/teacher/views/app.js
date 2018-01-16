@@ -5,11 +5,25 @@ import reduxPromise from 'redux-promise';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { Link } from 'react-router';
 import Logout from '../../auth/logout';
+import { getTeacherInfo } from '../actions';
 
 //import { connect } from 'react-redux';
 
+// TEACHER APP
 class App extends React.Component {
+
+    // component did mount: is invoked immediately after a component is mounted
+    componentDidMount() {
+
+        console.log('getting Teacher info');
+        // access props via dispatch to getTeacherInfo (from actions)
+        this.props.dispatch(getTeacherInfo())
+
+    }
+
+
     render() {
+        console.log('profesor');
         {
             // if is false,
             // return div with property Loadinig...
@@ -28,6 +42,7 @@ class App extends React.Component {
             //    }
             //
             //});
+
             return (
                 <div>
                     <nav>
@@ -59,5 +74,14 @@ class App extends React.Component {
     };
 }
 
+// connect to store
+var mapStateToProps = function (state) {
 
-export default connect()(App);
+    return {
+        teacherInfo: state.teachers.teacherInfo
+    }
+
+}
+
+
+export default connect(mapStateToProps)(App);
