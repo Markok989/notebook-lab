@@ -14,6 +14,7 @@ if (!process.env.DATABASE_URL) {
 
 // dbUrl has value process.env.DATABASE_URL or localUrl
 var dbUrl = process.env.DATABASE_URL || localUrl;
+var dbUrl = process.env.DATABASE_URL || localUrl;
 
 // db has value spicedPg with parameter dbUrl
 var db = spicedPg(dbUrl);

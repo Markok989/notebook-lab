@@ -23,7 +23,7 @@ const {
     newData,
     newCalculations,
     newDiscussion
-            } = require("../database/assignmentsDb")
+            } = require("../database/assignmentsDb");
 
 
 // component teacherRoutes with parameter app,
@@ -36,11 +36,15 @@ var teacherRoutes = (app) => {
 
 
     /********** ASSIGNMENTS *********/
+
     // creates a new assignment.
     // app post with path '/api/teacher/assignment', mw.loggedInCheck(from middleware) and use parameters req and res
     // res with json access to success with value true and assignmentId with value of results.rows[0]
     app.post('/api/teacher/assignment', mw.loggedInCheck, (req, res) => {
         //make assignment row in assignments database.
+
+        // variable assignments has value of empty array
+        var assignments = [];
 
         /*
         - req.body.assignmentInfo.section use forEach loop with section parameter
@@ -48,13 +52,15 @@ var teacherRoutes = (app) => {
                 - section
                 - req.body.assignmentInfo
             - then with word 'then' with parameter assignmentId we access to function
-                - log string:"assignmentId" and parameter assignmentId
-                - log string:"sectionId" and parameter section
+                - ssignments push to objects/ properties { section, assignmentId },
 
                 - return getStudentIdsBySectionId with parameter [section]
                 - then with word 'then' with paramerer results we access to function
+                    - log string: 'assignments: ' and variable assignments,
                     - students has value results.rows
-                    - log string:'students' and variable students
+                    - include, editable, defaults belongs to req.body.assignmentInfo;
+                    - log string: 'MAKING STUDENT ASSINGMENTS!!!',
+                    - return function makeStudentAssignments with parameters students, section, assignmentId, include, editable, defaults
             - catch with paramerter e we access to function
                 - log parameter e
        */
@@ -62,23 +68,31 @@ var teacherRoutes = (app) => {
 
             return makeNewAssignment(section, req.body.assignmentInfo).then((assignmentId) => {
 
-                console.log('assignmentId', assignmentId);
-                console.log('sectionId', section);
+                //now get list of students and for each student make a student report, using user_id make student assignment
+                assignments.push({ section, assignmentId });
 
                 //now get list of students and for each student make a student report, using user_id make student assignment
                 return getStudentIdsBySectionId([section]).then(results => {
 
-                    var students = results.rows;
-                    console.log('students', students);
+                    console.log('assignments: ', assignments);
 
-                }).catch(e => {
-                    console.log(e);
+                    var students = results.rows;
+
+                    var { include, editable, defaults } = req.body.assignmentInfo;
+
+                    console.log('MAKING STUDENT ASSINGMENTS!!!');
+
+                    return makeStudentAssignments(students, section, assignmentId, include, editable, defaults);
+
                 });
 
-                //then for each include make a row in each categorie's table with student_id and stuff
+            }).catch(e => {
+
+                console.log(e); // end makeNewAssignment
+
             });
 
-        });
+        }); // end forEach
 
 
 
@@ -88,7 +102,7 @@ var teacherRoutes = (app) => {
 
         res.json({
             success: true,
-            assignmentId: results.rows[0]
+            assignmentId: 5
         });
     });
 
@@ -105,13 +119,19 @@ var teacherRoutes = (app) => {
         let data = [req.body.courseId, req.body.name, req.body.start, req.body.end];
         console.log(data);
         return saveNewSection(data).then(() => {
+
             res.json({
                 success: true
             });
+
         }).catch(e => {
+
             res.json({
+
                 error: e
+
             });
+
         });
     });
 
@@ -131,14 +151,20 @@ var teacherRoutes = (app) => {
         // res.json contains error with value e
         let data = [req.session.user.id];
         return getAllSections(data).then((results) => {
+
             return res.json({
                 success: true,
                 sections: results.rows
             });
+
         }).catch(e => {
+
             res.json({
+
                 error: e
+
             });
+
         });
     });
 
@@ -157,14 +183,18 @@ var teacherRoutes = (app) => {
         // res.json contains error with value e
         let data = [req.params.id];
         return getSectionsByCourseId(data).then((results) => {
+
             return res.json({
                 success: true,
                 sections: results.rows
             });
+
         }).catch((e) => {
+
             res.json({
                 error: e
             });
+
         });
     });
 
@@ -184,14 +214,18 @@ var teacherRoutes = (app) => {
 
         let data = [req.session.user.id, req.body.name];
         return saveNewCourse(data).then(() => {
+
             res.json({
                 success: true
             });
+
         }).catch(e => {
+
             res.json({
                 error: e
             });
-        })
+
+        });
     });
 
     // app get with path /api/teacher/courses, mw loggedInCheck(from midlleware) and use parameters req and res
@@ -205,15 +239,17 @@ var teacherRoutes = (app) => {
         let data = [req.session.user.id];
         // call db
         return getCoursesByTeacher(data).then((results) => {
+
             res.json({
                 success: true,
                 courses: results.rows
-            })
+            });
+
         }).catch(e => {
             res.json({
                 error: e
             });
-        })
+        });
     });
 
     // app delete with path '/app/teacher/course/:id' , mw loggedInCheck(from midlleware)
@@ -229,13 +265,17 @@ var teacherRoutes = (app) => {
         // res.json contains error with value e
         let data = [req.params.id];
         return deleteCourse(data).then(() => {
+
             res.json({
                 success: true
             });
+
         }).catch((e) => {
+
             res.json({
                 error: e
             });
+
         });
     });
 };
@@ -257,11 +297,11 @@ module.exports = teacherRoutes;
    
     - condition if not info.instructions
         - info.instructions is null
-
+ 
     - newInclude has value of massageIncludeObject with parameters include and shared
-
+ 
     - data has own properties
-
+ 
     - return saveNewAssignmentTemplate with parameter data,
         - then with word "then" with parameter results access to function
             - log string :"Resulting AssignmentId: " and parameter results.rows[0].id
@@ -321,12 +361,12 @@ function makeNewAssignment(sectionId, info) {
 - function massageIncludeObject with parameters include and shared
     - for loop var key in include
         - condition if include[key]
-
+ 
             - condition if shared[key]
                 - include[key] has value of string 'group'
             - else
                 - include[key] has value of string 'individual'
-
+ 
         - else
             - include[key] has value of null
             
@@ -365,22 +405,22 @@ At the end it calls the function make a row in the student report table
 
 
 /*
-- function makeStudentAssignments(students, assignmentId, include, editable, defaults) {
-
+- function makeStudentAssignments(students, sectionId, assignmentId, include, editable, defaults) {
+ 
     
     - students use forEach loop with prameter student
-
+ 
         - log string "(((students)))", and parameter student,
         - log string "defaults" and parameter defaults,
-
+ 
         - promiseArr has value of empty array [],
         
         - for loop key in include
         
             - log string: '***** makingStudentAssigns: key:' and key,
-
+ 
             - condition if include[key]
-
+ 
                 - group_id has value null;
                 - function name has value
                 
@@ -391,7 +431,7 @@ At the end it calls the function make a row in the student report table
                 - data has own parameters assignmentId, group_id, editableBoolean, defaults['defaults_' + key]
                     
                 - log string: 'make student assignment data' and variable data
-
+ 
                 - condition if key is the same as string 'title'
                     - promiseArr push to newTitle with parameter data,
                     - when with word 'then' with parameter results we access to function
@@ -427,43 +467,43 @@ At the end it calls the function make a row in the student report table
                     - when with word 'then' with parameter results we access to function
                         - returns
                             - title has value results.rows[0].id
-
+ 
                 - condition if key is the same as string 'procedures'
                     - promiseArr push to newProcedure with parameter data,
                     - when with word 'then' with parameter results we access to function
                         - returns
                             - title has value results.rows[0].id
-
+ 
                 - condition if key is the same as string 'data'
                     - promiseArr push to newData with parameter data,
                     - when with word 'then' with parameter results we access to function
                         - returns
                             - title has value results.rows[0].id
-
+ 
                 - condition if key is the same as string 'caluclations'
                     - promiseArr push to newCalculations with parameter data,
                     - when with word 'then' with parameter results we access to function
                         - returns
                             - title has value results.rows[0].id
-
+ 
                 - condition if key is the same as string 'discussion'
                     - promiseArr push to newDiscussion with parameter data,
                     - when with word 'then' with parameter results we access to function
                         - returns
                             - title has value results.rows[0].id
-
+ 
         
         - returns Promise.all with parameter promiseArr,
         - then with word 'then' with parameter results we access to function
             - log string: 'Results from Promise.all' and parmeter results,
            
-            - return function newStudentReport with parameters student.user_id, assignmentId, results
-
+            - return function newStudentReport with parameters student.user_id, sectionId, assignmentId, results
+ 
         - then with word "chatch" with parameter e we access to function
             - log: string 'Promise.all error: ' and parameter e
-
+ 
 */
-function makeStudentAssignments(students, assignmentId, include, editable, defaults) {
+function makeStudentAssignments(students, sectionId, assignmentId, include, editable, defaults) {
 
     students.forEach((student) => {
 
@@ -613,7 +653,7 @@ function makeStudentAssignments(students, assignmentId, include, editable, defau
 
             console.log('Results from Promise.all', results);
 
-            return newStudentReport(student.user_id, assignmentId, results);
+            return newStudentReport(student.user_id, sectionId, assignmentId, results);
 
         }).catch((e) => {
             console.log('Promise.all error: ', e);
@@ -625,32 +665,34 @@ function makeStudentAssignments(students, assignmentId, include, editable, defau
 
 /*
 - function newStudentReport with parameters studentId, assignmentId, categoryIds
-
+ 
     - variable categories has array of strings
-
+ 
     - variable group_id has value of null;
-
-    - variable data has value of array with parameters studentId, assignmentId, group_id
-
+ 
+    - variable data has value of array with parameters studentId, sectionId, assignmentId, group_id
+ 
     - categories use forEach loop with parameter category, and acceess to function
         
         - variable gotOne has boolean value false,
         - log string: "vategory" and parameter category
         - parameter categoryIds use forEach loop with parameter id , access to function
             - log: stirng 'id' and parameter id
-
+ 
             - condition if id[category](category-from parameter in forEach loop)
                 - gotOne has boolean value true
                 - log string 'got one',
                 - data push to id[category](category-from parameter in forEach loop)
-
+ 
         - condition if not gotOne
             - log string 'got one',
             - data push to null
+ 
+    - log: string STUDENT REPORT DATA:' and variable data
 
-    log: string STUDENT REPORT DATA:' and variable data
+    - return saveNewStudentReport (from file assignmentsDb.js) with parameter data 
 */
-function newStudentReport(studentId, assignmentId, categoryIds) {
+function newStudentReport(studentId, sectionId, assignmentId, categoryIds) {
 
     var categories = [
         "title",
@@ -667,7 +709,7 @@ function newStudentReport(studentId, assignmentId, categoryIds) {
 
     var group_id = null;
 
-    var data = [studentId, assignmentId, group_id];
+    var data = [studentId, sectionId, assignmentId, group_id];
 
     categories.forEach((category) => {
 
@@ -694,156 +736,157 @@ function newStudentReport(studentId, assignmentId, categoryIds) {
 
     console.log('STUDENT REPORT DATA:', data);
 
-    //cdreturn saveNewStudentReport(data);
+    return saveNewStudentReport(data);
 
 }
 
-// TESTS
 
-/*
-- function makeNewAssignmentAll with parameter req
-    - assignments has value of empty array []
-    - req.body.assignmentInfo.sections use forEach loop with parameter section
-        - makeNewAssignment with parameters section and req.body.assignmentInfo
-        - then with word 'then' with parameter assignmentId we access to function
- 
-            - assignments push to objects: section, assignmentId 
- 
-            - return getStudentIdsBySectionId with parameter [section],
+    // TESTS
+
+    /*
+    - function makeNewAssignmentAll with parameter req
+        - assignments has value of empty array []
+        - req.body.assignmentInfo.sections use forEach loop with parameter section
+            - makeNewAssignment with parameters section and req.body.assignmentInfo
             - then with word 'then' with parameter assignmentId we access to function
-                - log string: assignments and variable assignments
- 
-                - students  has value of results.rows,
-                - include, editable, defaults belongs to req.body.assignmentInfo,
-                - log string: 'MAKING STUDENT ASSINGMENTS!!!',
-                - returns function makeStudentAssignments with parameters students, assignmentId, includes, editable, defaults
-                
-        - "catch" word with parameter e
-            - log parameter e 
-*/
-function makeNewAssignmentAll(req) {
+     
+                - assignments push to objects: section, assignmentId 
+     
+                - return getStudentIdsBySectionId with parameter [section],
+                - then with word 'then' with parameter assignmentId we access to function
+                    - log string: assignments and variable assignments
+     
+                    - students  has value of results.rows,
+                    - include, editable, defaults belongs to req.body.assignmentInfo,
+                    - log string: 'MAKING STUDENT ASSINGMENTS!!!',
+                    - returns function makeStudentAssignments with parameters students, assignmentId, includes, editable, defaults
+                    
+            - "catch" word with parameter e
+                - log parameter e 
+    */
+    // function makeNewAssignmentAll(req) {
 
-    var assignments = [];
-    req.body.assignmentInfo.sections.forEach((section) => {
+    //     var assignments = [];
+    //     req.body.assignmentInfo.sections.forEach((section) => {
 
-        return makeNewAssignment(section, req.body.assignmentInfo).then((assignmentId) => {
+    //         return makeNewAssignment(section, req.body.assignmentInfo).then((assignmentId) => {
 
-            //now get list of students and for each student make a student report, using user_id make student assignment
-            assignments.push({ section, assignmentId });
+    //             //now get list of students and for each student make a student report, using user_id make student assignment
+    //             assignments.push({ section, assignmentId });
 
-            return getStudentIdsBySectionId([section]).then((ressults) => {
-                console.log('assignments', assignments);
-            })
-
-
-            var students = results.rows;
-            var { include, editable, defaults } = req.body.assignmentInfo;
-            console.log('MAKING STUDENT ASSINGMENTS!!!');
-            return makeStudentAssignments(students, assignmentId, includes, editable, defaults);
-
-        }).catch((e) => {
-
-            console.log(e); // end makeNewAssignment
-
-        });
-
-    }); // end forEach
-}
+    //             return getStudentIdsBySectionId([section]).then((ressults) => {
+    //                 console.log('assignments', assignments);
+    //             })
 
 
+    //             var students = results.rows;
+    //             var { include, editable, defaults } = req.body.assignmentInfo;
+    //             console.log('MAKING STUDENT ASSINGMENTS!!!');
+    //             return makeStudentAssignments(students, section, assignmentId, includes, editable, defaults);
 
-const req = {
-    session: {
-        user: {
-            id: 1
-        }
-    },
-    body1: {
-        assignmentInfo: {
-            sections: ['4'],
-            include: {
-                title: 'individual',
-                question: null,
-                abstract: null,
-                hypothesis: null,
-                variables: null,
-                materials: null,
-                procedures: null,
-                data: null,
-                calculations: null,
-                discussion: null
-            },
-            editable: {},
-            shared: {},
-            defaults: {
-                defaults_title: '',
-                defaults_question: '',
-                defaults_abstract: '',
-                defaults_hypothesis: '',
-                defaults_variables: '',
-                defaults_materials: '',
-                defaults_procecures: '',
-                defaults_data: '',
-                defaults_calculations: '',
-                defaults_discussion: '',
-                default_title: 'sdfasdf'
-            },
-            assignmentName: 'asd',
-            instructions: null,
-            group_lab: false,
-            due: null
-        }
-    },
-    body: {
-        assignmentInfo: {
-            sections: ['3', '4'],
-            include: {
-                title: 'group',
-                question: 'group',
-                abstract: null,
-                hypothesis: 'individual',
-                variables: null,
-                materials: 'group',
-                procedures: 'group',
-                data: 'group',
-                calculations: 'individual',
-                discussion: null
-            },
-            editable: {
-                materials: true,
-                procedures: true,
-                data: true,
-                calculations: true,
-                title: true,
-                question: true
-            },
-            shared: {
-                title: true,
-                question: true,
-                materials: true,
-                procedures: true,
-                data: true
-            },
-            defaults: {
-                defaults_title: '',
-                defaults_question: '',
-                defaults_abstract: '',
-                defaults_hypothesis: 'my starting hypothesis',
-                defaults_variables: '',
-                defaults_materials: '',
-                defaults_procecures: '',
-                defaults_data: '',
-                defaults_calculations: '',
-                defaults_discussion: '',
-                defaults_procedures: 'Follow the procedures on the handout.'
-            },
-            assignmentName: 'Soap lab',
-            due: '2017-10-10',
-            instructions: null,
-            group_lab: true
-        }
-    }
-};
+    //         }).catch((e) => {
+
+    //             console.log(e); // end makeNewAssignment
+
+    //         });
+
+    //     }); // end forEach
+    // }
 
 
-makeNewAssignmentAll(req);
+
+    // const req = {
+    //     session: {
+    //         user: {
+    //             id: 1
+    //         }
+    //     },
+    //     body1: {
+    //         assignmentInfo: {
+    //             sections: ['1','2'],
+    //             include: {
+    //                 title: 'individual',
+    //                 question: null,
+    //                 abstract: null,
+    //                 hypothesis: null,
+    //                 variables: null,
+    //                 materials: null,
+    //                 procedures: null,
+    //                 data: null,
+    //                 calculations: null,
+    //                 discussion: null
+    //             },
+    //             editable: {},
+    //             shared: {},
+    //             defaults: {
+    //                 defaults_title: '',
+    //                 defaults_question: '',
+    //                 defaults_abstract: '',
+    //                 defaults_hypothesis: '',
+    //                 defaults_variables: '',
+    //                 defaults_materials: '',
+    //                 defaults_procecures: '',
+    //                 defaults_data: '',
+    //                 defaults_calculations: '',
+    //                 defaults_discussion: '',
+    //                 default_title: 'sdfasdf'
+    //             },
+    //             assignmentName: 'asd',
+    //             instructions: null,
+    //             group_lab: false,
+    //             due: null
+    //         }
+    //     },
+    //     body: {
+    //         assignmentInfo: {
+    //             sections: ['1', '2'],
+    //             include: {
+    //                 title: 'group',
+    //                 question: 'group',
+    //                 abstract: null,
+    //                 hypothesis: 'individual',
+    //                 variables: null,
+    //                 materials: 'group',
+    //                 procedures: 'group',
+    //                 data: 'group',
+    //                 calculations: 'individual',
+    //                 discussion: null
+    //             },
+    //             editable: {
+    //                 materials: true,
+    //                 procedures: true,
+    //                 data: true,
+    //                 calculations: true,
+    //                 title: true,
+    //                 question: true
+    //             },
+    //             shared: {
+    //                 title: true,
+    //                 question: true,
+    //                 materials: true,
+    //                 procedures: true,
+    //                 data: true
+    //             },
+    //             defaults: {
+    //                 defaults_title: '',
+    //                 defaults_question: '',
+    //                 defaults_abstract: '',
+    //                 defaults_hypothesis: 'my starting hypothesis',
+    //                 defaults_variables: '',
+    //                 defaults_materials: '',
+    //                 defaults_procecures: '',
+    //                 defaults_data: '',
+    //                 defaults_calculations: '',
+    //                 defaults_discussion: '',
+    //                 defaults_procedures: 'Follow the procedures on the handout.'
+    //             },
+    //             assignmentName: 'Soap lab',
+    //             due: '2017-10-10',
+    //             instructions: null,
+    //             group_lab: true
+    //         }
+    //     }
+    // };
+
+
+    // makeNewAssignmentAll(req);
