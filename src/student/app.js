@@ -96,13 +96,14 @@ class App extends React.Component {
 
             -log this.state.assignmentVisible
     */
-    showAssignment() {
+    showAssignment(e) {
+
+        console.log(e.target.id);
+
         this.setState({
             assignmentVisible: true
-
-        }, () => {
-            console.log(this.state.assignmentVisible);
         })
+
     }
 
 
@@ -148,8 +149,9 @@ class App extends React.Component {
                                         - ul element with property course.assignments use .map with parameter assignment to access
                                             - li element with attribute onClick
                                                 - e parmater use showAssignment with parameter e
-                                                - property of element
-                                                    - {assignment.assignment_name}
+                                                - property of elementelement
+                                                    - Link element with path {`/student/assignment/${assignment.assignment_id}`}
+                                                      and property {assignment.assignment_name}
                                 */
                             }
                             {studentInfo.courses.map(course => (
@@ -157,7 +159,18 @@ class App extends React.Component {
                                 <li>{course.course_name}
                                     <ul>
                                         {course.assignments.map(assignment => (
-                                            <li onClick={e => this.showAssignment(e)}>{assignment.assignment_name}</li>
+
+                                            <li
+                                                onClick={e => this.showAssignment(e)}
+                                                id={assignment.assignment_id}>
+
+                                                <Link
+                                                    to={`/student/assignment/${assignment.assignment_id}`} >
+                                                    {assignment.assignment_name}
+                                                </Link>
+
+                                            </li>
+
                                         )
                                         )}
                                     </ul>
@@ -204,7 +217,7 @@ class App extends React.Component {
                     - {this.state.assignmentVisible and component AssignmentView}
                     */
                 }
-                {this.state.assignmentVisible && <AssignmentView />}
+           
 
             </div>
         );

@@ -46,15 +46,15 @@ export function addNewClass(classID) {
 
 /*
 - export function getAssignment 
-    - return axios post with path '/api/student/assignment' and property classID
-    - then with word 'then; with parameter result access to function
+    - return axios get with path '/api/student/assignment/'  +(plus) id,
+    - then with word 'then' with parameter result access to function
 
         - return next propeties
             - type as 'GET_ASSIGNMENT'
             - assignment as result.data.assignment
 */
-export function getAssignment() {
-    return axios.post('/api/student/assignment', {
+export function getAssignment(id) {
+    return axios.get('/api/student/assignment/' + id, {
     }).then((result) => {
         return {
             type: 'GET_ASSIGNMENT',

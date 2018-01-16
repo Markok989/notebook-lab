@@ -2,7 +2,7 @@ import React from 'react';
 import { Router, Route, Link, IndexRoute, browserHistory, hashHistory } from 'react-router';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { getAssignmentList } from '../actions';
+import { getAssignment } from '../actions';
 
 // component Assignment
 class Assignment extends React.Component {
@@ -18,40 +18,110 @@ class Assignment extends React.Component {
     }
 
     // componentDidMount is invoked immediately after a component is mounted,
-    // props dipsatch to getAssignment with parameter assignmentID
+    // constant id belongs to this.props.params
+    // props dipsatch to getAssignment with parameter id
+    // log string 'ass view' and state of this component
     componentDidMount() {
-        this.props.dispatch(getAssignment(assignmentID));
+
+        const { id } = this.props.params;
+
+        this.props.dispatch(getAssignment(id));
+
+        console.log('ass view', this.state);
+
     }
 
-// render method
+    // render method
     render() {
 
-        // constant assignments belongs to this.props
-        const { assignments } = this.props;
+        // constant assignment and studentInfo belongs to this.props
+        const { assignment, studentInfo } = this.props;
 
         /*
         - condition if not assignments return null
         */
-        if (!assignments) {
+        if (!assignment) {
             return null
         }
 
+        // variable assignmentOptions with properties
+        // div element contain set of functions
+        var assignmentOptions =
+
+            <div>
+                {editable(assignment.title)}
+                {editable(assignment.question)}
+                {editable(assignment.abstract)}
+                {editable(assignment.hypothesis)}
+                {editable(assignment.variable)}
+                {editable(assignment.material)}
+                {editable(assignment.procedure)}
+                {editable(assignment.data)}
+                {editable(assignment.calculation)}
+                {editable(assignment.discussion)}
+            </div>;
+
         return (
             <div>
-                <ul>
-                    {
-                        /*
-                        - assignments use .map with parameter assignment to access function
-                            - li element with property {assignment.assignment_name}
-                        */
-                    }
-                    {assignments.map(assignment => (
-                        <li>{assignment.assignment_name}</li>
-                    ))}
 
-                </ul>
+                <h3>Complete the following assignment</h3>
+
+                {assignmentOptions}
+
             </div>
         )
 
     }
 }
+
+/*
+- function editable with parameter section
+    
+    - log parameter section
+
+    - condition if section with parmaters [sections +(plus) string '_editable' ]
+        
+        - return
+            - form element with property
+    
+    - else 
+
+        - div element with property
+*/
+function editable(section) {
+
+    console.log(section);
+
+    if (section[section + '_editable']) {
+
+        return (
+            <form>
+                <label>section:</label>
+
+                <textarea name="content" placeholder="Type here.." cols="30" rows="5" onChange={e => this.handleChange(e)} />
+
+                <input type="submit" value="Save" />
+            </form>
+
+        )
+
+    } else {
+        <div>
+            <p>section[section + '_content']</p>
+        </div>
+    }
+
+}
+
+const mapStateToProps = function (state) {
+    console.log('mapStateToProps', state);
+
+    return {
+        assignment: state.students.assignment,
+        studentInfo: state.students.studentInfo
+    }
+}
+export default connect(mapStateToProps)(Assignment);
+
+
+

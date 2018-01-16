@@ -104,7 +104,7 @@ VALUES
     (1, FALSE, 'Volume of Sugar Molecule', 'https://www.dropbox.com/s/o7kkoofi0zbpoq0/Lab_FindVolumeofMoleculeofSugar.pdf', 'individual', 'individual', 'individual', 'individual', 'individual', 'individual', 'individual', 'individual', 'individual', 'individual');
 
 INSERT INTO titles
-    (assignment_id, editable)
+    (assignment_id, editable, content)
 VALUES
     (1, TRUE);
 INSERT INTO questions

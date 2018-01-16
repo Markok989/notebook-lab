@@ -30,7 +30,6 @@ var studentRoutes = (app) => {
             - id, first_name, last_name, user_id  belong to result.rows[0]
             
             - constant studentData has next properties:
-                - id: id,
                 - first_name: first_name,
                 - last_name: last_name,
                 - user_id: user_id
@@ -87,7 +86,6 @@ var studentRoutes = (app) => {
                 const { id, first_name, last_name, user_id } = result.rows[0];
 
                 const studentData = {
-                    id: id,
                     first_name: first_name,
                     last_name: last_name,
                     user_id: user_id
@@ -201,32 +199,169 @@ var studentRoutes = (app) => {
 
 
     /*
-    - app post with path '/api/student/assignments' and function with parameters: req and res
+    - app get with path '/api/student/assignment/:id' and function with parameters: req and res
          
-        - constant id belongs to req.session.user
-        
-        - dbStudent access to getAssignmentList(from student.js file), with parameter id,
-         - then with word 'then' with parameter result , access to function
+        - constant paramsID has value of req.params.id
+        - constant userID has value of req.session.user.id
+
+        - log userID and paramsID
+
+        - dbStudent access to getAssignment(from student.js file), with parameters userID and paramsID,
+        - then with word 'then' with parameter result , access to function
              
-             - log string 'get ass list' and result.rows,     
+            - log string 'assignment' and result.rows,     
         
+            - constant with arguments belongs to result.rows[0];
+
+
+
+            - constant title with propertues: title_editable, title_content, title_comments, title_grade
+                
+            - constant question with propertues: question_editable, question_content, question_comments, question_grade
+
+            - constant abstract with propertues: abstract_editable, abstract_content, abstract_comments, abstract_grade
+
+            - constant hypothesis with propertues: hypothesis_editable, hypothesis_content, hypothesis_comments, hypothesis_grade
+                
+            - constant variable with propertues: variable_editable, variable_content, variable_comments, variable_grade
+                
+            - constant material with propertues: material_editable, material_content, material_comments, material_grade
+        
+            - constant procedure with propertues: procedure_editable, procedure_content, procedure_comments, procedure_grade
+                
+            - constant data with propertues: data_editable, data_content, data_comments, data_grade
+                
+            - constant calculation with propertues: calculation_editable, calculation_content, calculation_comments, calculation_grade
+            
+            - constant discussion with propertues: discussion_editable, discussion_content, discussion_comments, discussion_grade
+            
+
                - res.json has properties:
                  - success has value true
-                 - assignments has value result.rows
-     */
-    app.post('/api/student/assignments', (req, res) => {
+                 - assignments has properties
+                        - title,
+                        - question,
+                        - abstract,
+                        - hypothesis,
+                        - variable,
+                        - material,
+                        - procedure,
+                        - data,
+                        - calculation,
+                        - discussion
+    */
+    app.get('/api/student/assignment/:id', (req, res) => {
 
-        const { id } = req.session.user;
+        const paramsID = req.params.id;
+        const userID = req.session.user.id;
 
-        dbStudent.getAssignmentList(id).then((result) => {
-            console.log('get ass list', result.rows);
+        console.log(userID, paramsID);
 
-            res.json({
-                success: true,
-                assignments: result.rows
-            });
+        dbStudent.getAssignment(userID, paramsID)
+            .then((result) => {
 
-        })
+                console.log('assignment', result.rows);
+
+                const {
+                    title_editable,
+                    title_content,
+                    title_comments,
+                    title_grade,
+                    question_editable,
+                    question_content,
+                    question_comments,
+                    question_grade,
+                    abstract_editable,
+                    abstract_content,
+                    abstract_comments,
+                    abstract_grade,
+                    hypothesis_editable,
+                    hypothesis_content,
+                    hypothesis_comments,
+                    hypothesis_grade,
+                    variable_editable,
+                    variable_content,
+                    variable_comments,
+                    variable_grade,
+                    material_editable,
+                    material_content,
+                    material_comments,
+                    material_grade,
+                    procedure_editable,
+                    procedure_content,
+                    procedure_comments,
+                    procedure_grade,
+                    data_editable,
+                    data_content,
+                    data_comments,
+                    data_grade,
+                    calculation_editable,
+                    calculation_content,
+                    calculation_comments,
+                    calculation_grade,
+                    discussion_editable,
+                    discussion_content,
+                    discussion_comments,
+                    discussion_grade
+                            } = result.rows[0];
+
+
+                const title = {
+                    title_editable, title_content, title_comments, title_grade
+                }
+
+                const question = {
+                    question_editable, question_content, question_comments, question_grade
+                }
+
+                const abstract = {
+                    abstract_editable, abstract_content, abstract_comments, abstract_grade
+                }
+
+                const hypothesis = {
+                    hypothesis_editable, hypothesis_content, hypothesis_comments, hypothesis_grade
+                }
+
+                const variable = {
+                    variable_editable, variable_content, variable_comments, variable_grade
+                }
+                const material = {
+                    material_editable, material_content, material_comments, material_grade
+                }
+
+                const procedure = {
+                    procedure_editable, procedure_content, procedure_comments, procedure_grade
+                }
+
+                const data = {
+                    data_editable, data_content, data_comments, data_grade
+                }
+
+                const calculation = {
+                    calculation_editable, calculation_content, calculation_comments, calculation_grade
+                }
+
+                const discussion = {
+                    discussion_editable, discussion_content, discussion_comments, discussion_grade
+                }
+
+                res.json({
+                    success: true,
+                    assignments: {
+                        title,
+                        question,
+                        abstract,
+                        hypothesis,
+                        variable,
+                        material,
+                        procedure,
+                        data,
+                        calculation,
+                        discussion
+                    }
+                });
+
+            })
 
     })
 

@@ -9,6 +9,11 @@
        
         - state have value of new Object
             - empty object and state has property of courses witgh action.newClassList
+  
+     - contition if action.type is strictly the same as 'GET_ASSIGNMENT'
+       
+        - state have value of new Object
+            - empty object and state has property of assignment witgh action.assignment
 
     - log string 'state' and state
     - return state
@@ -32,11 +37,11 @@ export default function (state = {}, action) {
         })
     }
 
-    // if(action.type === 'GET_ASSIGNMENTS') {
-    //     state = Object.assign({}, state,{
-    //         assignments: action.assignments
-    //     })
-    // }
+    if (action.type === 'GET_ASSIGNMENT') {
+        state = Object.assign({}, state, {
+            assignment: action.assignment
+        })
+    }
 
 
     console.log("state", state);
