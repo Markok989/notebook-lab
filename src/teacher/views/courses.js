@@ -9,7 +9,7 @@ import { saveNewCourse, getCourseList, getAllSections } from '../actions';
 import { Link } from 'react-router';
 import { filterList } from '../utils/makeList';
 import AddSection from '../components/addSection';
-import { Row, Col, Container, Modal, Button, Input } from 'react-materialize'
+import { Row, Col, Container, Card, Modal, Button, Input, Collapsible, CollapsibleItem } from 'react-materialize'
 
 // component TeacherCourses
 class TeacherCourses extends React.Component {
@@ -40,11 +40,13 @@ class TeacherCourses extends React.Component {
     // method for input,
     // [e.target.name] takes value of path e.target.value
     handleInput(e) {
+
         this.setState({
             [e.target.name]: e.target.value
         }, () => {
             console.log('state', this.state);
         });
+
     }
 
     // method submit,
@@ -57,15 +59,19 @@ class TeacherCourses extends React.Component {
     //      - set the state error has string 'Please provide a course name.'
     submit() {
         if (this.state.courseName) {
+
             this.props.dispatch(saveNewCourse(this.state.courseName));
             this.courseNameInput.value = '';
             this.setState({
                 courseName: ''
             });
+
         } else {
+
             this.setState({
                 error: 'Please provide a course name.'
             })
+
         }
     }
 
@@ -85,55 +91,49 @@ class TeacherCourses extends React.Component {
         return (
             <Container>
 
-                <header>
-                    Make a new course
-                </header>
+                <Card>
 
-                {
-                    /*
-                    state eroor and shows element p with property {this.state.error}
-                    */
-                }
-                {this.state.error && <p>{this.state.error}</p>}
+                    <Modal header="Add A Course" trigger={<Button>Add A Course</Button>}>
 
-                {
-                    /*
-                     eroor and shows element p with property {error}
-                    */
-                }
-                {error && <p>{error}</p>}
-                <Input
-                    type="text"
-                    cname="courseName"
-                    placeholder="Name of course"
-                    onChange={this.handleInput}
-                    ref={el => this.courseNameInput = el} />
+                        {
+                            /*
+                            state eroor and shows element p with property {this.state.error}
+                            */
+                        }
+                        {this.state.error && <p>{this.state.error}</p>}
 
-                <Button onClick={this.submit}>Save new course</Button>
+                        {
+                            /*
+                             eroor and shows element p with property {error}
+                            */
+                        }
+                        {error && <p>{error}</p>}
+
+                        <Input
+                            type="text"
+                            cname="courseName"
+                            placeholder="Name of course"
+                            onChange={this.handleInput}
+                            ref={el => this.courseNameInput = el} />
+
+                        <Button onClick={this.submit}>Save new course</Button>
+
+                    </Modal>
+
+                </Card>
                 {
                     /*
                     - courses and 
-                    - element div with properties header and ul with property {courseList}
+                    - element Collapsible with property {courseList}
                     */
                     courses &&
-                    <div>
-                        <header>
-                            Course List
-                        </header>
-                        <ul>
-                            {courseList}
-                        </ul>
-                    </div>
+                    <Collapsible>
+
+                        {courseList}
+
+                    </Collapsible>
                 }
-                {
-                    /*  
-                      <input type="text" name="courseName" placeholder="Name of course" onChange={this.handleInput} />
-                      <input type="text" name="courseName" placeholder="Name of course" onChange={this.handleInput}
-                          ref={el => this.courseNameInput = el} />
-      
-                      <button type="submit" onClick={this.submit}>Save new course</button>
-                    */
-                }
+
             </Container>
         );
     }
@@ -181,8 +181,8 @@ function filterListByCourseId(sections, courseId) {
         - return:
             - element li with attribute key {item.id.toString()} (use item from map's parameter),
                 - Link element with path to={`/teacher/section/${item.id}` and property {item.name}
-        - return element ul with property {itemList}
-*/
+                - return element ul with property {itemList}
+                */
 function makeList(items) {
     var itemList = items.map((item) => {
         console.log('item', item);
@@ -212,36 +212,46 @@ function makeList(items) {
             - return :
                 - element li with attribute key={course.id.toString()} and properties:
                     - Linik element with attribute to/path {link} and property {course.name}
-                    - component AddSection with attribute courseId={course.id}
-                    - element ul with property {sectionList}
-        
-        - else
+                - component AddSection with attribute courseId={course.id}
+                - element ul with property {sectionList}
+
+                - else
             - return:
                 - element li with attribute key={course.id.toString()} and property:
                     - Linik element with attribute to/path {link} and property {course.name}
 
-*/
+                */
 function makeCourseList(courses, sections) {
+
     return courses.map((course) => {
-        var link = '/teacher/course/' + course.id;
+
         if (sections) {
+
             var sectionsForThisCourse = filterListByCourseId(sections, course.id);
             var sectionList = makeList(sectionsForThisCourse);
+
             return (
-                <li key={course.id.toString()}>
-                    <Link to={link}>{course.name}</Link>
+
+                <CollapsibleItem header={course.name}>
+
                     <AddSection courseId={course.id} />
                     <ul>
                         {sectionList}
                     </ul>
-                </li>
+                    
+                </CollapsibleItem>
+
             );
         } else {
+
             return (
+
                 <li key={course.id.toString()}>
                     <Link to={link}>{course.name}</Link>
                 </li>
+
             );
         }
+
     });
 }
