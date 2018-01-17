@@ -322,7 +322,9 @@ class TeacherNewAssignment extends React.Component {
             return (
                 <div>
 
-                    <Card title="To which classes should the assignment be added?">
+                    <Row>
+
+                        <h5>To which classes should the assignment be added?</h5>
 
                         {
                             /*
@@ -338,11 +340,11 @@ class TeacherNewAssignment extends React.Component {
                         }
                         {makeSectionList(sections, this.handleSectionInput)}
 
-                    </Card>
+                    </Row>
 
                     <Row>
 
-                        <h3> Lab Report Basics</h3>
+                        <h5> Lab Report Basics</h5>
 
                         <Input m={12} type="text" name="assignmentName"
                             onChange={this.handleInput} label="Assignment Name" />
@@ -361,7 +363,7 @@ class TeacherNewAssignment extends React.Component {
 
                     <Row>
 
-                        <h3>Assignment Details</h3>
+                        <h5>Assignment Details</h5>
 
                         {assignmentOptions}
 
