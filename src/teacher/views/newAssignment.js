@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { getAllSections, saveNewAssignment } from '../actions';
+import { Row, Col, Button, Input, Card, Collection, CollectionItem } from 'react-materialize';
 
 // TeacherNewAssignment component
 class TeacherNewAssignment extends React.Component {
@@ -289,73 +290,84 @@ class TeacherNewAssignment extends React.Component {
         // variable assignmentOptions has value :
         // function: which on has div element with properties
         var assignmentOptions =
-            <div >
-                <div style={assignmentGridStyle}>
-                    <p>Include</p>
-                    <p>Category</p>
-                    <p>Default values</p>
-                    <p>Students can edit?</p>
-                    <p>Shared amongst groups?</p>
-                </div>
+            <Row>
 
-                {createAssignmentCategoryDiv('Title', events)}
-                {createAssignmentCategoryDiv('Question', events)}
-                {createAssignmentCategoryDiv('Abstract', events)}
-                {createAssignmentCategoryDiv('Hypothesis', events)}
-                {createAssignmentCategoryDiv('Variables', events)}
-                {createAssignmentCategoryDiv('Materials', events)}
-                {createAssignmentCategoryDiv('Procedures', events)}
-                {createAssignmentCategoryDiv('Data', events)}
-                {createAssignmentCategoryDiv('Calculations', events)}
-                {createAssignmentCategoryDiv('Discussion', events)}
+                <Row>
 
-            </div>;
-        /* 
+                    {createAssignmentCategoryDiv('Title', events)}
+                    {createAssignmentCategoryDiv('Question', events)}
+                    {createAssignmentCategoryDiv('Abstract', events)}
+                    {createAssignmentCategoryDiv('Hypothesis', events)}
+                    {createAssignmentCategoryDiv('Variables', events)}
+                    {createAssignmentCategoryDiv('Materials', events)}
+                    {createAssignmentCategoryDiv('Procedures', events)}
+                    {createAssignmentCategoryDiv('Data', events)}
+                    {createAssignmentCategoryDiv('Calculations', events)}
+                    {createAssignmentCategoryDiv('Discussion', events)}
+
+                </Row>
+
+            </Row>;
+
+        /*
         - contition if not sections
             - return null
-        - else 
+        - else
             - return jsx of component
         */
         if (!sections) {
             return null;
         } else {
+
             return (
                 <div>
-                    <div>Section List</div>
-                    {
-                        /*
-                        - shows this.state.sectionError and p element with property
-                          {this.state.sectionError}
-                        */
-                    }
-                    {this.state.sectionError && <p>{this.state.sectionError}</p>}
-                    {
-                        /*
-                        - function makeSectionList use sections and property sections of this cpomponent 
-                        */
-                    }
-                    {makeSectionList(sections, this.handleSectionInput)}
 
-                    <label forHtml="assignmentName">Assignment Name</label>
-                    <input type="text" name="assignmentName" onChange={this.handleInput} />
+                    <Card title="To which classes should the assignment be added?">
 
-                    <label forHtml="due">Due Date (optional)</label>
-                    <input type="text" name="due" onChange={this.handleInput} />
+                        {
+                            /*
+                            - shows this.state.sectionError and p element with property
+                              {this.state.sectionError}
+                            */
+                        }
+                        {this.state.sectionError && <p>{this.state.sectionError}</p>}
+                        {
+                            /*
+                            - function makeSectionList use sections and property sections of this cpomponent 
+                            */
+                        }
+                        {makeSectionList(sections, this.handleSectionInput)}
 
-                    <label forHtml="instructions">Instructions (optional)</label>
-                    <input type="text" name="instructions" onChange={this.handleInput} />
+                    </Card>
 
-                    <label forHtml="group_lab">Group Lab?</label>
-                    <input type="checkbox" name="group_lab" onChange={this.handleInput} />
+                    <Row>
 
-                    <h3>Assignment Details</h3>
+                        <h3> Lab Report Basics</h3>
 
-                    {
-                        /*
-                            variable assignmentOptions
-                        */
-                    }
-                    {assignmentOptions}
+                        <Input m={12} type="text" name="assignmentName"
+                            onChange={this.handleInput} label="Assignment Name" />
+
+                        <Input m={6} type="text" name="due"
+                            onChange={this.handleInput} label="Due Date YYYY-MM-DD (optional)" />
+
+                        <Input m={6} type="checkbox" name="group_lab"
+                            onChange={this.handleInput} label="Group Lab?" />
+
+                        <Input m={12} type="textarea" name="instructions"
+                            onChange={this.handleInput} label="Instructions (optional)" />
+
+
+                    </Row>
+
+                    <Row>
+
+                        <h3>Assignment Details</h3>
+
+                        {assignmentOptions}
+
+                        <Button onClick={this.submit}>Save assignment</Button>
+
+                    </Row>
 
                 </div>
             );
@@ -380,24 +392,25 @@ export default connect(mapStateToProps)(TeacherNewAssignment);
 /*
 - function createAssignmentCategoryDiv with parameter category
     - return div element with properties
-        - 
+        -
 */
 function createAssignmentCategoryDiv(category, events) {
     return (
-        <div style={assignmentGridStyle}>
-            <input type="checkbox" name={`${category.toLowerCase()}`} onChange={events.include} />
+        <Row>
 
-            <label forHtml={`${category}`}>{`${category}`}</label>
+            <Input m={2} type="checkbox" name={`${category.toLowerCase()}`}
+                onChange={events.include} label={category} />
 
-            <input type="text" name={`defaults_${category.toLowerCase()}`}
-                placeholder="Type default text here that will appear on all student assignments"
-                onChange={events.defaults} style={inputStyle} />
+            <Input m={2} type="checkbox" name={`${category.toLowerCase()}Editable`}
+                onChange={events.editable} label={`Editable`} />
 
-            <input type="checkbox" name={`${category.toLowerCase()}Editable`} onChange={events.editable} />
+            <Input m={2} type="checkbox" name={`${category.toLowerCase()}Share`}
+                onChange={events.shared} label={`Share ${category}`} />
 
-            <input type="checkbox" name={`${category.toLowerCase()}Share`} onChange={events.shared} />
+            <Input m={6} type="text" name={`defaults_${category.toLowerCase()}`}
+                placeholder={`Default ${category}. Will appear on all student assignments`} onChange={events.defaults} />
 
-        </div >
+        </Row>
     );
 }
 
@@ -405,9 +418,9 @@ function createAssignmentCategoryDiv(category, events) {
 - function makeSectionList with parameter items
     - variable itemList has value of item with map with parameter item
         - log parameter item
-        - return 
+        - return
             - element li with attribute key={item.id.toString()}
-                - input element
+                    - input element
     - return element ul with property {itemList}
 */
 function makeSectionList(items, save) {
@@ -416,15 +429,13 @@ function makeSectionList(items, save) {
         console.log(item);
 
         return (
-            <li key={item.id.toString()}>
-                <input type="checkbox" name={`section${item.id}`} onChange={save} />{item.name}
-            </li>
+            <Input type="checkbox" name={`sectioncb${item.id}`} onChange={save} label={item.name} />
         );
     });
     return (
-        <ul>
+        <Row>
             {itemList}
-        </ul>
+        </Row>
     );
 }
 
