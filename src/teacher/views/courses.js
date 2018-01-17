@@ -9,7 +9,7 @@ import { saveNewCourse, getCourseList, getAllSections } from '../actions';
 import { Link } from 'react-router';
 import { filterList } from '../utils/makeList';
 import AddSection from '../components/addSection';
-import { Row, Col, Container, SideNav, SideNavItem, Button, Input } from 'react-materialize'
+import { Row, Col, Container, Modal, Button, Input } from 'react-materialize'
 
 // component TeacherCourses
 class TeacherCourses extends React.Component {
