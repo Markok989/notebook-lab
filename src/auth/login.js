@@ -80,7 +80,7 @@ export default class Login extends React.Component {
 
             <Row className="reg-input-container">
 
-                <Col m={6} s={12}>
+                <Col m={8} s={12}>
 
                     <Card className='darken-1' textClassName='white-text' title='Login'>
 

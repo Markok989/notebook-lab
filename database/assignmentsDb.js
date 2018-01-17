@@ -52,13 +52,13 @@ function saveNewStudentReport(data) {
 
 /*
 - function newTitle with parameter data
-    - log string 'TEACHER_DB newAbstract',
+    - log string 'TEACHER_DB newTitle',
     - queryStr has value of string `INSERT INTO titles (assignment_id, group_id, editable, content) VALUES ($1, $2, $3, $4) RETURNING id`
     - return db query with parameters queryStr and data
 */
 function newTitle(data) {
 
-    console.log('TEACHER_DB newAbstract');
+    console.log('TEACHER_DB newTitle');
     let queryStr = `INSERT INTO titles (assignment_id, group_id, editable, content) VALUES ($1, $2, $3, $4) RETURNING id`;
     return db.query(queryStr, data);
 
@@ -67,13 +67,13 @@ function newTitle(data) {
 
 /*
 - function newQuestion with parameter data
-    - log string 'TEACHER_DB newAbstract',
+    - log string 'TEACHER_DB newQuestion',
     - queryStr has value of string `INSERT INTO questions (assignment_id, group_id, editable, content) VALUES ($1, $2, $3, $4) RETURNING id`
     - return db query with parameters queryStr and data
 */
 function newQuestion(data) {
 
-    console.log('TEACHER_DB newAbstract');
+    console.log('TEACHER_DB newQuestion');
     let queryStr = `INSERT INTO questions (assignment_id, group_id, editable, content) VALUES ($1, $2, $3, $4) RETURNING id`;
     return db.query(queryStr, data);
 
@@ -97,13 +97,13 @@ function newAbstract(data) {
 
 /*
 - function newHypothesis with parameter data
-    - log string 'TEACHER_DB newAbstract',
+    - log string 'TEACHER_DB newHypothesis',
     - queryStr has value of string `INSERT INTO hypotheses (assignment_id, group_id, editable, content) VALUES ($1, $2, $3, $4) RETURNING id`
     - return db query with parameters queryStr and data
 */
 function newHypothesis(data) {
 
-    console.log('TEACHER_DB newAbstract');
+    console.log('TEACHER_DB newHypothesis');
     let queryStr = `INSERT INTO hypotheses (assignment_id, group_id, editable, content) VALUES ($1, $2, $3, $4) RETURNING id`;
     return db.query(queryStr, data);
 
@@ -112,13 +112,13 @@ function newHypothesis(data) {
 
 /*
 - function newVariables with parameter data
-    - log string 'TEACHER_DB newAbstract',
+    - log string 'TEACHER_DB newVariables',
     - queryStr has value of string `INSERT INTO variables (assignment_id, group_id, editable, content) VALUES ($1, $2, $3, $4) RETURNING id`
     - return db query with parameters queryStr and data
 */
 function newVariables(data) {
 
-    console.log('TEACHER_DB newAbstract');
+    console.log('TEACHER_DB newVariables');
     let queryStr = `INSERT INTO variables (assignment_id, group_id, editable, content) VALUES ($1, $2, $3, $4) RETURNING id`;
     return db.query(queryStr, data);
 
@@ -127,13 +127,13 @@ function newVariables(data) {
 
 /*
 - function newMaterials with parameter data
-    - log string 'TEACHER_DB newAbstract',
+    - log string 'TEACHER_DB newMaterials',
     - queryStr has value of string `INSERT INTO materials (assignment_id, group_id, editable, content) VALUES ($1, $2, $3, $4) RETURNING id`
     - return db query with parameters queryStr and data
 */
 function newMaterials(data) {
 
-    console.log('TEACHER_DB newAbstract');
+    console.log('TEACHER_DB newMaterials');
     let queryStr = `INSERT INTO materials (assignment_id, group_id, editable, content) VALUES ($1, $2, $3, $4) RETURNING id`;
     return db.query(queryStr, data);
 
@@ -142,13 +142,13 @@ function newMaterials(data) {
 
 /*
 - function newProcedure with parameter data
-    - log string 'TEACHER_DB newAbstract',
+    - log string 'TEACHER_DB newProcedure',
     - queryStr has value of string `INSERT INTO procedures (assignment_id, group_id, editable, content) VALUES ($1, $2, $3, $4) RETURNING id`
     - return db query with parameters queryStr and data
 */
 function newProcedure(data) {
 
-    console.log('TEACHER_DB newAbstract');
+    console.log('TEACHER_DB newProcedure');
     let queryStr = `INSERT INTO procedures (assignment_id, group_id, editable, content) VALUES ($1, $2, $3, $4) RETURNING id`;
     return db.query(queryStr, data);
 
@@ -157,13 +157,13 @@ function newProcedure(data) {
 
 /*
 - function newData with parameter data
-    - log string 'TEACHER_DB newAbstract',
+    - log string 'TEACHER_DB newData',
     - queryStr has value of string `INSERT INTO data (assignment_id, group_id, editable, content) VALUES ($1, $2, $3, $4) RETURNING id`
     - return db query with parameters queryStr and data
 */
 function newData(data) {
 
-    console.log('TEACHER_DB newAbstract');
+    console.log('TEACHER_DB newData');
     let queryStr = `INSERT INTO data (assignment_id, group_id, editable, content) VALUES ($1, $2, $3, $4) RETURNING id`;
     return db.query(queryStr, data);
 
@@ -172,13 +172,13 @@ function newData(data) {
 
 /*
 - function newCalculations with parameter data
-    - log string 'TEACHER_DB newAbstract',
+    - log string 'TEACHER_DB newCalculations',
     - queryStr has value of string `INSERT INTO calculations (assignment_id, group_id, editable, content) VALUES ($1, $2, $3, $4) RETURNING id`
     - return db query with parameters queryStr and data
 */
 function newCalculations(data) {
 
-    console.log('TEACHER_DB newAbstract');
+    console.log('TEACHER_DB newCalculations');
     let queryStr = `INSERT INTO calculations (assignment_id, group_id, editable, content) VALUES ($1, $2, $3, $4) RETURNING id`;
     return db.query(queryStr, data);
 
@@ -187,13 +187,13 @@ function newCalculations(data) {
 
 /*
 - function newDiscussion with parameter data
-    - log string 'TEACHER_DB newAbstract',
+    - log string 'TEACHER_DB newDiscussion',
     - queryStr has value of string `INSERT INTO discussions (assignment_id, group_id, editable, content) VALUES ($1, $2, $3, $4) RETURNING id`
     - return db query with parameters queryStr and data
 */
 function newDiscussion(data) {
 
-    console.log('TEACHER_DB newAbstract');
+    console.log('TEACHER_DB newDiscussion');
     let queryStr = `INSERT INTO discussions (assignment_id, group_id, editable, content) VALUES ($1, $2, $3, $4) RETURNING id`;
     return db.query(queryStr, data);
 
@@ -249,6 +249,8 @@ module.exports.newDiscussion = newDiscussion;
 // });
 
 //saveNewStudentReport([])
+
+
 
 /********** ASSIGNMENTS *********/
 

@@ -8,7 +8,7 @@ import {
     hashHistory
 } from 'react-router';
 import axios from 'axios';
-//import { error } from 'util';
+import { Row, Col, Input, Button, Card, Container } from 'react-materialize';
 
 // component Registration
 export default class Registration extends React.Component {
@@ -161,25 +161,27 @@ export default class Registration extends React.Component {
     render() {
 
         const studentRegistration = (
-            <div>
-                <h3 className="singup-title">PLEASE SING UP</h3>
-                <h4>For Student</h4>
+
+            <Card s={12} m={4} title='Create a New Student Account'>
+
                 {/* onChange - use method handleChange */}
-                <input className="reg-input" name="first_name" placeholder="First Name" onChange={(e) => this.handleChange(e)} />
-                <input className="reg-input" name="last_name" placeholder="Last Name" onChange={(e) => this.handleChange(e)} />
-                <input className="reg-input" name="email" placeholder="E-mail" onChange={(e) => this.handleChange(e)} />
-                <input className="reg-input" name="password" placeholder="Password" type="password" onChange={(e) => this.handleChange(e)} />
-                <input className="reg-input" name="course" placeholder="Course Code" onChange={(e) => this.handleChange(e)} />
+                <input className="reg-input" name="first_name" placeholder="First Name" onChange={e => this.handleChange(e)} />
+                <input className="reg-input" name="last_name" placeholder="Last Name" onChange={e => this.handleChange(e)} />
+                <input className="reg-input" name="email" placeholder="E-mail" onChange={e => this.handleChange(e)} />
+                <input className="reg-input" name="password" placeholder="Password" type="password" onChange={e => this.handleChange(e)} />
+                <input className="reg-input" name="course" placeholder="Course Code" onChange={e => this.handleChange(e)} />
 
                 {/* onClick - use method handleStudentRegistration */}
-                <button className="reg-button" onClick={(e) => this.handleStudentRegistration(e)}> Submit </button>
-            </div>
+                <Button className="reg-button" onClick={e => this.handleStudentRegistration(e)}> Submit </Button >
+            </Card>
+
         );
+
+
         const teacherRegistration = (
-            <div>
 
-                <h3 className="singup-title">PLEASE SING UP</h3>
-                <h4>For Teacher</h4>
+            <Card title='Create a New Teacher Account'>
+
                 {/* onChange - use method handleChange */}
                 <input className="reg-input" name="first_name" placeholder="First Name" onChange={(e) => this.handleChange(e)} />
                 <input className="reg-input" name="last_name" placeholder="Last Name" onChange={(e) => this.handleChange(e)} />
@@ -187,23 +189,52 @@ export default class Registration extends React.Component {
                 <input className="reg-input" name="password" placeholder="Password" type="password" onChange={(e) => this.handleChange(e)} />
 
                 {/* onClick - use method handleStudentRegistration */}
-                <button className="reg-button" onClick={(e) => this.handleTeacherRegistration(e)}> Submit </button>
+                <Button onClick={e => this.handleTeacherRegistration(e)}> Submit </Button>
 
-            </div>
+            </Card>
+
         );
+
         console.log(this.handleStudentRegistration);
+
         return (
-            <div>
 
-                <h3>Please select one of the following to register:</h3>
+            <Container>
 
-                {/* onClick - use method handleTeacherSubmit */}
-                <button className="teacher-button" onClick={e => this.handleTeacherSubmit(e)}> TEACHER </button>
-                {'       '}
-                {/* onClick - use method handleStudentSubmit */}
-                <button className="teacher-button" onClick={e => this.handleStudentSubmit(e)}> STUDENT </button>
+                <Card className="darken-1" title="Please select one of the following to register">
+
+                    <Row>
+
+                        {/* onClick - use method handleTeacherSubmit */}
+                        <Col s={2} >
+                            <Button
+                                waves='red'
+                                className="teacher-button"
+                                onClick={e => this.handleTeacherSubmit(e)}
+                            >
+                                TEACHER
+                                </Button>
+                        </Col>
+
+                        {'       '}
+
+                        {/* onClick - use method handleStudentSubmit */}
+                        <Col s={4}>
+                            <Button
+                                className="teacher-button"
+                                onClick={e => this.handleStudentSubmit(e)}
+                            >
+                                STUDENT
+                             </Button>
+                        </Col>
+
+
+                    </Row>
+
+                </Card>
 
                 {this.state.role == 'student' && studentRegistration}
+
                 {this.state.role === 'teacher' && teacherRegistration}
 
                 <br />
@@ -211,7 +242,13 @@ export default class Registration extends React.Component {
 
                 <div>If already a member, please<Link to="/login"> LOGIN</Link></div>
 
-            </div>
+
+            </Container>
+
         );
     }
+}
+
+var btnStyle = {
+    paddingRight: '10px'
 }
