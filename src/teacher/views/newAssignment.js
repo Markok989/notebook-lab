@@ -344,7 +344,7 @@ class TeacherNewAssignment extends React.Component {
 
                     <Row>
 
-                        <h5> Lab Report Basics</h5>
+                        <h5>Assignment Basics</h5>
 
                         <Input m={12} type="text" name="assignmentName"
                             onChange={this.handleInput} label="Assignment Name" />
