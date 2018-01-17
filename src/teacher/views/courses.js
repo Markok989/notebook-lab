@@ -4,7 +4,7 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
-import { saveNewCourse, getCourseList, getAllSections } from '../actions';
+import { saveNewCourse, getCourseList, getAllSections, Collection, CollectionItem } from '../actions';
 
 import { Link } from 'react-router';
 import { filterList } from '../utils/makeList';
@@ -238,7 +238,7 @@ function makeCourseList(courses, sections) {
                     <ul>
                         {sectionList}
                     </ul>
-                    
+
                 </CollapsibleItem>
 
             );

@@ -69,7 +69,7 @@ class AddSection extends React.Component {
         const { courseId, error } = this.props;
 
         return (
-            <Card>
+            <div>
 
                 {
                     /*
@@ -113,7 +113,7 @@ class AddSection extends React.Component {
 
                 </Modal>
                 
-            </Card>
+            </div>
         );
     }
 }

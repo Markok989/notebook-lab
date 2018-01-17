@@ -206,7 +206,7 @@ export default class Registration extends React.Component {
                     <Row>
 
                         {/* onClick - use method handleTeacherSubmit */}
-                        <Col s={12} m={4} l={2}>
+                        <Col s={12} m={3}>
                             <Button
                                 className="teacher-button"
                                 onClick={e => this.handleTeacherSubmit(e)}
@@ -218,7 +218,7 @@ export default class Registration extends React.Component {
                         {'       '}
 
                         {/* onClick - use method handleStudentSubmit */}
-                        <Col s={12} m={4} l={2}>
+                        <Col s={12} m={3}>
                             <Button
                                 className="teacher-button"
                                 onClick={e => this.handleStudentSubmit(e)}
