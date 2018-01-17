@@ -9,6 +9,7 @@ import { saveNewCourse, getCourseList, getAllSections } from '../actions';
 import { Link } from 'react-router';
 import { filterList } from '../utils/makeList';
 import AddSection from '../components/addSection';
+import { Row, Col, Container, SideNav, SideNavItem, Button, Input } from 'react-materialize'
 
 // component TeacherCourses
 class TeacherCourses extends React.Component {
@@ -82,7 +83,8 @@ class TeacherCourses extends React.Component {
         }
 
         return (
-            <div>
+            <Container>
+
                 <header>
                     Make a new course
                 </header>
@@ -100,14 +102,14 @@ class TeacherCourses extends React.Component {
                     */
                 }
                 {error && <p>{error}</p>}
-                <input
+                <Input
                     type="text"
                     cname="courseName"
                     placeholder="Name of course"
                     onChange={this.handleInput}
                     ref={el => this.courseNameInput = el} />
 
-                <button type="submit" onClick={this.submit}>Save new course</button>
+                <Button onClick={this.submit}>Save new course</Button>
                 {
                     /*
                     - courses and 
@@ -132,7 +134,7 @@ class TeacherCourses extends React.Component {
                       <button type="submit" onClick={this.submit}>Save new course</button>
                     */
                 }
-            </div>
+            </Container>
         );
     }
 }

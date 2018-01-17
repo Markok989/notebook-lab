@@ -6,7 +6,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import { Link } from 'react-router';
 import Logout from '../../auth/logout';
 import { getTeacherInfo } from '../actions';
-import { Navbar, NavItem, Row, Col } from 'react-materialize';
+import { Navbar, NavItem, Row, Col, Container, SideNav, SideNavItem, Button } from 'react-materialize';
 
 //import { connect } from 'react-redux';
 
@@ -45,7 +45,8 @@ class App extends React.Component {
             //});
 
             return (
-                <div>
+                <Container>
+
                     <Navbar>
 
                         <NavItem href="/teacher">Home</NavItem>
@@ -73,7 +74,7 @@ class App extends React.Component {
 
                     </Row>
 
-                </div>
+                </Container>
             );
         }
     };

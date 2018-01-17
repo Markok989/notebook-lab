@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { saveNewSection } from '../actions';
+import { Row, Col, Card, SideNav, SideNavItem, Button, Input } from 'react-materialize';
 
 // Add Section Component
 class AddSection extends React.Component {
@@ -68,7 +69,7 @@ class AddSection extends React.Component {
         const { courseId, error } = this.props;
 
         return (
-            <div>
+            <Card title="Make a New Section">
                 {
                     /*
                     - error and show paragraph element with property {error}
@@ -115,7 +116,8 @@ class AddSection extends React.Component {
                                 - sectionNameInput has value of el
                             */
                         }
-                        <input
+                        <Input
+                            s={12}
                             type="text"
                             name="sectionName"
                             placeholder="Section Name"
@@ -130,7 +132,8 @@ class AddSection extends React.Component {
                             onChange use method handleInput
                             */
                         }
-                        <input
+                        <Input
+                            s={6}
                             type="text"
                             name="startDate"
                             placeholder="Start Date (optional)"
@@ -145,7 +148,8 @@ class AddSection extends React.Component {
                             onChange use method handleInput
                             */
                         }
-                        <input
+                        <Input
+                            s={6}
                             type="text"
                             name="endDate"
                             placeholder="End Date (optional)"
@@ -157,10 +161,10 @@ class AddSection extends React.Component {
                                 onClick use method submit
                             */
                         }
-                        <button onClick={this.submit}>Save New Course</button>
+                        <Button onClick={this.submit}>Save New Course</Button>
                     </div>
                 }
-            </div>
+            </Card>
         );
     }
 }
