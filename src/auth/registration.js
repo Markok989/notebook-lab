@@ -165,11 +165,11 @@ export default class Registration extends React.Component {
             <Card s={12} m={4} title='Create a New Student Account'>
 
                 {/* onChange - use method handleChange */}
-                <input className="reg-input" name="first_name" placeholder="First Name" onChange={e => this.handleChange(e)} />
-                <input className="reg-input" name="last_name" placeholder="Last Name" onChange={e => this.handleChange(e)} />
-                <input className="reg-input" name="email" placeholder="E-mail" onChange={e => this.handleChange(e)} />
-                <input className="reg-input" name="password" placeholder="Password" type="password" onChange={e => this.handleChange(e)} />
-                <input className="reg-input" name="course" placeholder="Course Code" onChange={e => this.handleChange(e)} />
+                <Input className="reg-input" name="first_name" placeholder="First Name" onChange={e => this.handleChange(e)} />
+                <Input className="reg-input" name="last_name" placeholder="Last Name" onChange={e => this.handleChange(e)} />
+                <Input className="reg-input" name="email" placeholder="E-mail" onChange={e => this.handleChange(e)} />
+                <Input className="reg-input" name="password" placeholder="Password" type="password" onChange={e => this.handleChange(e)} />
+                <Input className="reg-input" name="course" placeholder="Course Code" onChange={e => this.handleChange(e)} />
 
                 {/* onClick - use method handleStudentRegistration */}
                 <Button className="reg-button" onClick={e => this.handleStudentRegistration(e)}> Submit </Button >
@@ -183,10 +183,10 @@ export default class Registration extends React.Component {
             <Card title='Create a New Teacher Account'>
 
                 {/* onChange - use method handleChange */}
-                <input className="reg-input" name="first_name" placeholder="First Name" onChange={(e) => this.handleChange(e)} />
-                <input className="reg-input" name="last_name" placeholder="Last Name" onChange={(e) => this.handleChange(e)} />
-                <input className="reg-input" name="email" placeholder="E-mail" onChange={(e) => this.handleChange(e)} />
-                <input className="reg-input" name="password" placeholder="Password" type="password" onChange={(e) => this.handleChange(e)} />
+                <Input className="reg-input" name="first_name" placeholder="First Name" onChange={(e) => this.handleChange(e)} />
+                <Input className="reg-input" name="last_name" placeholder="Last Name" onChange={(e) => this.handleChange(e)} />
+                <Input className="reg-input" name="email" placeholder="E-mail" onChange={(e) => this.handleChange(e)} />
+                <Input className="reg-input" name="password" placeholder="Password" type="password" onChange={(e) => this.handleChange(e)} />
 
                 {/* onClick - use method handleStudentRegistration */}
                 <Button onClick={e => this.handleTeacherRegistration(e)}> Submit </Button>
@@ -206,9 +206,8 @@ export default class Registration extends React.Component {
                     <Row>
 
                         {/* onClick - use method handleTeacherSubmit */}
-                        <Col s={2} >
+                        <Col s={12} m={4} l={2}>
                             <Button
-                                waves='red'
                                 className="teacher-button"
                                 onClick={e => this.handleTeacherSubmit(e)}
                             >
@@ -219,7 +218,7 @@ export default class Registration extends React.Component {
                         {'       '}
 
                         {/* onClick - use method handleStudentSubmit */}
-                        <Col s={4}>
+                        <Col s={12} m={4} l={2}>
                             <Button
                                 className="teacher-button"
                                 onClick={e => this.handleStudentSubmit(e)}

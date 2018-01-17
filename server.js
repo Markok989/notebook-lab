@@ -58,7 +58,7 @@ teacherRoutes(app);
 // 404.html
 app.get('*', mw.loggedInCheck, function (req, res) {
     console.log('file not found');
-    return res.sendFile(__dirname + './public/404.html');
+    return res.sendFile(__dirname + '/public/404.html');
 });
 
 app.listen(7070, function () {

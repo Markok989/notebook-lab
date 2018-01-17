@@ -1,20 +1,24 @@
 import React from 'react';
+import { MediaBox, Container } from 'react-materialize';
 
 export default function (props) {
     // console.log('ucitaj')
     return (
-        <div id="welcome">
+        <Container>
 
-            <figure>
-                <img src="/public/images/flaskIcon.png" alt="DreamLab NB log pink flask" />
-            </figure>
+            <div id="welcome">
 
-            <h3>CloudNotebook</h3>
+                <MediaBox src="/public/images/flaskIcon.png" caption="Logo" width="50px" />
 
-            {
-                // shows property of chhildren components
-            }
-            {props.children}
-        </div>
+                <h3>CloudNotebook</h3>
+
+                {
+                    // shows property of chhildren components
+                }
+                {props.children}
+
+            </div>
+
+        </Container>
     )
 }

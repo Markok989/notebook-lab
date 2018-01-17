@@ -82,7 +82,7 @@ export default class Login extends React.Component {
 
                 <Col m={8} s={12}>
 
-                    <Card className='darken-1' textClassName='white-text' title='Login'>
+                    <Card className='darken-1' title='Login'>
 
                         {
                             /*
