@@ -49,16 +49,16 @@ class Assignment extends React.Component {
         var assignmentOptions =
 
             <div>
-                {editable(assignment.title)}
-                {editable(assignment.question)}
-                {editable(assignment.abstract)}
-                {editable(assignment.hypothesis)}
-                {editable(assignment.variable)}
-                {editable(assignment.material)}
-                {editable(assignment.procedure)}
-                {editable(assignment.data)}
-                {editable(assignment.calculation)}
-                {editable(assignment.discussion)}
+                {editable(assignment.title, 'title')}
+                {editable(assignment.question, 'question')}
+                {editable(assignment.abstract, 'abstract')}
+                {editable(assignment.hypothesis, 'hypothesis')}
+                {editable(assignment.variable, 'variable')}
+                {editable(assignment.material, 'material')}
+                {editable(assignment.procedure, 'procedure')}
+                {editable(assignment.data, 'data')}
+                {editable(assignment.calculation, 'calculation')}
+                {editable(assignment.discussion, 'discussion')}
             </div>;
 
         return (
@@ -75,28 +75,44 @@ class Assignment extends React.Component {
 }
 
 /*
-- function editable with parameter section
+- function editable with parameters section and category
     
-    - log parameter section
+    - log parameter section[section + '_editable']
 
-    - condition if section with parmaters [sections +(plus) string '_editable' ]
+    - condition if section with parmaters [category +(plus) string '_editable' ]
+
+        - log string 'section true'
         
         - return
             - form element with property
     
+    - else if condition
+      section[category + '_editable'] is strictly the same as null
+      OR(||)
+      section[category + '_content'] is strictly the same as null null
+
+        return
+    
     - else 
 
-        - div element with property
+        - log string: 'cannot edit' and  section[category + '_content'],
+
+        -return
+
+            - div element with property 
 */
-function editable(section) {
+function editable(section, category) {
 
-    console.log(section);
+    console.log(section[section + '_editable']);
 
-    if (section[section + '_editable']) {
+    if (section[category + '_editable']) {
+
+        console.log('section true');
 
         return (
+
             <form>
-                <label>section:</label>
+                <label>{category}:</label>
 
                 <textarea name="content" placeholder="Type here.." cols="30" rows="5" onChange={e => this.handleChange(e)} />
 
@@ -105,10 +121,22 @@ function editable(section) {
 
         )
 
+    } else if (section[category + '_editable'] === null || section[category + '_content'] === null) {
+
+        return
+
     } else {
-        <div>
-            <p>section[section + '_content']</p>
-        </div>
+
+        console.log('cannot edit', section[category + '_content']);
+
+        return (
+
+            <div>
+                <h3>{category}:</h3>
+                <p>{section[category + '_content']}</p>
+            </div>
+
+        )
     }
 
 }

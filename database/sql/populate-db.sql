@@ -101,12 +101,12 @@ VALUES
 INSERT INTO assignments
     (section_id, group_lab, name, instructions, title, abstract, question, hypothesis, variables, materials, procedures, data, calculations, discussion)
 VALUES
-    (1, FALSE, 'Volume of Sugar Molecule', 'https://www.dropbox.com/s/o7kkoofi0zbpoq0/Lab_FindVolumeofMoleculeofSugar.pdf', 'individual', 'individual', 'individual', 'individual', 'individual', 'individual', 'individual', 'individual', 'individual', 'individual');
+    (2, FALSE, 'Volume of Sugar Molecule', 'https://www.dropbox.com/s/o7kkoofi0zbpoq0/Lab_FindVolumeofMoleculeofSugar.pdf', 'individual', 'individual', 'individual', 'individual', 'individual', 'individual', 'individual', 'individual', 'individual', 'individual');
 
 INSERT INTO titles
     (assignment_id, editable, content)
 VALUES
-    (1, TRUE);
+    (1, TRUE, 'test');
 INSERT INTO questions
     (assignment_id, editable)
 VALUES

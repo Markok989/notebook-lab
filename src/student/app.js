@@ -141,7 +141,9 @@ class App extends React.Component {
                     </header>
 
                     <div>
+
                         <ul>
+
                             {
                                 /*
                                 - studentInfo.course use .map with parameter course to access
@@ -157,8 +159,10 @@ class App extends React.Component {
                             {studentInfo.courses.map(course => (
 
                                 <li>{course.course_name}
+                                    
                                     <ul>
-                                        {course.assignments.map(assignment => (
+
+                                        {course.assignments && course.assignments.map(assignment => (
 
                                             <li
                                                 onClick={e => this.showAssignment(e)}
@@ -173,11 +177,17 @@ class App extends React.Component {
 
                                         )
                                         )}
+
                                     </ul>
+
                                 </li>
+
                             ))}
+
                         </ul>
+
                     </div>
+                    
                 </sidebar>
 
                 {
@@ -217,7 +227,7 @@ class App extends React.Component {
                     - {this.state.assignmentVisible and component AssignmentView}
                     */
                 }
-           
+
 
             </div>
         );
