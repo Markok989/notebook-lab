@@ -17,6 +17,7 @@ class Assignment extends React.Component {
 
         // binding
         this.handleChange = this.handleChange.bind(this);
+        this.handleSave = this.handleSave.bind(this);
 
     }
 
@@ -52,16 +53,16 @@ class Assignment extends React.Component {
     /*
     - method handleSave with parmeter e
 
-        - log string "YAWW"
-
         - constant id belongs to this.props.params
+
+        - this component props dispatch to saveAssignment with parameters id and this.state
 
     */
     handleSave(e) {
 
-        console.log('YAWW');
-
         const { id } = this.props.params;
+
+        this.props.dispatch(saveAssignment(id, this.state));
 
     }
 
@@ -143,7 +144,7 @@ function editable(section, category, handleChange, handleSave) {
 
         return (
 
-            <form>
+            <div>
 
                 <label>{category}:</label>
 
@@ -151,7 +152,7 @@ function editable(section, category, handleChange, handleSave) {
 
                 <button name={category} onClick={handleSave}>Save</button>
 
-            </form>
+            </div>
 
         )
 

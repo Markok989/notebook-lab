@@ -296,6 +296,7 @@ var studentRoutes = (app) => {
                - res.json has properties:
                  - success has value true
                  - assignments has properties
+                        - assignment_id,
                         - title,
                         - question,
                         - abstract,
@@ -320,6 +321,7 @@ var studentRoutes = (app) => {
                 console.log('assignment', result.rows);
 
                 const {
+                    assignment_id,
                     title_editable,
                     title_content,
                     title_comments,
@@ -360,7 +362,8 @@ var studentRoutes = (app) => {
                     discussion_content,
                     discussion_comments,
                     discussion_grade
-                            } = result.rows[0];
+                } = result.rows[0];
+
 
 
                 const title = {
@@ -405,6 +408,7 @@ var studentRoutes = (app) => {
                 res.json({
                     success: true,
                     assignments: {
+                        assignment_id,
                         title,
                         question,
                         abstract,
@@ -422,23 +426,411 @@ var studentRoutes = (app) => {
 
     })
 
+
+    // after updating. either do another query to get all rows again orrrrr write if clauses in reducer
+    // to update the state. another issue is when you save to locak state it adds on to the list of this.state.
+
     /*
-    - app post with path ''/api/student/save-assignment/:id/:part' and function with parameters: req and res
-    
-        - constant paramsID has value of req.params.id;
-        - constant paramsPart has value of req.params.part
-        - constant userID has value of req.session.user.id
+    - app post with path '/api/student/save-assignment' and function with parameters: req and res
 
-        - log string 'NAWWW'
+        - constant assignmentID has value req.body.id
+        - constant {part} has value of req.body
+        - constant {id} has value of req.session.user
 
+        - log assignmentID, part, id
+
+        - for loop with variable prop in port
+
+            - condition if prop is strictly the same as string 'title'
+
+                - dbStudent access to updateTitles with parameters assignmentID and part[prop]
+                - then with word 'then' with parameter result access to function
+                
+                    - constant title has value of result.rows[0].content
+                    - res.json has properties:
+                        - success has value true
+                        - assignment has property title
+
+            //////////////////////////////////////////////////////
+
+            - condition if prop is strictly the same as string 'question'
+
+                - dbStudent access to updateQuestions with parameters assignmentID and part[prop]
+                - then with word 'then' with parameter result access to function
+                
+                    - constant question has value of result.rows[0].content
+                    - res.json has properties:
+                        - success has value true
+                        - assignment has property question
+
+            //////////////////////////////////////////////////////
+
+            - condition if prop is strictly the same as string 'abstract'
+
+                - dbStudent access to updateAbstracts with parameters assignmentID and part[prop]
+                - then with word 'then' with parameter result access to function
+                
+                    - constant abstract has value of result.rows[0].content
+                    - res.json has properties:
+                        - success has value true
+                        - assignment has property abstract
+
+            //////////////////////////////////////////////////////
+
+            - condition if prop is strictly the same as string 'hypothesis'
+
+                - log string 'yaa' and part[prop]
+                - dbStudent access to updateHypotheses with parameters assignmentID and part[prop]
+                - then with word 'then' with parameter result access to function
+                
+                    - log parameter result
+                    - constant hypothesis  has value of result.rows[0].content
+                    - res.json has properties:
+                        - success has value true
+                        - assignment has property hypothesis 
+
+            //////////////////////////////////////////////////////
+
+            - condition if prop is strictly the same as string 'variable'
+
+                - dbStudent access to updateVariables with parameters assignmentID and part[prop]
+                - then with word 'then' with parameter result access to function
+                
+                    - return variable as result.rows[0].content
+
+            //////////////////////////////////////////////////////
+
+            - condition if prop is strictly the same as string 'material'
+
+                - dbStudent access to updateMaterials with parameters assignmentID and part[prop]
+                - then with word 'then' with parameter result access to function
+                
+                    - constant updateMaterials has value of result.rows[0].content
+                    - res.json has properties:
+                        - success has value true
+                        - assignment has property
+                            - assignment_id,
+                            - title, 
+                            - question, 
+                            - abstract, 
+                            - hypothesis, 
+                            - variable, 
+                            - material, 
+                            - procedure,
+                            - data, 
+                            - calculation, 
+                            - discussion
+
+            //////////////////////////////////////////////////////
+            
+            - condition if prop is strictly the same as string 'procedure'
+
+                - dbStudent access to updateProcedures with parameters assignmentID and part[prop]
+                - then with word 'then' with parameter result access to function
+                
+                    - constant procedure  has value of result.rows[0].content
+                    - res.json has properties:
+                        - success has value true
+                       - assignment has property
+                            - assignment_id,
+                            - title, 
+                            - question, 
+                            - abstract, 
+                            - hypothesis, 
+                            - variable, 
+                            - material, 
+                            - procedure,
+                            - data, 
+                            - calculation, 
+                            - discussion
+
+            //////////////////////////////////////////////////////
+            
+            - condition if prop is strictly the same as string 'data'
+
+                - dbStudent access to updateData with parameters assignmentID and part[prop]
+                - then with word 'then' with parameter result access to function
+                
+                    - constant data  has value of result.rows[0].content
+                    - res.json has properties:
+                        - success has value true
+                       - assignment has property
+                            - assignment_id,
+                            - title, 
+                            - question, 
+                            - abstract, 
+                            - hypothesis, 
+                            - variable, 
+                            - material, 
+                            - procedure,
+                            - data, 
+                            - calculation, 
+                            - discussion
+
+            //////////////////////////////////////////////////////
+            
+            - condition if prop is strictly the same as string 'calculation'
+
+                - dbStudent access to updateCalculations with parameters assignmentID and part[prop]
+                - then with word 'then' with parameter result access to function
+                
+                    - constant calculation  has value of result.rows[0].content
+                    - res.json has properties:
+                        - success has value true
+                       - assignment has property
+                            - assignment_id,
+                            - title, 
+                            - question, 
+                            - abstract, 
+                            - hypothesis, 
+                            - variable, 
+                            - material, 
+                            - procedure,
+                            - data, 
+                            - calculation, 
+                            - discussion
+
+            //////////////////////////////////////////////////////
+            
+            - condition if prop is strictly the same as string 'discussion'
+
+                - dbStudent access to updateDiscussions with parameters assignmentID and part[prop]
+                - then with word 'then' with parameter result access to function
+                
+                    - constant discussion  has value of result.rows[0].content
+                    - res.json has properties:
+                        - success has value true
+                       - assignment has property
+                            - assignment_id,
+                            - title, 
+                            - question, 
+                            - abstract, 
+                            - hypothesis, 
+                            - variable, 
+                            - material, 
+                            - procedure,
+                            - data, 
+                            - calculation, 
+                            - discussion
+
+       
     */
-    app.post('/api/student/save-assignment/:id/:part', (req, res) => {
+    app.post('/api/student/save-assignment', (req, res) => {
 
-        const paramsID = req.params.id;
-        const paramsPart = req.params.part;
-        const userID = req.session.user.id;
+        const assignmentID = req.body.id;
+        const { part } = req.body;
+        const { id } = req.session.user;
 
-        console.log('NAWWW');
+        console.log(assignmentID, part, id);
+
+        for (var prop in part) {
+
+            if (prop === 'title') {
+
+                dbStudent.updateTitles(assignmentID, part[prop]).then((result) => {
+
+                    const title = result.rows[0].content;
+                    res.json({
+                        success: true,
+                        assignment: {
+                            title
+                        }
+                    })
+
+                })
+            }
+
+            if (prop === 'question') {
+
+                dbStudent.updateQuestions(assignmentID, part[prop]).then((result) => {
+
+                    const question = result.rows[0].content;
+                    res.json({
+                        success: true,
+                        assignment: {
+                            question
+                        }
+                    })
+                })
+
+            }
+
+            if (prop === 'abstract') {
+
+                dbStudent.updateAbstracts(assignmentID, part[prop]).then((result) => {
+
+                    const abstract = result.rows[0].content;
+                    res.json({
+                        success: true,
+                        assignment: {
+                            abstract
+                        }
+                    })
+                })
+
+            }
+
+
+            if (prop === 'hypothesis') {
+
+                console.log('yaa', part[prop]);
+                dbStudent.updateHypotheses(assignmentID, part[prop]).then((result) => {
+
+                    console.log(result);
+                    const hypothesis = result.rows[0].content;
+                    res.json({
+                        success: true,
+                        assignment: {
+                            abstract
+                        }
+                    })
+                })
+
+            }
+
+
+            if (prop === 'variable') {
+
+                dbStudent.updateVariables(assignmentID, part[prop]).then((result) => {
+
+                    return {
+                        variable: result.rows[0].content
+                    }
+                })
+
+            }
+
+
+            if (prop === 'material') {
+
+                dbStudent.updateMaterials(assignmentID, part[prop]).then((result) => {
+
+                    const material = result.rows[0].content;
+                    res.json({
+                        success: true,
+                        assignment: {
+                            assignment_id,
+                            title,
+                            question,
+                            abstract,
+                            hypothesis,
+                            variable,
+                            material,
+                            procedure,
+                            data,
+                            calculation,
+                            discussion
+                        }
+                    })
+                })
+
+            }
+
+
+            if (prop === 'procedure') {
+
+                dbStudent.updateProcedures(assignmentID, part[prop]).then((result) => {
+
+                    const procedure = result.rows[0].content;
+                    res.json({
+                        success: true,
+                        assignment: {
+                            assignment_id,
+                            title,
+                            question,
+                            abstract,
+                            hypothesis,
+                            variable,
+                            material,
+                            procedure,
+                            data,
+                            calculation,
+                            discussion
+                        }
+                    })
+                })
+
+            }
+
+
+            if (prop === 'data') {
+
+                dbStudent.updateData(assignmentID, part[prop]).then((result) => {
+
+                    const data = result.rows[0].content;
+                    res.json({
+                        success: true,
+                        assignment: {
+                            assignment_id,
+                            title,
+                            question,
+                            abstract,
+                            hypothesis,
+                            variable,
+                            material,
+                            procedure,
+                            data,
+                            calculation,
+                            discussion
+                        }
+                    })
+                })
+
+            }
+
+
+            if (prop === 'calculation') {
+
+                dbStudent.updateCalculations(assignmentID, part[prop]).then((result) => {
+
+                    const calculation = result.rows[0].content;
+                    res.json({
+                        success: true,
+                        assignment: {
+                            assignment_id,
+                            title,
+                            question,
+                            abstract,
+                            hypothesis,
+                            variable,
+                            material,
+                            procedure,
+                            data,
+                            calculation,
+                            discussion
+                        }
+                    })
+                })
+
+            }
+
+
+            if (prop === 'discussion') {
+
+                dbStudent.updateDiscussions(assignmentID, part[prop]).then((result) => {
+
+                    const discussion = result.rows[0].content;
+                    res.json({
+                        success: true,
+                        assignment: {
+                            assignment_id,
+                            title,
+                            question,
+                            abstract,
+                            hypothesis,
+                            variable,
+                            material,
+                            procedure,
+                            data,
+                            calculation,
+                            discussion
+                        }
+                    })
+                })
+
+            }
+
+        }
 
     })
 

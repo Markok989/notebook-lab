@@ -78,11 +78,15 @@ export function getAssignment(id) {
     - return axios post with path'/api/student/assignment/' +(plus) id +(plus) part
     - then with word 'then' with parameter result access to function
 
+        - log id and part
+
         - return next propeties
             - type as 'NEW_ASSIGNMENT'
             - assignment as result.data.assignment
 */
 export function newAssignment(id, part) {
+
+    console.log(id, part);
 
     return axios.post('/api/student/assignment/' + id + '/' + part, {
     }).then((result) => {
