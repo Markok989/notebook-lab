@@ -5,6 +5,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { saveNewCourse, getCourseList, getAllSections } from '../actions';
+import { Collapsible, CollapsibleItem } from 'react-materialize';
 
 // TeacherAssignments component
 class TeacherAssignments extends React.Component {
@@ -40,20 +41,155 @@ class TeacherAssignments extends React.Component {
         // course and section belong to props of component
         const { courses, sections } = this.props;
 
+        /*
+        - condition if courses
+            - variable courseList has value of function makeCourseList with parameters courses and sections
+        */
+        if (courses) {
+            var courseList = makeCourseList(courses, sections);
+        }
+
         return (
             <div>
-                <ul>
-                    <li>Courses will eventually be listed here...
-                        <Link to='/teacher/new/assignment'>New Assignment</Link>
-                        <ul>
-                            <li>Assignments will eventually be listed here...</li>
-                        </ul>
-                    </li>
-                </ul>
+
+                {courses &&
+
+                    <Collapsible>
+                        {courseList}
+                    </Collapsible>
+
+                }
             </div>
         );
 
     }
+
+}
+
+/********** LIST MAKING FUNCTIONS ************/
+
+/*
+- function filterListByCourseId with parameters sections and courseId
+
+    - log string 'sections: ' and parameter sections
+    - log string 'id: ' and parameter courseId
+
+    - var filteredList has value of sections filtered with parameter section to access function
+
+        - return section.course_id is the same as courseId
+
+    - return filteredList
+*/
+function filterListByCourseId(sections, courseId) {
+
+    console.log('sections: ', sections);
+    console.log('id: ', courseId);
+
+    var filteredList = sections.filter((section) => {
+
+        return section.course_id == courseId;
+
+    });
+
+    return filteredList;
+
+}
+
+/*
+- function makeCourseList with parameters courses and sections
+
+    - return courses with map with parameter course to access function
+    
+        - condition if sections
+
+            - variable sectionsForThisCourse has value of finction filterListByCourseId with parameters sections and course.id
+            - variable sectionList has value of finction makeInnerList with parameter sectionsForThisCourse function
+
+            -return
+                - CollapsibleItem element with header {course.name}
+                - ul element with property {sectionList}
+
+        - else 
+
+            - rerurn li element with key attribute {course.id.toString()} and as property
+                - Link element use as path {link} and has property {course.name}
+
+        - return section.course_id is the same as courseId
+
+    - return filteredList
+*/
+function makeCourseList(courses, sections) {
+
+    return courses.map((course) => {
+
+        if (sections) {
+
+            var sectionsForThisCourse = filterListByCourseId(sections, course.id);
+            var sectionList = makeInnerList(sectionsForThisCourse);
+
+            return (
+
+                <CollapsibleItem header={course.name}>
+                    <ul>
+                        {sectionList}
+                    </ul>
+                </CollapsibleItem>
+
+            );
+
+        } else {
+
+            return (
+
+                <li key={course.id.toString()}>
+                    <Link to={link}>{course.name}</Link>
+                </li>
+
+            );
+
+        }
+
+    })
+
+}
+
+
+/*
+- function makeInnerList with parameter items
+
+    - variable itemList has value of items and use map with parameter item to access function
+
+        - log string 'item: ' and parameter item
+    
+        -return
+            - rerurn li element with key attribute {item.id.toString()} and as property
+            - Link element use as path {`/teacher/section/${item.id}`} and has property {item.name}
+
+    - return ul element with property {itemList}
+*/
+function makeInnerList(items) {
+
+    var itemList = items.map((item) => {
+
+        console.log('item: ', item);
+
+        return (
+
+            <li key={item.id.toString()}>
+                <Link to={`/teacher/section/${item.id}`}>{item.name}</Link>
+            </li>
+
+        );
+
+    });
+
+    return (
+
+        <ul>
+            {itemList}
+        </ul>
+
+    );
 
 }
 
