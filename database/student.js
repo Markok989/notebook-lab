@@ -85,6 +85,24 @@ module.exports.getAssignmentList = function (user_id, section_id) {
 
 
 /*
+- module export checkStudentClasses has value of function with parameter user_id
+
+    - select has value of string 
+        SELECT section_id FROM users_sections WHERE user_id=$1`
+    - result has value of db.query(select, [user_id]); 
+    - return result
+*/
+module.exports.checkStudentClasses = function (user_id) {
+
+    const select = `SELECT section_id FROM users_sections WHERE user_id=$1`;
+    const result = db.query(select, [user_id]);
+    return result;
+
+}
+
+
+
+/*
 - module export getAssignment has value of function with parameters student_id and assignment_id
 
     - select has value of string 

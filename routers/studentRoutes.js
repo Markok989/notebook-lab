@@ -46,7 +46,7 @@ var studentRoutes = (app) => {
             - then with word 'then' with parameter result access to function
                 - studentInfo(parameter).course use forEach loop with parameter course, access to function
                     - course.assignments has value of result.row and filtred with parameter ass,
-                      ass.selection is the same as course.section_id
+                      ass.section_id is the same as course.section_id
 
             - res.json has properties:
                 - success has value true
@@ -124,34 +124,66 @@ var studentRoutes = (app) => {
 
     /*
     - app post with path '/api/student/class' and function with parameters: req and res
+
         - constant id belongs to req.session.user
         - constant classID belongs to req.body
 
-        -log string: 'course' and req.body.classID
-
-        - dbStudent access to addNewClass(from student.js file), with parameters id and classID,
+        - dbStudent access to checkStudentClasses(from student.js file), with parameters id and classID,
         - then with word 'then' with parameter result , access to function
             
             - log string 'addNewClass post' and parameter result, 
             - constant section_id belongs to result.row[0]
             - log section_id
 
-            - dbStudent access to addNewClass(from student.js file).updateClassList with parameter id ,
+            - dbStudent access to addNewClass(from student.js file) with parameter id ,
             - then with word 'then' sith parameter result, access to function
                 
-                - constant courses has value of result.rows and use .map with parameter obj, access to function
-                    - course has own properties
-                        - course_name: obj.course_name,
-                        - course_id: obj.course_id,
-                        - section_id: obj.section_id
-                    - return course
+                - log result.rows
 
-              - res.json has properties:
-                - success has value true
-                - courses has value courses
+                - condition if result.rows and filtered with parameter section
+                    - section.section_id is the same as classID
 
-        - catch with parameter err
-            - log parameter err
+                        - throw string 'Error student is already enrolled in this class'
+
+                - else
+                    
+                    - dbStudent access to addNewClass(from student.js file), with parameters id and classID,
+                    - then with word 'then' with parameter result , access to function
+            
+                        - log string 'addNewClass post' and parameter result, 
+                        - constant section_id belongs to result.row[0]
+                        - log section_id
+
+                        - dbStudent access to updateClassList(from student.js file), with parameter id,
+                        - then with word 'then' with parameter result , access to function
+
+                            - constant courses has value of result.rows and use .map with parameter obj, access to function
+                                - course has own properties
+                                    - course_name: obj.course_name,
+                                    - course_id: obj.course_id,
+                                    - section_id: obj.section_id
+                                
+                                - return course
+
+                            - return courses
+
+                        - then with word 'then' with parameter course access to function
+                            
+                            - dbStudent access to getAssignmentList(from student.js file), with parameter id,
+                            - then with word 'then' with parameter result , access to function 
+
+                                - courses use forEach loop with parameter course
+                                    
+                                    - course.assignments has value of
+                                        - result.rows filtered with parameter ass
+                                            - ass.section_id is the same as course.section_id
+
+                                - res.json has properties:
+                                    - success has value true
+                                    - courses has value courses
+
+                        - catch with parameter err
+                            - log parameter err
 
         - catch with parameter err
             - log parameter err
@@ -161,68 +193,91 @@ var studentRoutes = (app) => {
         const { id } = req.session.user;
         const { classID } = req.body;
 
-        console.log('course', req.body.classID);
+        dbStudent.checkStudentClasses(id).then((result) => {
 
-        dbStudent.addNewClass(id, classID).then((result) => {
+            console.log(result.rows);
 
-            console.log('addNewClass post', result);
-            const { section_id } = result.rows[0];
-            console.log(section_id);
+            if (result.rows.filter(section => section.section_id == classID)) {
 
-            dbStudent.updateClassList(id).then((result) => {
+                throw 'Error student is already enrolled in this class'
 
-                const courses = result.rows.map((obj) => {
+            } else {
 
-                    var course = {
-                        course_name: obj.course_name,
-                        course_id: obj.course_id,
-                        section_id: obj.section_id
-                    }
-                    return course;
+                dbStudent.addNewClass(id, classID).then((result) => {
 
+                    console.log('addNewClass post', result);
+                    const { section_id } = result.rows[0]
+                    console.log(section_id);
+
+                    dbStudent.updateClassList(id)
+                        .then((result) => {
+
+                            const courses = result.rows.map((obj) => {
+
+                                var course = {
+                                    course_id: obj.course_id,
+                                    course_name: obj.course_name,
+                                    section_id: obj.section_id
+
+                                }
+
+                                return course;
+
+                            });
+
+                            return courses
+
+                        })
+                        .then((courses) => {
+
+                            dbStudent.getAssignmentList(id).then((result) => {
+
+                                courses.forEach(course => {
+                                    course.assignments = result.rows.filter(ass => ass.section_id == course.section_id);
+                                });
+
+
+                                res.json({
+                                    success: true,
+                                    courses: courses
+                                })
+
+                            })
+                                .catch((err) => {
+                                    console.log(err);
+                                });
+                        })
                 })
-
-                console.log('HERE', courses);
-
-                res.json({
-                    success: true,
-                    courses: courses
-                })
-
-            })
-                .catch((err) => {
-                    console.log(err);
-                });
+            }
         })
             .catch((err) => {
                 console.log(err);
             })
     });
 
-
     /*
     - app get with path '/api/student/assignment/:id' and function with parameters: req and res
          
         - constant paramsID has value of req.params.id
         - constant userID has value of req.session.user.id
-
+ 
         - log userID and paramsID
-
+ 
         - dbStudent access to getAssignment(from student.js file), with parameters userID and paramsID,
         - then with word 'then' with parameter result , access to function
              
             - log string 'assignment' and result.rows,     
         
             - constant with arguments belongs to result.rows[0];
-
-
-
+ 
+ 
+ 
             - constant title with propertues: title_editable, title_content, title_comments, title_grade
                 
             - constant question with propertues: question_editable, question_content, question_comments, question_grade
-
+ 
             - constant abstract with propertues: abstract_editable, abstract_content, abstract_comments, abstract_grade
-
+ 
             - constant hypothesis with propertues: hypothesis_editable, hypothesis_content, hypothesis_comments, hypothesis_grade
                 
             - constant variable with propertues: variable_editable, variable_content, variable_comments, variable_grade
@@ -237,7 +292,7 @@ var studentRoutes = (app) => {
             
             - constant discussion with propertues: discussion_editable, discussion_content, discussion_comments, discussion_grade
             
-
+ 
                - res.json has properties:
                  - success has value true
                  - assignments has properties
@@ -364,6 +419,26 @@ var studentRoutes = (app) => {
                 });
 
             })
+
+    })
+
+    /*
+    - app post with path ''/api/student/save-assignment/:id/:part' and function with parameters: req and res
+    
+        - constant paramsID has value of req.params.id;
+        - constant paramsPart has value of req.params.part
+        - constant userID has value of req.session.user.id
+
+        - log string 'NAWWW'
+
+    */
+    app.post('/api/student/save-assignment/:id/:part', (req, res) => {
+
+        const paramsID = req.params.id;
+        const paramsPart = req.params.part;
+        const userID = req.session.user.id;
+
+        console.log('NAWWW');
 
     })
 
