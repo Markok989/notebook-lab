@@ -1,4 +1,5 @@
 import axios from '../api/axios';
+import { browserHistory } from 'react-router';
 
 // action Type
 //var SAVE_NEW_COURSE = 'SAVE_NEW_COURSE';
@@ -18,6 +19,7 @@ const SAVE_COURSE_LIST = 'SAVE_COURSE_LIST',
         - return axios post with path '/api/teacher/assignment', and object {assignmentInfo}
         - then with word then with parameter results we access to function
             - condition if results.data.success
+                - browserHistory push to path '/teacher/assignments'
                 - return next properties
                     - type as UPDATE_RECENT_ASSIGNMENTS,
                     - payload as results.data.assignmentId
@@ -27,20 +29,28 @@ const SAVE_COURSE_LIST = 'SAVE_COURSE_LIST',
                 - payload as e
 */
 export function saveNewAssignment(assignmentInfo) {
+
     console.log('ACTIONS: in save assignment', assignmentInfo);
     if (assignmentInfo) {
+
         return axios.post('/api/teacher/assignment', { assignmentInfo }).then((results) => {
+
             if (results.data.success) {
+
+                browserHistory.push('/teacher/assignments')
                 return {
                     type: UPDATE_RECENT_ASSIGNMENTS,
                     payload: results.data.assignmentId
                 };
+
             }
         }).catch((e) => {
+
             return {
                 type: ERROR,
                 payload: e
             };
+
         });
     }
 }
@@ -55,15 +65,19 @@ export function saveNewAssignment(assignmentInfo) {
 //  - else 
 //      - return type: ERROR and payload with string "You must give a name for the section"
 export function saveNewSection(courseId, name, start, end) {
+
     if (name) {
+
         return axios.post('/api/teacher/section', { courseId, name, start, end }).then(() => {
             return getAllSections();
         });
     } else {
+
         return {
             type: ERROR,
             payload: "You must give a name for the section"
         };
+
     }
 }
 
@@ -77,16 +91,19 @@ export function getAllSections() {
     // after that goes catch with parameter e
     //      return type: ERROR and payload with parameter e  
     return axios.get('/api/teacher/sections').then((results) => {
+
         console.log('ACTIONS getAllSections', results);
         return {
             type: SAVE_SECTION_LIST,
             payload: results.data.sections
         };
     }).catch((e) => {
+
         return {
             type: ERROR,
             payload: e
         }
+
     });
 }
 
@@ -101,11 +118,13 @@ export function getCourseList() {
     //  - return  type: SAVE_COURSE_LIST,
     //            payload: results.data.courses
     return axios.get('/api/teacher/courses').then((results) => {
+
         console.log('Actions: back from getting courses', results);
         return {
             type: SAVE_COURSE_LIST,
             payload: results.data.courses
         };
+
     });
 }
 
@@ -148,6 +167,7 @@ export function saveNewCourse(name, desc) {
                 payload as results.data.teacherInfo
 */
 export function getTeacherInfo() {
+
     console.log('ACTIONS: getUserInfo');
     return axios.get('/api/teacher').then(results => {
 
