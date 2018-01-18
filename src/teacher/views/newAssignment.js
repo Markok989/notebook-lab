@@ -234,9 +234,21 @@ class TeacherNewAssignment extends React.Component {
 
     /*
     - method submit 
+
         - condition if this.checkSections
             - props dispatch access to function getAllSections from teacher actions with parameter
               and this.state
+
+            - condition if this.state.assignmentName
+
+                - log string 'dispatching'
+                - props dispatch access to function saveNewAssignment from teacher actions with parameter
+                  and this.state
+
+            - else 
+                - set the state with propsery assignError wich one has value of
+                  string 'The assignment must have a name'
+
         - else 
             - set the state with propsery sectionError wich one has value of
               string "Please select a class"
@@ -244,12 +256,26 @@ class TeacherNewAssignment extends React.Component {
     submit() {
 
         if (this.checkSections()) {
-            console.log('dispatching');
-            this.props.dispatch(saveNewAssignment(this.state));
+
+            if (this.state.assignmentName) {
+
+                console.log('dispatching');
+                this.props.dispatch(saveNewAssignment(this.state));
+
+            } else {
+
+                this.setState({
+                    assignError: 'The assignment must have a name'
+                });
+
+            }
+
         } else {
+
             this.setState({
                 sectionError: "Please select a class"
             });
+
         }
         // validation!
 
@@ -332,7 +358,7 @@ class TeacherNewAssignment extends React.Component {
                               {this.state.sectionError}
                             */
                         }
-                        {this.state.sectionError && <p>{this.state.sectionError}</p>}
+                        {this.state.sectionError && <p className="red darken-4">{this.state.sectionError}</p>}
                         {
                             /*
                             - function makeSectionList use sections and property sections of this cpomponent 
@@ -345,6 +371,8 @@ class TeacherNewAssignment extends React.Component {
                     <Row>
 
                         <h5>Assignment Basics</h5>
+
+                        {this.state.assignError && <p className='red-text darken-4'>{this.state.assignError}</p>}
 
                         <Input m={12} type="text" name="assignmentName"
                             onChange={this.handleInput} label="Assignment Name" />
