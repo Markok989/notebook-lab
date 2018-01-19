@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { getAssignments } from '../actions';
-import { Row, Col, Card, Modal, Button, Input } from 'react-materialize';
+import { Row, Col, Card, Modal, Button, Input, Collapsible, CollapsibleItem } from 'react-materialize';
 import axios from '../../api/axios';
 import { Link } from 'react-router';
 
@@ -111,9 +111,10 @@ export default class AssignmentList extends React.Component {
 
         - log item parameter
 
-        - return li element with attribute key {item.id.toString()} and property {item.name}
+        - return CollectionItem element with attribute key {item.id.toString()} and property 
+          element Link with path {`/teacher/assignment/${item.id}`} and property {item.name}
 
-    return ul element with property {itemList}
+    return Collection element with property {itemList}
 */
 function makeListAssignments(items) {
 
@@ -122,17 +123,17 @@ function makeListAssignments(items) {
         console.log(item);
 
         return (
-            <li key={item.id.toString()}>
-                {item.name}
-            </li>
+            <CollectionItem key={item.id.toString()}>
+                <Link to={`/teacher/assignment/${item.id}`}>{item.name}</Link>
+            </CollectionItem >
         );
 
     });
 
     return (
-        <ul>
+        <Collection>
             {itemList}
-        </ul>
+        </Collection>
     );
 
 }

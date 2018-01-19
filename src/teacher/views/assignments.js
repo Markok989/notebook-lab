@@ -5,7 +5,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { saveNewCourse, getCourseList, getAllSections } from '../actions';
-import { Collapsible, CollapsibleItem } from 'react-materialize';
+import { Collapsible, CollapsibleItem, Collection, CollectionItem } from 'react-materialize';
 import AssignmentList from '../components/assignmentList';
 
 // TeacherAssignments component
@@ -173,10 +173,10 @@ function makeCourseList(courses, sections) {
         - log string 'item: ' and parameter item
     
         -return
-            - rerurn li element with key attribute {item.id.toString()} and as property
+            - rerurn CollectionItem element with key attribute {item.id.toString()} and as property
             - Link element use as path {`/teacher/section/${item.id}`} and has property {item.name}
 
-    - return ul element with property {itemList}
+    - return Collection element with property {itemList}
 */
 function makeInnerList(items) {
 
@@ -186,13 +186,13 @@ function makeInnerList(items) {
 
         return (
 
-            <li key={item.id.toString()}>
+            <CollectionItem key={item.id.toString()}>
 
                 {item.name}
 
                 <AssignmentList sectionId={item.id} />
 
-            </li>
+            </CollectionItem >
 
         );
 
@@ -200,9 +200,9 @@ function makeInnerList(items) {
 
     return (
 
-        <ul>
+        <Collection>
             {itemList}
-        </ul>
+        </Collection>
 
     );
 
@@ -216,7 +216,7 @@ const mapStateToProps = function (state) {
         courses: state.teachers.courses,
         sections: state.teachers.sections,
     }
-    
+
 }
 
 export default connect(mapStateToProps)(TeacherAssignments);
