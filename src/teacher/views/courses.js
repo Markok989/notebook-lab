@@ -8,7 +8,19 @@ import { saveNewCourse, getCourseList, getAllSections } from '../actions';
 
 import { Link } from 'react-router';
 import AddSection from '../components/addSection';
-import { Row, Col, Container, Card, Modal, Button, Input, Collapsible, CollapsibleItem, Collection, CollectionItem } from 'react-materialize'
+import {
+    Row,
+    Col,
+    Container,
+    Card,
+    Modal,
+    Button,
+    Input,
+    Collapsible,
+    CollapsibleItem,
+    Collection,
+    CollectionItem
+} from 'react-materialize'
 
 // component TeacherCourses
 class TeacherCourses extends React.Component {
