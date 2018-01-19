@@ -1,7 +1,6 @@
 import React from 'react';
 import { Router, Route, Link, IndexRoute, browsweHistory, hashHistory } from 'react-router';
 import axios from 'axios';
-import { error } from 'util';
 import { Row, Col, Input, Button, Card } from 'react-materialize';
 
 // Login Component
@@ -11,6 +10,7 @@ export default class Login extends React.Component {
     constructor(props) {
         super(props);
 
+        // state
         this.state = {};
     }
 
@@ -56,6 +56,7 @@ export default class Login extends React.Component {
                     console.log(res, res.data);
 
                     const data = res.data;
+
                     if (!data.success) {
                         error: true
                     } else {
@@ -89,14 +90,16 @@ export default class Login extends React.Component {
                             onChange use method handleChange with parametere e
                             */
                         }
-                        <Input s={6} className="reg-input" name="email" placeholder="E-mail" label="E-mail" onChange={e => this.handleChange(e)} />
+                        <Input s={6} className="reg-input" name="email" placeholder="E-mail"
+                            label="E-mail" onChange={e => this.handleChange(e)} />
 
                         {
                             /*
                             onChange use method handleChange with parametere e
                             */
                         }
-                        <Input s={6} className="reg-input" name="password" placeholder="Password" type="password" label="Password" onChange={e => this.handleChange(e)} />
+                        <Input s={6} className="reg-input" name="password" placeholder="Password"
+                            type="password" label="Password" onChange={e => this.handleChange(e)} />
 
                         {
                             /*
@@ -104,6 +107,7 @@ export default class Login extends React.Component {
                             */
                         }
                         <Button className="reg-button" onClick={e => this.handleLogin(e)}> Login </Button>
+
                     </Card>
 
                     <Link className="wel-links" to='/' >Register a New Account</Link>

@@ -7,7 +7,6 @@ import { connect } from 'react-redux';
 import { saveNewCourse, getCourseList, getAllSections, Collection, CollectionItem } from '../actions';
 
 import { Link } from 'react-router';
-import { filterList } from '../utils/makeList';
 import AddSection from '../components/addSection';
 import { Row, Col, Container, Card, Modal, Button, Input, Collapsible, CollapsibleItem } from 'react-materialize'
 
@@ -22,6 +21,7 @@ class TeacherCourses extends React.Component {
             courseName: ''
         }
 
+        // binding
         this.handleInput = this.handleInput.bind(this);
         this.submit = this.submit.bind(this);
 
@@ -89,6 +89,7 @@ class TeacherCourses extends React.Component {
         }
 
         return (
+
             <Container>
 
                 <Card>
@@ -135,24 +136,10 @@ class TeacherCourses extends React.Component {
                 }
 
             </Container>
+
         );
     }
 }
-
-{/********* CONNECTED COMPONENT ********/ }
-
-// conect component with store and takes 
-//      state(state.teachers.courses), state(state.teachers.sections) 
-//      error(state.teachers.error)
-const mapStateToProps = function (state) {
-    return {
-        courses: state.teachers.courses,
-        sections: state.teachers.sections,
-        error: state.teachers.error
-    };
-}
-// conect can combine component with mapStateToProps
-export default connect(mapStateToProps)(TeacherCourses);
 
 
 /********** LIST MAKING FUNCTIONS ************/
@@ -167,12 +154,16 @@ export default connect(mapStateToProps)(TeacherCourses);
     - un the end returns filteredList
 */
 function filterListByCourseId(sections, courseId) {
+
     console.log('sections: ', sections);
     console.log('id: ', courseId);
     var filteredList = sections.filter((section) => {
+
         return section.course_id == courseId;
+
     });
     return filteredList;
+
 }
 /*
 - function makeList with paramerer items
@@ -184,20 +175,29 @@ function filterListByCourseId(sections, courseId) {
                 - return element ul with property {itemList}
                 */
 function makeList(items) {
+
     var itemList = items.map((item) => {
+
         console.log('item', item);
         return (
+
             <li key={item.id.toString()}>
+
                 <Link to={`/teacher/section/${item.id}`}>
                     {item.name}
                 </Link>
+
             </li>
+
         );
     });
+
     return (
+
         <ul>
             {itemList}
         </ul>
+
     );
 }
 
@@ -255,3 +255,21 @@ function makeCourseList(courses, sections) {
 
     });
 }
+
+
+{/********* CONNECTED COMPONENT ********/ }
+
+// conect component with store and takes 
+//      state(state.teachers.courses), state(state.teachers.sections) 
+//      error(state.teachers.error)
+const mapStateToProps = function (state) {
+
+    return {
+        courses: state.teachers.courses,
+        sections: state.teachers.sections,
+        error: state.teachers.error
+    };
+    
+}
+// conect can combine component with mapStateToProps
+export default connect(mapStateToProps)(TeacherCourses);

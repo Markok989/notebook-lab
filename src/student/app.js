@@ -35,6 +35,7 @@ class App extends React.Component {
         this.setState({
             [e.target.name]: e.target.value
         });
+
     }
 
     /*
@@ -53,6 +54,7 @@ class App extends React.Component {
         this.props.dispatch(addNewClass(this.state.course));
 
         this.emptyField(e);
+
     }
 
     /*
@@ -75,6 +77,7 @@ class App extends React.Component {
 
 
             this.emptyField(e);
+
         }
     }
 
@@ -87,6 +90,7 @@ class App extends React.Component {
 
         e.target.value = '';
         console.log('e');
+
     }
 
     /*
@@ -102,6 +106,7 @@ class App extends React.Component {
 
         this.setState({
             assignmentVisible: true
+            
         })
 
     }

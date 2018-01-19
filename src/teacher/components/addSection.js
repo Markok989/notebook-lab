@@ -16,6 +16,7 @@ class AddSection extends React.Component {
             showDialog: false
         }
 
+        // binding
         this.handleInput = this.handleInput.bind(this);
         this.toggleShowDialog = this.toggleShowDialog.bind(this);
         this.submit = this.submit.bind(this);
@@ -26,9 +27,11 @@ class AddSection extends React.Component {
     // set the state
     //      - showDialog is not this.state.showDialog
     toggleShowDialog() {
+
         this.setState({
             showDialog: !this.state.showDialog
         });
+
     }
 
     // handleInput method with parameter e
@@ -36,9 +39,11 @@ class AddSection extends React.Component {
     // [e.target.name] has the value/path  e.target.value
     // log string "Add Section: handleInput state: " and state of AddSection component
     handleInput(e) {
+
         this.setState({
             [e.target.name]: e.target.value
         });
+
     }
 
     // method submit
@@ -49,16 +54,19 @@ class AddSection extends React.Component {
     // this.endDateInput.value has value of empty string
     // this method has mathod (call) toggleShowDialog
     submit() {
+
         this.props.dispatch(saveNewSection(
             this.props.courseId,
             this.state.sectionName,
             this.state.startDate,
             this.state.endDate
         ));
+
         this.sectionNameInput.value = '';
         this.startDateInput.value = '';
         this.endDateInput.value = '';
         this.toggleShowDialog();
+
     }
 
 
@@ -112,16 +120,18 @@ class AddSection extends React.Component {
                     <Button onClick={this.submit}>Save New Course</Button>
 
                 </Modal>
-                
+
             </div>
         );
     }
 }
 
 const mapStateToProps = function (state) {
+
     return {
         error: state.teachers.error
     };
+    
 }
 
 /********* CONNECTED COMPONENT ********/

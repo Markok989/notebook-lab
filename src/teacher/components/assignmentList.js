@@ -2,15 +2,20 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { getAssignments } from '../actions';
 import { Row, Col, Card, Modal, Button, Input } from 'react-materialize';
-import { axios } from '../../api/axios';
+import axios from '../../api/axios';
 import { Link } from 'react-router';
 
-// component AddSection
-export default class AddSection extends React.Component {
+// component AssignmentList
+export default class AssignmentList extends React.Component {
 
     // constructor
     constructor(props) {
         super(props);
+
+        // state
+        this.state = {
+            assignmentList: []
+        }
     }
 
     /*
@@ -33,15 +38,26 @@ export default class AddSection extends React.Component {
     */
     componentDidMount() {
 
-        axios.get('/api/teacher/' + this.props.sectionId).then(results => {
+        console.log('Component did mount: Asssignment List');
+
+        axios.get('/api/teacher/assignments/' + this.props.sectionId).then((results) => {
 
             if (results.data.success) {
+
+                console.log(results.data.assignmentList);
 
                 this.setState({
                     assignmentList: results.data.assignmentList
                 });
 
-            } else { }
+            } else {
+
+                this.setState({
+                    error: 'Could not get list of assignments'
+                });
+
+            }
+
         }).catch(e => {
 
             this.setState({
@@ -51,6 +67,7 @@ export default class AddSection extends React.Component {
         });
     }
 
+    // render method
     render() {
 
         // constant assignmentList belongs to this.state
@@ -60,13 +77,14 @@ export default class AddSection extends React.Component {
         // else variable listAssignments has value of makeListAssignments with parameter assignmentList
         // retrns div element with property ul element
         // ul element has property of {listAssignments}
-        if (!assignmentList) {
+        if (!this.state.assignmentList) {
 
             return null;
 
         } else {
 
-            var listAssignments = makeListAssignments(assignmentList)
+            const { assignmentList } = this.state;
+            var listAssignments = makeListAssignments(assignmentList);
 
             return (
 
@@ -80,3 +98,36 @@ export default class AddSection extends React.Component {
         } //end else for returns
     } //end render
 } //end class
+
+/*
+- function makeListAssignments with parameter items
+
+    - variable itemList has value of items and use map with parameter item to access to fucntion
+
+        - log item parameter
+
+        - return li element with attribute key {item.id.toString()} and property {item.name}
+
+    return ul element with property {itemList}
+*/
+function makeListAssignments(items) {
+
+    var itemList = items.map(item => {
+
+        console.log(item);
+
+        return (
+            <li key={item.id.toString()}>
+                {item.name}
+            </li>
+        );
+
+    });
+
+    return (
+        <ul>
+            {itemList}
+        </ul>
+    );
+
+}

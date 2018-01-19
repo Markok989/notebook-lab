@@ -8,10 +8,12 @@ const mw = require('./middleware');
 // log: string: 'req.session.user.email' and req.session.user.email
 // return res sand file to the path with join __dirname + /index.html
 var studentRoutes = (app) => {
+
     app.get('/student', mw.loggedInCheck, (req, res) => {
 
         console.log('req.session.user.email: ', req.session.user.email);
         return res.sendFile(path.join(__dirname, '../public/index.html'));
+
     });
 
     /*
@@ -96,6 +98,7 @@ var studentRoutes = (app) => {
                     studentData,
                     courses
                 }
+
                 return info;
 
             }).then((studentInfo) => {
@@ -114,12 +117,13 @@ var studentRoutes = (app) => {
                 })
                     .catch((err) => {
                         console.log(err);
-                    })
+                    });
 
             })
             .catch((err) => {
                 console.log(err);
             });
+
     });
 
     /*
@@ -215,6 +219,7 @@ var studentRoutes = (app) => {
                             const courses = result.rows.map((obj) => {
 
                                 var course = {
+
                                     course_id: obj.course_id,
                                     course_name: obj.course_name,
                                     section_id: obj.section_id
@@ -246,6 +251,7 @@ var studentRoutes = (app) => {
                                 .catch((err) => {
                                     console.log(err);
                                 });
+                                
                         })
                 })
             }
@@ -253,6 +259,7 @@ var studentRoutes = (app) => {
             .catch((err) => {
                 console.log(err);
             })
+
     });
 
     /*

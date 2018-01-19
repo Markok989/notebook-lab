@@ -1,8 +1,5 @@
 import React from 'react';
-import { connect, Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
-import reduxPromise from 'redux-promise';
-import { composeWithDevTools } from 'redux-devtools-extension';
+import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import Logout from '../../auth/logout';
 import { getTeacherInfo } from '../actions';
@@ -24,6 +21,7 @@ class App extends React.Component {
 
 
     render() {
+
         console.log('profesor');
         {
             // if is false,
@@ -58,14 +56,19 @@ class App extends React.Component {
                     </Navbar>
 
                     <Row>
+
                         <Col s={2} className='sidebar'>
+
                             <ul>
+
                                 <li><Link to="/teacher/assignments">Assignments</Link></li>
                                 <li><Link to="/teacher/courses">Courses</Link></li>
                                 <li>Gradebook</li>
                                 <li>Students</li>
                                 <li>Messages</li>
+
                             </ul>
+
                         </Col>
 
                         <Col s={10} className='mainContainer'>

@@ -8,7 +8,7 @@ export default function (props) {
 
             <div id="welcome">
 
-                <MediaBox src="../../public/images/flaskIcon" caption="Logo" width="50px" />
+                <MediaBox src="/public/images/flaskIcon.png" caption="Logo" width="50px" />
 
                 <h3>CloudNotebook</h3>
 

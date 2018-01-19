@@ -40,13 +40,9 @@ function saveNewStudentReport(data) {
 // TEST
 
 // saveNewStudentReport([2, 1, 116, null, 137, 137, null, 92, null, 137, 137, 137, null, null]).then((result) => {
-
 //     console.log(result);
-
 // }).catch((e) => {
-
 //     console.log(e);
-
 // });
 
 

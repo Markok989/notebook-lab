@@ -32,8 +32,11 @@ const {
 // app get have path "/teacher", mw loggedInCheck(from midlleware) and function with parameters: req and res,
 // res sand file to the path with join __dirname + /index.html
 var teacherRoutes = (app) => {
+
     app.get('/teacher', mw.loggedInCheck, (req, res) => {
+
         return res.sendFile(path.join(__dirname, '../public/index.html'));
+
     });
 
 
@@ -71,7 +74,9 @@ var teacherRoutes = (app) => {
     /********** ASSIGNMENTS *********/
 
     /*
-    - app get with path '/api/teacher/:sectionId', and use parameters req and res
+    - app get with path '/api/teacher/assignments/:sectionId', and use parameters req and res
+        
+        - log string 'TEACHER ROUTES: getting Assignments by section id'
         
         - data has value of [req.params.sectionId]
         - return getAssignmentNameIdBySection(from teacherDb) with parameter data
@@ -81,7 +86,9 @@ var teacherRoutes = (app) => {
             - res.json contains success with boolean value true and
               assignmentList with value results.rows
     */
-    app.get('/api/teacher/:sectionId', (req, res) => {
+    app.get('/api/teacher/assignments/:sectionId', (req, res) => {
+
+        console.log('TEACHER ROUTES: getting Assignments by section id');
 
         let data = [req.params.sectionId];
         return getAssignmentNameIdBySection(data).then((results) => {
@@ -169,6 +176,7 @@ var teacherRoutes = (app) => {
             success: true,
             assignmentId: 5
         });
+
     });
 
 
@@ -181,6 +189,7 @@ var teacherRoutes = (app) => {
     // res with json access to success with value true
     // "catch" catch errors, with parameter e res with json access to error with e
     app.post('/api/teacher/section', mw.loggedInCheck, (req, res) => {
+
         let data = [req.body.courseId, req.body.name, req.body.start, req.body.end];
         console.log(data);
         return saveNewSection(data).then(() => {
@@ -311,9 +320,11 @@ var teacherRoutes = (app) => {
             });
 
         }).catch(e => {
+
             res.json({
                 error: e
             });
+
         });
     });
 
@@ -339,6 +350,7 @@ var teacherRoutes = (app) => {
 
             res.json({
                 error: e
+
             });
 
         });
@@ -416,6 +428,7 @@ function makeNewAssignment(sectionId, info) {
 
         console.log('Resulting AssignmentId: ', results.rows[0].id)
         return results.rows[0].id;
+
     }).catch(e => {
         console.log(e);
     });
@@ -467,8 +480,6 @@ function massageIncludeObject(include, shared) {
 This function uses the list of included categories to make a row in each category table for each student
 At the end it calls the function make a row in the student report table
 */
-
-
 /*
 - function makeStudentAssignments(students, sectionId, assignmentId, include, editable, defaults) {
  
@@ -601,9 +612,11 @@ function makeStudentAssignments(students, sectionId, assignmentId, include, edit
                 if (key == 'title') {
 
                     promiseArr.push(newTitle(data).then(results => {
+
                         return {
                             title: results.rows[0].id
                         };
+
                     }));
 
                 }
@@ -612,9 +625,11 @@ function makeStudentAssignments(students, sectionId, assignmentId, include, edit
                 if (key == 'question') {
 
                     promiseArr.push(newQuestion(data).then(results => {
+
                         return {
-                            title: results.rows[0].id
+                            question: results.rows[0].id
                         };
+                        
                     }));
 
                 }
@@ -623,9 +638,11 @@ function makeStudentAssignments(students, sectionId, assignmentId, include, edit
                 if (key == "abstract") {
 
                     promiseArr.push(newAbstract(data).then(results => {
+
                         return {
-                            title: results.rows[0].id
+                            abstract: results.rows[0].id
                         };
+
                     }));
 
                 }
@@ -634,9 +651,11 @@ function makeStudentAssignments(students, sectionId, assignmentId, include, edit
                 if (key == "hypothesis") {
 
                     promiseArr.push(newHypothesis(data).then(results => {
+
                         return {
-                            title: results.rows[0].id
+                            hypothesis: results.rows[0].id
                         };
+
                     }));
 
                 }
@@ -645,9 +664,11 @@ function makeStudentAssignments(students, sectionId, assignmentId, include, edit
                 if (key == "variables") {
 
                     promiseArr.push(newData(data).then(results => {
+
                         return {
-                            title: results.rows[0].id
+                            variables: results.rows[0].id
                         };
+
                     }));
 
                 }
@@ -656,9 +677,11 @@ function makeStudentAssignments(students, sectionId, assignmentId, include, edit
                 if (key == "materials") {
 
                     promiseArr.push(newMaterials(data).then(results => {
+
                         return {
-                            title: results.rows[0].id
+                            materials: results.rows[0].id
                         };
+
                     }));
 
                 }
@@ -669,9 +692,11 @@ function makeStudentAssignments(students, sectionId, assignmentId, include, edit
                     console.log('adding procedures: ', data);
 
                     promiseArr.push(newProcedure(data).then(results => {
+
                         return {
-                            title: results.rows[0].id
+                            procedures: results.rows[0].id
                         };
+
                     }));
 
                 }
@@ -680,9 +705,11 @@ function makeStudentAssignments(students, sectionId, assignmentId, include, edit
                 if (key == "data") {
 
                     promiseArr.push(newData(data).then(results => {
+
                         return {
-                            title: results.rows[0].id
+                            data: results.rows[0].id
                         };
+
                     }));
 
                 }
@@ -691,9 +718,11 @@ function makeStudentAssignments(students, sectionId, assignmentId, include, edit
                 if (key == "caluclations") {
 
                     promiseArr.push(newCalculations(data).then(results => {
+                        
                         return {
-                            title: results.rows[0].id
+                            caluclations: results.rows[0].id
                         };
+
                     }));
 
                 }
@@ -702,9 +731,11 @@ function makeStudentAssignments(students, sectionId, assignmentId, include, edit
                 if (key == "discussion") {
 
                     promiseArr.push(newDiscussion(data).then(results => {
+
                         return {
-                            title: results.rows[0].id
+                            discussion: results.rows[0].id
                         };
+
                     }));
 
                 } //end long if check
@@ -781,6 +812,7 @@ function newStudentReport(studentId, sectionId, assignmentId, categoryIds) {
         var gotOne = false;
         console.log('category: ', category)
         categoryIds.forEach(id => {
+            
             console.log('id', id);
 
             if (id[category]) {

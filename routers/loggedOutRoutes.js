@@ -8,7 +8,9 @@ var loggedOutRoutes = (app) => {
     // app get have path "/", mw.registerLoginCheck(from middleware) and function with parameters: req and res,
     // res sand file to the path with join __dirname + /index.html
     app.get('/', mw.registerLoginCheck, (req, res) => {
+
         return res.sendFile(path.join(__dirname, '../public/index.html'));
+
     });
 
     /*
@@ -37,6 +39,7 @@ var loggedOutRoutes = (app) => {
                 - log parameter err        
        */
     app.post('/api/student/register', (req, res) => {
+
         console.log('student server post');
         const { first_name, last_name, email, password, course } = req.body;
 
@@ -74,10 +77,12 @@ var loggedOutRoutes = (app) => {
                                 success: false
                             })
                         })
+
                 })
                 .catch((err) => {
                     console.log(err);
                 })
+
         }
     });
 
@@ -105,6 +110,7 @@ var loggedOutRoutes = (app) => {
                  - log log err.stack       
         */
     app.post('/api/teacher/register', (req, res) => {
+
         console.log('teacher server post');
 
         const { first_name, last_name, email, password } = req.body;
@@ -115,9 +121,11 @@ var loggedOutRoutes = (app) => {
 
             dbHashing.hashPassword(password)
                 .then((hash) => {
+
                     console.log('adding user to DB', hash);
                     return dbHashing.addTeacher(first_name, last_name, email, hash)
                         .then((result) => {
+
                             console.log('teacher', result);
 
                             const { id, first_name, last_name, email, role } = result.rows[0]
@@ -137,10 +145,12 @@ var loggedOutRoutes = (app) => {
                         .catch((err) => {
                             console.log(err.stack);
                         })
+
                 })
                 .catch((err) => {
                     console.log(err.stack);
                 })
+
         }
     })
 
@@ -168,16 +178,22 @@ var loggedOutRoutes = (app) => {
             - log parameter err      
     */
     app.post('/api/login', (req, res) => {
+
         const { email, password } = req.body;
 
         dbHashing.getUserByEmail(email)
             .then((result) => {
+
                 dbHashing.checkPassword(password, result.rows[0].password)
                     .then((doesMatch) => {
+
                         if (!doesMatch) {
+
                             throw 'Password is incorrect.';
                             alert('Your email or password are incorrect');
+
                         } else {
+
                             console.log('password is correct', result.rows);
 
                             const { id, first_name, last_name, email, role } = result.rows[0];
@@ -190,24 +206,29 @@ var loggedOutRoutes = (app) => {
                                 success: true,
                                 role: role
                             });
-                            
+
                         }
+
                     }).catch((err) => {
                         console.log(err);
                     })
+
             }).catch((err) => {
                 console.log(err);
             })
+
     })
 
     /*
-    - app post have path '/logout' and function with parameters: req and res,
+    - app get have path '/logout' and function with parameters: req and res,
         - req session has value null,
         - res redirect to '/'
     */
     app.get('/logout', (req, res) => {
+
         req.session = null;
         res.redirect('/');
+
     });
 };
 

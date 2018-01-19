@@ -2,7 +2,6 @@ var spicedPg = require('spiced-pg');
 var bcrypt = require('bcryptjs');
 //const secrets = require('../secrets.json');
 const secrets = 'test';
-//const secrets = 'postgres://qdzpwmxf:4QKHT0tKxYTWp02dCMPk6sCg0RExLYwj@dumbo.db.elephantsql.com:5432/qdzpwmxf';
 // const db = spicedPg(`postgres:${secrets.dbuser}:${secrets.dbpassword}@localhost:5432/labnb`);
 const db = spicedPg(`postgres:qdzpwmxf:4QKHT0tKxYTWp02dCMPk6sCg0RExLYwj@dumbo.db.elephantsql.com:5432/qdzpwmxf`);
 
@@ -43,6 +42,7 @@ module.exports.hashPassword = function (plainTextPassword) {
 
                 resolve(hash);
                 // console.log('users.js: hashPassword successful', hash)
+
             });
         });
     });
@@ -86,6 +86,7 @@ module.exports.addStudent = function (first_name, last_name, email, password) {
     const insert = `INSERT INTO users (first_name, last_name, email, password, role) VALUES ($1, $2, $3, $4, 'student') RETURNING id, first_name, last_name, email, role `;
     const result = db.query(insert, [first_name, last_name, email, password]);
     return result;
+
 }
 
 /*
@@ -99,6 +100,7 @@ module.exports.addTeacher = function (first_name, last_name, email, password) {
     const insert = `INSERT INTO users (first_name, last_name, email, password, role) VALUES ($1, $2, $3, $4, 'teacher') RETURNING id, first_name, last_name, email, role `;
     const result = db.query(insert, [first_name, last_name, email, password]);
     return result;
+    
 }
 
 /*
@@ -108,7 +110,9 @@ module.exports.addTeacher = function (first_name, last_name, email, password) {
     - returns result 
 */
 module.exports.getUserByEmail = function (email) {
+
     const select = `SELECT * FROM users WHERE email=$1`;
     const result = db.query(select, [email]);
     return result;
+
 }

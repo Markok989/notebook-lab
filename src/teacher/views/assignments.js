@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { saveNewCourse, getCourseList, getAllSections } from '../actions';
 import { Collapsible, CollapsibleItem } from 'react-materialize';
+import AssignmentList from '../components/assignmentList';
 
 // TeacherAssignments component
 class TeacherAssignments extends React.Component {
@@ -41,12 +42,17 @@ class TeacherAssignments extends React.Component {
         // course and section belong to props of component
         const { courses, sections } = this.props;
 
+        console.log('Komponenta TeacherAssignments');
+
         /*
         - condition if courses
             - variable courseList has value of function makeCourseList with parameters courses and sections
         */
         if (courses) {
+
+            console.log('making courses call');
             var courseList = makeCourseList(courses, sections);
+
         }
 
         return (
@@ -72,7 +78,7 @@ class TeacherAssignments extends React.Component {
 - function filterListByCourseId with parameters sections and courseId
 
     - log string 'sections: ' and parameter sections
-    - log string 'id: ' and parameter courseId
+    - log string 'Assignments: Filter list by course id: ' and parameter courseId
 
     - var filteredList has value of sections filtered with parameter section to access function
 
@@ -83,7 +89,7 @@ class TeacherAssignments extends React.Component {
 function filterListByCourseId(sections, courseId) {
 
     console.log('sections: ', sections);
-    console.log('id: ', courseId);
+    console.log('Assignments: Filter list by course id: ', courseId);
 
     var filteredList = sections.filter((section) => {
 
@@ -125,6 +131,8 @@ function makeCourseList(courses, sections) {
         if (sections) {
 
             var sectionsForThisCourse = filterListByCourseId(sections, course.id);
+            console.log('calling make inner courses');
+
             var sectionList = makeInnerList(sectionsForThisCourse);
 
             return (
@@ -176,7 +184,11 @@ function makeInnerList(items) {
         return (
 
             <li key={item.id.toString()}>
-                <Link to={`/teacher/section/${item.id}`}>{item.name}</Link>
+
+                {item.name}
+
+                <AssignmentList sectionId={item.id} />
+
             </li>
 
         );
@@ -196,10 +208,12 @@ function makeInnerList(items) {
 
 /********* CONNECTED COMPONENT ********/
 const mapStateToProps = function (state) {
+
     return {
         courses: state.teachers.courses,
         sections: state.teachers.sections,
     }
+    
 }
 
 export default connect(mapStateToProps)(TeacherAssignments);

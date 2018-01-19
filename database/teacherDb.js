@@ -5,16 +5,16 @@ var localUrl = '';
 // secrets use secrets from path 'test'
 // localUrl has value js template: `postgres:${secrets.dbuser}:${secrets.dbpassword}@localhost:5432/labnb`
 if (!process.env.DATABASE_URL) {
+
     // const secrets = require('../secrets.json');
     const secrets = 'test';
-    // const secrets = 'postgres://qdzpwmxf:4QKHT0tKxYTWp02dCMPk6sCg0RExLYwj@dumbo.db.elephantsql.com:5432/qdzpwmxf';
     localUrl = `postgres://qdzpwmxf:4QKHT0tKxYTWp02dCMPk6sCg0RExLYwj@dumbo.db.elephantsql.com:5432/qdzpwmxf`;
 
 }
 
 // dbUrl has value process.env.DATABASE_URL or localUrl
 var dbUrl = process.env.DATABASE_URL || localUrl;
-var dbUrl = process.env.DATABASE_URL || localUrl;
+
 
 // db has value spicedPg with parameter dbUrl
 var db = spicedPg(dbUrl);
@@ -72,9 +72,11 @@ module.exports.getStudentDataBySectionId = getStudentDataBySectionId;
 // queryStr has value of string 'INSERT INTO sections (course_id, name, start_date, end_date) VALUES ($1, $2, $3, $4)'
 // return db query with parameters: queryStr and data
 function saveNewSection(data) {
+
     console.log('TEACHER_DB: saveNewSection, ', data);
     let queryStr = 'INSERT INTO sections (course_id, name, start_date, end_date) VALUES ($1, $2, $3, $4)';
     return db.query(queryStr, data);
+
 }
 
 
@@ -83,9 +85,11 @@ function saveNewSection(data) {
 // queryStr has value of string : 'SELECT sections.id, sections.name, sections.start_date, sections.end_date, courses.teacher_id, courses.id AS course_id FROM sections JOIN courses ON courses.id = sections.course_id WHERE courses.teacher_id = $1',
 // return db query with parameters : queryStr and data
 function getAllSections(data) {
+
     console.log('TEACHER_DB: getAllSections,', data);
     let queryStr = 'SELECT sections.id, sections.name, sections.start_date, sections.end_date, courses.teacher_id, courses.id AS course_id FROM sections JOIN courses ON courses.id = sections.course_id WHERE courses.teacher_id = $1';
     return db.query(queryStr, data);
+
 }
 
 
@@ -94,9 +98,11 @@ function getAllSections(data) {
 // queryStr has value of string : 'SELECT sections.id, sections.name, sections.start_date, sections.end_date, courses.id FROM sections JOIN courses ON courses.id = sections.course_id WHERE courses.id = $1',
 // return db query with parameters : queryStr and data
 function getSectionsByCourseId(data) {
+
     console.log('TEACHER_DB: getSectionsByCourseId', data);
     let queryStr = 'SELECT sections.id, sections.name, sections.start_date, sections.end_date, courses.id FROM sections JOIN courses ON courses.id = sections.course_id WHERE courses.id = $1';
     return db.query(queryStr, data);
+
 }
 
 // module export for saveNewSection with value saveNewSection
@@ -116,9 +122,11 @@ module.exports.getSectionsByCourseId = getSectionsByCourseId;
 // queryStr has value of string 'INSERT INTO courses (teacher_id, name) VALUES ($1, $2)',
 // return db.query with parameters queryStr and data
 function saveNewCourse(data) {
+
     console.log('TEACHER_DB: saveNewCourse,', data);
     let queryStr = 'INSERT INTO courses (teacher_id, name) VALUES ($1, $2)';
     return db.query(queryStr, data);
+
 }
 
 // function getCoursesByTeacher with parameter data,
@@ -126,9 +134,11 @@ function saveNewCourse(data) {
 // queryStr has value of string: 'SELECT * FROM courses WHERE teacher_id = $1',
 // return db.query with parameters queryStr and data
 function getCoursesByTeacher(data) {
+
     console.log(' TEACHER_DB: saveNewCourse.');
     let queryStr = 'SELECT * FROM courses WHERE teacher_id = $1';
     return db.query(queryStr, data);
+
 };
 
 // function deleteCourse with parameter id,
@@ -136,9 +146,11 @@ function getCoursesByTeacher(data) {
 // queryStr has value of string 'DELETE FROM courses WHERE id=$1',
 // return db.query with parameters queryStr and data
 function deleteCourse(id) {
+
     console.log(' TEACHER_DB: deleteCourse.');
     let queryStr = 'DELETE FROM courses WHERE id=$1';
     return db.query(queryStr, id);
+    
 }
 
 

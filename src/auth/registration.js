@@ -97,17 +97,18 @@ export default class Registration extends React.Component {
                     if (!data.success) {
                         error: true
                     } else {
-
                         location.replace('/student');
                     }
                 })
                 .catch((err) => {
                     console.log(err);
                 })
+
         } else {
 
             //change aler to adding a <div> w/ error message
             alert('Something went wrong. Please try again.');
+
         }
 
     }
@@ -144,7 +145,6 @@ export default class Registration extends React.Component {
                     if (!data.success) {
                         error: true
                     } else {
-
                         location.replace('/teacher');
                     }
                 })
@@ -165,11 +165,20 @@ export default class Registration extends React.Component {
             <Card s={12} m={4} title='Create a New Student Account'>
 
                 {/* onChange - use method handleChange */}
-                <Input className="reg-input" name="first_name" placeholder="First Name" onChange={e => this.handleChange(e)} />
-                <Input className="reg-input" name="last_name" placeholder="Last Name" onChange={e => this.handleChange(e)} />
-                <Input className="reg-input" name="email" placeholder="E-mail" onChange={e => this.handleChange(e)} />
-                <Input className="reg-input" name="password" placeholder="Password" type="password" onChange={e => this.handleChange(e)} />
-                <Input className="reg-input" name="course" placeholder="Course Code" onChange={e => this.handleChange(e)} />
+                <Input className="reg-input" name="first_name"
+                    placeholder="First Name" onChange={e => this.handleChange(e)} />
+
+                <Input className="reg-input" name="last_name"
+                    placeholder="Last Name" onChange={e => this.handleChange(e)} />
+
+                <Input className="reg-input" name="email"
+                    placeholder="E-mail" onChange={e => this.handleChange(e)} />
+
+                <Input className="reg-input" name="password"
+                    placeholder="Password" type="password" onChange={e => this.handleChange(e)} />
+
+                <Input className="reg-input" name="course"
+                    placeholder="Course Code" onChange={e => this.handleChange(e)} />
 
                 {/* onClick - use method handleStudentRegistration */}
                 <Button className="reg-button" onClick={e => this.handleStudentRegistration(e)}> Submit </Button >
@@ -183,10 +192,17 @@ export default class Registration extends React.Component {
             <Card title='Create a New Teacher Account'>
 
                 {/* onChange - use method handleChange */}
-                <Input className="reg-input" name="first_name" placeholder="First Name" onChange={(e) => this.handleChange(e)} />
-                <Input className="reg-input" name="last_name" placeholder="Last Name" onChange={(e) => this.handleChange(e)} />
-                <Input className="reg-input" name="email" placeholder="E-mail" onChange={(e) => this.handleChange(e)} />
-                <Input className="reg-input" name="password" placeholder="Password" type="password" onChange={(e) => this.handleChange(e)} />
+                <Input className="reg-input" name="first_name"
+                    placeholder="First Name" onChange={(e) => this.handleChange(e)} />
+
+                <Input className="reg-input" name="last_name"
+                    placeholder="Last Name" onChange={(e) => this.handleChange(e)} />
+
+                <Input className="reg-input" name="email"
+                    placeholder="E-mail" onChange={(e) => this.handleChange(e)} />
+
+                <Input className="reg-input" name="password"
+                    placeholder="Password" type="password" onChange={(e) => this.handleChange(e)} />
 
                 {/* onClick - use method handleStudentRegistration */}
                 <Button onClick={e => this.handleTeacherRegistration(e)}> Submit </Button>

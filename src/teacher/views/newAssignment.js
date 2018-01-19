@@ -409,16 +409,6 @@ class TeacherNewAssignment extends React.Component {
 }
 
 
-/********* CONNECTED COMPONENT ********/
-const mapStateToProps = function (state) {
-    // state
-    return {
-        error: state.teachers.error,
-        sections: state.teachers.sections
-    };
-}
-export default connect(mapStateToProps)(TeacherNewAssignment);
-
 /*
 - function createAssignmentCategoryDiv with parameter category
     - return div element with properties
@@ -479,3 +469,15 @@ var assignmentGridStyle = {
 var inputStyle = {
     width: '400px'
 }
+
+
+
+/********* CONNECTED COMPONENT ********/
+const mapStateToProps = function (state) {
+    // state
+    return {
+        error: state.teachers.error,
+        sections: state.teachers.sections
+    };
+}
+export default connect(mapStateToProps)(TeacherNewAssignment);
