@@ -28,6 +28,9 @@ function registerLoginCheck(req, res, next) {
 /*
 - function loggedInCheck with parameters req, res and next
     - condition if req.session.user
+
+        - log string "user is logged in sending to next"
+
         - next()
     - else 
         - res redirect to '/'
@@ -36,11 +39,14 @@ function loggedInCheck(req, res, next) {
 
     if (req.session.user) {
         // logged in!
+
+        console.log('user is logged in sending to next');
+
         next();
     } else {
         res.redirect('/')
     }
-    
+
 }
 
 //add student check and teacher check.

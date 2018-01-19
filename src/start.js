@@ -80,18 +80,37 @@ const teacherRouter = (
     </Provider>
 )
 
-// route
-// condition if location.pathname have same path as /student,
-// in console shows text "using student router" and 
-// route has value of studentRouter
-let route = loggedOutRouter;
+/*
+- let route
 
-if (location.pathname == '/student') {
+- condition if location.pathname is the same as '/' OR(||) location.pathname is the same as '/register' OR(||)
+  location.pathname is the same as '/login'
+
+    - route has value of loggedOutRouter
+
+- else condition if location.pathname.substring(0, 8) is the same as '/student'
+
+    - log string 'using student router'
+    - route jas value of studentRouter;
+
+- else condition if location.pathname.substring(0, 8) is the same as '/teacher'
+
+    - log string 'using teacher router'
+    - route jas value of teacherRouter;
+
+*/
+let route;
+
+if (location.pathname == '/' || location.pathname == '/register' || location.pathname == '/login') {
+
+    route = loggedOutRouter;
+
+} else if (location.pathname.substring(0, 8) == '/student') {
 
     console.log('using student router');
     route = studentRouter;
 
-} else if (location.pathname == '/teacher') {
+} else if (location.pathname.substring(0, 8) == '/teacher') {
 
     console.log('using teacher router');
     route = teacherRouter;

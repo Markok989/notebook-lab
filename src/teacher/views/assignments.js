@@ -153,7 +153,7 @@ function makeCourseList(courses, sections) {
             return (
 
                 <li key={course.id.toString()}>
-                    <Link to={link}>{course.name}</Link>
+                    {course.name}
                 </li>
 
             );
