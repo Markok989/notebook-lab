@@ -23,7 +23,8 @@ const {
     newProcedure,
     newData,
     newCalculations,
-    newDiscussion
+    newDiscussion,
+    getAssignmentNameIdBySection
             } = require("../database/assignmentsDb");
 
 
@@ -69,6 +70,38 @@ var teacherRoutes = (app) => {
 
     /********** ASSIGNMENTS *********/
 
+    /*
+    - app get with path '/api/teacher/:sectionId', and use parameters req and res
+        
+        - data has value of [req.params.sectionId]
+        - return getAssignmentNameIdBySection(from teacherDb) with parameter data
+        - then with word 'then' with parameter results access to function
+            
+            - log string 'Got Assignments Info' and results.rows
+            - res.json contains success with boolean value true and
+              assignmentList with value results.rows
+    */
+    app.get('/api/teacher/:sectionId', (req, res) => {
+
+        let data = [req.params.sectionId];
+        return getAssignmentNameIdBySection(data).then((results) => {
+
+            console.log('Got Assignments Info', results.rows);
+            res.json({
+                success: true,
+                assignmentList: results.rows
+            });
+
+        }).catch((e) => {
+
+            res.json({
+                error: e
+            });
+
+        });
+
+    });
+
     // creates a new assignment.
     // app post with path '/api/teacher/assignment', mw.loggedInCheck(from middleware) and use parameters req and res
     // res with json access to success with value true and assignmentId with value of results.rows[0]
@@ -85,7 +118,7 @@ var teacherRoutes = (app) => {
                 - req.body.assignmentInfo
             - then with word 'then' with parameter assignmentId we access to function
                 - ssignments push to objects/ properties { section, assignmentId },
-
+ 
                 - return getStudentIdsBySectionId with parameter [section]
                 - then with word 'then' with paramerer results we access to function
                     - log string: 'assignments: ' and variable assignments,

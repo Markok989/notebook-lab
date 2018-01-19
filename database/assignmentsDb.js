@@ -255,13 +255,27 @@ module.exports.newDiscussion = newDiscussion;
 /********** ASSIGNMENTS *********/
 
 /*
+- function getAssignmentNameIdBySection with parameter data
+    - log string ''ASSIGNMENT_DB: getAssignmentNameIdBySection, ' and parameter data
+    - queryStr has value of string ''SELECT id, name FROM assignments WHERE section_id = $1'
+    - return db query with parameters queryStr and data
+*/
+function getAssignmentNameIdBySection(data) {
+
+    console.log('ASSIGNMENT_DB: getAssignmentNameIdBySection, ', data);
+    let queryStr = 'SELECT id, name FROM assignments WHERE section_id = $1';
+    return db.query(queryStr, data);
+
+}
+
+/*
 - function saveNewAssignmentTemplate with parameter data
     - log string 'TEACHER_DB: saveNewAssignmentTemplate, ' and parameter data
     - queryStr has value of string 'INSERT INTO assignments (section_id, group_lab, name, instructions, due, title, default_title, abstract, default_abstract, question, default_question, hypothesis, default_hypothesis, variables, default_variables, materials, default_materials, procedures, default_procedures, data, default_data, calculations, default_calc, discussion, default_discussion ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25) RETURNING id'
     - return db query with parameters queryStr and data
 */
 function saveNewAssignmentTemplate(data) {
-    console.log('TEACHER_DB: saveNewAssignmentTemplate,', data);
+    console.log('ASSIGNMENT_DB: saveNewAssignmentTemplate,', data);
     let queryStr = 'INSERT INTO assignments (section_id, group_lab, name, instructions, due, title, default_title, abstract, default_abstract, question, default_question, hypothesis, default_hypothesis, variables, default_variables, materials, default_materials, procedures, default_procedures, data, default_data, calculations, default_calc, discussion, default_discussion ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25) RETURNING id';
     return db.query(queryStr, data);
 }
@@ -277,3 +291,4 @@ function saveNewAssignmentTemplate(data) {
 // INSERT INTO assignments (section_id, group_lab, name, instructions, due, title, default_title, abstract, default_abstract, question, default_question, hypothesis, default_hypothesis, variables, default_variables, materials, default_materials, procedures, default_procedures, data, default_data, calculations, default_calc, discussion, default_discussion) VALUES (1, false, '3moles', '4no instructions', '1999-01-01', '$6', '$7', '$8', '$9', '10', '11', '12', '13', '14', '$15', '$16', '$17', '$18', '$19', '$20', '21', '22', '$23', '$24', '$25') RETURNING id;
 
 module.exports.saveNewAssignmentTemplate = saveNewAssignmentTemplate;
+module.exports.getAssignmentNameIdBySection = getAssignmentNameIdBySection;
