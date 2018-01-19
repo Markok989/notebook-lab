@@ -4,11 +4,11 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
-import { saveNewCourse, getCourseList, getAllSections, Collection, CollectionItem } from '../actions';
+import { saveNewCourse, getCourseList, getAllSections } from '../actions';
 
 import { Link } from 'react-router';
 import AddSection from '../components/addSection';
-import { Row, Col, Container, Card, Modal, Button, Input, Collapsible, CollapsibleItem } from 'react-materialize'
+import { Row, Col, Container, Card, Modal, Button, Input, Collapsible, CollapsibleItem, Collection, CollectionItem } from 'react-materialize'
 
 // component TeacherCourses
 class TeacherCourses extends React.Component {
@@ -171,7 +171,13 @@ function filterListByCourseId(sections, courseId) {
         - log: string 'item' and parameter from map item
         - return:
             - element li with attribute key {item.id.toString()} (use item from map's parameter),
-                - Link element with path to={`/teacher/section/${item.id}` and property {item.name}
+
+                - Col element with attribute s={3}
+                    - Link element with path to={`/teacher/section/${item.id}` and property {item.name}
+
+                - Col element with attribute s={9}
+                    - p element with property string Code For Students: and {item.id}
+
                 - return element ul with property {itemList}
                 */
 function makeList(items) {
@@ -183,9 +189,17 @@ function makeList(items) {
 
             <li key={item.id.toString()}>
 
-                <Link to={`/teacher/section/${item.id}`}>
-                    {item.name}
-                </Link>
+                <CollectionItem>
+
+                    <Col s={3}>
+                        <Link to={`/teacher/section/${item.id}`}>{item.name}</Link>
+                    </Col>
+
+                    <Col s={9}>
+                        <p>Code For Students: {item.id}</p>
+                    </Col>
+
+                </CollectionItem>
 
             </li>
 
@@ -194,9 +208,9 @@ function makeList(items) {
 
     return (
 
-        <ul>
+        <Collection>
             {itemList}
-        </ul>
+        </Collection>
 
     );
 }
@@ -217,8 +231,7 @@ function makeList(items) {
 
                 - else
             - return:
-                - element li with attribute key={course.id.toString()} and property:
-                    - Linik element with attribute to/path {link} and property {course.name}
+                - element li with attribute key={course.id.toString()} and property {course.name}
 
                 */
 function makeCourseList(courses, sections) {
@@ -246,9 +259,7 @@ function makeCourseList(courses, sections) {
 
             return (
 
-                <li key={course.id.toString()}>
-                    <Link to={link}>{course.name}</Link>
-                </li>
+                <li key={course.id.toString()}>{course.name}</li>
 
             );
         }
@@ -269,7 +280,7 @@ const mapStateToProps = function (state) {
         sections: state.teachers.sections,
         error: state.teachers.error
     };
-    
+
 }
 // conect can combine component with mapStateToProps
 export default connect(mapStateToProps)(TeacherCourses);
