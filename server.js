@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const path = require('path');
 
 //middleware modules
 const compression = require('compression');
@@ -20,9 +21,11 @@ const teacherRoutes = require("./routers/teacherRoutes.js");
     Then start server.js in another terminal which will get bundle.js from the proxy.s
 */
 if (process.env.NODE_ENV != 'production') {
+
     // app.use(require('./build'));
     app.use('/bundle.js', require('http-proxy-middleware')({
         target: 'http://localhost:7071'
+
     }));
 }
 
@@ -57,8 +60,10 @@ teacherRoutes(app);
 
 // 404.html
 app.get('*', mw.loggedInCheck, function (req, res) {
+
     console.log('file not found');
-    return res.sendFile(__dirname + './public/404.html');
+    return res.sendFile(path.join(__dirname + './public/index.html'));
+
 });
 
 app.listen(7070, function () {
