@@ -21,10 +21,14 @@ export default class AssignmentList extends React.Component {
     /*
     - componentDidMount is invoked immediately after a component is mounted,
 
+        - log string 'Component did mount: Asssignment List'
+
         - axios get to path '/api/teacher/' +(plus) this.props.sectionId
         - then with word 'then' with parameter results access to function
 
             - condition if results.data.success
+
+                - log results.data.assignmentList
 
                 - set the state 
                     - assignmentList has calue of results.data.assignmentList
@@ -73,8 +77,9 @@ export default class AssignmentList extends React.Component {
         // constant assignmentList belongs to this.state
         const { assignmentList } = this.state;
 
-        // condition if not assignmentList returns null
-        // else variable listAssignments has value of makeListAssignments with parameter assignmentList
+        // condition if not this.state.assignmentList returns null
+        // else constant assignmentListbelongs to this.state and 
+        //    variable listAssignments has value of makeListAssignments with parameter assignmentList
         // retrns div element with property ul element
         // ul element has property of {listAssignments}
         if (!this.state.assignmentList) {

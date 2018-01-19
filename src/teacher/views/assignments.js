@@ -46,6 +46,7 @@ class TeacherAssignments extends React.Component {
 
         /*
         - condition if courses
+            - log string 'making courses call'
             - variable courseList has value of function makeCourseList with parameters courses and sections
         */
         if (courses) {
@@ -109,6 +110,8 @@ function filterListByCourseId(sections, courseId) {
         - condition if sections
 
             - variable sectionsForThisCourse has value of finction filterListByCourseId with parameters sections and course.id
+            - log string 'calling make inner courses'
+
             - variable sectionList has value of finction makeInnerList with parameter sectionsForThisCourse function
 
             -return
