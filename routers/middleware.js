@@ -53,22 +53,26 @@ function loggedInCheck(req, res, next) {
 /*
 - function checkIfTeacher with parameters req, res and next
 
+    - log string 'checking if teacher'
     - condition if req.session.user.role is the same as 'teacher'
 
         - next()
 
     - else 
 
+        -log string 'user is not teacher, routing to student'
         - res. reditect to path '/student'
 */
 function checkIfTeacher(req, res, next) {
 
+    console.log('checking if teacher');
     if (req.session.user.role == 'teacher') {
 
         next();
 
     } else {
 
+        console.log('user is not teacher, routing to student');
         res.redirect('/student');
 
     }
@@ -78,22 +82,26 @@ function checkIfTeacher(req, res, next) {
 /*
 - function checkIfStudent with parameters req, res and next
 
+    - log string 'checking if student'
     - condition if req.session.user.role is the same as 'student'
 
         - next()
 
     - else 
 
+        - log string 'user is not student, routing to teacher'
         - res. reditect to path '/student'
 */
 function checkIfStudent(req, res, next) {
 
+    console.log('checking if student');
     if (req.session.user.role == 'student') {
 
         next();
 
     } else {
 
+        console.log('user is not student, routing to teacher');
         res.redirect('/teacher');
 
     }

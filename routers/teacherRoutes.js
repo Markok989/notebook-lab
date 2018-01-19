@@ -29,11 +29,12 @@ const {
 
 
 // component teacherRoutes with parameter app,
-// app get have path "/teacher", mw loggedInCheck(from midlleware) and function with parameters: req and res,
+// app get have path "/teacher", mw.loggedInCheck and mw.checkIfTeacher (from midlleware) 
+//      and function with parameters: req and res,
 // res sand file to the path with join __dirname + /index.html
 var teacherRoutes = (app) => {
 
-    app.get('/teacher', mw.loggedInCheck, (req, res) => {
+    app.get('/teacher', mw.loggedInCheck, mw.checkIfTeacher, (req, res) => {
 
         return res.sendFile(path.join(__dirname, '../public/index.html'));
 
@@ -43,7 +44,7 @@ var teacherRoutes = (app) => {
     /********** USERS *********/
 
     /*
-    - app get with path '/api/teacher', and use parameters req and res
+    - app get with path '/api/teacher', mw.loggedInCheck and mw.checkIfTeacher (from midlleware), and use parameters req and res
         
         - return getTeacherInfoById(from teacherDb) with parameter [req.session.user.id]
         - then with word 'then' with parameter results access to function
@@ -51,7 +52,7 @@ var teacherRoutes = (app) => {
             - res.json contains success with boolean value true and
               teacherInfo with value teacherInfo.rows
     */
-    app.get('/api/teacher', (req, res) => {
+    app.get('/api/teacher', mw.loggedInCheck, mw.checkIfTeacher, (req, res) => {
 
         return getTeacherInfoById([req.session.user.id]).then((results) => {
 
@@ -74,7 +75,7 @@ var teacherRoutes = (app) => {
     /********** ASSIGNMENTS *********/
 
     /*
-    - app get with path '/api/teacher/assignments/:sectionId', and use parameters req and res
+    - app get with path '/api/teacher/assignments/:sectionId', mw.loggedInCheck and mw.checkIfTeacher (from midlleware) and use parameters req and res
         
         - log string 'TEACHER ROUTES: getting Assignments by section id'
         
@@ -86,7 +87,7 @@ var teacherRoutes = (app) => {
             - res.json contains success with boolean value true and
               assignmentList with value results.rows
     */
-    app.get('/api/teacher/assignments/:sectionId', (req, res) => {
+    app.get('/api/teacher/assignments/:sectionId', mw.loggedInCheck, mw.checkIfTeacher, (req, res) => {
 
         console.log('TEACHER ROUTES: getting Assignments by section id');
 
@@ -110,9 +111,9 @@ var teacherRoutes = (app) => {
     });
 
     // creates a new assignment.
-    // app post with path '/api/teacher/assignment', mw.loggedInCheck(from middleware) and use parameters req and res
+    // app post with path '/api/teacher/assignment', mw.loggedInCheck and mw.checkIfTeacher (from middleware) and use parameters req and res
     // res with json access to success with value true and assignmentId with value of results.rows[0]
-    app.post('/api/teacher/assignment', mw.loggedInCheck, (req, res) => {
+    app.post('/api/teacher/assignment', mw.loggedInCheck, mw.checkIfTeacher, (req, res) => {
         //make assignment row in assignments database.
 
         // variable assignments has value of empty array
@@ -182,13 +183,13 @@ var teacherRoutes = (app) => {
 
     /********** SECTIONS *********/
 
-    // app post with path /api/teacher/section, mw.loggedInCheck(from middleware) and use parameters req and res
+    // app post with path /api/teacher/section, mw.loggedInCheck and mw.checkIfTeacher (from middleware) and use parameters req and res
     // data has value array [req.body.courseId, req.body.name, req.body.start, req.body.end],
     // return saveNewSection (from file teacherDb.js),
     // then with "then" with anonymous function access next line of code
     // res with json access to success with value true
     // "catch" catch errors, with parameter e res with json access to error with e
-    app.post('/api/teacher/section', mw.loggedInCheck, (req, res) => {
+    app.post('/api/teacher/section', mw.loggedInCheck, mw.checkIfTeacher, (req, res) => {
 
         let data = [req.body.courseId, req.body.name, req.body.start, req.body.end];
         console.log(data);
@@ -210,10 +211,10 @@ var teacherRoutes = (app) => {
     });
 
     // get all the sections a teaher has
-    // app get with path 'app/teacher/sections', mw loggedInCheck(from midlleware)
+    // app get with path 'app/teacher/sections', mw loggedInCheck and mw.checkIfTeacher (from midlleware)
     // arrow function with parameters req and res
 
-    app.get('/api/teacher/sections', mw.loggedInCheck, (req, res) => {
+    app.get('/api/teacher/sections', mw.loggedInCheck, mw.checkIfTeacher, (req, res) => {
 
         // data has value of array: [req.session.user.id],
         // return getAllSections (function from file teacherDb.js),
@@ -243,9 +244,9 @@ var teacherRoutes = (app) => {
     });
 
     // get only the sections for a particular course
-    // app get with path '/api/teacher/sections/:courseId', mw loggedInCheck(from midlleware)
+    // app get with path '/api/teacher/sections/:courseId', mw loggedInCheck and mw.checkIfTeacher(from midlleware)
     // arrow function with parameters req and res
-    app.get('/api/teacher/sections/:courseId', mw.loggedInCheck, (req, res) => {
+    app.get('/api/teacher/sections/:courseId', mw.loggedInCheck, mw.checkIfTeacher, (req, res) => {
 
         // data has value of array [req.params.id],
         // return getSectionsByCourseId (function from file teacherDb.js),
@@ -277,14 +278,14 @@ var teacherRoutes = (app) => {
 
     /******** COURSES ***********/
 
-    // app post with path /api/teacher/course, mw loggedInCheck(from midlleware) and use parameters req and res
+    // app post with path /api/teacher/course, mw loggedInCheck and mw.checkIfTeacher(from midlleware) and use parameters req and res
     // data has value array [req.session.user.id, req.body.name],
     // return saveNewCourse (from file teacherDb.js),
     // then with "then" with anonymous function access next line of code
     // res with json access to success with value true
     // "catch" catch errors, with parameter e res with json access to error with e
 
-    app.post('/api/teacher/course', mw.loggedInCheck, (req, res) => {
+    app.post('/api/teacher/course', mw.loggedInCheck, mw.checkIfTeacher, (req, res) => {
 
         let data = [req.session.user.id, req.body.name];
         return saveNewCourse(data).then(() => {
@@ -302,13 +303,13 @@ var teacherRoutes = (app) => {
         });
     });
 
-    // app get with path /api/teacher/courses, mw loggedInCheck(from midlleware) and use parameters req and res
+    // app get with path /api/teacher/courses, mw loggedInCheck and mw.checkIfTeacher(from midlleware) and use parameters req and res
     // data has value array [req.session.user.id]
     // return saveNewCourse (from file teacherRoutes.js),
     // then with "then" with parameter results access next line of code
     // res with json access to success with value true
     // "catch" catch errors, with parameter e res with json access to error with e
-    app.get('/api/teacher/courses', mw.loggedInCheck, (req, res) => {
+    app.get('/api/teacher/courses', mw.loggedInCheck, mw.checkIfTeacher, (req, res) => {
 
         let data = [req.session.user.id];
         // call db
@@ -328,9 +329,9 @@ var teacherRoutes = (app) => {
         });
     });
 
-    // app delete with path '/app/teacher/course/:id' , mw loggedInCheck(from midlleware)
+    // app delete with path '/app/teacher/course/:id' , mw loggedInCheck and mw.checkIfTeacher(from midlleware)
     // arrow function with parameters req and res
-    app.delete('/api/teacher/course/:id', mw.loggedInCheck, (req, res) => {
+    app.delete('/api/teacher/course/:id', mw.loggedInCheck, mw.checkIfTeacher, (req, res) => {
 
         // data has value of array [req.params.id],
         // return deleteCourse (function from file teacherDb.js),
@@ -629,7 +630,7 @@ function makeStudentAssignments(students, sectionId, assignmentId, include, edit
                         return {
                             question: results.rows[0].id
                         };
-                        
+
                     }));
 
                 }
@@ -718,7 +719,7 @@ function makeStudentAssignments(students, sectionId, assignmentId, include, edit
                 if (key == "caluclations") {
 
                     promiseArr.push(newCalculations(data).then(results => {
-                        
+
                         return {
                             caluclations: results.rows[0].id
                         };
@@ -812,7 +813,7 @@ function newStudentReport(studentId, sectionId, assignmentId, categoryIds) {
         var gotOne = false;
         console.log('category: ', category)
         categoryIds.forEach(id => {
-            
+
             console.log('id', id);
 
             if (id[category]) {
