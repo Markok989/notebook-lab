@@ -113,6 +113,7 @@ export default class AssignmentList extends React.Component {
 
         - return CollectionItem element with attribute key {item.id.toString()} and property 
           element Link with path {`/teacher/assignment/${item.id}`} and property {item.name}
+          element p with attribute style {dueStyle} and property Due: {item.due}
 
     return Collection element with property {itemList}
 */
@@ -124,7 +125,10 @@ function makeListAssignments(items) {
 
         return (
             <CollectionItem key={item.id.toString()}>
+
                 <Link to={`/teacher/assignment/${item.id}`}>{item.name}</Link>
+                <p style={dueStyle}>Due: {item.due}</p>
+
             </CollectionItem >
         );
 
@@ -135,5 +139,14 @@ function makeListAssignments(items) {
             {itemList}
         </Collection>
     );
+
+}
+
+/******* STYLES **********/
+
+var dueStyle = {
+
+    display: 'inline',
+    paddingLeft: '40px'
 
 }

@@ -253,13 +253,13 @@ module.exports.newDiscussion = newDiscussion;
 /*
 - function getAssignmentNameIdBySection with parameter data
     - log string ''ASSIGNMENT_DB: getAssignmentNameIdBySection, ' and parameter data
-    - queryStr has value of string ''SELECT id, name FROM assignments WHERE section_id = $1'
+    - queryStr has value of string 'SELECT id, name, due FROM assignments WHERE section_id = $1'
     - return db query with parameters queryStr and data
 */
 function getAssignmentNameIdBySection(data) {
 
     console.log('ASSIGNMENT_DB: getAssignmentNameIdBySection, ', data);
-    let queryStr = 'SELECT id, name FROM assignments WHERE section_id = $1';
+    let queryStr = 'SELECT id, name, due FROM assignments WHERE section_id = $1';
     return db.query(queryStr, data);
 
 }

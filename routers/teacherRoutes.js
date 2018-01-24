@@ -74,6 +74,8 @@ var teacherRoutes = (app) => {
 
     /********** ASSIGNMENTS *********/
 
+    //gets list of assignments for a section
+    
     /*
     - app get with path '/api/teacher/assignments/:sectionId', mw.loggedInCheck and mw.checkIfTeacher (from midlleware) and use parameters req and res
         
