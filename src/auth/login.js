@@ -48,27 +48,26 @@ export default class Login extends React.Component {
          */
         if (email && password) {
 
-            axios.post('/api/login', {
-                email, password
-            })
-                .then((res) => {
+            axios.post('/api/login', { email, password }).then((res) => {
 
-                    console.log(res, res.data);
+                console.log(res, res.data);
 
-                    const data = res.data;
+                const data = res.data;
 
-                    if (!data.success) {
-                        error: true
+                if (!data.success) {
+                    error: true
+                } else {
+
+                    console.log(data.role);
+
+                    if (data.role == 'student') {
+                        location.replace('/student');
                     } else {
-                        console.log(data.role);
-
-                        if (data.role == 'student') {
-                            location.replace('/student');
-                        } else {
-                            location.replace('/teacher');
-                        }
+                        location.replace('/teacher');
                     }
-                });
+                    
+                }
+            });
         } else {
             alert('The email or password are invalid');
         }
