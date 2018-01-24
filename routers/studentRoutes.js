@@ -251,7 +251,7 @@ var studentRoutes = (app) => {
                                 .catch((err) => {
                                     console.log(err);
                                 });
-                                
+
                         })
                 })
             }
@@ -456,7 +456,7 @@ var studentRoutes = (app) => {
                     - constant title has value of result.rows[0].content
                     - res.json has properties:
                         - success has value true
-                        - assignment has property title
+                   
 
             //////////////////////////////////////////////////////
 
@@ -468,7 +468,7 @@ var studentRoutes = (app) => {
                     - constant question has value of result.rows[0].content
                     - res.json has properties:
                         - success has value true
-                        - assignment has property question
+                     
 
             //////////////////////////////////////////////////////
 
@@ -480,7 +480,7 @@ var studentRoutes = (app) => {
                     - constant abstract has value of result.rows[0].content
                     - res.json has properties:
                         - success has value true
-                        - assignment has property abstract
+                 
 
             //////////////////////////////////////////////////////
 
@@ -494,7 +494,7 @@ var studentRoutes = (app) => {
                     - constant hypothesis  has value of result.rows[0].content
                     - res.json has properties:
                         - success has value true
-                        - assignment has property hypothesis 
+                  
 
             //////////////////////////////////////////////////////
 
@@ -515,18 +515,7 @@ var studentRoutes = (app) => {
                     - constant updateMaterials has value of result.rows[0].content
                     - res.json has properties:
                         - success has value true
-                        - assignment has property
-                            - assignment_id,
-                            - title, 
-                            - question, 
-                            - abstract, 
-                            - hypothesis, 
-                            - variable, 
-                            - material, 
-                            - procedure,
-                            - data, 
-                            - calculation, 
-                            - discussion
+                       
 
             //////////////////////////////////////////////////////
             
@@ -538,18 +527,7 @@ var studentRoutes = (app) => {
                     - constant procedure  has value of result.rows[0].content
                     - res.json has properties:
                         - success has value true
-                       - assignment has property
-                            - assignment_id,
-                            - title, 
-                            - question, 
-                            - abstract, 
-                            - hypothesis, 
-                            - variable, 
-                            - material, 
-                            - procedure,
-                            - data, 
-                            - calculation, 
-                            - discussion
+                      
 
             //////////////////////////////////////////////////////
             
@@ -561,18 +539,7 @@ var studentRoutes = (app) => {
                     - constant data  has value of result.rows[0].content
                     - res.json has properties:
                         - success has value true
-                       - assignment has property
-                            - assignment_id,
-                            - title, 
-                            - question, 
-                            - abstract, 
-                            - hypothesis, 
-                            - variable, 
-                            - material, 
-                            - procedure,
-                            - data, 
-                            - calculation, 
-                            - discussion
+                       
 
             //////////////////////////////////////////////////////
             
@@ -584,19 +551,7 @@ var studentRoutes = (app) => {
                     - constant calculation  has value of result.rows[0].content
                     - res.json has properties:
                         - success has value true
-                       - assignment has property
-                            - assignment_id,
-                            - title, 
-                            - question, 
-                            - abstract, 
-                            - hypothesis, 
-                            - variable, 
-                            - material, 
-                            - procedure,
-                            - data, 
-                            - calculation, 
-                            - discussion
-
+                     
             //////////////////////////////////////////////////////
             
             - condition if prop is strictly the same as string 'discussion'
@@ -607,20 +562,7 @@ var studentRoutes = (app) => {
                     - constant discussion  has value of result.rows[0].content
                     - res.json has properties:
                         - success has value true
-                       - assignment has property
-                            - assignment_id,
-                            - title, 
-                            - question, 
-                            - abstract, 
-                            - hypothesis, 
-                            - variable, 
-                            - material, 
-                            - procedure,
-                            - data, 
-                            - calculation, 
-                            - discussion
-
-       
+                            
     */
     app.post('/api/student/save-assignment', (req, res) => {
 
@@ -638,10 +580,7 @@ var studentRoutes = (app) => {
 
                     const title = result.rows[0].content;
                     res.json({
-                        success: true,
-                        assignment: {
-                            title
-                        }
+                        success: true
                     })
 
                 })
@@ -653,10 +592,7 @@ var studentRoutes = (app) => {
 
                     const question = result.rows[0].content;
                     res.json({
-                        success: true,
-                        assignment: {
-                            question
-                        }
+                        success: true
                     })
                 })
 
@@ -668,10 +604,7 @@ var studentRoutes = (app) => {
 
                     const abstract = result.rows[0].content;
                     res.json({
-                        success: true,
-                        assignment: {
-                            abstract
-                        }
+                        success: true
                     })
                 })
 
@@ -686,10 +619,7 @@ var studentRoutes = (app) => {
                     console.log(result);
                     const hypothesis = result.rows[0].content;
                     res.json({
-                        success: true,
-                        assignment: {
-                            abstract
-                        }
+                        success: true
                     })
                 })
 
@@ -714,20 +644,7 @@ var studentRoutes = (app) => {
 
                     const material = result.rows[0].content;
                     res.json({
-                        success: true,
-                        assignment: {
-                            assignment_id,
-                            title,
-                            question,
-                            abstract,
-                            hypothesis,
-                            variable,
-                            material,
-                            procedure,
-                            data,
-                            calculation,
-                            discussion
-                        }
+                        success: true
                     })
                 })
 
@@ -740,20 +657,7 @@ var studentRoutes = (app) => {
 
                     const procedure = result.rows[0].content;
                     res.json({
-                        success: true,
-                        assignment: {
-                            assignment_id,
-                            title,
-                            question,
-                            abstract,
-                            hypothesis,
-                            variable,
-                            material,
-                            procedure,
-                            data,
-                            calculation,
-                            discussion
-                        }
+                        success: true
                     })
                 })
 
@@ -766,20 +670,7 @@ var studentRoutes = (app) => {
 
                     const data = result.rows[0].content;
                     res.json({
-                        success: true,
-                        assignment: {
-                            assignment_id,
-                            title,
-                            question,
-                            abstract,
-                            hypothesis,
-                            variable,
-                            material,
-                            procedure,
-                            data,
-                            calculation,
-                            discussion
-                        }
+                        success: true
                     })
                 })
 
@@ -792,20 +683,7 @@ var studentRoutes = (app) => {
 
                     const calculation = result.rows[0].content;
                     res.json({
-                        success: true,
-                        assignment: {
-                            assignment_id,
-                            title,
-                            question,
-                            abstract,
-                            hypothesis,
-                            variable,
-                            material,
-                            procedure,
-                            data,
-                            calculation,
-                            discussion
-                        }
+                        success: true
                     })
                 })
 
@@ -818,20 +696,7 @@ var studentRoutes = (app) => {
 
                     const discussion = result.rows[0].content;
                     res.json({
-                        success: true,
-                        assignment: {
-                            assignment_id,
-                            title,
-                            question,
-                            abstract,
-                            hypothesis,
-                            variable,
-                            material,
-                            procedure,
-                            data,
-                            calculation,
-                            discussion
-                        }
+                        success: true
                     })
                 })
 

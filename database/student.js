@@ -60,6 +60,7 @@ module.exports.updateClassList = function (user_id) {
 
     const result = db.query(select, [user_id]);
     return result;
+
 }
 
 
@@ -78,7 +79,6 @@ module.exports.getAssignmentList = function (user_id, section_id) {
     const result = db.query(select, [user_id]);
 
     return result;
-
 
 }
 
@@ -102,16 +102,156 @@ module.exports.checkStudentClasses = function (user_id) {
 //****************UPDATE ASSIGNMENTS *********************//
 
 /*
+- module export updateTitles has value of function with parameters assignment_id and content
 
+    - update has value of string `UPDATE titles SET content = $2 WHERE assignment_id = $1 RETURNING content`
+    - result has value of db.query(update, [assignment_id, content])
+    - return result
+*/
+module.exports.updateTitles = function (assignment_id, content) {
+
+    const update = `UPDATE titles SET content = $2 WHERE assignment_id = $1 RETURNING content`;
+    const result = db.query(update, [assignment_id, content]);
+    return result;
+
+}
+
+/*
+- module export updateQuestions has value of function with parameters assignment_id and content
+
+    - update has value of string `UPDATE questions SET content = $2 WHERE assignment_id = $1 RETURNING content`
+    - result has value of db.query(update, [assignment_id, content])
+    - return result
+*/
+module.exports.updateQuestions = function (assignment_id, content) {
+
+    const update = `UPDATE questions SET content = $2 WHERE assignment_id = $1 RETURNING content`;
+    const result = db.query(update, [assignment_id, content]);
+    return result;
+
+}
+
+/*
+- module export updateAbstracts has value of function with parameters assignment_id and content
+
+    - update has value of string `UPDATE abstracts SET content = $2 WHERE assignment_id = $1 RETURNING content`
+    - result has value of db.query(update, [assignment_id, content])
+    - return result
+*/
+module.exports.updateAbstracts = function (assignment_id, content) {
+
+    const update = `UPDATE abstracts SET content = $2 WHERE assignment_id = $1 RETURNING content`;
+    const result = db.query(update, [assignment_id, content]);
+    return result;
+
+}
+
+/*
+- module export updateHypotheses has value of function with parameters assignment_id and content
+
+    - constant update has value of string `UPDATE hypotheses SET content = $2 WHERE assignment_id = $1 RETURNING content`
+    - result has value of db.query(update, [assignment_id, content]); 
+    - return result
 */
 module.exports.updateHypotheses = function (assignment_id, content) {
 
-    console.log('update hypothese');
     const update = `UPDATE hypotheses SET content = $2 WHERE assignment_id = $1 RETURNING content`;
     const result = db.query(update, [assignment_id, content]);
     return result;
 
 }
+
+/*
+- module export updateVariables has value of function with parameters assignment_id and content
+
+    - update has value of string `UPDATE variables SET content = $2 WHERE assignment_id = $1 RETURNING content`
+    - result has value of db.query(update, [assignment_id, content])
+    - return result
+*/
+module.exports.updateVariables = function (assignment_id, content) {
+
+    const update = `UPDATE variables SET content = $2 WHERE assignment_id = $1 RETURNING content`;
+    const result = db.query(update, [assignment_id, content]);
+    return result;
+
+}
+
+/*
+- module export updateMaterials has value of function with parameters assignment_id and content
+
+    - update has value of string `UPDATE materials SET content = $2 WHERE assignment_id = $1 RETURNING content`
+    - result has value of db.query(update, [assignment_id, content])
+    - return result
+*/
+module.exports.updateMaterials = function (assignment_id, content) {
+
+    const update = `UPDATE materials SET content = $2 WHERE assignment_id = $1 RETURNING content`;
+    const result = db.query(update, [assignment_id, content]);
+    return result;
+
+}
+
+/*
+- module export updateProcedures has value of function with parameters assignment_id and content
+
+    - update has value of string `UPDATE procedures SET content = $2 WHERE assignment_id = $1 RETURNING content`
+    - result has value of db.query(update, [assignment_id, content])
+    - return result
+*/
+module.exports.updateProcedures = function (assignment_id, content) {
+
+    const update = `UPDATE procedures SET content = $2 WHERE assignment_id = $1 RETURNING content`;
+    const result = db.query(update, [assignment_id, content]);
+    return result;
+
+}
+
+/*
+- module export updateData has value of function with parameters assignment_id and content
+
+    - update has value of string `UPDATE data SET content = $2 WHERE assignment_id = $1 RETURNING content`
+    - result has value of db.query(update, [assignment_id, content])
+    - return result
+*/
+module.exports.updateData = function (assignment_id, content) {
+
+    const update = `UPDATE data SET content = $2 WHERE assignment_id = $1 RETURNING content`;
+    const result = db.query(update, [assignment_id, content]);
+    return result;
+}
+
+/*
+- module export updateCalculations has value of function with parameters assignment_id and content
+
+    - update has value of string `UPDATE calculations SET content = $2 WHERE assignment_id = $1 RETURNING content`
+    - result has value of db.query(update, [assignment_id, content])
+    - return result
+*/
+module.exports.updateCalculations = function (assignment_id, content) {
+
+    const update = `UPDATE calculations SET content = $2 WHERE assignment_id = $1 RETURNING content`;
+    const result = db.query(update, [assignment_id, content]);
+    return result;
+
+}
+
+/*
+- module export updateDiscussions has value of function with parameters assignment_id and content
+
+    - update has value of string `UPDATE discussions SET content = $2 WHERE assignment_id = $1 RETURNING content`
+    - result has value of db.query(update, [assignment_id, content])
+    - return result
+*/
+module.exports.updateDiscussions = function (assignment_id, content) {
+
+    const update = `UPDATE discussions SET content = $2 WHERE assignment_id = $1 RETURNING content`;
+    const result = db.query(update, [assignment_id, content]);
+    return result;
+
+}
+
+
+//************************getAssignment************************//
 
 /*
 - module export getAssignment has value of function with parameters student_id and assignment_id
@@ -150,4 +290,5 @@ module.exports.getAssignment = function (student_id, assignment_id) {
 
     const result = db.query(select, [student_id, assignment_id]);
     return result;
+
 }

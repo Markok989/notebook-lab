@@ -17,7 +17,9 @@ class Assignment extends React.Component {
 
         // binding
         this.handleChange = this.handleChange.bind(this);
+        this.props.dispatch = this.props.dispatch.bind(this);
         this.handleSave = this.handleSave.bind(this);
+        this.handleSaveAll = this.handleSaveAll.bind(this);
 
     }
 
@@ -53,13 +55,41 @@ class Assignment extends React.Component {
     /*
     - method handleSave with parmeter e
 
+        - variable field has value of [e.target.name]
+
+        - variable send has value of object
+             - [e.target.name] has value of this.state[field]
+
         - constant id belongs to this.props.params
 
-        - this component props dispatch to saveAssignment with parameters id and this.state
+        - this component props dispatch to saveAssignment with parameters id and send
 
     */
     handleSave(e) {
 
+        var field = [e.target.name];
+
+        var send = {
+            [e.target.name]: this.state[field]
+        }
+
+        const { id } = this.props.params;
+
+        this.props.dispatch(saveAssignment(id, send));
+
+    }
+
+    /*
+    - method handleSaveAll with parmeter e
+
+        - log string 'save all' and this.state
+        - constant id belongs to this.props.params
+
+        - this component props dispatch to saveAssignment with parameters id and this.state
+    */
+    handleSaveAll(e) {
+
+        console.log('save all', this.state);
         const { id } = this.props.params;
 
         this.props.dispatch(saveAssignment(id, this.state));
@@ -103,6 +133,8 @@ class Assignment extends React.Component {
 
                 {assignmentOptions}
 
+                <button name="saveAll" onClick={this.handleSaveAll}>Save All</button>
+
             </div>
         )
 
@@ -116,10 +148,46 @@ class Assignment extends React.Component {
 
     - condition if section with parmaters [category +(plus) string '_editable' ]
 
-        - log string 'section true'
+        - condition if section with parmaters [category +(plus) string '_content' ]
+
+            - log string 'YAAAW'
+
+            - return div element with properties
+
+                - element label with property {category}
+
+                - element textarea with attributes
+                    - name {category}
+                    - placeholder "Type here.."
+                    - cols "30" , rows "5"
+                    - onChange use method handleChange
+                    - property
+                        - {section[category + '_content']}
+
+                - element button with attributes
+                    - name {category}
+                    - onClick use method handleSave
+                    - property
+                        - text Save
+
+        - else
+
+            - return div element with properties
+
+                - element label with property {category}
+                
+                - element textarea with attributes
+                    - name {category}
+                    - placeholder "Type here.."
+                    - cols "30" , rows "5"
+                    - onChange use method handleChange
+                  
+                - element button with attributes
+                    - name {category}
+                    - onClick use method handleSave
+                    - property
+                        - text Save
         
-        - return
-            - form element with property
     
     - else if condition
       section[category + '_editable'] is strictly the same as null
@@ -134,7 +202,11 @@ class Assignment extends React.Component {
 
         -return
 
-            - div element with property 
+            - div element with property
+            
+                - element h3 with property {category}
+
+                - element p with property {section[category + '_content']}
 */
 function editable(section, category, handleChange, handleSave) {
 
@@ -142,19 +214,43 @@ function editable(section, category, handleChange, handleSave) {
 
     if (section[category + '_editable']) {
 
-        return (
+        if (section[category + '_content']) {
 
-            <div>
+            console.log('YAAAW');
 
-                <label>{category}:</label>
+            return (
 
-                <textarea name={category} placeholder="Type here.." cols="30" rows="5" onChange={handleChange} />
+                <div>
 
-                <button name={category} onClick={handleSave}>Save</button>
+                    <label>{category}:</label>
 
-            </div>
+                    <textarea name={category} placeholder="Type here.." cols="30" rows="5" onChange={handleChange}>
+                        {section[category + '_content']}
+                    </textarea>
 
-        )
+                    <button name={category} onClick={handleSave}>Save</button>
+
+                </div>
+
+            )
+
+        } else {
+
+            return (
+
+                <div>
+
+                    <label>{category}:</label>
+
+                    <textarea name={category} placeholder="Type here.." cols="30" rows="5" onChange={handleChange} />
+
+                    <button name={category} onClick={handleSave}>Save</button>
+
+                </div>
+
+            );
+
+        }
 
     } else if (section[category + '_editable'] === null || section[category + '_content'] === null) {
 
@@ -165,8 +261,11 @@ function editable(section, category, handleChange, handleSave) {
         return (
 
             <div>
+
                 <h3>{category}:</h3>
+
                 <p>{section[category + '_content']}</p>
+
             </div>
 
         )
@@ -174,6 +273,8 @@ function editable(section, category, handleChange, handleSave) {
 
 }
 
+
+/********** COMPONENT CONNECTED **************/
 const mapStateToProps = function (state) {
     console.log('mapStateToProps', state);
 
@@ -183,6 +284,3 @@ const mapStateToProps = function (state) {
     }
 }
 export default connect(mapStateToProps)(Assignment);
-
-
-
