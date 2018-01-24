@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import axios from '../../api/axios';
-import { Row, Col, Input, Card, Collection, CollectionItem } from 'react-materialize';
+import { Row, Col, Input, Card, Collection, CollectionItem, CollapsibleItem } from 'react-materialize';
 
 // component SpecificAssignment
 export default class SpecificAssignment extends React.Component {
@@ -28,6 +28,7 @@ export default class SpecificAssignment extends React.Component {
 
             - set the state - property
                 
+                - assignmentId has value of this.props.params.id
                 - studentList has value of results.data.studentList
                 - anonymous function log string 'Student list? ' and this.state
 
@@ -47,7 +48,9 @@ export default class SpecificAssignment extends React.Component {
 
             this.setState({
 
+                assignmentId: this.props.params.id,
                 studentList: results.data.studentList
+
             }, () => console.log('Student list? ', this.state));
 
         }).catch((e) => {
@@ -63,21 +66,109 @@ export default class SpecificAssignment extends React.Component {
     // render method
     render() {
 
+        // constants assignmentId, studentList belongs to this.state
+        const { assignmentId, studentList } = this.state;
+
         /* 
-        - condition if this.state.studentList
-            log string 'got student list'
+        - condition if studentList
+            - variable studentHtmlList has value of makeInnerList with parameters studentList, assignmentId
         */
-        if (this.state.studentList) {
-            console.log('got student list');
+        if (studentList) {
+            var studentHtmlList = makeInnerList(studentList, assignmentId)
         }
 
+        /*
+        - return div element with property {studentHtmlList}
+        */
         return (
 
             <div>
-                Specific Assignment will go here!
+                {studentHtmlList}
             </div>
 
         );
     }
+
+}
+
+/*
+- function makeInnerList with parameters items and assignmentId
+
+    - variable itemList has value of items and use map with parameter item to access to function
+
+        - log parameter item
+        - variable status has value of function determineStatus with parameters item.status and assignmentId
+
+        - return
+
+            - element CollapsibleItem with attribute key {item.report_id.toString()} and peroperty
+
+                - element link with path {`/teacher/assignment/${assignmentId}/student/${item.report_id}`}
+                  and property 
+
+                    -   {item.first_name}  {item.last_name}
+                
+                - element p with style {statusStyle} and proprerty text 'Status: ' {status}
+
+    - return 
+
+        - element Collection with property  {itemList}
+*/
+function makeInnerList(items, assignmentId) {
+
+    var itemList = items.map((item) => {
+
+        console.log(item);
+        var status = determineStatus(item.status, assignmentId);
+
+        return (
+
+            <CollapsibleItem key={item.report_id.toString()}>
+
+                <Link to={`/teacher/assignment/${assignmentId}/student/${item.report_id}`}>
+                    {item.first_name}  {item.last_name}
+                </Link>
+
+                <p style={statusStyle}>Status: {status} </p>
+
+            </CollapsibleItem>
+
+        );
+
+    });
+
+    return (
+
+        <Collection>
+            {itemList}
+        </Collection>
+
+    );
+
+}
+
+/*
+- function determineStatus with parameter status
+    
+    - condition if status
+        - return status
+    else 
+        - return string 'Not Started'
+*/
+function determineStatus(status) {
+
+    if (status) {
+        return status;
+    } else {
+        return 'Not Started';
+    }
+
+}
+
+/************* STYLE ***************/
+var statusStyle = {
+
+    display: 'inline',
+    paddingLeft: '40px'
 
 }
