@@ -78,7 +78,7 @@ export function getAssignment(id) {
 /*
 - export function newAssignment with parmaeters id and part
 
-    - return axios post with path'/api/student/assignment/' +(plus) id +(plus) part
+    - return axios post with path'/api/student/assignment/' and property { id, part }
     - then with word 'then' with parameter result access to function
 
         - log id and part
@@ -91,8 +91,9 @@ export function newAssignment(id, part) {
 
     console.log(id, part);
 
-    return axios.post('/api/student/assignment/' + id + '/' + part, {
-    }).then((result) => {
+    // return axios.post('/api/student/assignment/' + id + '/' + part, {
+    // }).then((result) => {
+    return axios.post('/api/student/assignment/', { id, part }).then((result) => {
 
         return {
             type: 'NEW_ASSIGNMENT',

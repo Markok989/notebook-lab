@@ -95,6 +95,8 @@ class App extends React.Component {
 
     /*
     - method showAssignment
+    
+        - log e.target.id
         - set the state
             - assignmentVisible has value true
 
@@ -107,7 +109,7 @@ class App extends React.Component {
         this.setState({
 
             assignmentVisible: true
-            
+
         });
 
     }
@@ -126,6 +128,7 @@ class App extends React.Component {
         console.log('ucenik');
 
         return (
+
             <div>
                 {/* student First name - student Last name */}
                 {studentInfo.first_name} {studentInfo.last_name}
@@ -165,7 +168,7 @@ class App extends React.Component {
                             {studentInfo.courses.map(course => (
 
                                 <li>{course.course_name}
-                                    
+
                                     <ul>
 
                                         {course.assignments && course.assignments.map(assignment => (
@@ -193,7 +196,7 @@ class App extends React.Component {
                         </ul>
 
                     </div>
-                    
+
                 </sidebar>
 
                 {
@@ -228,14 +231,8 @@ class App extends React.Component {
                 }
                 {this.props.children}
 
-                {
-                    /*
-                    - {this.state.assignmentVisible and component AssignmentView}
-                    */
-                }
-
-
             </div>
+
         );
 
     }
