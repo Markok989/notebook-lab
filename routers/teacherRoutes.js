@@ -9,7 +9,8 @@ const {
     getSectionsByCourseId,
     saveNewSection,
     getStudentIdsBySectionId,
-    getTeacherInfoById
+    getTeacherInfoById,
+    getStudentsAssignmentIdsBySection
     } = require("../database/teacherDb");
 
 const {
@@ -74,6 +75,45 @@ var teacherRoutes = (app) => {
 
     /********** ASSIGNMENTS *********/
 
+    /*
+    - app get with path'/api/teacher/students/:sectionId', mw.loggedInCheck and mw.checkIfTeacher (from midlleware) and use parameters req and res
+             
+       - data has value of [req.params.sectionId]
+       - return getStudentsAssignmentIdsBySection(from teacherDb) with parameter data
+       - then with word 'then' with parameter results access to function
+           
+           - log string 'Got Student Assignment List Info' and results.rows
+           - res.json contains success with boolean value true and
+             studentList with value results.rows
+
+        - 'catch' word with parameter e to access to function
+
+            - res.json with property
+                - error has value of parameter e
+    */
+    app.get('/api/teacher/students/:sectionId', mw.loggedInCheck, mw.checkIfTeacher, (req, res) => {
+
+        let data = [req.params.sectionId];
+        return getStudentsAssignmentIdsBySection(data).then(results => {
+
+            console.log('Got Student Assignment List Info', results.rows);
+
+            res.json({
+                success: true,
+                studentList: results.rows
+            });
+
+        }).catch(e => {
+
+            res.json({
+                error: e
+            });
+
+        });
+
+    });
+
+
     //gets list of assignments for a section
 
     /*
@@ -87,7 +127,7 @@ var teacherRoutes = (app) => {
             
             - log string 'Got Assignments Info' and results.rows
             - res.json contains success with boolean value true and
-              assignmentList with value results.rows
+              studentAssignmentList with value results.rows
     */
     app.get('/api/teacher/assignments/:sectionId', mw.loggedInCheck, mw.checkIfTeacher, (req, res) => {
 
@@ -97,10 +137,10 @@ var teacherRoutes = (app) => {
         return getAssignmentNameIdBySection(data).then((results) => {
 
             console.log('Got Assignments Info', results.rows);
-            
+
             res.json({
                 success: true,
-                assignmentList: results.rows
+                studentAssignmentList: results.rows
             });
 
         }).catch((e) => {

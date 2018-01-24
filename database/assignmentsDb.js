@@ -37,6 +37,13 @@ function getStudentsAssignmentIdsBySection(data) {
 
 }
 
+
+// TESTS
+// getStudentsAssignmentIdsBySection([1]).then(results => {
+//     console.log(results.rows);
+// }).catch(e => console.log(e));
+
+
 /*
 - function saveNewStudentReport with parameter data
     - log string 'TEACHER_DB: saveNewStudentReport',
