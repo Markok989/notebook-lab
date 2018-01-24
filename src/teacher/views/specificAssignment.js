@@ -13,12 +13,17 @@ export default class SpecificAssignment extends React.Component {
 
         // state
         this.state = {
-            studentList: []
-        }
+            studentList: [],
+            showCategoriesToggle: false
+        };
+
+        // binding
+        this.showCategories = this.showCategories.bind(this);
+
     }
 
     /* 
-    - componentDidMount is invoked immediately after a component is mounted
+    - componentWillMount is invoked immediately before a component is mounted
 
         - log string 'Specific Assignment sectionId' and this.props.params.id
         - return axios get with path '/api/teacher/students/' +(plus) this.props.params.id
@@ -37,7 +42,7 @@ export default class SpecificAssignment extends React.Component {
             - set the state - property
                 - error has value of parameter e
     */
-    componentDidMount() {
+    componentWillMount() {
 
         //needt to get list of students in this section and the id of their students_report
 
@@ -63,11 +68,28 @@ export default class SpecificAssignment extends React.Component {
 
     }
 
+    /*
+    - showCategories method
+
+        - set the state with property
+            - showCategories is not this.state.showCategoriesToggle
+    */
+    showCategories() {
+
+        console.log('clicked');
+
+        this.setState({
+            showCategories: !this.state.showCategoriesToggle
+        });
+
+    }
+
+
     // render method
     render() {
 
-        // constants assignmentId, studentList belongs to this.state
-        const { assignmentId, studentList } = this.state;
+        // constants assignmentId, studentList, showCategories belongs to this.state
+        const { assignmentId, studentList, showCategories } = this.state;
 
         /* 
         - condition if studentList
@@ -83,6 +105,20 @@ export default class SpecificAssignment extends React.Component {
         return (
 
             <div>
+
+                <Row>
+                    <Input type="checkbox" label="Grade Anonymously" />
+                    <Input type="checkbox" lable="Randomize Students" />
+                    <Input type="checkbox" label="Grade By Group" />
+                    <Input type="checkbox" label="Grade By Section" onClick={this.showCategories} />
+                </Row>
+
+                {showCategories && <div>
+                    <Button>Grade Titles</Button>
+                    <Button>Grade Questions</Button>
+                    <Button>Grade Hypotheses</Button>
+                </div>}
+
                 {studentHtmlList}
             </div>
 

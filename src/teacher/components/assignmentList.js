@@ -46,12 +46,13 @@ export default class AssignmentList extends React.Component {
 
         axios.get('/api/teacher/assignments/' + this.props.sectionId).then((results) => {
 
+            console.log('Back from getting assignments:,', results);
             if (results.data.success) {
 
                 console.log(results.data.assignmentList);
 
                 this.setState({
-                    assignmentList: results.data.assignmentList
+                    assignmentList: results.data.studentAssignmentList
                 });
 
             } else {
@@ -77,17 +78,25 @@ export default class AssignmentList extends React.Component {
         // constant assignmentList belongs to this.state
         const { assignmentList } = this.state;
 
-        // condition if not this.state.assignmentList returns null
-        // else constant assignmentListbelongs to this.state and 
-        //    variable listAssignments has value of makeListAssignments with parameter assignmentList
-        // retrns div element with property ul element
-        // ul element has property of {listAssignments}
+        /* 
+        - condition if not this.state.assignmentList returns null
+               
+        - else 
+
+            - log string 'AssignmentList state: ' and this.state
+            - constant assignmentList belongs to this.state;
+            - variable listAssignments has value of makeListAssignments with parameter assignmentList
+               
+            - retrns div element with property ul element
+                ul element has property of {listAssignments}
+                 */
         if (!this.state.assignmentList) {
 
             return null;
 
         } else {
 
+            console.log('AssignmentList state: ', this.state);
             const { assignmentList } = this.state;
             var listAssignments = makeListAssignments(assignmentList);
 
@@ -111,11 +120,14 @@ export default class AssignmentList extends React.Component {
 
         - log item parameter
 
-        - return CollectionItem element with attribute key {item.id.toString()} and property 
-          element Link with path {`/teacher/assignment/${item.id}`} and property {item.name}
-          element p with attribute style {dueStyle} and property Due: {item.due}
+        - return 
+       
+                - CollectionItem element with attribute key {item.id.toString()} and property 
+                - element Link with path {`/teacher/assignment/${item.id}`} and property {item.name}
+                - element p with attribute style {dueStyle} and property Due: {item.due}
 
-    return Collection element with property {itemList}
+    - return element div with properties
+        - element Collection element with property {itemList}
 */
 function makeListAssignments(items) {
 
@@ -135,9 +147,15 @@ function makeListAssignments(items) {
     });
 
     return (
-        <Collection>
-            {itemList}
-        </Collection>
+
+        <div>
+
+            <Collection>
+                {itemList}
+            </Collection>
+
+        </div>
+
     );
 
 }
