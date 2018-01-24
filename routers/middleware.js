@@ -44,7 +44,7 @@ function loggedInCheck(req, res, next) {
 
         next();
     } else {
-        res.redirect('/')
+        res.redirect('/');
     }
 
 }

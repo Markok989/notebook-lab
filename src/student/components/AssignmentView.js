@@ -127,6 +127,7 @@ class Assignment extends React.Component {
             </div>;
 
         return (
+
             <div>
 
                 <h3>Complete the following assignment</h3>
@@ -136,7 +137,8 @@ class Assignment extends React.Component {
                 <button name="saveAll" onClick={this.handleSaveAll}>Save All</button>
 
             </div>
-        )
+
+        );
 
     }
 }
@@ -232,7 +234,7 @@ function editable(section, category, handleChange, handleSave) {
 
                 </div>
 
-            )
+            );
 
         } else {
 
@@ -268,7 +270,7 @@ function editable(section, category, handleChange, handleSave) {
 
             </div>
 
-        )
+        );
     }
 
 }
@@ -276,11 +278,13 @@ function editable(section, category, handleChange, handleSave) {
 
 /********** COMPONENT CONNECTED **************/
 const mapStateToProps = function (state) {
+    
     console.log('mapStateToProps', state);
 
     return {
         assignment: state.students.assignment,
         studentInfo: state.students.studentInfo
     }
+
 }
 export default connect(mapStateToProps)(Assignment);

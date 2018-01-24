@@ -251,7 +251,7 @@ module.exports.updateDiscussions = function (assignment_id, content) {
 }
 
 
-//************************getAssignment************************//
+//************************ getAssignment ************************//
 
 /*
 - module export getAssignment has value of function with parameters student_id and assignment_id

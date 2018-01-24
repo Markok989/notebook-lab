@@ -106,7 +106,9 @@ var studentRoutes = (app) => {
                 dbStudent.getAssignmentList(id).then((result) => {
 
                     studentInfo.course.forEach((course) => {
+
                         course.assignments = result.row.filter((ass) => ass.section_id == course.section_id);
+
                     });
 
                     res.json({
@@ -230,7 +232,7 @@ var studentRoutes = (app) => {
 
                             });
 
-                            return courses
+                            return courses;
 
                         })
                         .then((courses) => {
@@ -245,20 +247,20 @@ var studentRoutes = (app) => {
                                 res.json({
                                     success: true,
                                     courses: courses
-                                })
+                                });
 
                             })
                                 .catch((err) => {
                                     console.log(err);
                                 });
 
-                        })
-                })
+                        });
+                });
             }
         })
             .catch((err) => {
                 console.log(err);
-            })
+            });
 
     });
 
@@ -429,9 +431,9 @@ var studentRoutes = (app) => {
                     }
                 });
 
-            })
+            });
 
-    })
+    });
 
 
     // after updating. either do another query to get all rows again orrrrr write if clauses in reducer
@@ -579,9 +581,10 @@ var studentRoutes = (app) => {
                 dbStudent.updateTitles(assignmentID, part[prop]).then((result) => {
 
                     const title = result.rows[0].content;
+
                     res.json({
                         success: true
-                    })
+                    });
 
                 })
             }
@@ -591,10 +594,12 @@ var studentRoutes = (app) => {
                 dbStudent.updateQuestions(assignmentID, part[prop]).then((result) => {
 
                     const question = result.rows[0].content;
+
                     res.json({
                         success: true
-                    })
-                })
+                    });
+
+                });
 
             }
 
@@ -603,10 +608,12 @@ var studentRoutes = (app) => {
                 dbStudent.updateAbstracts(assignmentID, part[prop]).then((result) => {
 
                     const abstract = result.rows[0].content;
+
                     res.json({
                         success: true
-                    })
-                })
+                    });
+
+                });
 
             }
 
@@ -618,10 +625,12 @@ var studentRoutes = (app) => {
 
                     console.log(result);
                     const hypothesis = result.rows[0].content;
+
                     res.json({
                         success: true
-                    })
-                })
+                    });
+
+                });
 
             }
 
@@ -643,10 +652,12 @@ var studentRoutes = (app) => {
                 dbStudent.updateMaterials(assignmentID, part[prop]).then((result) => {
 
                     const material = result.rows[0].content;
+
                     res.json({
                         success: true
-                    })
-                })
+                    });
+
+                });
 
             }
 
@@ -656,10 +667,12 @@ var studentRoutes = (app) => {
                 dbStudent.updateProcedures(assignmentID, part[prop]).then((result) => {
 
                     const procedure = result.rows[0].content;
+
                     res.json({
                         success: true
-                    })
-                })
+                    });
+
+                });
 
             }
 
@@ -669,10 +682,12 @@ var studentRoutes = (app) => {
                 dbStudent.updateData(assignmentID, part[prop]).then((result) => {
 
                     const data = result.rows[0].content;
+
                     res.json({
                         success: true
-                    })
-                })
+                    });
+
+                });
 
             }
 
@@ -682,10 +697,12 @@ var studentRoutes = (app) => {
                 dbStudent.updateCalculations(assignmentID, part[prop]).then((result) => {
 
                     const calculation = result.rows[0].content;
+
                     res.json({
                         success: true
-                    })
-                })
+                    });
+;
+                });
 
             }
 
@@ -695,16 +712,18 @@ var studentRoutes = (app) => {
                 dbStudent.updateDiscussions(assignmentID, part[prop]).then((result) => {
 
                     const discussion = result.rows[0].content;
+
                     res.json({
                         success: true
-                    })
-                })
+                    });
+
+                });
 
             }
 
         }
 
-    })
+    });
 
 }
 

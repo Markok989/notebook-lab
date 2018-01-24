@@ -17,7 +17,7 @@ export function getStudentData() {
             studentInfo: result.data.studentInfo
         }
 
-    })
+    });
 }
 
 //******************addCourse*****************//
@@ -42,7 +42,8 @@ export function addNewClass(classID) {
             type: 'ADD_CLASS',
             newClassList: result.data.courses
         }
-    })
+
+    });
 }
 
 //******************getAssignment*****************//
@@ -61,11 +62,13 @@ export function getAssignment(id) {
 
     return axios.get('/api/student/assignment/' + id, {
     }).then((result) => {
+
         return {
             type: 'GET_ASSIGNMENT',
             assignment: result.data.assignment
         }
-    })
+
+    });
 
 }
 
@@ -96,6 +99,6 @@ export function newAssignment(id, part) {
             assignment: result.data.assignment
         }
 
-    })
+    });
 
 }

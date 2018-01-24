@@ -105,9 +105,10 @@ class App extends React.Component {
         console.log(e.target.id);
 
         this.setState({
+
             assignmentVisible: true
             
-        })
+        });
 
     }
 
