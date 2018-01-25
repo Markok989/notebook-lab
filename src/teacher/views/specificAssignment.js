@@ -61,18 +61,18 @@ class SpecificAssignment extends React.Component {
     // render method
     render() {
 
-        // constants assignmentId, showCategories belongs to this.state
-        const { assignmentId, showCategories } = this.state;
+        // constants showCategories belongs to this.state
+        const { showCategories } = this.state;
 
-        // constants studentList belongs to this.props
-        const { studentList } = this.props;
+        // constants studentList, currAssignmentId belongs to this.props
+        const { studentList, currAssignmentId } = this.props;
 
         /* 
         - condition if studentList
             - variable studentHtmlList has value of makeInnerList with parameters studentList, assignmentId
         */
         if (studentList) {
-            var studentHtmlList = makeInnerList(studentList, assignmentId)
+            var studentHtmlList = makeInnerList(studentList, currAssignmentId)
         }
 
         /*
@@ -91,7 +91,7 @@ class SpecificAssignment extends React.Component {
 
                 {showCategories && <div>
 
-                    <Link to={`/teacher/assignment/${assignmentId}/title`}>
+                    <Link to={`/teacher/assignment/${currAssignmentId}/title`}>
                         Grade Titles
                     </Link>
 
