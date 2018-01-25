@@ -59,7 +59,7 @@ class TeacherAssignments extends React.Component {
         return (
             <div>
 
-                <Link to='/teacher/new/assignment'>New Assignment</Link>
+                <Link to='/teacher/new/assignment'>Create New Assignment</Link>
 
                 {courses &&
 

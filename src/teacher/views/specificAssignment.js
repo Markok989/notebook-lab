@@ -3,9 +3,10 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import axios from '../../api/axios';
 import { Row, Col, Input, Card, Collection, CollectionItem, CollapsibleItem } from 'react-materialize';
+import { getStudentAssignmentList } from '../actions';
 
 // component SpecificAssignment
-export default class SpecificAssignment extends React.Component {
+class SpecificAssignment extends React.Component {
 
     //constructor
     constructor(props) {
@@ -26,45 +27,17 @@ export default class SpecificAssignment extends React.Component {
     - componentWillMount is invoked immediately before a component is mounted
 
         - log string 'Specific Assignment sectionId' and this.props.params.id
-        - return axios get with path '/api/teacher/students/' +(plus) this.props.params.id
-        - then with word 'then' with parameter results access to function
 
-            - log string 'will mount' and parameter results
-
-            - set the state - property
-                
-                - assignmentId has value of this.props.params.id
-                - studentList has value of results.data.studentList
-                - anonymous function log string 'Student list? ' and this.state
-
-        - then with word 'catch' with parameter e access to function
-
-            - set the state - property
-                - error has value of parameter e
+        - props dispatch togetStudentAssignmentList(from actions) and parameter this.props.params.id
+        
     */
     componentWillMount() {
 
         //needt to get list of students in this section and the id of their students_report
 
         console.log('Specific Assignment sectionId', this.props.params.id);
-        return axios.get('/api/teacher/students/' + this.props.params.id).then((results) => {
 
-            console.log('will mount', results);
-
-            this.setState({
-
-                assignmentId: this.props.params.id,
-                studentList: results.data.studentList
-
-            }, () => console.log('Student list? ', this.state));
-
-        }).catch((e) => {
-
-            this.setState({
-                error: e
-            });
-
-        });
+        this.props.dispatch(getStudentAssignmentList(this.props.params.id));
 
     }
 
@@ -88,8 +61,11 @@ export default class SpecificAssignment extends React.Component {
     // render method
     render() {
 
-        // constants assignmentId, studentList, showCategories belongs to this.state
-        const { assignmentId, studentList, showCategories } = this.state;
+        // constants assignmentId, showCategories belongs to this.state
+        const { assignmentId, showCategories } = this.state;
+
+        // constants studentList belongs to this.props
+        const { studentList } = this.props;
 
         /* 
         - condition if studentList
@@ -114,9 +90,14 @@ export default class SpecificAssignment extends React.Component {
                 </Row>
 
                 {showCategories && <div>
-                    <Button>Grade Titles</Button>
+
+                    <Link to={`/teacher/assignment/${assignmentId}/title`}>
+                        Grade Titles
+                    </Link>
+
                     <Button>Grade Questions</Button>
                     <Button>Grade Hypotheses</Button>
+
                 </div>}
 
                 {studentHtmlList}
@@ -127,6 +108,8 @@ export default class SpecificAssignment extends React.Component {
 
 }
 
+
+/************* HELPER FUNCTIONS ***************/
 /*
 - function makeInnerList with parameters items and assignmentId
 
@@ -208,3 +191,16 @@ var statusStyle = {
     paddingLeft: '40px'
 
 }
+
+
+/************ CONNECTED COMPONENT *************/
+var mapStateToProps = function (state) {
+
+    return {
+        studentList: state.teachers.studentAssignmentList,
+        currAssignmentId: state.teachers.currAssignmentId
+    }
+
+}
+
+export default connect(mapStateToProps)(SpecificAssignment);

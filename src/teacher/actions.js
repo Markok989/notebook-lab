@@ -7,10 +7,53 @@ const SAVE_COURSE_LIST = 'SAVE_COURSE_LIST',
     SAVE_SECTION_LIST = 'SAVE_SECTION_LIST',
     UPDATE_RECENT_ASSIGNMENTS = 'UPDATE_RECENT_ASSIGNMENTS',
     ADD_TEACHER_INFO = 'ADD_TEACHER_INFO',
+    RECEIVE_STUDENT_ASSIGNMENT_LIST = 'RECEIVE_STUDENT_ASSIGNMENT_LIST',
     ERROR = 'ERROR';
 
 
 /************ ASSIGNMENTS *************/
+
+
+/*
+- function getStudentAssignmentList with parameter assignmentId
+
+    - log string 'ACTIONS: in get student assignment list'
+
+    - return axios get with path '/api/teacher/students/' and +(plus) parameter assignmentId
+    - then with word 'then' with parameter results access to function 
+
+        - log string 'will mount' and parameter results
+
+        - return properties
+            - type as RECEIVE_STUDENT_ASSIGNMENT_LIST
+            - payload as results.data.studentList
+            - currAssignmentId as assignmentId
+
+    - then with word 'catch' with parameter e access to function
+        - set the state , property error has value of parameter e
+*/
+export function getStudentAssignmentList(assignmentId) {
+
+    console.log('ACTIONS: in get student assignment list');
+
+    return axios.get('/api/teacher/students/' + assignmentId).then((results) => {
+
+        console.log('will mount', results);
+
+        return {
+            type: RECEIVE_STUDENT_ASSIGNMENT_LIST,
+            payload: results.data.studentList,
+            currAssignmentId: assignmentId
+        };
+
+    }).catch((e) => {
+        this.setState({
+            error: e
+        });
+
+    });
+
+}
 
 /*
 - function saveNewAssignment with property assignmentInfo

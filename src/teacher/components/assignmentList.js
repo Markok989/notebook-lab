@@ -46,7 +46,7 @@ export default class AssignmentList extends React.Component {
 
         axios.get('/api/teacher/assignments/' + this.props.sectionId).then((results) => {
 
-            console.log('Back from getting assignments:,', results);
+            console.log('Back from getting assignments: ', results);
             if (results.data.success) {
 
                 console.log(results.data.assignmentList);
