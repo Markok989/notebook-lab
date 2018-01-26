@@ -23,12 +23,12 @@ var db = spicedPg(dbUrl);
 /********** TEACHER ************/
 
 // function getTeacherInfoById with parameter data
-// log: string "TEACHER_DB: getTeacherInfoById, " and data parameter,
+// log: string "TEACHER_DB: getStudentIdBySection, " and data parameter,
 // queryStr has value of string ''SELECT first_name, last_name, email, password, profile_pic, bio, role FROM users WHERE id = $1'
 // return db query with parameters: queryStr and data
 function getTeacherInfoById(data) {
 
-    console.log('TEACHER_DB: getTeacherInfoById, ', data);
+    console.log('TEACHER_DB: getStudentIdBySection, ', data);
     let queryStr = 'SELECT first_name, last_name, email, password, profile_pic, bio, role FROM users WHERE id = $1';
     return db.query(queryStr, data);
 
@@ -42,12 +42,12 @@ module.exports.getTeacherInfoById = getTeacherInfoById;
 /********** STUDENTS ************/
 
 // function getStudentsBySectionId with parameter data
-// log: string "TEACHER_DB: getStudentIdsBySectionId, " and data parameter,
+// log: string "TEACHER_DB: getStudentIdBySection, " and data parameter,
 // queryStr has value of string 'SELECT users_sections.user_id, users.first_name, users.last_name, users.profile_pic FROM users_sections JOIN users ON users_sections.user_id = users.id WHERE section_id = $1'
 // return db query with parameters: queryStr and data
 function getStudentsBySectionId(data) {
 
-    console.log('TEACHER_DB: getStudentIdsBySectionId, ', data);
+    console.log('TEACHER_DB: getStudentIdBySection, ', data);
     let queryStr = 'SELECT users_sections.user_id, users.first_name, users.last_name, users.profile_pic FROM users_sections JOIN users ON users_sections.user_id = users.id WHERE section_id = $1';
     return db.query(queryStr, data);
 
