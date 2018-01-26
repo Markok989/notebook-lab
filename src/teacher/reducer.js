@@ -68,8 +68,11 @@ export default function (state = {}, action) {
     if (action.type == ADD_TEACHER_INFO) {
 
         console.log('REDUCER: addTeacherInfo');
+
         state = Object.assign({}, state, {
+
             teacherInfo: action.payload
+
         });
 
     }
@@ -82,20 +85,30 @@ export default function (state = {}, action) {
             - empty object, state with property latestAssignment as action.payload
     */
     if (action.type == UPDATE_RECENT_ASSIGNMENTS) {
+
         console.log('REDUCER: getting assignment list');
+
         state = Object.assign({}, state, {
+
             latestAssignment: action.payload
+
         });
+
     }
 
     // condition if action.type is the same as SAVE_SECTION_LIST next line of code is working,
     // log string : 'REDUCER: saving section list',
     // state has value - new empty object, state with sections who has value action.payload
     if (action.type == SAVE_SECTION_LIST) {
+
         console.log('REDUCER: saving section list');
+
         state = Object.assign({}, state, {
+
             sections: action.payload
+
         });
+
     }
 
     // condition if action.type and SAVE_COURSE_COURSE are the same,
@@ -104,10 +117,30 @@ export default function (state = {}, action) {
     //      - create new obejct (Object.assign), empty object {}, with state,
     //          - courses have value action.payload
     if (action.type == SAVE_COURSE_LIST) {
+
         console.log('REDUCER: saving course list');
+
         state = Object.assign({}, state, {
+
             courses: action.payload
+
         });
+
+    }
+
+
+    // condition if action.type and GET_COMMITS are the same,
+    // state has value: 
+    //      - create new obejct (Object.assign), empty object {}, with state,
+    //          - assignment have value action.assignment
+    if (action.type == GET_COMMITS) {
+
+        state = Object.assign({}.state, {
+
+            assignment: action.assignment
+
+        });
+
     }
 
     // condition if action.type and ERROR are the same,
@@ -115,9 +148,13 @@ export default function (state = {}, action) {
     //      - create new obejct (Object.assign), empty object {}, with state,
     //          - error have value action.payload
     if (action.type == ERROR) {
+
         state = Object.assign({}, state, {
+
             error: action.payload
-        })
+
+        });
+
     }
 
     // log state

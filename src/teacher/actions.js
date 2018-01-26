@@ -275,3 +275,27 @@ export function getTeacherInfo() {
 
     })
 }
+
+/*
+- function getCommittedAssignments with parameters id and studentid
+
+    - return axios get with path 'teacher/grading/assignment/:id/student/:studentid', and properties
+      id and studentid
+    - then with word 'then' access to function result
+
+        - return 
+            - type as string 'GET_COMMITS'
+            - assignment as result.data.assignment
+*/
+export function getCommittedAssignments(id, studentid) {
+
+    return axios.get('teacher/grading/assignment/:id/student/:studentid', { id, studentid }).then((result) => {
+
+        return {
+            type: 'GET_COMMITS',
+            assignment: result.data.assignment
+        }
+
+    });
+
+}

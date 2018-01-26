@@ -13,6 +13,7 @@ const mw = require('./routers/middleware');
 const loggedOutRoutes = require("./routers/loggedOutRoutes.js");
 const studentRoutes = require("./routers/studentRoutes.js");
 const teacherRoutes = require("./routers/teacherRoutes.js");
+const teacherGradingRoutes = require("./routers/teacherGrading.js");
 
 // ZA BAZU
 // DBUrl: postgres://qdzpwmxf:4QKHT0tKxYTWp02dCMPk6sCg0RExLYwj@dumbo.db.elephantsql.com:5432/qdzpwmxf
@@ -57,6 +58,7 @@ app.use(express.static(__dirname + '/public'));
 loggedOutRoutes(app);
 studentRoutes(app);
 teacherRoutes(app);
+teacherGradingRoutes(app);
 
 // 404.html
 app.get('*', mw.loggedInCheck, function (req, res) {
