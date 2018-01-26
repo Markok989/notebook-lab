@@ -23,7 +23,7 @@ const SAVE_COURSE_LIST = 'SAVE_COURSE_LIST',
         - log string 'Back grom getting Category Data'
 
         - return properties
-            - action as UPDATE_STUDENT_CATEGORY_DATA
+            - type as UPDATE_STUDENT_CATEGORY_DATA
             - payload as results.data.studentDataForGrading
           
 
@@ -37,7 +37,7 @@ export function getCategoriesForGrading(assignmentId, category) {
         console.log('Back grom getting Category Data');
 
         return {
-            action: UPDATE_STUDENT_CATEGORY_DATA,
+            type: UPDATE_STUDENT_CATEGORY_DATA,
             payload: results.data.studentDataForGrading
         };
 
