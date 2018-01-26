@@ -72,22 +72,23 @@ export function getAssignment(id) {
 
 }
 
-//*********************newAssignment*******************//
+//********************* saveAssignment *******************//
 
 
 /*
-- export function newAssignment with parmaeters id and part
+- export function saveAssignment with parmaeters id and part
+
+    - log id and part
 
     - return axios post with path'/api/student/assignment/' and property { id, part }
     - then with word 'then' with parameter result access to function
 
-        - log id and part
-
+       
         - return next propeties
-            - type as 'NEW_ASSIGNMENT'
+            - type as 'UPDATE_ASSIGNMENT'
             - assignment as result.data.assignment
 */
-export function newAssignment(id, part) {
+export function saveAssignment(id, part) {
 
     console.log(id, part);
 
@@ -96,7 +97,39 @@ export function newAssignment(id, part) {
     return axios.post('/api/student/assignment/', { id, part }).then((result) => {
 
         return {
-            type: 'NEW_ASSIGNMENT',
+            type: 'UPDATE_ASSIGNMENT',
+            assignment: result.data.assignment
+        }
+
+    });
+
+}
+
+/*
+- export function commitAssignment with parmaeters id and part
+
+    - log id and part
+
+    - return axios post with path '/api/student/commit-assignment/' and property { id, part }
+    - then with word 'then' with parameter result access to function
+
+       
+        - return next propeties
+            - type as 'COMMIT_ASSIGNMENT''
+            - assignment as result.data.assignment
+*/
+export function commitAssignment(id, part) {
+
+    console.log(id, part);
+
+    return axios.post('/api/student/commit-assignment/', {
+
+        id, part
+
+    }).then((result) => {
+
+        return {
+            type: 'COMMIT_ASSIGNMENT',
             assignment: result.data.assignment
         }
 

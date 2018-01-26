@@ -306,6 +306,7 @@ var studentRoutes = (app) => {
                  - success has value true
                  - assignments has properties
                         - assignment_id,
+                        - status,
                         - title,
                         - question,
                         - abstract,
@@ -331,6 +332,7 @@ var studentRoutes = (app) => {
 
                 const {
                     assignment_id,
+                    status,
                     title_editable,
                     title_content,
                     title_comments,
@@ -418,6 +420,7 @@ var studentRoutes = (app) => {
                     success: true,
                     assignments: {
                         assignment_id,
+                        status,
                         title,
                         question,
                         abstract,
@@ -445,10 +448,29 @@ var studentRoutes = (app) => {
         - constant assignmentID has value req.body.id
         - constant {part} has value of req.body
         - constant {id} has value of req.session.user
+        - log constants: id, assignmentID 
 
-        - log assignmentID, part, id
+       
+        - dbStudent access to getAssignmentStatus with parameters id and assignmentID
+        - then with word 'then' with parameter result access to function
+                
+             - constant status has value of result.rows[0].status
+                                      
 
-        - for loop with variable prop in port
+        //////////////////////////////////////////////////////
+
+            - condition if prop is strictly the same as null
+
+                - dbStudent access to updateAssignmentStatus with parameters id, assignmentID and string 'IN PROGRESS'
+                - then with word 'then' with parameter result access to function
+                
+                    - log string 'in progress' and parameter result
+                     
+
+        //////////////////////////////////////////////////////
+      
+      
+            - for loop with variable prop in part
 
             - condition if prop is strictly the same as string 'title'
 
@@ -458,9 +480,9 @@ var studentRoutes = (app) => {
                     - constant title has value of result.rows[0].content
                     - res.json has properties:
                         - success has value true
-                   
 
-            //////////////////////////////////////////////////////
+      
+        //////////////////////////////////////////////////////
 
             - condition if prop is strictly the same as string 'question'
 
@@ -472,7 +494,7 @@ var studentRoutes = (app) => {
                         - success has value true
                      
 
-            //////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////
 
             - condition if prop is strictly the same as string 'abstract'
 
@@ -484,7 +506,7 @@ var studentRoutes = (app) => {
                         - success has value true
                  
 
-            //////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////
 
             - condition if prop is strictly the same as string 'hypothesis'
 
@@ -498,7 +520,7 @@ var studentRoutes = (app) => {
                         - success has value true
                   
 
-            //////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////
 
             - condition if prop is strictly the same as string 'variable'
 
@@ -507,7 +529,7 @@ var studentRoutes = (app) => {
                 
                     - return variable as result.rows[0].content
 
-            //////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////
 
             - condition if prop is strictly the same as string 'material'
 
@@ -519,7 +541,7 @@ var studentRoutes = (app) => {
                         - success has value true
                        
 
-            //////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////
             
             - condition if prop is strictly the same as string 'procedure'
 
@@ -531,7 +553,7 @@ var studentRoutes = (app) => {
                         - success has value true
                       
 
-            //////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////
             
             - condition if prop is strictly the same as string 'data'
 
@@ -543,7 +565,7 @@ var studentRoutes = (app) => {
                         - success has value true
                        
 
-            //////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////
             
             - condition if prop is strictly the same as string 'calculation'
 
@@ -554,7 +576,7 @@ var studentRoutes = (app) => {
                     - res.json has properties:
                         - success has value true
                      
-            //////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////
             
             - condition if prop is strictly the same as string 'discussion'
 
@@ -564,6 +586,8 @@ var studentRoutes = (app) => {
                     - constant discussion  has value of result.rows[0].content
                     - res.json has properties:
                         - success has value true
+
+        //////////////////////////////////////////////////////
                             
     */
     app.post('/api/student/save-assignment', (req, res) => {
@@ -571,8 +595,24 @@ var studentRoutes = (app) => {
         const assignmentID = req.body.id;
         const { part } = req.body;
         const { id } = req.session.user;
+        console.log(id, assignmentID);
 
         console.log(assignmentID, part, id);
+
+        dbStudent.getAssignmentStatus(id, assignmentID).then((result) => {
+
+            const status = result.rows[0].status;
+
+        });
+
+        if (status === null) {
+
+            dbStudent.updateAssignmentStatus(id, assignmentID, 'IN PROGRESS').then((result) => {
+
+                console.log('in progress', result);
+
+            })
+        }
 
         for (var prop in part) {
 
@@ -583,10 +623,13 @@ var studentRoutes = (app) => {
                     const title = result.rows[0].content;
 
                     res.json({
+
                         success: true
+
                     });
 
-                })
+                });
+
             }
 
             if (prop === 'question') {
@@ -596,10 +639,12 @@ var studentRoutes = (app) => {
                     const question = result.rows[0].content;
 
                     res.json({
+
                         success: true
+
                     });
 
-                });
+                })
 
             }
 
@@ -701,7 +746,7 @@ var studentRoutes = (app) => {
                     res.json({
                         success: true
                     });
-;
+                    ;
                 });
 
             }
@@ -722,6 +767,42 @@ var studentRoutes = (app) => {
             }
 
         }
+
+    });
+
+
+    /*
+    - app post with path '/api/student/commit-assignment/' and function with parameters: req and res
+
+        - log string 'server committing'
+
+        - constant assignmentID has value of req.body.id
+        - constant part has value of req.body
+        - constant id has value of req.session.user
+
+        - dbStudent access to updateAssignmentStatus(from student.js file), with parameters id, assignmentID 
+          and string 'COMMITTED'
+        - then with word then we use parameter result to access function
+
+            - log string 'committed' and parameter results
+
+           - res reditect to path '/api/student/assignment/' +(plus) assignmentID
+           
+    */
+    app.post('/api/student/commit-assignment/', (req, res) => {
+
+        console.log('server committing');
+
+        const assignmentID = req.body.id;
+        const { part } = req.body;
+        const { id } = req.session.user;
+
+        dbStudent.updateAssignmentStatus(id, assignmentID, 'COMMITTED').then((results) => {
+
+            console.log('committed', result);
+
+            res.redirect('/api/student/assignment/' + assignmentID);
+        });
 
     });
 

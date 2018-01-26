@@ -2,7 +2,7 @@ import React from 'react';
 import { Router, Route, Link, IndexRoute, browserHistory, hashHistory } from 'react-router';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { getAssignment, saveAssignment } from '../actions';
+import { getAssignment, saveAssignment, udpateAssignmentStatus, commitAssignment } from '../actions';
 
 // component Assignment
 class Assignment extends React.Component {
@@ -20,6 +20,7 @@ class Assignment extends React.Component {
         this.props.dispatch = this.props.dispatch.bind(this);
         this.handleSave = this.handleSave.bind(this);
         this.handleSaveAll = this.handleSaveAll.bind(this);
+        this.handleCommit = this.handleCommit.bind(this);
 
     }
 
@@ -80,6 +81,25 @@ class Assignment extends React.Component {
     }
 
     /*
+    - method handleCommit with parameter e
+
+        - constant id belongs to this.props.params
+
+        - props dispatch to function getAssignment(from actions) with parameter id
+        - props dispatch to function commitAssignment(from actions) with parameters id and this.state
+
+    */
+    handleCommit(e) {
+
+        const { id } = this.props.params;
+
+        this.props.dispatch(getAssignment(id));
+        this.props.dispatch(commitAssignment(id, this.state))
+
+    }
+
+
+    /*
     - method handleSaveAll with parmeter e
 
         - log string 'save all' and this.state
@@ -99,6 +119,8 @@ class Assignment extends React.Component {
     // render method
     render() {
 
+        var form;
+
         // constant assignment and studentInfo belongs to this.props
         const { assignment, studentInfo } = this.props;
 
@@ -109,22 +131,72 @@ class Assignment extends React.Component {
             return null
         }
 
+        console.log('STATUS', assignment.status);
+
+
         // variable assignmentOptions with properties
         // div element contain set of functions
         var assignmentOptions =
+            <div>
+
+                <div>
+
+                    {editable(assignment.title, 'title', this.handleChange, this.handleSave)}
+                    {editable(assignment.question, 'question', this.handleChange, this.handleSave)}
+                    {editable(assignment.abstract, 'abstract', this.handleChange, this.handleSave)}
+                    {editable(assignment.hypothesis, 'hypothesis', this.handleChange, this.handleSave)}
+                    {editable(assignment.variable, 'variable', this.handleChange, this.handleSave)}
+                    {editable(assignment.material, 'material', this.handleChange, this.handleSave)}
+                    {editable(assignment.procedure, 'procedure', this.handleChange, this.handleSave)}
+                    {editable(assignment.data, 'data', this.handleChange, this.handleSave)}
+                    {editable(assignment.calculation, 'calculation', this.handleChange, this.handleSave)}
+                    {editable(assignment.discussion, 'discussion', this.handleChange, this.handleSave)}
+
+                </div>
+
+                <button name='saveAll' onClick={this.handleSaveAll}>Save All</button>
+
+                <button name='commit' onClick={this.handleCommit}>Commit</button>
+
+            </div>;
+
+        var committedAssignment =
 
             <div>
-                {editable(assignment.title, 'title', this.handleChange, this.handleSave)}
-                {editable(assignment.question, 'question', this.handleChange, this.handleSave)}
-                {editable(assignment.abstract, 'abstract', this.handleChange, this.handleSave)}
-                {editable(assignment.hypothesis, 'hypothesis', this.handleChange, this.handleSave)}
-                {editable(assignment.variable, 'variable', this.handleChange, this.handleSave)}
-                {editable(assignment.material, 'material', this.handleChange, this.handleSave)}
-                {editable(assignment.procedure, 'procedure', this.handleChange, this.handleSave)}
-                {editable(assignment.data, 'data', this.handleChange, this.handleSave)}
-                {editable(assignment.calculation, 'calculation', this.handleChange, this.handleSave)}
-                {editable(assignment.discussion, 'discussion', this.handleChange, this.handleSave)}
+
+                {committed(assignment.title, 'title')}
+                {committed(assignment.question, 'question')}
+                {committed(assignment.abstract, 'abstract')}
+                {committed(assignment.hypothesis, 'hypothesis')}
+                {committed(assignment.variable, 'variable')}
+                {committed(assignment.material, 'material')}
+                {committed(assignment.procedure, 'procedure')}
+                {committed(assignment.data, 'data')}
+                {committed(assignment.calculation, 'calculation')}
+                {committed(assignment.discussion, 'discussion')}
+
             </div>;
+
+        /*
+        - condition if assignment.status is strictly the same as string 'COMMITTED'
+          OR(||)
+          assignment.status is strictly the same as string 'GRADED'
+          OR(||)
+          assignment.status is strictly the same as string 'PENDING'
+
+            - form has value of committedAssignment
+
+        - else 
+            - form has value of assignmentOptions
+        */
+        if (assignment.status === 'COMMITTED' || assignment.status === 'GRADED' || assignment.status === 'PENDING') {
+
+            form = committedAssignment;
+
+        } else {
+            form = assignmentOptions;
+        }
+
 
         return (
 
@@ -132,9 +204,7 @@ class Assignment extends React.Component {
 
                 <h3>Complete the following assignment</h3>
 
-                {assignmentOptions}
-
-                <button name="saveAll" onClick={this.handleSaveAll}>Save All</button>
+                {form}
 
             </div>
 
@@ -144,8 +214,8 @@ class Assignment extends React.Component {
 }
 
 /*
-- function editable with parameters: section, ategory, handleChange, handleSave
-    
+- function editable with parameters: section, category, handleChange, handleSave, handleSaveAll, handleCommit
+
     - log parameter section[section + '_editable']
 
     - condition if section with parmaters [category +(plus) string '_editable' ]
@@ -160,7 +230,7 @@ class Assignment extends React.Component {
 
                 - element textarea with attributes
                     - name {category}
-                    - placeholder "Type here.."
+                - placeholder "Type here.."
                     - cols "30" , rows "5"
                     - onChange use method handleChange
                     - property
@@ -168,7 +238,7 @@ class Assignment extends React.Component {
 
                 - element button with attributes
                     - name {category}
-                    - onClick use method handleSave
+                - onClick use method handleSave
                     - property
                         - text Save
 
@@ -177,40 +247,40 @@ class Assignment extends React.Component {
             - return div element with properties
 
                 - element label with property {category}
-                
+
                 - element textarea with attributes
                     - name {category}
-                    - placeholder "Type here.."
+                - placeholder "Type here.."
                     - cols "30" , rows "5"
                     - onChange use method handleChange
-                  
+
                 - element button with attributes
                     - name {category}
-                    - onClick use method handleSave
+                - onClick use method handleSave
                     - property
                         - text Save
-        
-    
+
+
     - else if condition
       section[category + '_editable'] is strictly the same as null
       OR(||)
       section[category + '_content'] is strictly the same as null null
 
         return
-    
-    - else 
+
+    - else
 
         - log string: 'cannot edit' and  section[category + '_content'],
 
         -return
 
             - div element with property
-            
+
                 - element h3 with property {category}
 
                 - element p with property {section[category + '_content']}
-*/
-function editable(section, category, handleChange, handleSave) {
+                */
+function editable(section, category, handleChange, handleSave, handleSaveAll, handleCommit) {
 
     console.log(section[section + '_editable']);
 
@@ -275,10 +345,40 @@ function editable(section, category, handleChange, handleSave) {
 
 }
 
+/*
+- function committed with parameters section, category
+
+    - condition if section[category + '_content']
+
+        - return element div with property
+
+            - element h3 wit property {category}
+
+            - element p wit property {section[category + '_content']}
+*/
+function committed(section, category) {
+
+    if (section[category + '_content']) {
+
+        return (
+
+            <div>
+
+                <h3>{category}</h3>
+
+                <p>{section[category + '_content']}</p>
+
+            </div>
+
+        );
+
+    }
+
+}
 
 /********** COMPONENT CONNECTED **************/
 const mapStateToProps = function (state) {
-    
+
     console.log('mapStateToProps', state);
 
     return {
