@@ -5,8 +5,8 @@ import axios from '../../api/axios';
 import { getCategoriesForGrading } from '../actions';
 import { Row, Col, Button, Card, Collection, CollectionItem } from 'react-materialize';
 
-// component SpecificAssignment
-class SpecificAssignment extends React.Component {
+// component GradeACategory
+class GradeACategory extends React.Component {
 
     // constructor
     constructor(props) {

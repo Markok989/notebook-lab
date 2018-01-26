@@ -4,6 +4,23 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import { getStudentData, addNewClass, getAssignmentList } from './actions';
 import AssignmentView from './components/AssignmentView';
+import {
+    Navbar,
+    NavItem,
+    Row,
+    Col,
+    Container,
+    SideNav,
+    SideNavItem,
+    Button,
+    Collapsible,
+    CollapsibleItem,
+    Modal,
+    Input,
+    Collection,
+    CollectionItem
+} from 'react-materialize';
+import Logout from '../auth/logout';
 
 // component App (for student) STUDENT APP
 class App extends React.Component {
@@ -129,111 +146,115 @@ class App extends React.Component {
 
         return (
 
-            <div>
+            <Container>
+
                 {/* student First name - student Last name */}
                 {studentInfo.first_name} {studentInfo.last_name}
 
-                <nav>
-                    <ul>
-                        <Link to="/student"><li>Home</li></Link>
-                        <li>Courses</li>
-                        <li>Gradebookrysjlktd</li>
-                        <li>Account</li>
-                        <li>Logout</li>
-                    </ul>
-                </nav>
+                <Navbar>
 
-                <sidebar>
+                    <NavItem><Link to='/student'>Home</Link></NavItem>
+                    <NavItem>Courses</NavItem>
+                    <NavItem>Gradebook</NavItem>
+                    <NavItem>Account</NavItem>
+                    <NavItem><Logout /></NavItem>
 
-                    <header>
-                        Menu
-                    </header>
+                </Navbar>
 
-                    <div>
+                <Row>
 
-                        <ul>
+                    <Col s={12} m={4}>
+
+                        <Collapsible>
 
                             {
                                 /*
                                 - studentInfo.course use .map with parameter course to access
-                                    - li element with property {course.course_name}
-                                        - ul element with property course.assignments use .map with parameter assignment to access
-                                            - li element with attribute onClick
+
+                                    - CollapsibleItem element with property {course.course_name}
+
+                                        - ul element with property
+                                            - course.assignments AND course.assignments use .map
+                                              with parameter assignment to access
+
+                                                - li element with attribute onClick
                                                 - e parmater use showAssignment with parameter e
-                                                - property of elementelement
-                                                    - Link element with path {`/student/assignment/${assignment.assignment_id}`}
-                                                      and property {assignment.assignment_name}
+
+                                                    - property of elementelement
+                                                        - Link element with path {`/student/assignment/${assignment.assignment_id}`}
+                                                          and property {assignment.assignment_name}
                                 */
                             }
                             {studentInfo.courses.map(course => (
 
-                                <li>{course.course_name}
+                                <CollapsibleItem header={course.course_name}>
 
                                     <ul>
 
                                         {course.assignments && course.assignments.map(assignment => (
 
-                                            <li
-                                                onClick={e => this.showAssignment(e)}
-                                                id={assignment.assignment_id}>
+                                            <li onClick={e => this.showAssignment(e)} id={assignment.assignment_id}>
 
-                                                <Link
-                                                    to={`/student/assignment/${assignment.assignment_id}`} >
+                                                <Link to={`/student/assignment/${assignment.assignment_id}`} >
                                                     {assignment.assignment_name}
                                                 </Link>
 
-                                            </li>
-
-                                        )
+                                            </li>)
                                         )}
 
                                     </ul>
 
-                                </li>
+                                </CollapsibleItem>
 
                             ))}
 
-                        </ul>
+                        </Collapsible>
 
-                    </div>
+                        <Modal header="Add A Class" trigger={<Button>Add A Class</Button>}>
 
-                </sidebar>
+                            {
+                                /*
+                                - Input element with attribute 
+                                    - name
+                                    - placeholder
+                                    - onChange - with parmaeter e , use handleChange with parmeter e
+                                    - onKeyPress - with parmaeter e , use emitMessage with parmeter e
+                                */
+                            }
+                            <Input name="course" placeholder="Course Code"
+                                onChange={e => this.handleChange(e)}
+                                onKeyPress={e => this.emitMessage(e)} />
 
-                {
-                    /*
-                    - input element with attribute 
-                       - className
-                       - name
-                       - placeholder
-                       - onChange - with parmaeter e , use handleChange with parmeter e
-                       - onKeyPress - with parmaeter e , use emitMessage with parmeter e
-                    */
-                }
+                            {
+                                /*
+                                - button element with attribute 
+                                    - onClick - with parmaeter e , use newClass with parmeter e
+                                */
+                            }
+                            <Button onClick={e => this.newClass(e)}> Submit </Button>
 
-                <input className="reg-input" name="course" placeholder="Course Code"
-                    onChange={e => this.handleChange(e)}
-                    onKeyPress={e => this.emitMessage(e)} />
+                        </Modal>
 
-                {
-                    /*
-                    - button element with attribute 
-                        - onClick - with parmaeter e , use newClass with parmeter e
-                    */
-                }
-                <button className="new-class-button" onClick={e => this.newClass(e)}> Submit </button>
+                    </Col>
 
-                {
-                    /*
-                    - this is App component
-                    - props as property
-                    - children, show children components
-                    */
-                }
-                {this.props.children}
+                    <Col s={12} m={8}>
 
-            </div>
+                        {
+                            /*
+                            - this is App component
+                            - props as property
+                            - children, show children components
+                            */
+                        }
+                        {this.props.children}
 
-        );
+                    </Col>
+
+                </Row>
+
+            </Container>
+
+        ); // end return
 
     }
 

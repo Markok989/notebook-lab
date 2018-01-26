@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import Logout from '../../auth/logout';
 import { getTeacherInfo } from '../actions';
-import { Navbar, NavItem, Row, Col, Container, SideNav, SideNavItem, Button } from 'react-materialize';
+import { Navbar, NavItem, Row, Col, Container, SideNav, SideNavItem, Button, Collection, CollectionItem } from 'react-materialize';
 
 //import { connect } from 'react-redux';
 
@@ -59,15 +59,15 @@ class App extends React.Component {
 
                         <Col s={2} className='sidebar'>
 
-                            <ul>
+                            <Collection>
 
-                                <li><Link to="/teacher/assignments">Assignments</Link></li>
-                                <li><Link to="/teacher/courses">Courses</Link></li>
-                                <li>Gradebook</li>
-                                <li>Students</li>
-                                <li>Messages</li>
+                                <CollectionItem><Link to="/teacher/assignments">Assignments</Link></CollectionItem>
+                                <CollectionItem><Link to="/teacher/courses">Courses</Link></CollectionItem>
+                                <CollectionItem>Gradebook</CollectionItem>
+                                <CollectionItem>Students</CollectionItem>
+                                <CollectionItem>Messages</CollectionItem>
 
-                            </ul>
+                            </Collection>
 
                         </Col>
 
