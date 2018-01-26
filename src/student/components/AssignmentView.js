@@ -56,10 +56,14 @@ class Assignment extends React.Component {
     /*
     - method handleSave with parmeter e
 
-        - variable field has value of [e.target.name]
+        - variable field has value of e.target.name
+
+        - log string 'data' and variable field
 
         - variable send has value of object
-             - [e.target.name] has value of this.state[field]
+             - [field] has value of this.state[field]
+
+        - log string 'send' and variable send
 
         - constant id belongs to this.props.params
 
@@ -68,11 +72,15 @@ class Assignment extends React.Component {
     */
     handleSave(e) {
 
-        var field = [e.target.name];
+        var field = e.target.name;
+
+        console.log('dield', field);
 
         var send = {
-            [e.target.name]: this.state[field]
+            [field]: this.state[field]
         }
+
+        console.log('send', send);
 
         const { id } = this.props.params;
 
