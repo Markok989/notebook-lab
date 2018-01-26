@@ -11,7 +11,7 @@ const {
     getStudentIdsBySectionId,
     getTeacherInfoById,
     getStudentsAssignmentIdsBySection
-    } = require("../database/teacherDb");
+    } = require('../database/teacherDb');
 
 const {
     saveNewAssignmentTemplate,
@@ -26,7 +26,9 @@ const {
     newCalculations,
     newDiscussion,
     getAssignmentNameIdBySection
-            } = require("../database/assignmentsDb");
+            } = require('../database/assignmentsDb');
+
+const { getCategoriesForGrading } = require('../database/gradingDb');
 
 
 // component teacherRoutes with parameter app,
@@ -74,6 +76,50 @@ var teacherRoutes = (app) => {
 
 
     /********** ASSIGNMENTS *********/
+
+    //get all the students data for given category
+
+    /*
+    - app get with path '/api/teacher/:assignmentId/:category', mw.loggedInCheck and mw.checkIfTeacher (from midlleware) and use parameters req and res
+             
+       - data has value of  [req.params.assignmentId, req.params.category]
+       - return getCategoriesForGrading(from teacherDb) with parameter data
+       - then with word 'then' with parameter results access to function
+           
+           - log string 'TEACHER ROUTER: categories for grading: ' and results.rows
+
+           - res.json contains success with boolean value true and
+             categoryData with value results.rows
+
+        - 'catch' word with parameter e to access to function
+
+            - res.json with property
+                - error has value of parameter e
+    */
+    app.get('/api/teacher/:assignmentId/:category', mw.loggedInCheck, mw.checkIfTeacher, (req, res) => {
+
+        let data = [req.params.assignmentId, req.params.category];
+
+        return getCategoriesForGrading(data).then(results => {
+
+            console.log('TEACHER ROUTER: categories for grading: ', results.rows);
+
+            res.json({
+                success: true,
+                categoryData: results.rows
+            });
+
+        }).catch(e => {
+
+            res.json({
+                error: e
+            });
+
+        });
+
+    });
+
+    //get all the students report ids by section
 
     /*
     - app get with path'/api/teacher/students/:sectionId', mw.loggedInCheck and mw.checkIfTeacher (from midlleware) and use parameters req and res

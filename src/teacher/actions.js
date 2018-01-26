@@ -8,7 +8,49 @@ const SAVE_COURSE_LIST = 'SAVE_COURSE_LIST',
     UPDATE_RECENT_ASSIGNMENTS = 'UPDATE_RECENT_ASSIGNMENTS',
     ADD_TEACHER_INFO = 'ADD_TEACHER_INFO',
     RECEIVE_STUDENT_ASSIGNMENT_LIST = 'RECEIVE_STUDENT_ASSIGNMENT_LIST',
+    UPDATE_STUDENT_CATEGORY_DATA = 'UPDATE_STUDENT_CATEGORY_DATA',
     ERROR = 'ERROR';
+
+
+/************ ASSIGNMENTS *************/
+
+/*
+- function getCategoriesForGrading with parameters assignmentId, category
+
+    - return axios get with path `/api/teacher/${assignmentId}/${category}`
+    - then with word 'then' with parameter results access to function 
+
+        - log string 'Back grom getting Category Data'
+
+        - return properties
+            - action as UPDATE_STUDENT_CATEGORY_DATA
+            - payload as results.data.studentDataForGrading
+          
+
+    - then with word 'catch' with parameter e access to function
+        - set the state , property error has value of parameter e
+*/
+export function getCategoriesForGrading(assignmentId, category) {
+
+    return axios.get(`/api/teacher/${assignmentId}/${category}`).then(results => {
+
+        console.log('Back grom getting Category Data');
+
+        return {
+            action: UPDATE_STUDENT_CATEGORY_DATA,
+            payload: results.data.studentDataForGrading
+        };
+
+    }).catch(e => {
+
+        return {
+            error: e
+        };
+
+    });
+
+}
+
 
 
 /************ ASSIGNMENTS *************/
@@ -74,6 +116,7 @@ export function getStudentAssignmentList(assignmentId) {
 export function saveNewAssignment(assignmentInfo) {
 
     console.log('ACTIONS: in save assignment', assignmentInfo);
+
     if (assignmentInfo) {
 
         return axios.post('/api/teacher/assignment', { assignmentInfo }).then((results) => {
@@ -87,6 +130,7 @@ export function saveNewAssignment(assignmentInfo) {
                 };
 
             }
+
         }).catch((e) => {
 
             return {
@@ -114,6 +158,7 @@ export function saveNewSection(courseId, name, start, end) {
         return axios.post('/api/teacher/section', { courseId, name, start, end }).then(() => {
             return getAllSections();
         });
+
     } else {
 
         return {
@@ -136,10 +181,12 @@ export function getAllSections() {
     return axios.get('/api/teacher/sections').then((results) => {
 
         console.log('ACTIONS getAllSections', results);
+
         return {
             type: SAVE_SECTION_LIST,
             payload: results.data.sections
         };
+
     }).catch((e) => {
 
         return {
@@ -163,6 +210,7 @@ export function getCourseList() {
     return axios.get('/api/teacher/courses').then((results) => {
 
         console.log('Actions: back from getting courses', results);
+
         return {
             type: SAVE_COURSE_LIST,
             payload: results.data.courses
@@ -217,6 +265,7 @@ export function getTeacherInfo() {
         if (results.data.success) {
 
             console.log('got teacher info:', results);
+
             return {
                 type: ADD_TEACHER_INFO,
                 payload: results.data.teacherInfo
