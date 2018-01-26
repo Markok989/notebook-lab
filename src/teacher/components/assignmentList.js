@@ -23,6 +23,9 @@ export default class AssignmentList extends React.Component {
 
         - log string 'Component did mount: Asssignment List'
 
+        - variable url has value of string/path '/api/teacher/assignments/' +(plus) this.props.sectionId
+        - log string 'URL' and variable url
+
         - axios get to path '/api/teacher/' +(plus) this.props.sectionId
         - then with word 'then' with parameter results access to function
 
@@ -43,6 +46,9 @@ export default class AssignmentList extends React.Component {
     componentDidMount() {
 
         console.log('Component did mount: Asssignment List');
+
+        var url = '/api/teacher/assignments/' + this.props.sectionId;
+        console.log('URL', url);
 
         axios.get('/api/teacher/assignments/' + this.props.sectionId).then((results) => {
 

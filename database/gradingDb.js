@@ -18,14 +18,14 @@ var db = spicedPg(dbUrl);
 /*
 - function getCategoriesForGrading with parameter data
 
-    - log string 'Grading_DB: getStudentIdsBySectionId, ' and parameter data
+    - log string 'Grading_DB: getCategoriesForGrading, ' and parameter data
     - queryStr has value of string :
       'SELECT titles.content, students_reports.id AS report_id, students_reports.student_id, students_reports.status FROM students_reports JOIN titles ON students_reports.title_id = titles.id WHERE students_reports.assignment_id = 1'
     - returns db.query(queryStr, data)
 */
 function getCategoriesForGrading(data) {
 
-    console.log('Grading_DB: getStudentIdsBySectionId, ', data);
+    console.log('Grading_DB: getCategoriesForGrading, ', data);
     let queryStr = 'SELECT titles.content, students_reports.id AS report_id, students_reports.student_id, students_reports.status FROM students_reports JOIN titles ON students_reports.title_id = titles.id WHERE students_reports.assignment_id = 1;';
     return db.query(queryStr, data);
 

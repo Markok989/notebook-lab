@@ -128,7 +128,7 @@ class SpecificAssignment extends React.Component {
 
             - element CollapsibleItem with attribute key {item.report_id.toString()} and peroperty
 
-                - element link with path {`/teacher/assignment/${assignmentId}/student/${item.report_id}`}
+                - element link with path {`/teacher/grading/assignment/${assignmentId}/student/${item.report_id}`}
                   and property 
 
                     -   {item.first_name}  {item.last_name}
@@ -150,7 +150,7 @@ function makeInnerList(items, assignmentId) {
 
             <CollapsibleItem key={item.report_id.toString()}>
 
-                <Link to={`/teacher/assignment/${assignmentId}/student/${item.report_id}`}>
+                <Link to={`/teacher/grading/assignment/${assignmentId}/student/${item.report_id}`}>
                     {item.first_name}  {item.last_name}
                 </Link>
 

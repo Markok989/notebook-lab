@@ -80,7 +80,7 @@ var teacherRoutes = (app) => {
     //get all the students data for given category
 
     /*
-    - app get with path '/api/teacher/:assignmentId/:category', mw.loggedInCheck and mw.checkIfTeacher (from midlleware) and use parameters req and res
+    - app get with path '/api/teacher/grading/:assignmentId/:category', mw.loggedInCheck and mw.checkIfTeacher (from midlleware) and use parameters req and res
              
        - data has value of  [req.params.assignmentId, req.params.category]
        - return getCategoriesForGrading(from teacherDb) with parameter data
@@ -96,7 +96,7 @@ var teacherRoutes = (app) => {
             - res.json with property
                 - error has value of parameter e
     */
-    app.get('/api/teacher/:assignmentId/:category', mw.loggedInCheck, mw.checkIfTeacher, (req, res) => {
+    app.get('/api/teacher/grading/:assignmentId/:category', mw.loggedInCheck, mw.checkIfTeacher, (req, res) => {
 
         let data = [req.params.assignmentId, req.params.category];
 
@@ -124,12 +124,14 @@ var teacherRoutes = (app) => {
     /*
     - app get with path'/api/teacher/students/:sectionId', mw.loggedInCheck and mw.checkIfTeacher (from midlleware) and use parameters req and res
              
-       - data has value of [req.params.sectionId]
-       - return getStudentsAssignmentIdsBySection(from teacherDb) with parameter data
-       - then with word 'then' with parameter results access to function
+        - data has value of [req.params.sectionId]
+        - log string 'About to: getStudentsAssignmentIdsBySection'
+
+        - return getStudentsAssignmentIdsBySection(from teacherDb) with parameter data
+        - then with word 'then' with parameter results access to function
            
-           - log string 'Got Student Assignment List Info' and results.rows
-           - res.json contains success with boolean value true and
+            - log string 'Got Student Assignment List Info' and results.rows
+            - res.json contains success with boolean value true and
              studentList with value results.rows
 
         - 'catch' word with parameter e to access to function
@@ -140,6 +142,8 @@ var teacherRoutes = (app) => {
     app.get('/api/teacher/students/:sectionId', mw.loggedInCheck, mw.checkIfTeacher, (req, res) => {
 
         let data = [req.params.sectionId];
+        console.log('About to: getStudentsAssignmentIdsBySection');
+
         return getStudentsAssignmentIdsBySection(data).then(results => {
 
             console.log('Got Student Assignment List Info', results.rows);
