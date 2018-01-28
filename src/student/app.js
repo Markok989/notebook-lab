@@ -60,6 +60,7 @@ class App extends React.Component {
         - e.preventDefault (The preventDefault() method cancels the event if it is cancelable,
           meaning that the default action that belongs to the event will not occur.)
         
+        - log string 'new class event'
         - props dispatch to addNewClass(from actions) with property this.state.course
 
         - use method emptyField with parameter e
@@ -68,6 +69,7 @@ class App extends React.Component {
 
         e.preventDefault();
 
+        console.log('new class event');
         this.props.dispatch(addNewClass(this.state.course));
 
         this.emptyField(e);
@@ -210,7 +212,41 @@ class App extends React.Component {
 
                         </Collapsible>
 
-                        <Modal header="Add A Class" trigger={<Button>Add A Class</Button>}>
+                        {
+                            /*
+                            - element Modal with attributes
+                                - header - "Add A Class"
+                                - trigger - {<Button>Add A Class</Button>}
+                                - actions 
+
+                                    - element div
+
+                                        - element Button with attributes 
+                                            - modal - "close"
+                                            - onClick - {e => this.newClass(e)}
+                                            - actions - {'modal-close'}
+
+                                        - element Button with attributes 
+                                            - flat
+                                            - modal - "close"
+                                            - waves - "light"
+                            */
+                        }
+                        <Modal header="Add A Class" trigger={<Button>Add A Class</Button>} actions={
+
+                            <div>
+
+                                <Button modal="close" onClick={e => this.newClass(e)} actions={'modal-close'}>
+                                    Submit
+                                </Button>
+
+                                <Button flat modal="close" waves="light">
+                                    Dismiss
+                                </Button>
+
+                            </div>
+
+                        }>
 
                             {
                                 /*
@@ -224,14 +260,6 @@ class App extends React.Component {
                             <Input name="course" placeholder="Course Code"
                                 onChange={e => this.handleChange(e)}
                                 onKeyPress={e => this.emitMessage(e)} />
-
-                            {
-                                /*
-                                - button element with attribute 
-                                    - onClick - with parmaeter e , use newClass with parmeter e
-                                */
-                            }
-                            <Button onClick={e => this.newClass(e)}> Submit </Button>
 
                         </Modal>
 
