@@ -129,7 +129,7 @@ class TeacherCourses extends React.Component {
                             onChange={this.handleInput}
                             ref={el => this.courseNameInput = el} />
 
-                        <Button onClick={this.submit}>Save new course</Button>
+                        <Button modal="close" onClick={this.submit}>Save new course</Button>
 
                     </Modal>
 

@@ -117,7 +117,7 @@ class AddSection extends React.Component {
                         ref={el => this.endDateInput = el}
                     />
 
-                    <Button onClick={this.submit}>Save New Course</Button>
+                    <Button modal="close" onClick={this.submit}>Save New Course</Button>
 
                 </Modal>
 
@@ -131,7 +131,7 @@ const mapStateToProps = function (state) {
     return {
         error: state.teachers.error
     };
-    
+
 }
 
 /********* CONNECTED COMPONENT ********/
