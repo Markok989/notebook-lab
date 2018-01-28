@@ -146,7 +146,7 @@ var studentRoutes = (app) => {
                 
                 - log result.rows
 
-                - condition if result.rows and filtered with parameter section
+                - condition if result.rows and find with parameter section
                     - section.section_id is the same as classID
 
                         - throw string 'Error student is already enrolled in this class'
@@ -203,7 +203,7 @@ var studentRoutes = (app) => {
 
             console.log(result.rows);
 
-            if (result.rows.filter(section => section.section_id == classID)) {
+            if (result.rows.find(section => section.section_id == classID)) {
 
                 throw 'Error student is already enrolled in this class'
 

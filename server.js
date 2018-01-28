@@ -15,7 +15,7 @@ const studentRoutes = require("./routers/studentRoutes.js");
 const teacherRoutes = require("./routers/teacherRoutes.js");
 const teacherGradingRoutes = require("./routers/teacherGrading.js");
 
-// ZA BAZU
+// For DB
 // DBUrl: postgres://qdzpwmxf:4QKHT0tKxYTWp02dCMPk6sCg0RExLYwj@dumbo.db.elephantsql.com:5432/qdzpwmxf
 
 /* Start bundle-server.js in terminal to have webpack compile bundle.js

@@ -131,14 +131,17 @@ export default function (state = {}, action) {
 
 
     // condition if action.type and GET_COMMITS are the same,
+    // log string 'GET_COMMITS' and action.assignment
     // state has value: 
     //      - create new obejct (Object.assign), empty object {}, with state,
-    //          - assignment have value action.assignment
+    //          - committedAssignment have value action.assignment
     if (action.type == GET_COMMITS) {
+
+        console.log('GET_COMMITS', action.assignment);
 
         state = Object.assign({}.state, {
 
-            assignment: action.assignment
+            committedAssignment: action.assignment
 
         });
 
@@ -159,6 +162,6 @@ export default function (state = {}, action) {
     }
 
     // log state
-    console.log(state);
+    console.log('STATE', state);
     return state;
 }

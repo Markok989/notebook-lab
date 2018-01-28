@@ -1,5 +1,6 @@
 const path = require('path');
 const mw = require('./middleware');
+const dbGrading = require('../database/gradingDb');
 
 const {
     saveNewCourse,
@@ -448,8 +449,249 @@ var teacherRoutes = (app) => {
             });
 
         });
+
     });
-};
+
+
+
+    /*
+    - app get with path '/api/teacher/grading/assignment/:id/student/:reportid', and use parameters req and res
+    
+        - constant assignmentID has value of req.params.id,
+        - constant reportID has value of req.params.reportid,
+        
+        - log string 'entering', constants assignmentID and reportID,
+    
+        - access to dbGrading getAssignment(module.export) with parameters reportID, assignmentID
+        - then with word 'then' with parameter result 
+    
+            - log result.rows
+    
+            - constant status has value of result.rows[0].status
+    
+            - condition if status is strictly the same as string 'COMMITTED'
+    
+                - constants {
+                    first_name,
+                    last_name,
+                    assignment_id,
+                    status,
+                    title_editable,
+                    title_content,
+                    title_comments,
+                    title_grade,
+                    question_editable,
+                    question_content,
+                    question_comments,
+                    question_grade,
+                    abstract_editable,
+                    abstract_content,
+                    abstract_comments,
+                    abstract_grade,
+                    hypothesis_editable,
+                    hypothesis_content,
+                    hypothesis_comments,
+                    hypothesis_grade,
+                    variable_editable,
+                    variable_content,
+                    variable_comments,
+                    variable_grade,
+                    material_editable,
+                    material_content,
+                    material_comments,
+                    material_grade,
+                    procedure_editable,
+                    procedure_content,
+                    procedure_comments,
+                    procedure_grade,
+                    data_editable,
+                    data_content,
+                    data_comments,
+                    data_grade,
+                    calculation_editable,
+                    calculation_content,
+                    calculation_comments,
+                    calculation_grade,
+                    discussion_editable,
+                    discussion_content,
+                    discussion_comments,
+                    discussion_grade
+                } belongs to result.rows[0];
+    
+                
+                constant title has properties: title_editable, title_content, title_comments, title_grade
+                
+                constant question has properties: question_editable, question_content, question_comments, question_grade
+                
+                constant abstract has properties: abstract_editable, abstract_content, abstract_comments, abstract_grade
+    
+                constant hypothesis has properties: hypothesis_editable, hypothesis_content, hypothesis_comments, hypothesis_grade
+                
+                constant variable has properties: variable_editable, variable_content, variable_comments, variable_grade
+                
+                constant material has properties: material_editable, material_content, material_comments, material_grade
+                
+                constant procedure has properties: procedure_editable, procedure_content, procedure_comments, procedure_grade
+                
+                constant data has properties: data_editable, data_content, data_comments, data_grade
+                
+                constant calculation has properties: calculation_editable, calculation_content, calculation_comments, calculation_grade
+             
+                constant discussion has properties: discussion_editable, discussion_content, discussion_comments, discussion_grade
+    
+    
+                - res json has properties 
+                    - success has value of true
+                    - assignment has properties:
+                        first_name,
+                        last_name,
+                        assignment_id,
+                        status,
+                        title,
+                        question,
+                        abstract,
+                        hypothesis,
+                        variable,
+                        material,
+                        procedure,
+                        data,
+                        calculation,
+                        discussion 
+    */
+    app.get('/api/teacher/grading/assignment/:id/student/:reportid', (req, res) => {
+
+        const assignmentID = req.params.id;
+        const reportID = req.params.reportid;
+
+
+        console.log('entering', assignmentID, reportID);
+
+
+        dbGrading.getAssignment(reportID, assignmentID).then((result) => {
+
+            console.log(result.rows);
+
+            const status = result.rows[0].status;
+
+            if (status === 'COMMITTED') {
+                const {
+                first_name,
+                    last_name,
+                    assignment_id,
+                    status,
+                    title_editable,
+                    title_content,
+                    title_comments,
+                    title_grade,
+                    question_editable,
+                    question_content,
+                    question_comments,
+                    question_grade,
+                    abstract_editable,
+                    abstract_content,
+                    abstract_comments,
+                    abstract_grade,
+                    hypothesis_editable,
+                    hypothesis_content,
+                    hypothesis_comments,
+                    hypothesis_grade,
+                    variable_editable,
+                    variable_content,
+                    variable_comments,
+                    variable_grade,
+                    material_editable,
+                    material_content,
+                    material_comments,
+                    material_grade,
+                    procedure_editable,
+                    procedure_content,
+                    procedure_comments,
+                    procedure_grade,
+                    data_editable,
+                    data_content,
+                    data_comments,
+                    data_grade,
+                    calculation_editable,
+                    calculation_content,
+                    calculation_comments,
+                    calculation_grade,
+                    discussion_editable,
+                    discussion_content,
+                    discussion_comments,
+                    discussion_grade
+                    } = result.rows[0];
+
+
+                const title = {
+                    title_editable, title_content, title_comments, title_grade
+                }
+
+                const question = {
+                    question_editable, question_content, question_comments, question_grade
+                }
+
+                const abstract = {
+                    abstract_editable, abstract_content, abstract_comments, abstract_grade
+                }
+
+                const hypothesis = {
+                    hypothesis_editable, hypothesis_content, hypothesis_comments, hypothesis_grade
+                }
+
+                const variable = {
+                    variable_editable, variable_content, variable_comments, variable_grade
+                }
+
+                const material = {
+                    material_editable, material_content, material_comments, material_grade
+                }
+
+                const procedure = {
+                    procedure_editable, procedure_content, procedure_comments, procedure_grade
+                }
+
+                const data = {
+                    data_editable, data_content, data_comments, data_grade
+                }
+
+                const calculation = {
+                    calculation_editable, calculation_content, calculation_comments, calculation_grade
+                }
+
+                const discussion = {
+                    discussion_editable, discussion_content, discussion_comments, discussion_grade
+                }
+
+                res.json({
+
+                    success: true,
+                    assignment: {
+                        first_name,
+                        last_name,
+                        assignment_id,
+                        status,
+                        title,
+                        question,
+                        abstract,
+                        hypothesis,
+                        variable,
+                        material,
+                        procedure,
+                        data,
+                        calculation,
+                        discussion
+                    }
+
+                });
+
+            }
+
+        });
+
+    });
+
+}
+
 
 // export module 
 // module.exports.teacherRoutes = teacherRoutes;
@@ -879,7 +1121,7 @@ function makeStudentAssignments(students, sectionId, assignmentId, include, edit
             - data push to null
  
     - log: string STUDENT REPORT DATA:' and variable data
-
+ 
     - return saveNewStudentReport (from file assignmentsDb.js) with parameter data 
 */
 function newStudentReport(studentId, sectionId, assignmentId, categoryIds) {

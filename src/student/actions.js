@@ -108,8 +108,6 @@ export function saveAssignment(id, part) {
 /*
 - export function commitAssignment with parmaeters id and part
 
-    - log id and part
-
     - return axios post with path '/api/student/commit-assignment/' and property { id, part }
     - then with word 'then' with parameter result access to function
 
@@ -119,8 +117,6 @@ export function saveAssignment(id, part) {
             - assignment as result.data.assignment
 */
 export function commitAssignment(id, part) {
-
-    console.log(id, part);
 
     return axios.post('/api/student/commit-assignment/', {
 

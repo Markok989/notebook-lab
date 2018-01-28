@@ -280,9 +280,10 @@ export function getTeacherInfo() {
 /*
 - function getCommittedAssignments with parameters id and studentid
 
-    - return axios get with path 'teacher/grading/assignment/:id/student/:studentid', and properties
-      id and studentid
+    - return axios get with path `/api/teacher/grading/assignment/${id}/student/${reportid}`
     - then with word 'then' access to function result
+
+        - log string 'got assignment per student report'
 
         - return 
             - type as string 'GET_COMMITS'
@@ -290,10 +291,12 @@ export function getTeacherInfo() {
 */
 export function getCommittedAssignments(id, studentid) {
 
-    return axios.get('teacher/grading/assignment/:id/student/:studentid', { id, studentid }).then((result) => {
+    return axios.get(`/api/teacher/grading/assignment/${id}/student/${reportid}`).then((result) => {
+
+        console.log('got assignment per student report');
 
         return {
-            type: 'GET_COMMITS',
+            type: GET_COMMITS,
             assignment: result.data.assignment
         }
 

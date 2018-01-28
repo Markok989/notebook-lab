@@ -13,9 +13,24 @@ module.exports.addNewClass = function (user_id, code) {
 
     const insert = `INSERT INTO users_sections (user_id, section_id) VALUES ($1, $2) RETURNING section_id`;
     const result = db.query(insert, [user_id, code]);
-    return result
+    return result;
 
 };
+
+// module export addStudentsReports
+// use function with parameter user_id and code,
+//      - insert has value of string `INSERT INTO students_reports (student_id, section_id) VALUES ($1, $2) RETURNING section_id`
+//      - result has value of db.query(insert, [user_id, code])
+//      - return result
+module.exports.addStudentsReports = function (user_id, code) {
+
+    const insert = `INSERT INTO students_reports (student_id, section_id) VALUES ($1, $2) RETURNING section_id`;
+    const result = db.query(insert, [user_id, code]);
+    return result;
+
+};
+
+
 
 // module export getStudentData
 // use function with parameter email,

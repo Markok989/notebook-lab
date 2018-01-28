@@ -30,7 +30,10 @@ var loggedOutRoutes = (app) => {
                                 last_name: last_name,
                                 email: email,
                                 role: role
+
                         - dbStudent addNewClass has parameters (id, course);
+                        - dbStudent addStudentsReports has parameters (id, course);
+
                         - res.json has property success with value true
                 - catch access function with parameter err      
                     - log parameter err
@@ -66,6 +69,7 @@ var loggedOutRoutes = (app) => {
                             }
 
                             dbStudent.addNewClass(id, course);
+                            dbStudent.addStudentsReports(id, course);
 
                             res.json({
                                 success: true
