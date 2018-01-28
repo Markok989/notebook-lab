@@ -163,7 +163,7 @@ class App extends React.Component {
 
                 <Row>
 
-                    <Col s={12} m={4}>
+                    <Col s={12} m={3}>
 
                         <Collapsible>
 
@@ -237,7 +237,7 @@ class App extends React.Component {
 
                     </Col>
 
-                    <Col s={12} m={8}>
+                    <Col s={12} m={9}>
 
                         {
                             /*

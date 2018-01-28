@@ -3,6 +3,22 @@ import { Router, Route, Link, IndexRoute, browserHistory, hashHistory } from 're
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { getAssignment, saveAssignment, udpateAssignmentStatus, commitAssignment } from '../actions';
+import {
+    Card,
+    Row,
+    Col,
+    Container,
+    SideNav,
+    SideNavItem,
+    Button,
+    Collapsible,
+    CollapsibleItem,
+    Modal,
+    Input,
+    Collection,
+    CollectionItem
+} from 'react-materialize';
+
 
 // component Assignment
 class Assignment extends React.Component {
@@ -162,9 +178,9 @@ class Assignment extends React.Component {
 
                 </div>
 
-                <button name='saveAll' onClick={this.handleSaveAll}>Save All</button>
+                <Button name='saveAll' onClick={this.handleSaveAll}>Save All</Button>
 
-                <button name='commit' onClick={this.handleCommit}>Commit</button>
+                <Button name='commit' onClick={this.handleCommit}>Commit</Button>
 
             </div>;
 
@@ -208,9 +224,9 @@ class Assignment extends React.Component {
 
         return (
 
-            <div>
+            <div className="blueBox">
 
-                <h3>Complete the following assignment</h3>
+                <h5>Put Assgignment Name Here</h5>
 
                 {form}
 
@@ -244,7 +260,7 @@ class Assignment extends React.Component {
                     - property
                         - {section[category + '_content']}
 
-                - element button with attributes
+                - element Button with attributes
                     - name {category}
                 - onClick use method handleSave
                     - property
@@ -252,19 +268,17 @@ class Assignment extends React.Component {
 
         - else
 
-            - return div element with properties
-
-                - element label with property {category}
+            - return Card with attribute title {category} and properties
 
                 - element textarea with attributes
                     - name {category}
-                - placeholder "Type here.."
+                    - placeholder "Type here.."
                     - cols "30" , rows "5"
                     - onChange use method handleChange
 
-                - element button with attributes
+                - element Button with attributes
                     - name {category}
-                - onClick use method handleSave
+                    - onClick use method handleSave
                     - property
                         - text Save
 
@@ -280,13 +294,10 @@ class Assignment extends React.Component {
 
         - log string: 'cannot edit' and  section[category + '_content'],
 
-        -return
+        - return Card with attribute title {capitalize(category)} and properties
+        
+            - element p with property {section[category + '_content']}
 
-            - div element with property
-
-                - element h3 with property {category}
-
-                - element p with property {section[category + '_content']}
                 */
 function editable(section, category, handleChange, handleSave, handleSaveAll, handleCommit) {
 
@@ -308,7 +319,7 @@ function editable(section, category, handleChange, handleSave, handleSaveAll, ha
                         {section[category + '_content']}
                     </textarea>
 
-                    <button name={category} onClick={handleSave}>Save</button>
+                    <Button name={category} onClick={handleSave}>Save</Button>
 
                 </div>
 
@@ -318,15 +329,13 @@ function editable(section, category, handleChange, handleSave, handleSaveAll, ha
 
             return (
 
-                <div>
-
-                    <label>{category}:</label>
+                <Card title={category}>
 
                     <textarea name={category} placeholder="Type here.." cols="30" rows="5" onChange={handleChange} />
 
-                    <button name={category} onClick={handleSave}>Save</button>
+                    <Button name={category} onClick={handleSave}>Save</Button>
 
-                </div>
+                </Card>
 
             );
 
@@ -340,13 +349,11 @@ function editable(section, category, handleChange, handleSave, handleSaveAll, ha
 
         return (
 
-            <div>
-
-                <h3>{category}:</h3>
+            <Card title={capitalize(category)}>
 
                 <p>{section[category + '_content']}</p>
 
-            </div>
+            </Card>
 
         );
     }
@@ -358,9 +365,7 @@ function editable(section, category, handleChange, handleSave, handleSaveAll, ha
 
     - condition if section[category + '_content']
 
-        - return element div with property
-
-            - element h3 wit property {category}
+        - return Card with attribute title {capitalize(category)} and properties
 
             - element p wit property {section[category + '_content']}
 */
@@ -370,19 +375,30 @@ function committed(section, category) {
 
         return (
 
-            <div>
-
-                <h3>{category}</h3>
+            <Card title={capitalize(category)}>
 
                 <p>{section[category + '_content']}</p>
 
-            </div>
+            </Card>
 
         );
 
     }
 
 }
+
+
+/*
+- function capitalize with parameter word
+
+    - returns word with charAt(0) and toUpperCase() +(plus) word.slice(1)
+*/
+function capitalize(word) {
+
+    return word.charAt(0).toUpperCase() + word.slice(1);
+
+}
+
 
 /********** COMPONENT CONNECTED **************/
 const mapStateToProps = function (state) {
