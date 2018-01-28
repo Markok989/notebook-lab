@@ -5,7 +5,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { saveNewCourse, getCourseList, getAllSections } from '../actions';
-import { Collapsible, CollapsibleItem, Collection, CollectionItem } from 'react-materialize';
+import { Button, Row, Collapsible, CollapsibleItem, Collection, CollectionItem, Breadcrumb, MenuItem } from 'react-materialize';
 import AssignmentList from '../components/assignmentList';
 
 // TeacherAssignments component
@@ -59,7 +59,17 @@ class TeacherAssignments extends React.Component {
         return (
             <div>
 
-                <Link to='/teacher/new/assignment'>Create New Assignment</Link>
+                <div>
+
+                    <Breadcrumb>
+                        <MenuItem>Assignments</MenuItem>
+                    </Breadcrumb>
+
+                </div>
+
+                <div>
+                    <Button waves='light' node='a' href='/teacher/new/assignment'>New Assignment</Button>
+                </div>
 
                 {courses &&
 
