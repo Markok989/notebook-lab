@@ -178,10 +178,29 @@ class Assignment extends React.Component {
 
                 </div>
 
-                <Button name='saveAll' onClick={this.handleSaveAll}>Save All</Button>
+                <Row>
 
-                <Button name='commit' onClick={this.handleCommit}>Commit</Button>
+                    <Col s={4}>
 
+                        <Button name='saveAll' onClick={this.handleSaveAll}>
+                            Save All
+                        </Button>
+
+                    </Col>
+
+                </Row>
+
+                <Row>
+
+                    <Col s={4}>
+
+                        <Button className="deep-purple" name='commit' onClick={this.handleCommit}>
+                            Commit
+                        </Button>
+
+                    </Col>
+
+                </Row>
             </div>;
 
         var committedAssignment =
@@ -210,7 +229,7 @@ class Assignment extends React.Component {
 
             - form has value of committedAssignment
 
-        - else 
+        - else
             - form has value of assignmentOptions
         */
         if (assignment.status === 'COMMITTED' || assignment.status === 'GRADED' || assignment.status === 'PENDING') {
@@ -252,17 +271,17 @@ class Assignment extends React.Component {
 
                 - element label with property {category}
 
-                - element textarea with attributes
+                    - element textarea with attributes
                     - name {category}
-                - placeholder "Type here.."
+                    - placeholder "Type here.."
                     - cols "30" , rows "5"
                     - onChange use method handleChange
                     - property
                         - {section[category + '_content']}
 
-                - element Button with attributes
+                    - element Button with attributes
                     - name {category}
-                - onClick use method handleSave
+                    - onClick use method handleSave
                     - property
                         - text Save
 
@@ -295,10 +314,10 @@ class Assignment extends React.Component {
         - log string: 'cannot edit' and  section[category + '_content'],
 
         - return Card with attribute title {capitalize(category)} and properties
-        
+
             - element p with property {section[category + '_content']}
 
-                */
+                    */
 function editable(section, category, handleChange, handleSave, handleSaveAll, handleCommit) {
 
     console.log(section[section + '_editable']);
@@ -319,7 +338,9 @@ function editable(section, category, handleChange, handleSave, handleSaveAll, ha
                         {section[category + '_content']}
                     </textarea>
 
-                    <Button name={category} onClick={handleSave}>Save</Button>
+                    <div>
+                        <Button name={category} onClick={handleSave}>Save</Button>
+                    </div>
 
                 </div>
 
@@ -368,7 +389,7 @@ function editable(section, category, handleChange, handleSave, handleSaveAll, ha
         - return Card with attribute title {capitalize(category)} and properties
 
             - element p wit property {section[category + '_content']}
-*/
+                    */
 function committed(section, category) {
 
     if (section[category + '_content']) {
