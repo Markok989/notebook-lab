@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import axios from '../../api/axios';
-import { getCategoriesForGrading } from '../actions';
+import { getCategoriesForGrading, getStudentAssignmentList } from '../actions';
 import { Row, Col, Button, Card, Collection, CollectionItem } from 'react-materialize';
 
 // component GradeACategory
@@ -21,7 +21,11 @@ class GradeACategory extends React.Component {
     /* 
     - componentWillMount is invoked immediately before a component is mounted
    
-        - log string 'GradeACategory' and this.props.params.assignmentid
+        - condition if not this.props.studentAssignmentList
+
+            - props dispatch to getStudentAssignmentList(from actions) wiht parameter this.props.params.sectionid
+
+        - log string 'GradeACategory' and this.props.params
 
         - constants assignmentid and category belongs to this.props.params
 
@@ -30,7 +34,13 @@ class GradeACategory extends React.Component {
        */
     componentWillMount() {
 
-        console.log('GradeACategory', this.props.params.assignmentid);
+        if (!this.props.studentAssignmentList) {
+
+            this.props.dispatch(getStudentAssignmentList(this.props.params.sectionid));
+
+        }
+
+        console.log('GradeACategory', this.props.params);
 
         const { assignmentid, category } = this.props.params;
 
@@ -39,6 +49,15 @@ class GradeACategory extends React.Component {
     } //end component will mount
 
     render() {
+
+        // constant studentCategoryData belongs to this.props
+        const { studentCategoryData } = this.props;
+
+        // constants sectionid, assignmentid belongs to this.props.params
+        const { sectionid, assignmentid } = this.props.params;
+
+        // variable gradeList has value of function makeList with parameters studentCategoryData, sectionid, assignmentid
+        var gradeList = makeList(studentCategoryData, sectionid, assignmentid);
 
         return (
 
@@ -52,6 +71,21 @@ class GradeACategory extends React.Component {
 
 }
 
+/*************** HELPER FUNCTIONS ***************/
+/*
+- function makeList with parameter data
+
+    - return string 'list'
+*/
+function makeList(data) {
+
+    // var cards = data.map(student => {
+    //
+    // })
+    return 'list';
+
+}
+
 
 
 /************ CONNECTED COMPONENT *************/
@@ -59,7 +93,8 @@ var mapStateToProps = function (state) {
 
     return {
         studentCategoryData: state.teachers.studentCategoryData,
-        currAssignmentId: state.teachers.currAssignmentId
+        currAssignmentId: state.teachers.currAssignmentId,
+        studentAssignmentList: state.teachers.studentAssignmentList
     }
 
 }

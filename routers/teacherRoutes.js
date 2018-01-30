@@ -82,24 +82,28 @@ var teacherRoutes = (app) => {
 
     /*
     - app get with path '/api/teacher/grading/:assignmentId/:category', mw.loggedInCheck and mw.checkIfTeacher (from midlleware) and use parameters req and res
-             
-       - data has value of  [req.params.assignmentId, req.params.category]
-       - return getCategoriesForGrading(from teacherDb) with parameter data
-       - then with word 'then' with parameter results access to function
-           
-           - log string 'TEACHER ROUTER: categories for grading: ' and results.rows
+        
+        - log string 'In route to get student data by category' and req.params
+        - data has value of [req.params.assignmentId];
 
-           - res.json contains success with boolean value true and
+        - return getCategoriesForGrading(from teacherDb) with parameter data
+        - then with word 'then' with parameter results access to function
+           
+            - log string 'TEACHER ROUTER: categories for grading: ' and results.rows
+
+            - res.json contains success with boolean value true and
              categoryData with value results.rows
 
         - 'catch' word with parameter e to access to function
 
+            - log string 'Getting categories for grading error: ' and parameter e
             - res.json with property
                 - error has value of parameter e
     */
     app.get('/api/teacher/grading/:assignmentId/:category', mw.loggedInCheck, mw.checkIfTeacher, (req, res) => {
 
-        let data = [req.params.assignmentId, req.params.category];
+        console.log('In route to get student data by category', req.params);
+        let data = [req.params.assignmentId];
 
         return getCategoriesForGrading(data).then(results => {
 
@@ -112,6 +116,7 @@ var teacherRoutes = (app) => {
 
         }).catch(e => {
 
+            console.log('Getting categories for grading error: ', e);
             res.json({
                 error: e
             });

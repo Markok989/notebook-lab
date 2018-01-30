@@ -21,11 +21,11 @@ const SAVE_COURSE_LIST = 'SAVE_COURSE_LIST',
     - return axios get with path `/api/teacher/grading/${assignmentId}/${category}`
     - then with word 'then' with parameter results access to function 
 
-        - log string 'Back grom getting Category Data'
+        - log string 'Back from getting Category Data' and parameter result
 
         - return properties
             - type as UPDATE_STUDENT_CATEGORY_DATA
-            - payload as results.data.studentDataForGrading
+            - payload as results.data.categoryData
           
 
     - then with word 'catch' with parameter e access to function
@@ -35,11 +35,11 @@ export function getCategoriesForGrading(assignmentId, category) {
 
     return axios.get(`/api/teacher/grading/${assignmentId}/${category}`).then(results => {
 
-        console.log('Back grom getting Category Data');
+        console.log('Back from getting Category Data', results);
 
         return {
             type: UPDATE_STUDENT_CATEGORY_DATA,
-            payload: results.data.studentDataForGrading
+            payload: results.data.categoryData
         };
 
     }).catch(e => {

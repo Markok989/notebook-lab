@@ -115,7 +115,7 @@ class SpecificAssignment extends React.Component {
 
                         {showCategories && <div>
 
-                            <Link to={`/teacher/grading/assignment/${currAssignmentId}/titles`}>
+                            <Link to={`/teacher/grading/assignment/${this.props.params.id}/${currAssignmentId}/titles`}>
                                 Grade Titles
                             </Link>
 
