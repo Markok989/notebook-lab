@@ -1,10 +1,15 @@
 /*
 - function registerLoginCheck with parameters req, res and next
+
     - condition if req.session.user
+
+        - log string 'REGISTER LOGIN CHECK' and req.session
+
         - condition if req.session.user.role is the same as string "teacher"
             - res redirect to '/teacher
         - else
             - res redirect to '/student'
+
     - else next
 */
 function registerLoginCheck(req, res, next) {
@@ -12,6 +17,9 @@ function registerLoginCheck(req, res, next) {
     if (req.session.user) {
 
         // logged in
+
+        console.log('REGISTER LOGIN CHECK', req.session);
+
         if (req.session.user.role == 'teacher') {
             res.redirect('/teacher');
         } else {
@@ -27,8 +35,10 @@ function registerLoginCheck(req, res, next) {
 
 /*
 - function loggedInCheck with parameters req, res and next
+
     - condition if req.session.user
 
+        - log string 'Logged in check: ' and req.session
         - log string "user is logged in sending to next"
 
         - next()
@@ -38,8 +48,9 @@ function registerLoginCheck(req, res, next) {
 function loggedInCheck(req, res, next) {
 
     if (req.session.user) {
-        // logged in!
 
+        // logged in!
+        console.log('Logged in check: ', req.session);
         console.log('user is logged in sending to next');
 
         next();

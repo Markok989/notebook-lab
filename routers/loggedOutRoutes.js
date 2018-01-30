@@ -51,41 +51,39 @@ var loggedOutRoutes = (app) => {
             console.log("success")
             console.log(first_name, last_name);
 
-            dbHashing.hashPassword(password)
-                .then((hash) => {
+            dbHashing.hashPassword(password).then((hash) => {
 
-                    return dbHashing.addStudent(first_name, last_name, email, hash)
+                return dbHashing.addStudent(first_name, last_name, email, hash).then((result) => {
 
-                        .then((result) => {
+                    const { id, first_name, last_name, email, role } = result.rows[0];
 
-                            const { id, first_name, last_name, email, role } = result.rows[0];
+                    req.session.user = {
+                        id: id,
+                        first_name: first_name,
+                        last_name: last_name,
+                        email: email,
+                        role: role
+                    }
 
-                            req.session.user = {
-                                id: id,
-                                first_name: first_name,
-                                last_name: last_name,
-                                email: email,
-                                role: role
-                            }
+                    dbStudent.addNewClass(id, course);
+                    dbStudent.addStudentsReports(id, course);
 
-                            dbStudent.addNewClass(id, course);
-                            dbStudent.addStudentsReports(id, course);
+                    res.json({
+                        success: true
+                    });
 
-                            res.json({
-                                success: true
-                            });
-                        })
-                        .catch((err) => {
-                            console.log(err);
-                            res.json({
-                                success: false
-                            })
-                        })
-
-                })
-                .catch((err) => {
+                }).catch((err) => {
                     console.log(err);
-                })
+                    res.json({
+                        success: false
+                    });
+                });
+
+            }).catch((err) => {
+
+                console.log(err);
+
+            });
 
         }
     });
@@ -225,12 +223,19 @@ var loggedOutRoutes = (app) => {
 
     /*
     - app get have path '/logout' and function with parameters: req and res,
+
+        - log string 'logout route!'
         - req session has value null,
+
+        - log req.session
         - res redirect to '/'
     */
     app.get('/logout', (req, res) => {
 
+        console.log('logout route!');
         req.session = null;
+
+        console.log(req.session);
         res.redirect('/');
 
     });

@@ -4,12 +4,12 @@ const dbStudent = require('../database/student');
 const mw = require('./middleware');
 
 // component studentRoutes with parameter app,
-// app get have path "/student" mw.loggedInCheck(from middleware file) and function with parameters: req and res,
+// app get have path "/student" mw.loggedInCheck and mw.checkIfStudent(from middleware file) and function with parameters: req and res,
 // log: string: 'req.session.user.email' and req.session.user.email
 // return res sand file to the path with join __dirname + /index.html
 var studentRoutes = (app) => {
 
-    app.get('/student', mw.loggedInCheck, (req, res) => {
+    app.get('/student', mw.loggedInCheck, mw.checkIfStudent, (req, res) => {
 
         console.log('req.session.user.email: ', req.session.user.email);
         return res.sendFile(path.join(__dirname, '../public/index.html'));
@@ -17,7 +17,7 @@ var studentRoutes = (app) => {
     });
 
     /*
-    - app get with path '/api/student/data' and function with parameters: req and res
+    - app get with path '/api/student/data', mw.loggedInCheck and mw.checkIfStudent(from middleware file) and function with parameters: req and res
         - id, first_name, last_name, email, role belong to req.session.user
         - dbStudent access to getStudentData(from student.js file), with parameter email
         - then with word then we use parameter result to access function
@@ -61,7 +61,7 @@ var studentRoutes = (app) => {
             - log parameter e
 
 */
-    app.get('/api/student/data', (req, res) => {
+    app.get('/api/student/data', mw.loggedInCheck, mw.checkIfStudent, (req, res) => {
 
         const { id, first_name, last_name, email, role } = req.session.user;
 
@@ -129,7 +129,7 @@ var studentRoutes = (app) => {
     });
 
     /*
-    - app post with path '/api/student/class' and function with parameters: req and res
+    - app post with path '/api/student/class', mw.loggedInCheck and mw.checkIfStudent(from middleware file) and function with parameters: req and res
 
         - constant id belongs to req.session.user
         - constant classID belongs to req.body
@@ -194,7 +194,7 @@ var studentRoutes = (app) => {
         - catch with parameter err
             - log parameter err
     */
-    app.post('/api/student/class', (req, res) => {
+    app.post('/api/student/class', mw.loggedInCheck, mw.checkIfStudent, (req, res) => {
 
         const { id } = req.session.user;
         const { classID } = req.body;
@@ -443,7 +443,7 @@ var studentRoutes = (app) => {
     // to update the state. another issue is when you save to locak state it adds on to the list of this.state.
 
     /*
-    - app post with path '/api/student/save-assignment' and function with parameters: req and res
+    - app post with path '/api/student/save-assignment', mw.loggedInCheck and mw.checkIfStudent(from middleware file) and function with parameters: req and res
 
         - constant assignmentID has value req.body.id
         - constant {part} has value of req.body
@@ -590,7 +590,7 @@ var studentRoutes = (app) => {
         //////////////////////////////////////////////////////
                             
     */
-    app.post('/api/student/save-assignment', (req, res) => {
+    app.post('/api/student/save-assignment', mw.loggedInCheck, mw.checkIfStudent, (req, res) => {
 
         const assignmentID = req.body.id;
         const { part } = req.body;
@@ -772,7 +772,7 @@ var studentRoutes = (app) => {
 
 
     /*
-    - app post with path '/api/student/commit-assignment/' and function with parameters: req and res
+    - app post with path '/api/student/commit-assignment/', mw.loggedInCheck and mw.checkIfStudent(from middleware file) and function with parameters: req and res
 
         - log string 'server committing'
 
@@ -789,7 +789,7 @@ var studentRoutes = (app) => {
            - res reditect to path '/api/student/assignment/' +(plus) assignmentID
            
     */
-    app.post('/api/student/commit-assignment/', (req, res) => {
+    app.post('/api/student/commit-assignment/', mw.loggedInCheck, mw.checkIfStudent, (req, res) => {
 
         console.log('server committing');
 
