@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import axios from '../../api/axios';
 import { getCategoriesForGrading, getStudentAssignmentList } from '../actions';
 import { Row, Col, Button, Card, Collection, CollectionItem } from 'react-materialize';
 
@@ -16,23 +15,34 @@ class GradeACategory extends React.Component {
         this.state = {
             titles: []
         };
+
+        // binding
+        this.handleChange = this.handleChange.bind(this);
+
+    }
+
+    /*
+    - method handleChange with paameter e    
+    */
+    handleChange(e) {
+
     }
 
     /* 
-    - componentWillMount is invoked immediately before a component is mounted
+    - componentDidMount is invoked immediately after a component is mounted
    
         - condition if not this.props.studentAssignmentList
 
             - props dispatch to getStudentAssignmentList(from actions) wiht parameter this.props.params.sectionid
 
-        - log string 'GradeACategory' and this.props.params
+        - log string 'GradeACategory' and this.props
 
         - constants assignmentid and category belongs to this.props.params
 
         - props dispatch getCategoriesForGrading(from actions) and parameters assignmentid, category
            
        */
-    componentWillMount() {
+    componentDidMount() {
 
         if (!this.props.studentAssignmentList) {
 
@@ -40,15 +50,31 @@ class GradeACategory extends React.Component {
 
         }
 
-        console.log('GradeACategory', this.props.params);
+        console.log('GradeACategory', this.props);
 
         const { assignmentid, category } = this.props.params;
 
         this.props.dispatch(getCategoriesForGrading(assignmentid, category))
 
-    } //end component will mount
+    } //end component did mount
 
     render() {
+
+        // log string 'PROPS in gradeACategory: ' and this.props
+        console.log('PROPS in gradeACategory: ', this.props);
+
+        /*
+        - condition if not !this.props.currAssignmentId
+
+            - log string 'returning null'
+            - returns null
+        */
+        if (!this.props.currAssignmentId) {
+
+            console.log('returning null');
+            return null;
+
+        }
 
         // constant studentCategoryData belongs to this.props
         const { studentCategoryData } = this.props;
@@ -56,13 +82,18 @@ class GradeACategory extends React.Component {
         // constants sectionid, assignmentid belongs to this.props.params
         const { sectionid, assignmentid } = this.props.params;
 
-        // variable gradeList has value of function makeList with parameters studentCategoryData, sectionid, assignmentid
-        var gradeList = makeList(studentCategoryData, sectionid, assignmentid);
+        // variable gradeList has value of function makeList with parameters studentCategoryData, sectionid, assignmentid, this.handleChange
+        var gradeList = makeList(studentCategoryData, sectionid, assignmentid, this.handleChange);
+
+        console.log("GRADELIST: ", gradeList);
 
         return (
 
             <div>
-                Category Grading...
+
+                <p>Grade these:</p>
+                {gradeList}
+
             </div>
 
         );
@@ -75,14 +106,61 @@ class GradeACategory extends React.Component {
 /*
 - function makeList with parameter data
 
-    - return string 'list'
+    - log string 'Make list', parameter data end event
+
+    - return data and use map with parameter studentData to access function
+
+        - returns
+
+            - element Row with property
+                - element Col with attributes s={12} m={6} and property
+
+                    - element p with property of text Name: 
+                    - element div with property of {studentData.content}
+
+                - element Col with attributes s={12} m={6} and property
+
+                    - element Input with attributes:
+                        - type - "textarea"
+                        - name - {`comments_${studentData.id}`}
+                        - onChange - {event}
+                        - label - "Comments"
+                    - element Input with attributes:
+                        - type - "text"
+                        - label - "Grade"
+                        - onChange - {event}
+                        
+            
 */
 function makeList(data) {
 
-    // var cards = data.map(student => {
-    //
-    // })
-    return 'list';
+    console.log('Make list', data, event);
+
+    return data.map(studentData => {
+
+        return (
+
+            <Row>
+
+                <Col s={12} m={6}>
+
+                    <p>Name: </p>
+                    <div>
+                        {studentData.content}
+                    </div>
+
+                </Col>
+
+                <Col s={12} m={6}>
+
+                    <Input type="textarea" name={`comments_${studentData.id}`} onChange={event} label="Comments" />
+                    <Input type="text" label="Grade" onChange={event} />
+
+                </Col>
+
+            </Row>);
+
+    });
 
 }
 
