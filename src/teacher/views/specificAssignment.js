@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import axios from '../../api/axios';
-import { Row, Col, Input, Card, Collection, CollectionItem, CollapsibleItem } from 'react-materialize';
+import { Row, Col, Button, Input, Card, Collection, CollectionItem, MenuItem, Breadcrumb } from 'react-materialize';
 import { getStudentAssignmentList } from '../actions';
 
 // component SpecificAssignment
@@ -84,28 +84,66 @@ class SpecificAssignment extends React.Component {
 
                 <Row>
 
-                    <Input type="checkbox" label="Grade Anonymously" />
-                    <Input type="checkbox" lable="Randomize Students" />
-                    <Input type="checkbox" label="Grade By Group" />
-                    <Input type="checkbox" label="Grade By Category" onClick={this.showCategories} />
-                    <Input type="checkbox" label="Grade All Sections" />
+                    <Col m={12}>
+
+                        <Breadcrumb className="indigo">
+                            <MenuItem>Assignments</MenuItem>
+                            <MenuItem>This Assignment</MenuItem>
+                        </Breadcrumb>
+
+                    </Col>
 
                 </Row>
 
-                {showCategories && <div>
+                <Row>
 
-                    <Link to={`/teacher/assignment/${currAssignmentId}/title`}>
-                        Grade Titles
-                    </Link>
+                    <Col m={12}>
 
-                    <Button>Grade Questions</Button>
-                    <Button>Grade Hypotheses</Button>
+                        <Input type="checkbox" label="Grade Anonymously" />
+                        <Input type="checkbox" lable="Randomize Students" />
+                        <Input type="checkbox" label="Grade By Group" />
+                        <Input type="checkbox" label="Grade By Category" onClick={this.showCategories} />
+                        <Input type="checkbox" label="Grade All Sections" />
 
-                </div>}
+                    </Col>
 
-                <p>Click a student to grade his/her report</p>
+                </Row>
 
-                {studentHtmlList}
+                <Row>
+
+                    <Col m={12}>
+
+                        {showCategories && <div>
+
+                            <Link to={`/teacher/grading/assignment/${currAssignmentId}/titles`}>
+                                Grade Titles
+                            </Link>
+
+
+                            <Button>Grade Questions</Button>
+                            <Button>Grade Hypotheses</Button>
+
+                        </div>}
+
+                    </Col>
+
+                </Row>
+
+                <Row>
+
+                    <Col m={12}>
+                        <p>Click a student to grade his/her report</p>
+                    </Col>
+
+                </Row>
+
+                <Row>
+
+                    <Col m={12}>
+                        {studentHtmlList}
+                    </Col>
+
+                </Row>
 
             </div>
 
@@ -129,16 +167,16 @@ class SpecificAssignment extends React.Component {
             - element CollapsibleItem with attribute key {item.report_id.toString()} and peroperty
 
                 - element link with path {`/teacher/grading/assignment/${assignmentId}/student/${item.report_id}`}
-                  and property 
+                and property
 
                     -   {item.first_name}  {item.last_name}
-                
+
                 - element p with style {statusStyle} and proprerty text 'Status: ' {status}
 
-    - return 
+                - return
 
         - element Collection with property  {itemList}
-*/
+                */
 function makeInnerList(items, assignmentId) {
 
     var itemList = items.map((item) => {
@@ -174,10 +212,10 @@ function makeInnerList(items, assignmentId) {
 
 /*
 - function determineStatus with parameter status
-    
+
     - condition if status
         - return status
-    else 
+    else
         - return string 'Not Started'
 */
 function determineStatus(status) {

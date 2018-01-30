@@ -45,7 +45,7 @@ class App extends React.Component {
             return (
                 <Container>
 
-                    <Navbar>
+                    <Navbar className="indigo">
 
                         <NavItem href="/teacher">Home</NavItem>
                         <NavItem>New Assignment</NavItem>
