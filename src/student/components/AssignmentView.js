@@ -245,7 +245,7 @@ class Assignment extends React.Component {
 
             <div className="blueBox">
 
-                <h5>Put Assgignment Name Here</h5>
+                <h5>{getAssignmenName(this.props.params.classid, this.props.params.id, this.props.studentInfo)}</h5>
 
                 {form}
 
@@ -330,9 +330,7 @@ function editable(section, category, handleChange, handleSave, handleSaveAll, ha
 
             return (
 
-                <div>
-
-                    <label>{category}:</label>
+                <Card title={capitalize(category)}>
 
                     <textarea name={category} placeholder="Type here.." cols="30" rows="5" onChange={handleChange}>
                         {section[category + '_content']}
@@ -342,7 +340,7 @@ function editable(section, category, handleChange, handleSave, handleSaveAll, ha
                         <Button name={category} onClick={handleSave}>Save</Button>
                     </div>
 
-                </div>
+                </Card>
 
             );
 
@@ -418,6 +416,44 @@ function capitalize(word) {
 
     return word.charAt(0).toUpperCase() + word.slice(1);
 
+}
+
+/*
+- function getAssignmenName with parameters assignmentId, classId, studentInfo
+
+    - log string 'getAssignName: ' and parameter studentInfo
+
+    - variable currCourse has value of parameter studentInfo and course, then use filter with parameter course to access to fucntion
+    
+        - return classId as course.course_id
+        
+    - log cariable currCourse
+
+    - variable currAssignhas value of currCourse[0].assignments then with filter and parameter asgnmt access to function
+
+        - return assignmentId as asgnmt.assignment_id
+
+    - on the end return JavaScript template `${currCourse[0].course_name}:  ${currAssign[0].assignment_name}`
+*/
+function getAssignmenName(assignmentId, classId, studentInfo) {
+
+    console.log('getAssignName: ', studentInfo);
+
+    var currCourse = studentInfo.courses.filter(course => {
+
+        return course.course_id = classId;
+
+    });
+
+    console.log(currCourse);
+
+    var currAssign = currCourse[0].assignments.filter(asgnmt => {
+
+        return asgnmt.assignment_id = assignmentId;
+
+    });
+
+    return `${currCourse[0].course_name}:  ${currAssign[0].assignment_name}`;
 }
 
 

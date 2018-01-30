@@ -183,7 +183,7 @@ class App extends React.Component {
                                                 - e parmater use showAssignment with parameter e
 
                                                     - property of elementelement
-                                                        - Link element with path {`/student/assignment/${assignment.assignment_id}`}
+                                                        - Link element with path {`/student/${course.course_id}/assignment/${assignment.assignment_id}`}
                                                           and property {assignment.assignment_name}
                                 */
                             }
@@ -197,7 +197,7 @@ class App extends React.Component {
 
                                             <li onClick={e => this.showAssignment(e)} id={assignment.assignment_id}>
 
-                                                <Link to={`/student/assignment/${assignment.assignment_id}`} >
+                                                <Link to={`/student/${course.course_id}/assignment/${assignment.assignment_id}`} >
                                                     {assignment.assignment_name}
                                                 </Link>
 
