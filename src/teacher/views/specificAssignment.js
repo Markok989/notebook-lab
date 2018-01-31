@@ -67,12 +67,20 @@ class SpecificAssignment extends React.Component {
         // constants studentList, currAssignmentId belongs to this.props
         const { studentList, currAssignmentId } = this.props;
 
+        // variable assignmentName has for value empty string
+        var assignmentName = '';
+
         /* 
         - condition if studentList
+
             - variable studentHtmlList has value of makeInnerList with parameters studentList, assignmentId
+            - assignmentName has for value studentList[0].name
         */
         if (studentList) {
-            var studentHtmlList = makeInnerList(studentList, currAssignmentId)
+
+            var studentHtmlList = makeInnerList(studentList, currAssignmentId);
+            assignmentName = studentList[0].name;
+
         }
 
         /*
@@ -88,7 +96,7 @@ class SpecificAssignment extends React.Component {
 
                         <Breadcrumb className="indigo">
                             <MenuItem>Assignments</MenuItem>
-                            <MenuItem>This Assignment</MenuItem>
+                            <MenuItem>{assignmentName}</MenuItem>
                         </Breadcrumb>
 
                     </Col>
@@ -159,7 +167,7 @@ class SpecificAssignment extends React.Component {
 
     - variable itemList has value of items and use map with parameter item to access to function
 
-        - log parameter item
+        - log string 'studentListItem: ' and parameter item
         - variable status has value of function determineStatus with parameters item.status and assignmentId
 
         - return
@@ -181,7 +189,7 @@ function makeInnerList(items, assignmentId) {
 
     var itemList = items.map((item) => {
 
-        console.log(item);
+        console.log('studentListItem: ', item);
         var status = determineStatus(item.status, assignmentId);
 
         return (

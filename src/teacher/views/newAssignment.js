@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { getAllSections, saveNewAssignment } from '../actions';
-import { Row, Col, Button, Input, Card, Collection, CollectionItem } from 'react-materialize';
+import { Row, Col, Button, Input, Card, Collection, CollectionItem, Breadcrumb, MenuItem } from 'react-materialize';
 
 // TeacherNewAssignment component
 class TeacherNewAssignment extends React.Component {
@@ -347,6 +347,19 @@ class TeacherNewAssignment extends React.Component {
 
             return (
                 <div>
+
+                    <Row>
+
+                        <Col m={12}>
+
+                            <Breadcrumb className="indigo">
+                                <MenuItem>Assignments</MenuItem>
+                                <MenuItem>New Assignment</MenuItem>
+                            </Breadcrumb>
+
+                        </Col>
+
+                    </Row>
 
                     <Row>
 
