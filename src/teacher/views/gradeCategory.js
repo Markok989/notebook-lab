@@ -2,7 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { getCategoriesForGrading, getStudentAssignmentList } from '../actions';
-import { Row, Col, Button, Card, Collection, CollectionItem } from 'react-materialize';
+import { capitalize } from '../../helpers';
+import { Row, Col, Button, Input, Card, Collection, CollectionItem, Breadcrumb, MenuItem } from 'react-materialize';
 
 // component GradeACategory
 class GradeACategory extends React.Component {
@@ -128,8 +129,8 @@ class GradeACategory extends React.Component {
 
         }
 
-        // constant studentCategoryData belongs to this.props
-        const { studentCategoryData } = this.props;
+        // constants studentCategoryData and studentAssignmentList belongs to this.props
+        const { studentCategoryData, studentAssignmentList } = this.props;
 
         // constants sectionid, assignmentid belongs to this.props.params
         const { sectionid, assignmentid } = this.props.params;
@@ -144,14 +145,50 @@ class GradeACategory extends React.Component {
         // variable gradeList has value of function makeList with parameters studentCategoryData, sectionid, assignmentid, events
         var gradeList = makeList(studentCategoryData, sectionid, assignmentid, events);
 
-        console.log("GRADELIST: ", gradeList);
+        /*
+        - condition if studentAssignmentList
+
+            - variable assignmentName has value studentAssignmentList[0].name
+        */
+        if (studentAssignmentList) {
+
+            var assignmentName = studentAssignmentList[0].name;
+
+        }
+
+        // variable capCat has value of function capitalize (from helper file) and parameter this.props.params.category
+        var capCat = capitalize(this.props.params.category);
+
+        // log string 'CAPCAT' and variable capCat
+        console.log('CAPCAT', capCat);
 
         return (
 
             <div>
 
-                <p>Grade these:</p>
-                {gradeList}
+                <Row>
+
+                    <Col m={12}>
+
+                        <Breadcrumb className="indigo">
+
+                            <MenuItem>Assignments</MenuItem>
+                            <MenuItem>{assignmentName}</MenuItem>
+                            <MenuItem>{capCat}</MenuItem>
+                            
+                        </Breadcrumb>
+
+                    </Col>
+
+                </Row>
+
+                <Row>
+
+                    <Col m={12}>
+                        {gradeList}
+                    </Col>
+
+                </Row>
 
                 <Row>
 
