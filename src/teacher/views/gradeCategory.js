@@ -170,6 +170,7 @@ class GradeACategory extends React.Component {
 }
 
 /*************** HELPER FUNCTIONS ***************/
+
 /*
 - function makeList with parameter data
 
@@ -179,41 +180,43 @@ class GradeACategory extends React.Component {
 
         - returns
 
-            - element Row with property
-                - element Col with attributes s={12} m={6} and property
+            -element Card with attribute title={studentData.first_name}
 
-                    - element p with property of text Name: 
-                    - element div with property of {studentData.content}
+                - element Row with property
+                    - element Col with attributes s={12} m={6} and property
 
-                - element Col with attributes s={12} m={6} and property
+                        - element p with property of text Name: 
+                        - element div with property of {studentData.content}
 
-                    - element div with property
+                    - element Col with attributes s={12} m={6} and property
 
-                        - element Input with attributes:
-                            - s - {12}
-                            - type - "textarea"
-                            - name - {`comments_${studentData.id}`}
-                            - onChange - {events.inputChange}
-                            - label - "Comments"
+                        - element div with property
 
-                        - element Button with attribute
-                            - onClick - {events.saveEach}
-                            - property:
-                                - text Save
+                            - element Input with attributes:
+                                - s - {12}
+                                - type - "textarea"
+                                - name - {`comments_${studentData.id}`}
+                                - onChange - {events.inputChange}
+                                - label - "Comments"
 
-                     - element div with property
-                    
-                        - element Input with attributes:
-                            - s - {12}
-                            - name - {`grade_${studentData.id}`}
-                            - type - "textarea"
-                            - label - "Grade"
-                            - onChange - {events.inputChange}
+                            - element Button with attribute
+                                - onClick - {events.saveEach}
+                                - property:
+                                    - text Save
 
-                        - element Button with attribute
-                            - onClick - {events.saveEach}
-                            - property:
-                                - text Save
+                        - element div with property
+                        
+                            - element Input with attributes:
+                                - s - {12}
+                                - name - {`grade_${studentData.id}`}
+                                - type - "textarea"
+                                - label - "Grade"
+                                - onChange - {events.inputChange}
+
+                            - element Button with attribute
+                                - onClick - {events.saveEach}
+                                - property:
+                                    - text Save
                             
                         
             
@@ -227,47 +230,53 @@ function makeList(data, sectionid, assignmentid, events) {
 
         return (
 
-            <Row>
+            <Card title={studentData.first_name}>
 
-                <Col s={12} m={6}>
+                <Row>
 
-                    <p>Name: </p>
-                    <div>
-                        {studentData.content}
-                    </div>
+                    <Col s={12} m={6}>
 
-                </Col>
+                        <p>Name: </p>
+                        <div>
+                            {studentData.content}
+                        </div>
 
-                <Col s={12} m={6}>
+                    </Col>
 
-                    <div>
+                    <Col s={12} m={6}>
 
-                        <Input
-                            s={12}
-                            type="textarea"
-                            name={`comments_${studentData.id}`}
-                            onChange={events.inputChange}
-                            label="Comments" />
+                        <div>
 
-                    </div>
+                            <Input
+                                s={12}
+                                type="textarea"
+                                name={`comments_${studentData.id}`}
+                                onChange={events.inputChange}
+                                label="Comments" />
 
-                    <Button onClick={events.saveEach}>Save</Button>
-
-                    <div>
-
-                        <Input
-                            s={12}
-                            name={`grade_${studentData.id}`}
-                            type="text" label="Grade"
-                            onChange={events.inputChange} />
+                        </div>
 
                         <Button onClick={events.saveEach}>Save</Button>
 
-                    </div>
+                        <div>
 
-                </Col>
+                            <Input
+                                s={12}
+                                name={`grade_${studentData.id}`}
+                                type="text" label="Grade"
+                                onChange={events.inputChange} />
 
-            </Row>);
+                            <Button onClick={events.saveEach}>Save</Button>
+
+                        </div>
+
+                    </Col>
+
+                </Row>
+
+            </Card>
+
+        );
 
     });
 

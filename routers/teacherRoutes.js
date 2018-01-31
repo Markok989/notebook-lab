@@ -26,10 +26,11 @@ const {
     newData,
     newCalculations,
     newDiscussion,
-    getAssignmentNameIdBySection
+    getAssignmentNameIdBySection,
+    getCategoriesForGrading
             } = require('../database/assignmentsDb');
 
-const { getCategoriesForGrading } = require('../database/gradingDb');
+
 
 
 // component teacherRoutes with parameter app,
