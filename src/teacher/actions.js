@@ -59,7 +59,7 @@ export function getCategoriesForGrading(assignmentId, category) {
 
     - log string 'ACTIONS: getAssignmentProperties' and parameter assignmentId
 
-    - return axios get with path '/teacher/assignment/properties/' and +(plus) parameter assignmentId
+    - return axios get with path '/api/teacher/assignment/properties/' and +(plus) parameter assignmentId
     - then with word 'then' with parameter results access to function 
 
         - log string 'Back from getting Assignment Properties' and parameter results
@@ -75,7 +75,7 @@ export function getAssignmentProperties(assignmentId) {
 
     console.log('ACTIONS: getAssignmentProperties', assignmentId);
 
-    return axios.get('/teacher/assignment/properties/' + assignmentId).then(results => {
+    return axios.get('/api/teacher/assignment/properties/' + assignmentId).then(results => {
 
         console.log('Back from getting Assignment Properties', results);
 

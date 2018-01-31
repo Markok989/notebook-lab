@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 import axios from '../../api/axios';
 import { Row, Col, Button, Input, Card, Collection, CollectionItem, MenuItem, Breadcrumb } from 'react-materialize';
 import { getStudentAssignmentList, getAssignmentProperties } from '../actions';
@@ -20,6 +20,8 @@ class SpecificAssignment extends React.Component {
 
         // binding
         this.showCategories = this.showCategories.bind(this);
+        this.handleCatPick = this.handleCatPick.bind(this);
+        this.selectCategory = this.selectCategory.bind(this);
 
     }
 
@@ -41,7 +43,7 @@ class SpecificAssignment extends React.Component {
 
         this.props.dispatch(getStudentAssignmentList(this.props.params.id));
 
-        this.props.dispatch(getAssignmentProperties(this.props.params.id))
+        this.props.dispatch(getAssignmentProperties(this.props.params.id));
 
     }
 
@@ -60,6 +62,28 @@ class SpecificAssignment extends React.Component {
         });
 
     }
+
+    handleCatPick(e) {
+
+        console.log('cat picked', e.target.value);
+
+        this.setState({
+            category: e.target.value
+        }, () => {
+
+            console.log('STATE after handleCatPick', this.state);
+
+        });
+    }
+
+
+    selectCategory() {
+
+        console.log('select category picked');
+        browserHistory.push(`/teacher/grading/assignment/${this.props.params.id}/${this.props.currAssignmentId}/${this.state.category}`);
+
+    }
+
 
 
     // render method
@@ -94,7 +118,7 @@ class SpecificAssignment extends React.Component {
         */
         if (assignmentProperties) {
 
-            var selector = makeSelector(assignmentProperties);
+            var selector = makeSelector(assignmentProperties[0]);
 
         }
 
@@ -141,7 +165,7 @@ class SpecificAssignment extends React.Component {
 
                                 <Col m={8}>
 
-                                    {makeSelector(assignmentProperties)}
+                                    {makeSelector(assignmentProperties[0], this.handleCatPick)}
 
                                 </Col>
 
@@ -149,7 +173,9 @@ class SpecificAssignment extends React.Component {
 
                                     <div>
 
-                                        <Button name="selectCategory">Select</Button>
+                                        <Button name="selectCategory" onClick={this.selectCategory}>
+                                            Select
+                                        </Button>
 
                                     </div>
 
@@ -271,10 +297,30 @@ function determineStatus(status) {
 }
 
 /*
-- function makeSelector with parameter assignmentProps
+- function makeSelector with parameters assignmentProps and handleCatPick
 
     - log string 'MAKE SELECTOR' and parameter assignmentProps
+
+    - variable options has value of empty array [];
+
+    - for loop - variable key in assignmentProps
+
+        - condition if assignmentProps[key] is the same as string 'individual'
+          OR(||)
+          assignmentProps[key] is the same as string 'group'
+
+            -  options push to (key)
     
+    - log string 'OPTIONS ARRAY: 'and parameter options
+
+    - variable optionList has value of options and use mapt with parameter option to access to function
+
+        - log string 'OPTIONS: 'and parameter option
+
+        - returns
+
+            - element option with attribute value of {option} and property of {option}
+
     - returns
 
         - elemet Input with attribute 
@@ -283,27 +329,55 @@ function determineStatus(status) {
             - label - "Category to Grade Selection"
             - defaultValue - '1'
             - property
-
-                - element option with attribute value '1' and property text Title
-                - element option with attribute value '2' and property text Question
-                - element option with attribute value '3' and property text Option 3
+                - {optionList}
 */
-function makeSelector(assignmentProps) {
+function makeSelector(assignmentProps, handleCatPick) {
 
     console.log('MAKE SELECTOR', assignmentProps);
 
+
+    var options = [];
+
+    for (var key in assignmentProps) {
+
+        if (assignmentProps[key] == 'individual' || assignmentProps[key] == 'group') {
+            options.push(key);
+        }
+
+    }
+
+    console.log('OPTIONS ARRAY: ', options);
+
+    var optionList = options.map(option => {
+
+        console.log('OPTION: ', option);
+
+        return (
+            <option value={option}>{option}</option>
+        );
+
+    });
+
     return (
 
-        <Input s={12} type='select' label="Category to Grade Selection" defaultValue='1'>
+        <Input s={12} type='select' label="Category to Grade Selection" defaultValue='1' onChange={handleCatPick}>
 
-            <option value='1'>Title</option>
-            <option value='2'>Question</option>
-            <option value='3'>Option 3</option>
+            {optionList}
 
         </Input>
 
     );
 }
+
+
+/*
+ <div>
+ <option value=''>Title</option>
+ <option value='2'>Question</option>
+ <option value='3'>Option 3</option>
+     <Link to={`/teacher/grading/assignment/${this.props.params.id}/${currAssignmentId}/titles`}>Grade Titles</Link>
+ </div>
+*/
 
 
 
