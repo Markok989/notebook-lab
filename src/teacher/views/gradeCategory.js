@@ -18,18 +18,14 @@ class GradeACategory extends React.Component {
 
         // binding
         this.handleChange = this.handleChange.bind(this);
-
+        this.saveEach = this.saveEach.bind(this);
+        this.saveAll = this.saveAll.bind(this);
     }
 
-    /*
-    - method handleChange with paameter e    
-    */
-    handleChange(e) {
 
-    }
 
     /* 
-    - componentDidMount is invoked immediately after a component is mounted
+    - componentWillMount is invoked immediately before a component is mounted
    
         - condition if not this.props.studentAssignmentList
 
@@ -42,7 +38,7 @@ class GradeACategory extends React.Component {
         - props dispatch getCategoriesForGrading(from actions) and parameters assignmentid, category
            
        */
-    componentDidMount() {
+    componentWillMount() {
 
         if (!this.props.studentAssignmentList) {
 
@@ -58,18 +54,74 @@ class GradeACategory extends React.Component {
 
     } //end component did mount
 
+
+    /* 
+    - componentDidMount is invoked immediately after a component is mounted
+      
+        - run componentWillMount method
+                 
+    */
+    componentDidMount() {
+
+        this.componentWillMount();
+
+    }
+
+    /*
+    - method handleChange with paameter e    
+
+        - set the state
+
+            - [e.target.name] has value of e.target.value
+
+            - then with anonymous function run log state
+    */
+    handleChange(e) {
+
+        this.setState({
+
+            [e.target.name]: e.target.value
+
+        }, () => console.log(this.state));
+
+    }
+
+
+    /*
+    - method saveEach with paameter e    
+
+        - log string 'you clicked save each'
+    */
+    saveEach(e) {
+        console.log('you clicked save each');
+    }
+
+
+    /*
+    - method saveAll with paameter e   
+    
+         - log string 'you clicked save all'
+    */
+    saveAll(e) {
+        console.log('you clicked save all');
+    }
+
+
+    /*
+    - method render 
+    */
     render() {
 
         // log string 'PROPS in gradeACategory: ' and this.props
         console.log('PROPS in gradeACategory: ', this.props);
 
         /*
-        - condition if not !this.props.currAssignmentId
+        - condition if not !this.props.studentCategoryData
 
             - log string 'returning null'
             - returns null
         */
-        if (!this.props.currAssignmentId) {
+        if (!this.props.studentCategoryData) {
 
             console.log('returning null');
             return null;
@@ -82,8 +134,15 @@ class GradeACategory extends React.Component {
         // constants sectionid, assignmentid belongs to this.props.params
         const { sectionid, assignmentid } = this.props.params;
 
-        // variable gradeList has value of function makeList with parameters studentCategoryData, sectionid, assignmentid, this.handleChange
-        var gradeList = makeList(studentCategoryData, sectionid, assignmentid, this.handleChange);
+        // constant events with properties
+        const events = {
+            inputChange: this.handleChange,
+            saveEach: this.saveEach,
+            saveAll: this.saveAll
+        }
+
+        // variable gradeList has value of function makeList with parameters studentCategoryData, sectionid, assignmentid, events
+        var gradeList = makeList(studentCategoryData, sectionid, assignmentid, events);
 
         console.log("GRADELIST: ", gradeList);
 
@@ -93,6 +152,14 @@ class GradeACategory extends React.Component {
 
                 <p>Grade these:</p>
                 {gradeList}
+
+                <Row>
+
+                    <div>
+                        <Button onClick={this.saveAll}>Save All</Button>
+                    </div>
+
+                </Row>
 
             </div>
 
@@ -106,7 +173,7 @@ class GradeACategory extends React.Component {
 /*
 - function makeList with parameter data
 
-    - log string 'Make list', parameter data end event
+    - log string 'Make list', parameter event
 
     - return data and use map with parameter studentData to access function
 
@@ -120,21 +187,41 @@ class GradeACategory extends React.Component {
 
                 - element Col with attributes s={12} m={6} and property
 
-                    - element Input with attributes:
-                        - type - "textarea"
-                        - name - {`comments_${studentData.id}`}
-                        - onChange - {event}
-                        - label - "Comments"
-                    - element Input with attributes:
-                        - type - "text"
-                        - label - "Grade"
-                        - onChange - {event}
+                    - element div with property
+
+                        - element Input with attributes:
+                            - s - {12}
+                            - type - "textarea"
+                            - name - {`comments_${studentData.id}`}
+                            - onChange - {events.inputChange}
+                            - label - "Comments"
+
+                        - element Button with attribute
+                            - onClick - {events.saveEach}
+                            - property:
+                                - text Save
+
+                     - element div with property
+                    
+                        - element Input with attributes:
+                            - s - {12}
+                            - name - {`grade_${studentData.id}`}
+                            - type - "textarea"
+                            - label - "Grade"
+                            - onChange - {events.inputChange}
+
+                        - element Button with attribute
+                            - onClick - {events.saveEach}
+                            - property:
+                                - text Save
+                            
                         
             
 */
-function makeList(data) {
+function makeList(data, sectionid, assignmentid, events) {
 
-    console.log('Make list', data, event);
+    console.log('Make list', events);
+
 
     return data.map(studentData => {
 
@@ -153,8 +240,30 @@ function makeList(data) {
 
                 <Col s={12} m={6}>
 
-                    <Input type="textarea" name={`comments_${studentData.id}`} onChange={event} label="Comments" />
-                    <Input type="text" label="Grade" onChange={event} />
+                    <div>
+
+                        <Input
+                            s={12}
+                            type="textarea"
+                            name={`comments_${studentData.id}`}
+                            onChange={events.inputChange}
+                            label="Comments" />
+
+                    </div>
+
+                    <Button onClick={events.saveEach}>Save</Button>
+
+                    <div>
+
+                        <Input
+                            s={12}
+                            name={`grade_${studentData.id}`}
+                            type="text" label="Grade"
+                            onChange={events.inputChange} />
+
+                        <Button onClick={events.saveEach}>Save</Button>
+
+                    </div>
 
                 </Col>
 
