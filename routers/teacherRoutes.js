@@ -27,7 +27,8 @@ const {
     newCalculations,
     newDiscussion,
     getAssignmentNameIdBySection,
-    getCategoriesForGrading
+    getCategoriesForGrading,
+    getAssignmentProperties
             } = require('../database/assignmentsDb');
 
 
@@ -79,6 +80,53 @@ var teacherRoutes = (app) => {
 
     /********** ASSIGNMENTS *********/
 
+    /*
+      - app get with path '/api/teacher/assignment/properties/:assignmentId' and use parameters req and res
+               
+          - data has value of [req.params.assignmentId]
+           
+          - return getAssignmentProperties(from teacherDb) with parameter data
+          - then with word 'then' with parameter results access to function
+             
+              - log string 'TEACHER ROUTER: categories for grading: ' and results.rows
+
+              - res.json contains success with boolean value true and
+               assignmentProps with value results.rows
+  
+          - 'catch' word with parameter e to access to function
+
+                - log string 'Getting assignment properties error: ' and and parameter e
+
+              - res.json with property
+                  - error has value of parameter e
+                  - message has value of string 'Getting assingment properites error, route:/api/teacher/assignment/properties/:assignmentId'
+      */
+    app.get('/api/teacher/assignment/properties/:assignmentId', (req, res) => {
+
+        let data = [req.params.assignmentId];
+
+        return getAssignmentProperties(data).then((results) => {
+
+            console.log('TEACHER ROUTER: categories for grading: ', results.rows);
+
+            res.json({
+                success: true,
+                assignmentProps: results.rows
+            });
+
+        }).catch((e) => {
+
+            console.log('Getting assignment properties error: ', e);
+
+            res.json({
+                error: e,
+                meessage: 'Getting assingment properites error, route:/api/teacher/assignment/properties/:assignmentId'
+            });
+
+        });
+
+    });
+
     //get all the students data for given category
 
     /*
@@ -129,9 +177,9 @@ var teacherRoutes = (app) => {
     //get all the students report ids by section
 
     /*
-    - app get with path'/api/teacher/students/:sectionId', mw.loggedInCheck and mw.checkIfTeacher (from midlleware) and use parameters req and res
+    - app get with path '/api/teacher/students/:assignmentId', mw.loggedInCheck and mw.checkIfTeacher (from midlleware) and use parameters req and res
              
-        - data has value of [req.params.sectionId]
+        - data has value of [req.params.assignmentId]
         - log string 'About to: getStudentsAssignmentIdsBySection'
 
         - return getStudentsAssignmentIdsBySection(from teacherDb) with parameter data
@@ -146,9 +194,9 @@ var teacherRoutes = (app) => {
             - res.json with property
                 - error has value of parameter e
     */
-    app.get('/api/teacher/students/:sectionId', mw.loggedInCheck, mw.checkIfTeacher, (req, res) => {
+    app.get('/api/teacher/students/:assignmentId', mw.loggedInCheck, mw.checkIfTeacher, (req, res) => {
 
-        let data = [req.params.sectionId];
+        let data = [req.params.assignmentId];
         console.log('About to: getStudentsAssignmentIdsBySection');
 
         return getStudentsAssignmentIdsBySection(data).then(results => {

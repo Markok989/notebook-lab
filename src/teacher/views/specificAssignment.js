@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import axios from '../../api/axios';
 import { Row, Col, Button, Input, Card, Collection, CollectionItem, MenuItem, Breadcrumb } from 'react-materialize';
-import { getStudentAssignmentList } from '../actions';
+import { getStudentAssignmentList, getAssignmentProperties } from '../actions';
 
 // component SpecificAssignment
 class SpecificAssignment extends React.Component {
@@ -26,18 +26,22 @@ class SpecificAssignment extends React.Component {
     /* 
     - componentWillMount is invoked immediately before a component is mounted
 
-        - log string 'Specific Assignment sectionId' and this.props.params.id
+        - log string 'Specific Assignment for a given section assignmentId' and this.props.params.id
 
         - props dispatch togetStudentAssignmentList(from actions) and parameter this.props.params.id
+
+        - props dispatch getAssignmentProperties(from actions) and parameter this.props.params.id
         
     */
     componentWillMount() {
 
         //needt to get list of students in this section and the id of their students_report
 
-        console.log('Specific Assignment sectionId', this.props.params.id);
+        console.log('Specific Assignment for a given section assignmentId', this.props.params.id);
 
         this.props.dispatch(getStudentAssignmentList(this.props.params.id));
+
+        this.props.dispatch(getAssignmentProperties(this.props.params.id))
 
     }
 
@@ -250,7 +254,8 @@ var mapStateToProps = function (state) {
 
     return {
         studentList: state.teachers.studentAssignmentList,
-        currAssignmentId: state.teachers.currAssignmentId
+        currAssignmentId: state.teachers.currAssignmentId,
+        assignmentProperties: state.teachers.assignmentProperties
     }
 
 }

@@ -7,6 +7,7 @@ const SAVE_COURSE_LIST = 'SAVE_COURSE_LIST',
     RECEIVE_STUDENT_ASSIGNMENT_LIST = 'RECEIVE_STUDENT_ASSIGNMENT_LIST',
     UPDATE_STUDENT_CATEGORY_DATA = 'UPDATE_STUDENT_CATEGORY_DATA',
     GET_COMMITS = 'GET_COMMITS',
+    RECEIVE_ASSIGNMENT_PROPERTIES = 'RECEIVE_ASSIGNMENT_PROPERTIES',
     ERROR = 'ERROR';
 
 // reducer for teacher, take state and action, on end give new state 
@@ -16,6 +17,23 @@ export default function (state = {}, action) {
     //      string 'REDCUER: the action is: ' and action
     console.log('REDUCER: the action is: ', action);
 
+    /*
+    - condition if action.type is the same as RECEIVE_ASSIGNMENT_PROPERTIES
+          
+        - state has value of: empty object, state and
+            - properties:
+                - assignmentProperties as action.payload
+            
+    */
+    if (action.type == RECEIVE_ASSIGNMENT_PROPERTIES) {
+
+        state = Object.assign({}, state, {
+
+            assignmentProperties: action.payload
+
+        });
+
+    }
 
     /*
     - condition if action.type is the same as UPDATE_STUDENT_CATEGORY_DATA

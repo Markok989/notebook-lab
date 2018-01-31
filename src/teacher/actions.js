@@ -10,10 +10,11 @@ const SAVE_COURSE_LIST = 'SAVE_COURSE_LIST',
     RECEIVE_STUDENT_ASSIGNMENT_LIST = 'RECEIVE_STUDENT_ASSIGNMENT_LIST',
     UPDATE_STUDENT_CATEGORY_DATA = 'UPDATE_STUDENT_CATEGORY_DATA',
     GET_COMMITS = 'GET_COMMITS',
+    RECEIVE_ASSIGNMENT_PROPERTIES = 'RECEIVE_ASSIGNMENT_PROPERTIES',
     ERROR = 'ERROR';
 
 
-/************ ASSIGNMENTS *************/
+/************ PREPARING TO GRADE *************/
 
 /*
 - function getCategoriesForGrading with parameters assignmentId, category
@@ -53,6 +54,45 @@ export function getCategoriesForGrading(assignmentId, category) {
 }
 
 
+/*
+- function getAssignmentProperties with parameter assignmentId
+
+    - log string 'ACTIONS: getAssignmentProperties' and parameter assignmentId
+
+    - return axios get with path '/teacher/assignment/properties/' and +(plus) parameter assignmentId
+    - then with word 'then' with parameter results access to function 
+
+        - log string 'Back from getting Assignment Properties' and parameter results
+
+        - return properties
+            - type as RECEIVE_ASSIGNMENT_PROPERTIES,
+            - payload as results.data.assignmentProps
+            
+    - then with word 'catch' with parameter e access to function
+        - set the state , property error has value of parameter e
+*/
+export function getAssignmentProperties(assignmentId) {
+
+    console.log('ACTIONS: getAssignmentProperties', assignmentId);
+
+    return axios.get('/teacher/assignment/properties/' + assignmentId).then(results => {
+
+        console.log('Back from getting Assignment Properties', results);
+
+        return {
+            type: RECEIVE_ASSIGNMENT_PROPERTIES,
+            payload: results.data.assignmentProps
+        };
+
+    }).catch(e => {
+
+        this.setState({
+            error: e
+        });
+
+    });
+}
+
 
 /************ ASSIGNMENTS *************/
 
@@ -65,7 +105,7 @@ export function getCategoriesForGrading(assignmentId, category) {
     - return axios get with path '/api/teacher/students/' and +(plus) parameter assignmentId
     - then with word 'then' with parameter results access to function 
 
-        - log string 'will mount' and parameter results
+        - log string 'Back from getting student assignment list' and parameter results
 
         - return properties
             - type as RECEIVE_STUDENT_ASSIGNMENT_LIST
@@ -81,7 +121,7 @@ export function getStudentAssignmentList(assignmentId) {
 
     return axios.get('/api/teacher/students/' + assignmentId).then((results) => {
 
-        console.log('will mount', results);
+        console.log('Back from getting student assignment list', results);
 
         return {
             type: RECEIVE_STUDENT_ASSIGNMENT_LIST,
