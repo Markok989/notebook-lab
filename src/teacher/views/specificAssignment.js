@@ -68,8 +68,8 @@ class SpecificAssignment extends React.Component {
         // constants showCategories belongs to this.state
         const { showCategories } = this.state;
 
-        // constants studentList, currAssignmentId belongs to this.props
-        const { studentList, currAssignmentId } = this.props;
+        // constants studentList, currAssignmentId, assignmentProperties belongs to this.props
+        const { studentList, currAssignmentId, assignmentProperties } = this.props;
 
         // variable assignmentName has for value empty string
         var assignmentName = '';
@@ -84,6 +84,17 @@ class SpecificAssignment extends React.Component {
 
             var studentHtmlList = makeInnerList(studentList, currAssignmentId);
             assignmentName = studentList[0].name;
+
+        }
+
+        /* 
+        - condition if studentList
+      
+            - variable selector has value of function makeSelector with parameter assignmentProperties
+        */
+        if (assignmentProperties) {
+
+            var selector = makeSelector(assignmentProperties);
 
         }
 
@@ -109,13 +120,12 @@ class SpecificAssignment extends React.Component {
 
                 <Row>
 
-                    <Col m={12}>
+                    <Col m={6}>
 
                         <Input type="checkbox" label="Grade Anonymously" />
-                        <Input type="checkbox" lable="Randomize Students" />
+                        <Input type="checkbox" label="Randomize Students" />
                         <Input type="checkbox" label="Grade By Group" />
                         <Input type="checkbox" label="Grade By Category" onClick={this.showCategories} />
-                        <Input type="checkbox" label="Grade All Sections" />
 
                     </Col>
 
@@ -127,13 +137,33 @@ class SpecificAssignment extends React.Component {
 
                         {showCategories && <div>
 
-                            <Link to={`/teacher/grading/assignment/${this.props.params.id}/${currAssignmentId}/titles`}>
-                                Grade Titles
-                            </Link>
+                            <Row>
 
+                                <Col m={8}>
 
-                            <Button>Grade Questions</Button>
-                            <Button>Grade Hypotheses</Button>
+                                    {makeSelector(assignmentProperties)}
+
+                                </Col>
+
+                                <Col m={4}>
+
+                                    <div>
+
+                                        <Button name="selectCategory">Select</Button>
+
+                                    </div>
+
+                                </Col>
+
+                            </Row>
+
+                            <div>
+
+                                <Link to={`/teacher/grading/assignment/${this.props.params.id}/${currAssignmentId}/titles`}>>
+                                    Grade Titles
+                                </Link>
+
+                            </div>
 
                         </div>}
 
@@ -239,6 +269,43 @@ function determineStatus(status) {
     }
 
 }
+
+/*
+- function makeSelector with parameter assignmentProps
+
+    - log string 'MAKE SELECTOR' and parameter assignmentProps
+    
+    - returns
+
+        - elemet Input with attribute 
+            - s - {12} 
+            - type - 'select' 
+            - label - "Category to Grade Selection"
+            - defaultValue - '1'
+            - property
+
+                - element option with attribute value '1' and property text Title
+                - element option with attribute value '2' and property text Question
+                - element option with attribute value '3' and property text Option 3
+*/
+function makeSelector(assignmentProps) {
+
+    console.log('MAKE SELECTOR', assignmentProps);
+
+    return (
+
+        <Input s={12} type='select' label="Category to Grade Selection" defaultValue='1'>
+
+            <option value='1'>Title</option>
+            <option value='2'>Question</option>
+            <option value='3'>Option 3</option>
+
+        </Input>
+
+    );
+}
+
+
 
 /************* STYLE ***************/
 var statusStyle = {
