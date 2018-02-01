@@ -26,10 +26,39 @@ class SpecificAssignment extends React.Component {
 
     }
 
+    /*
+    - method componentWillReceiveProps() is invoked before a mounted component receives new props.
+
+        - condition if this.props.assignmentProperties
+
+            - variable categoryList has value of function getCategoryList with property this.props.assignmentProperties[0]
+
+            - set the state has properties
+                - categoryList and
+                - category has value of categoryList[0]
+
+
+    */
+    componentWillReceiveProps() {
+
+        if (this.props.assignmentProperties) {
+
+            var categoryList = getCategoryList(this.props.assignmentProperties[0]);
+
+            //console.log('SHOW CATEGORIES: CATEGORY LIST: ', categoryList);
+
+            this.setState({
+                categoryList,
+                category: categoryList[0]
+            });
+
+        }
+
+    }
+
+
     /* 
     - componentWillMount is invoked immediately before a component is mounted
-
-        - log string 'Specific Assignment for a given section assignmentId' and this.props.params.id
 
         - props dispatch togetStudentAssignmentList(from actions) and parameter this.props.params.id
 
@@ -40,7 +69,7 @@ class SpecificAssignment extends React.Component {
 
         //needt to get list of students in this section and the id of their students_report
 
-        console.log('Specific Assignment for a given section assignmentId', this.props.params.id);
+        // console.log('Specific Assignment for a given section assignmentId', this.props.params.id);
 
         this.props.dispatch(getStudentAssignmentList(this.props.params.id));
 
@@ -56,31 +85,33 @@ class SpecificAssignment extends React.Component {
     */
     showCategories() {
 
-        console.log('clicked');
-
         this.setState({
             showCategories: !this.state.showCategoriesToggle
         });
 
     }
 
-    handleCatPick(e) {
+    /*
+    - method handleCatPick with parameter e
 
-        console.log('cat picked', e.target.value);
+        - set the state 
+            - category has value of e.target.value
+    */
+    handleCatPick(e) {
 
         this.setState({
             category: e.target.value
-        }, () => {
-
-            console.log('STATE after handleCatPick', this.state);
-
         });
+
     }
 
+    /*
+    - method selectCategory 
 
+        -  browserHistory push to js template `/teacher/grading/assignment/${this.props.params.id}/${this.props.currAssignmentId}/${this.state.category}`
+    */
     selectCategory() {
 
-        console.log('select category picked');
         browserHistory.push(`/teacher/grading/assignment/${this.props.params.id}/${this.props.currAssignmentId}/${this.state.category}`);
 
     }
@@ -115,108 +146,105 @@ class SpecificAssignment extends React.Component {
         /* 
         - condition if studentList
       
-            - variable selector has value of function makeSelector with parameter assignmentProperties
+            - variable categoryList has value of this.state.categoryList
         */
         if (assignmentProperties) {
 
-            var selector = makeSelector(assignmentProperties[0]);
+            // var selector = makeSelector(assignmentProperties[0]);
+
+            var categoryList = this.state.categoryList;
 
         }
 
         /*
         - return div element with property {studentHtmlList}
         */
-        return (
+        if (this.state.categoryList) {
 
-            <div>
+            return (
 
-                <Row>
+                <div>
 
-                    <Col m={12}>
+                    <Row>
 
-                        <Breadcrumb className="indigo">
-                            <MenuItem>Assignments</MenuItem>
-                            <MenuItem>{assignmentName}</MenuItem>
-                        </Breadcrumb>
+                        <Col m={12}>
 
-                    </Col>
+                            <Breadcrumb className="indigo">
 
-                </Row>
+                                <MenuItem>Assignments</MenuItem>
+                                <MenuItem>{assignmentName}</MenuItem>
+                            </Breadcrumb>
 
-                <Row>
+                        </Col>
 
-                    <Col m={6}>
+                    </Row>
 
-                        <Input type="checkbox" label="Grade Anonymously" />
-                        <Input type="checkbox" label="Randomize Students" />
-                        <Input type="checkbox" label="Grade By Group" />
-                        <Input type="checkbox" label="Grade By Category" onClick={this.showCategories} />
+                    <Row>
 
-                    </Col>
+                        <Col m={6}>
 
-                </Row>
+                            <Input type="checkbox" label="Grade Anonymously" />
+                            <Input type="checkbox" label="Randomize Students" />
+                            <Input type="checkbox" label="Grade By Group" />
+                            <Input type="checkbox" label="Grade By Category" onClick={this.showCategories} />
 
-                <Row>
+                        </Col>
 
-                    <Col m={12}>
+                    </Row>
 
-                        {showCategories && <div>
+                    <Row>
 
-                            <Row>
+                        <Col m={12}>
 
-                                <Col m={8}>
+                            {showCategories &&
+                                <div>
 
-                                    {makeSelector(assignmentProperties[0], this.handleCatPick)}
+                                    <Row>
 
-                                </Col>
+                                        <Col m={8}>
+                                            {this.state.categoryList && makeSelector(this.state.categoryList, this.handleCatPick)}
+                                        </Col>
 
-                                <Col m={4}>
+                                        <Col m={4}>
 
-                                    <div>
+                                            <div>
+                                                <Button name="selectCategory" onClick={this.selectCategory}>Select</Button>
+                                            </div>
 
-                                        <Button name="selectCategory" onClick={this.selectCategory}>
-                                            Select
-                                        </Button>
+                                        </Col>
 
-                                    </div>
+                                    </Row>
 
-                                </Col>
+                                </div>}
+                        </Col>
 
-                            </Row>
+                    </Row>
 
-                            <div>
+                    <Row>
 
-                                <Link to={`/teacher/grading/assignment/${this.props.params.id}/${currAssignmentId}/titles`}>>
-                                    Grade Titles
-                                </Link>
+                        <Col m={12}>
+                            <p>Click a student to grade his/her report</p>
+                        </Col>
 
-                            </div>
+                    </Row>
 
-                        </div>}
+                    <Row>
 
-                    </Col>
+                        <Col m={12}>
+                            {studentHtmlList}
+                        </Col>
 
-                </Row>
+                    </Row>
 
-                <Row>
+                </div>
 
-                    <Col m={12}>
-                        <p>Click a student to grade his/her report</p>
-                    </Col>
+            ); // end of return
 
-                </Row>
+        } else {
 
-                <Row>
+            return null;
 
-                    <Col m={12}>
-                        {studentHtmlList}
-                    </Col>
-
-                </Row>
-
-            </div>
-
-        );
+        }
     }
 
 }
@@ -228,7 +256,6 @@ class SpecificAssignment extends React.Component {
 
     - variable itemList has value of items and use map with parameter item to access to function
 
-        - log string 'studentListItem: ' and parameter item
         - variable status has value of function determineStatus with parameters item.status and assignmentId
 
         - return
@@ -250,7 +277,6 @@ function makeInnerList(items, assignmentId) {
 
     var itemList = items.map((item) => {
 
-        console.log('studentListItem: ', item);
         var status = determineStatus(item.status, assignmentId);
 
         return (
@@ -301,8 +327,6 @@ function determineStatus(status) {
 /*
 - function getCategoryList with parameter assignmentProps
 
-    - log string ''MAKE Category List'' and parameter assignmentProps
-
     - variable options has value of empty array [];
 
     - for loop - variable key in assignmentProps
@@ -317,8 +341,6 @@ function determineStatus(status) {
 
 */
 function getCategoryList(assignmentProps) {
-
-    console.log('MAKE Category List', assignmentProps);
 
     var options = [];
 
@@ -337,15 +359,9 @@ function getCategoryList(assignmentProps) {
 }
 
 /*
-- function makeSelector with parameters assignmentProps and handleCatPick
+- function makeSelector with parameters options and handleCatPick
     
-    - variable options has value of function getCategoryList with parameter assignmentProps
-
-    - log string 'OPTIONS ARRAY: 'and parameter options
-
     - variable optionList has value of options and use mapt with parameter option to access to function
-
-        - log string 'OPTIONS: 'and parameter option
 
         - returns
 
@@ -361,15 +377,9 @@ function getCategoryList(assignmentProps) {
             - property
                 - {optionList}
 */
-function makeSelector(assignmentProps, handleCatPick) {
-
-    var options = getCategoryList(assignmentProps);
-
-    console.log('OPTIONS ARRAY: ', options);
+function makeSelector(options, handleCatPick) {
 
     var optionList = options.map(option => {
-
-        console.log('OPTION: ', option);
 
         return (
 
@@ -388,17 +398,9 @@ function makeSelector(assignmentProps, handleCatPick) {
         </Input>
 
     );
+
 }
 
-
-/*
- <div>
- <option value=''>Title</option>
- <option value='2'>Question</option>
- <option value='3'>Option 3</option>
-     <Link to={`/teacher/grading/assignment/${this.props.params.id}/${currAssignmentId}/titles`}>Grade Titles</Link>
- </div>
-*/
 
 
 
