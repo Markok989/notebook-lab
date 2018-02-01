@@ -8,6 +8,8 @@ const SAVE_COURSE_LIST = 'SAVE_COURSE_LIST',
     UPDATE_STUDENT_CATEGORY_DATA = 'UPDATE_STUDENT_CATEGORY_DATA',
     GET_COMMITS = 'GET_COMMITS',
     RECEIVE_ASSIGNMENT_PROPERTIES = 'RECEIVE_ASSIGNMENT_PROPERTIES',
+    ADD_COMMENT_CATEGORY = 'ADD_COMMENT_CATEGORY',
+    ADD_GRADE_CATEGORY = 'ADD_GRADE_CATEGORY',
     ERROR = 'ERROR';
 
 // reducer for teacher, take state and action, on end give new state 
@@ -164,6 +166,17 @@ export default function (state = {}, action) {
         });
 
     }
+
+
+    // if(action.type == ADD_COMMENT_CATEGORY) {
+    //     console.log('adding comment per category');
+    //     state = Object.assign({}, state, {
+    //
+    //     })
+    // }
+
+
+
 
     // condition if action.type and ERROR are the same,
     // state has value: 

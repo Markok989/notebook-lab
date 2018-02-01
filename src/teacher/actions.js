@@ -11,6 +11,8 @@ const SAVE_COURSE_LIST = 'SAVE_COURSE_LIST',
     UPDATE_STUDENT_CATEGORY_DATA = 'UPDATE_STUDENT_CATEGORY_DATA',
     GET_COMMITS = 'GET_COMMITS',
     RECEIVE_ASSIGNMENT_PROPERTIES = 'RECEIVE_ASSIGNMENT_PROPERTIES',
+    ADD_COMMENT_CATEGORY = 'ADD_COMMENT_CATEGORY',
+    ADD_GRADE_CATEGORY = 'ADD_GRADE_CATEGORY',
     ERROR = 'ERROR';
 
 
@@ -341,5 +343,36 @@ export function getCommittedAssignments(id, studentid) {
         }
 
     });
+
+}
+
+
+/*
+- function saveGrading with parameters id, reportid, grade
+
+    - return axios post with path `/api/teacher/grading/grade/${id}/student/${reportid}`, and properties
+      { id, reportid, grade }
+
+    - then with word 'then' access to function result
+
+        - log string 'saving grade'
+
+        - return 
+            - type as string ADD_COMMENT_CATEGORY
+            - assignment as result.data.assignment
+*/
+export function saveGrading(id, reportid, grade) {
+
+    return axios.post(`/api/teacher/grading/grade/${id}/student/${reportid}`,
+        { id, reportid, grade }).then((result) => {
+
+            console.log('saving grade');
+
+            return {
+                type: ADD_COMMENT_CATEGORY,
+                assignment: result.data.assignment
+            }
+
+        });
 
 }
