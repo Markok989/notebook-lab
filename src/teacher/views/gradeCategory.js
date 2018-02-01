@@ -222,7 +222,6 @@ class GradeACategory extends React.Component {
                 - element Row with property
                     - element Col with attributes s={12} m={6} and property
 
-                        - element p with property of text Name: 
                         - element div with property of {studentData.content}
 
                     - element Col with attributes s={12} m={6} and property
@@ -235,11 +234,6 @@ class GradeACategory extends React.Component {
                                 - name - {`comments_${studentData.id}`}
                                 - onChange - {events.inputChange}
                                 - label - "Comments"
-
-                            - element Button with attribute
-                                - onClick - {events.saveEach}
-                                - property:
-                                    - text Save
 
                         - element div with property
                         
@@ -273,7 +267,6 @@ function makeList(data, sectionid, assignmentid, events) {
 
                     <Col s={12} m={6}>
 
-                        <p>Name: </p>
                         <div>
                             {studentData.content}
                         </div>
@@ -292,8 +285,6 @@ function makeList(data, sectionid, assignmentid, events) {
                                 label="Comments" />
 
                         </div>
-
-                        <Button onClick={events.saveEach}>Save</Button>
 
                         <div>
 
