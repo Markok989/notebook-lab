@@ -274,21 +274,81 @@ module.exports.newDiscussion = newDiscussion;
 /********** SAVING GRADES BY CATEGORY *********/
 
 /*
-- function getCategoriesForGrading with parameter data
+- function getCategoriesForGrading with parameters tableName and data
     - log string 'Grading_DB: getCategoriesForGrading, ' and parameter data
     - queryStr has value of string 'SELECT titles.content, titles.id, titles.group_id, titles.comments, titles.grade, students_reports.id AS report_id, students_reports.student_id, students_reports.status, users.first_name, users.last_name, users.id AS user_id FROM students_reports JOIN titles ON students_reports.title_id = titles.id JOIN users ON users.id = students_reports.student_id WHERE students_reports.assignment_id = $1;'
     - return db query with parameters queryStr and data
 */
-function getCategoriesForGrading(data) {
+function getCategoriesForGrading(tableName, data) {
 
     console.log('Grading_DB: getCategoriesForGrading, ', data);
-    let queryStr = 'SELECT titles.content, titles.id, titles.group_id, titles.comments, titles.grade, students_reports.id AS report_id, students_reports.student_id, students_reports.status, users.first_name, users.last_name, users.id AS user_id FROM students_reports JOIN titles ON students_reports.title_id = titles.id JOIN users ON users.id = students_reports.student_id WHERE students_reports.assignment_id = $1;';
+    let queryStr = makeQuery(tableName);
     return db.query(queryStr, data);
 
 }
 
 
 module.exports.getCategoriesForGrading = getCategoriesForGrading;
+
+/*
+- function makeQuery with parameter tableName
+
+    - variable tableOptions has properties
+        title: 'titles',
+        question: 'questions',
+        variable: 'variables',
+        hypothesis: 'hypotheses',
+        abstract: 'abstracts',
+        procedure: 'procedures',
+        material: 'materials',
+        data: 'data',
+        discussion: 'discussions',
+        calculation: 'calculations'
+
+    - condition if tableOptions[tableName]
+
+        - returns JavaScript template `SELECT ${tableOptions[tableName]}.content, ${tableOptions[tableName]}.id, ${tableOptions[tableName]}.group_id, ${tableOptions[tableName]}.comments, ${tableOptions[tableName]}.grade, students_reports.id AS report_id, students_reports.student_id, students_reports.status, users.first_name, users.last_name, users.id AS user_id FROM students_reports JOIN ${tableOptions[tableName]} ON students_reports.title_id = ${tableOptions[tableName]}.id JOIN users ON users.id = students_reports.student_id WHERE students_reports.assignment_id = $1;`
+
+    - else 
+
+        - throw a Error string 'Invalid table name'
+
+        */
+function makeQuery(tableName) {
+
+    var tableOptions = {
+        title: 'titles',
+        question: 'questions',
+        variable: 'variables',
+        hypothesis: 'hypotheses',
+        abstract: 'abstracts',
+        procedure: 'procedures',
+        material: 'materials',
+        data: 'data',
+        discussion: 'discussions',
+        calculation: 'calculations'
+    };
+
+    if (tableOptions[tableName]) {
+
+        return `SELECT ${tableOptions[tableName]}.content, ${tableOptions[tableName]}.id, ${tableOptions[tableName]}.group_id, ${tableOptions[tableName]}.comments, ${tableOptions[tableName]}.grade, students_reports.id AS report_id, students_reports.student_id, students_reports.status, users.first_name, users.last_name, users.id AS user_id FROM students_reports JOIN ${tableOptions[tableName]} ON students_reports.title_id = ${tableOptions[tableName]}.id JOIN users ON users.id = students_reports.student_id WHERE students_reports.assignment_id = $1;`;
+
+    } else {
+
+        throw Error('Invalid table name');
+
+    }
+
+}
+
+//TESTS
+//console.log(makeQuery('titles'));
+// getCategoriesForGrading('abstract',[1]).then((results) => {
+//     console.log(results.rows);
+// }).catch(e => {
+//
+//     console.log(e);
+// });
 
 
 /********** ASSIGNMENTS *********/

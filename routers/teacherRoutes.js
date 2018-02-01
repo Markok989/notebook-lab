@@ -135,7 +135,7 @@ var teacherRoutes = (app) => {
         - log string 'In route to get student data by category' and req.params
         - data has value of [req.params.assignmentId];
 
-        - return getCategoriesForGrading(from teacherDb) with parameter data
+        - return getCategoriesForGrading(from teacherDb) with parameters req.params.category and data
         - then with word 'then' with parameter results access to function
            
             - log string 'TEACHER ROUTER: categories for grading: ' and results.rows
@@ -154,7 +154,7 @@ var teacherRoutes = (app) => {
         console.log('In route to get student data by category', req.params);
         let data = [req.params.assignmentId];
 
-        return getCategoriesForGrading(data).then(results => {
+        return getCategoriesForGrading(req.params.category, data).then(results => {
 
             console.log('TEACHER ROUTER: categories for grading: ', results.rows);
 
@@ -359,7 +359,7 @@ var teacherRoutes = (app) => {
     });
 
     // get all the sections a teaher has
-    // app get with path 'app/teacher/sections', mw loggedInCheck and mw.checkIfTeacher (from midlleware)
+    // app get with path '/app/teacher/sections', mw loggedInCheck and mw.checkIfTeacher (from midlleware)
     // arrow function with parameters req and res
 
     app.get('/api/teacher/sections', mw.loggedInCheck, mw.checkIfTeacher, (req, res) => {
@@ -370,7 +370,8 @@ var teacherRoutes = (app) => {
         // return res.json contains success with boolean value true and
         // sections with value results.row
         // after then goes word "catch" for errors,
-        // catch with parameter e access res.json ,
+        // catch with parameter e access function
+        // log string 'sending error'
         // res.json contains error with value e
         let data = [req.session.user.id];
         return getAllSections(data).then((results) => {
@@ -382,6 +383,7 @@ var teacherRoutes = (app) => {
 
         }).catch(e => {
 
+            console.log('sending error');
             res.json({
 
                 error: e
@@ -1444,6 +1446,7 @@ function newStudentReport(studentId, sectionId, assignmentId, categoryIds) {
 }
 
 
+
     // TESTS
 
     /*
@@ -1593,3 +1596,17 @@ function newStudentReport(studentId, sectionId, assignmentId, categoryIds) {
 
 
     // makeNewAssignmentAll(req);
+
+
+ //Tests:
+ // function getCatsForGradingTest(){
+ //     return getCategoriesForGrading( 'abstracts', [1] ).then(results => {
+ //         console.log("TEACHER ROUTER: categories for grading:", results.rows);
+ //
+ //     }).catch(e => {
+ //         console.log('Getting categories for grading error:', e);
+ //
+ //     });
+ // }
+ //
+ // getCatsForGradingTest();

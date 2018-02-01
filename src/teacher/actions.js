@@ -26,13 +26,21 @@ const SAVE_COURSE_LIST = 'SAVE_COURSE_LIST',
 
         - log string 'Back from getting Category Data' and parameter result
 
-        - return properties
-            - type as UPDATE_STUDENT_CATEGORY_DATA
-            - payload as results.data.categoryData
+        - condition if results.data.success
+
+            - return properties
+                - type as UPDATE_STUDENT_CATEGORY_DATA
+                - payload as results.data.categoryData
           
+        - else 
+
+            - log string 'ERROR getting categories'
 
     - then with word 'catch' with parameter e access to function
-        - set the state , property error has value of parameter e
+        - set the state , properties
+
+            - type has value of 'ERROR'
+            - error has value of parameter e
 */
 export function getCategoriesForGrading(assignmentId, category) {
 
@@ -40,14 +48,23 @@ export function getCategoriesForGrading(assignmentId, category) {
 
         console.log('Back from getting Category Data', results);
 
-        return {
-            type: UPDATE_STUDENT_CATEGORY_DATA,
-            payload: results.data.categoryData
-        };
+        if (results.data.success) {
+
+            return {
+                type: UPDATE_STUDENT_CATEGORY_DATA,
+                payload: results.data.categoryData
+            };
+
+        } else {
+
+            console.log('ERROR getting categories');
+
+        }
 
     }).catch(e => {
 
         return {
+            type: 'ERROR',
             error: e
         };
 
