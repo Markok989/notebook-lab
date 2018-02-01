@@ -4,6 +4,7 @@ import { Link, browserHistory } from 'react-router';
 import axios from '../../api/axios';
 import { Row, Col, Button, Input, Card, Collection, CollectionItem, MenuItem, Breadcrumb } from 'react-materialize';
 import { getStudentAssignmentList, getAssignmentProperties } from '../actions';
+import { capitalize } from '../../helpers';
 
 // component SpecificAssignment
 class SpecificAssignment extends React.Component {
@@ -296,10 +297,11 @@ function determineStatus(status) {
 
 }
 
-/*
-- function makeSelector with parameters assignmentProps and handleCatPick
 
-    - log string 'MAKE SELECTOR' and parameter assignmentProps
+/*
+- function getCategoryList with parameter assignmentProps
+
+    - log string ''MAKE Category List'' and parameter assignmentProps
 
     - variable options has value of empty array [];
 
@@ -311,6 +313,34 @@ function determineStatus(status) {
 
             -  options push to (key)
     
+    - returns options
+
+*/
+function getCategoryList(assignmentProps) {
+
+    console.log('MAKE Category List', assignmentProps);
+
+    var options = [];
+
+    for (var key in assignmentProps) {
+
+        if (assignmentProps[key] == 'individual' || assignmentProps[key] == 'group') {
+
+            options.push(key);
+
+        }
+
+    }
+
+    return options;
+
+}
+
+/*
+- function makeSelector with parameters assignmentProps and handleCatPick
+    
+    - variable options has value of function getCategoryList with parameter assignmentProps
+
     - log string 'OPTIONS ARRAY: 'and parameter options
 
     - variable optionList has value of options and use mapt with parameter option to access to function
@@ -319,7 +349,7 @@ function determineStatus(status) {
 
         - returns
 
-            - element option with attribute value of {option} and property of {option}
+            - element option with attribute value of {option} and property of {capitalize(option)}
 
     - returns
 
@@ -333,18 +363,7 @@ function determineStatus(status) {
 */
 function makeSelector(assignmentProps, handleCatPick) {
 
-    console.log('MAKE SELECTOR', assignmentProps);
-
-
-    var options = [];
-
-    for (var key in assignmentProps) {
-
-        if (assignmentProps[key] == 'individual' || assignmentProps[key] == 'group') {
-            options.push(key);
-        }
-
-    }
+    var options = getCategoryList(assignmentProps);
 
     console.log('OPTIONS ARRAY: ', options);
 
@@ -353,7 +372,9 @@ function makeSelector(assignmentProps, handleCatPick) {
         console.log('OPTION: ', option);
 
         return (
-            <option value={option}>{option}</option>
+
+            <option value={option}>{capitalize(option)}</option>
+
         );
 
     });
