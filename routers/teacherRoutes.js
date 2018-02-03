@@ -130,7 +130,7 @@ var teacherRoutes = (app) => {
     //get all the students data for given category
 
     /*
-    - app get with path '/api/teacher/grading/:assignmentId/:category', mw.loggedInCheck and mw.checkIfTeacher (from midlleware) and use parameters req and res
+    - app get with path '/api/t/category/:assignmentId/:category', mw.loggedInCheck and mw.checkIfTeacher (from midlleware) and use parameters req and res
         
         - log string 'In route to get student data by category' and req.params
         - data has value of [req.params.assignmentId];
@@ -149,7 +149,7 @@ var teacherRoutes = (app) => {
             - res.json with property
                 - error has value of parameter e
     */
-    app.get('/api/teacher/grading/:assignmentId/:category', mw.loggedInCheck, mw.checkIfTeacher, (req, res) => {
+    app.get('/api/t/category/:assignmentId/:category', mw.loggedInCheck, mw.checkIfTeacher, (req, res) => {
 
         console.log('In route to get student data by category', req.params);
         let data = [req.params.assignmentId];
@@ -952,7 +952,7 @@ var teacherRoutes = (app) => {
 
                 if (prop === 'discussion' || prop === 'discussion_grade') {
 
-                    dbGrading.updatediscussions(discussion_id, grade.discussion_comment, grade.discussion_grade);
+                    dbGrading.updateDiscussions(discussion_id, grade.discussion_comment, grade.discussion_grade);
 
                 }
 

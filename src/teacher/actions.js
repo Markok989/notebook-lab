@@ -20,7 +20,7 @@ const SAVE_COURSE_LIST = 'SAVE_COURSE_LIST',
 /*
 - function getCategoriesForGrading with parameters assignmentId, category
 
-    - return axios get with path `/api/teacher/grading/${assignmentId}/${category}`
+    - return axios get with path `/api/t/category/${assignmentId}/${category}`
     - then with word 'then' with parameter results access to function 
 
         - log string 'Back from getting Category Data' and parameter result
@@ -43,7 +43,7 @@ const SAVE_COURSE_LIST = 'SAVE_COURSE_LIST',
 */
 export function getCategoriesForGrading(assignmentId, category) {
 
-    return axios.get(`/api/teacher/grading/${assignmentId}/${category}`).then(results => {
+    return axios.get(`/api/t/category/${assignmentId}/${category}`).then(results => {
 
         console.log('Back from getting Category Data', results);
 
