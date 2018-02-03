@@ -108,11 +108,11 @@ class SpecificAssignment extends React.Component {
     /*
     - method selectCategory 
 
-        -  browserHistory push to js template `/teacher/grading/assignment/${this.props.params.id}/${this.props.currAssignmentId}/${this.state.category}`
+        -  browserHistory push to js template `/teacher/category/assignment/${this.props.params.id}/${this.props.currAssignmentId}/${this.state.category}`
     */
     selectCategory() {
 
-        browserHistory.push(`/teacher/grading/assignment/${this.props.params.id}/${this.props.currAssignmentId}/${this.state.category}`);
+        browserHistory.push(`/teacher/category/assignment/${this.props.params.id}/${this.props.currAssignmentId}/${this.state.category}`);
 
     }
 
