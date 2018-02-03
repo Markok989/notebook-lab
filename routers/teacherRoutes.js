@@ -391,6 +391,7 @@ var teacherRoutes = (app) => {
             });
 
         });
+
     });
 
     // get only the sections for a particular course
@@ -421,6 +422,7 @@ var teacherRoutes = (app) => {
             });
 
         });
+
     });
 
 
@@ -451,6 +453,7 @@ var teacherRoutes = (app) => {
             });
 
         });
+        
     });
 
     // app get with path /api/teacher/courses, mw loggedInCheck and mw.checkIfTeacher(from midlleware) and use parameters req and res

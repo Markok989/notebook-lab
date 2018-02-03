@@ -117,7 +117,7 @@ class AddSection extends React.Component {
                         ref={el => this.endDateInput = el}
                     />
 
-                    <Button modal="close" onClick={this.submit}>Save New Course</Button>
+                    <Button modal="close" onClick={this.submit}>Save New Section</Button>
 
                 </Modal>
 
