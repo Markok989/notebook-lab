@@ -166,6 +166,10 @@ class GradeAssignment extends React.Component {
                 Hi
                 {committedAssignment}
 
+                <button name='saveAll' onClick={this.handleSaveAll}>Save All</button>
+
+                <button name='commit' onClick={this.handleCommit}>Commit</button>
+
             </div>
 
         ); // end return
@@ -180,31 +184,123 @@ class GradeAssignment extends React.Component {
 
     - condition if section[category + '_editable']
 
-        - returns div element with property
+        - condition ifsection[category + '_comments'] 
+          AND(&&)
+          section[category + '_grade']
 
-            - element h3 has property {category}:
-            - element p has property {section[category + '_content']}
+            - returns div element with property
 
-            - element div with property text Teacher Comments
+                - element label with property {category}:
 
-            - element textarea with attributes
-                - onChange - {handleChange}
-                - name - {`${category}_comment`}
-                - placeholder - "Type here.."
-                - cols - "30"
-                - rows - "5"
+                - element div with property of text Teacher Comments
+ 
 
-            - element textarea with attributes
-                - onChange - {handleChange}
-                - name - {`${category}_grade`}
-                - placeholder - "Type here.."
-                - cols - "30"
-                - rows - "5"
+                - element textarea with attributes
+                    - name - JavaScript template {`${category}_comment`} 
+                    - placeholder - "Type here.."
+                    - cols="30"
+                    - rows="5"
+                    - onChange={handleChange}
+                    - property - {section[category + '_comments']}
 
-            - element button with attributes
-                - onClick - {handleSaveGrading}
-                - name - {category}
-                - property - text Save
+                - element div with property of text Teacher Grade
+
+                - element textarea with attributes
+                    - name - JavaScript template {`${category}_grade`} 
+                    - placeholder - "Type here.." 
+                    - cols - "30" 
+                    - rows - "5"
+                    - onChange - {handleChange}
+                    - property - {section[category + '_grade']}
+
+        - else condition if section[category + '_grade']
+
+            - returns element div with properties
+
+                - element label with property {category}
+ 
+                - element div with property of text: Teacher Comments
+ 
+                - element textarea with attributes
+                    - name - JavaScript template {`${category}_comment`} 
+                    - placeholder - "Type here.." 
+                    - cols - "30"
+                    - rows - "5"
+                    - onChange - {handleChange}
+ 
+                - element div with property of text: Teacher Grade
+ 
+                - element textarea with attributes
+                    - name - JavaScript template {`${category}_grade`}
+                    - placeholder - "Type here.."
+                    - cols - "30"
+                    - rows - "5" 
+                    - onChange - {handleChange}
+                    - property - {section[category + '_grade']}
+ 
+
+        - else  condition if section[category + '_comments']
+
+            - return element div with properties:
+
+                - element label with property {category}
+ 
+                - element div with property of text Teacher Comments
+ 
+                - element textarea with attributes
+                    - name - JavaScript template {`${category}_comment`} 
+                    - placeholder - "Type here.." 
+                    - cols - "30"
+                    - rows - "5" 
+                    - onChange - {handleChange}
+                    - property - {section[category + '_comments']}
+ 
+                - element div with property of text Teacher Grade
+ 
+                - element textarea with attributes 
+                    - onChange - {handleChange}
+                    - name - {`${category}_grade`}
+                    - placeholder - "Type here.."
+                    - cols - "30" 
+                    - rows - "5"
+ 
+ 
+                - element button with attributes
+                    - name - {category}
+                    - onClick - {handleSaveGrading}
+                    - property - Save
+ 
+        - else 
+ 
+            - returns div element with properties
+                 
+                - element h3 with property {category}
+ 
+                - element p with property {section[category + '_content']}
+ 
+                - element div with property of text Teacher Comments
+ 
+                - element  textarea with attributes 
+                    - onChange - {handleChange}
+                    - name - {`${category}_comment`}
+                    - placeholder - "Type here.."
+                    - cols - "30"
+                    - rows - "5"
+ 
+                - element div with property of text Teacher Grade
+ 
+                - element textarea with attributes 
+                    - onChange - {handleChange} 
+                    - name - {`${category}_grade`} 
+                    - placeholder - "Type here.."
+                    - cols - "30" 
+                    - rows - "5"
+ 
+                - element button with attribures
+                    - onClick - {handleSaveGrading}
+                    - name - {category}
+                    - property - Save
+ 
                 
     - else condition if section[category + '_editable'] is strictly the same as null
       OR (||)
@@ -225,36 +321,150 @@ function committed(section, category, handleChange, handleSaveGrading) {
 
     if (section[category + '_editable']) {
 
-        return (
+        if (section[category + '_comments'] && section[category + '_grade']) {
 
-            <div>
+            return (
 
-                <h3>{category}:</h3>
-                <p>{section[category + '_content']}</p>
+                <div>
+                    <label>{category}:</label>
 
-                <div>Teacher Comments</div>
+                    <div>Teacher Comments</div>
 
-                <textarea
-                    onChange={handleChange}
-                    name={`${category}_comment`}
-                    placeholder="Type here.."
-                    cols="30"
-                    rows="5" >
-                </textarea>
+                    <textarea
+                        name={`${category}_comment`}
+                        placeholder="Type here.."
+                        cols="30"
+                        rows="5"
+                        onChange={handleChange}>
+                        {section[category + '_comments']}
+                    </textarea>
 
-                <textarea
-                    onChange={handleChange}
-                    name={`${category}_grade`}
-                    placeholder="Type here.."
-                    cols="30"
-                    rows="5" >
-                </textarea>
+                    <div>Teacher Grade</div>
 
-                <button onClick={handleSaveGrading} name={category} >Save</button>
+                    <textarea
+                        name={`${category}_grade`}
+                        placeholder="Type here.."
+                        cols="30"
+                        rows="5"
+                        onChange={handleChange}>
+                        {section[category + '_grade']}
+                    </textarea>
 
-            </div>
 
-        );
+                    <button name={category} onClick={handleSaveGrading}>Save</button>
+
+                </div>
+
+            );
+
+        } else if (section[category + '_grade']) {
+
+            return (
+
+                <div>
+
+                    <label>{category}:</label>
+
+                    <div>Teacher Comments</div>
+
+                    <textarea
+                        name={`${category}_comment`}
+                        placeholder="Type here.."
+                        cols="30" rows="5"
+                        onChange={handleChange}>
+                    </textarea>
+
+                    <div>Teacher Grade</div>
+
+                    <textarea
+                        name={`${category}_grade`}
+                        placeholder="Type here.."
+                        cols="30"
+                        rows="5"
+                        onChange={handleChange}>
+                        {section[category + '_grade']}
+                    </textarea>
+
+
+                    <button name={category} onClick={handleSaveGrading}>Save</button>
+
+                </div>
+
+            );
+
+        } else if (section[category + '_comments']) {
+
+            return (
+
+                <div>
+
+                    <label>{category}:</label>
+
+                    <div>Teacher Comments</div>
+
+                    <textarea
+                        name={`${category}_comment`}
+                        placeholder="Type here.."
+                        cols="30"
+                        rows="5"
+                        onChange={handleChange}>
+                        {section[category + '_comments']}
+                    </textarea>
+
+                    <div>Teacher Grade</div>
+
+                    <textarea
+                        onChange={handleChange}
+                        name={`${category}_grade`}
+                        placeholder="Type here.."
+                        cols="30"
+                        rows="5" >
+                    </textarea>
+
+
+                    <button name={category} onClick={handleSaveGrading}>Save</button>
+
+                </div>
+
+            );
+
+        } else {
+
+            return (
+
+                <div>
+
+                    <h3>{category}:</h3>
+
+                    <p>{section[category + '_content']}</p>
+
+                    <div>Teacher Comments</div>
+
+                    <textarea
+                        onChange={handleChange}
+                        name={`${category}_comment`}
+                        placeholder="Type here.."
+                        cols="30"
+                        rows="5" >
+                    </textarea>
+
+                    <div>Teacher Grade</div>
+
+                    <textarea
+                        onChange={handleChange}
+                        name={`${category}_grade`}
+                        placeholder="Type here.."
+                        cols="30"
+                        rows="5" >
+                    </textarea>
+
+                    <button onClick={handleSaveGrading} name={category} >Save</button>
+
+                </div>
+
+            );
+
+        }
 
     } else if (section[category + '_editable'] === null || section[category + '_content'] === null) {
 

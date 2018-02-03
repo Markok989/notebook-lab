@@ -521,11 +521,10 @@ var teacherRoutes = (app) => {
         - access to dbGrading getAssignment(module.export) with parameters reportID, assignmentID
         - then with word 'then' with parameter result 
     
-            - log string 'getting assignment per student 10'
+            - log string result.rows
+
     
-            - constant status has value of result.rows[0].status
-    
-            - condition if status is strictly the same as string 'COMMITTED'
+            
     
                 - constants {
                     first_name,
@@ -595,24 +594,26 @@ var teacherRoutes = (app) => {
              
                 constant discussion has properties: discussion_editable, discussion_content, discussion_comments, discussion_grade
     
+
+                - condition if status is strictly the same as string 'COMMITTED'
     
-                - res json has properties 
-                    - success has value of true
-                    - assignment has properties:
-                        first_name,
-                        last_name,
-                        assignment_id,
-                        status,
-                        title,
-                        question,
-                        abstract,
-                        hypothesis,
-                        variable,
-                        material,
-                        procedure,
-                        data,
-                        calculation,
-                        discussion 
+                    - res json has properties 
+                        - success has value of true
+                        - assignment has properties:
+                            first_name,
+                            last_name,
+                            assignment_id,
+                            status,
+                            title,
+                            question,
+                            abstract,
+                            hypothesis,
+                            variable,
+                            material,
+                            procedure,
+                            data,
+                            calculation,
+                            discussion 
     */
     app.get('/api/teacher/grading/assignment/:id/student/:reportid', (req, res) => {
 
@@ -623,98 +624,97 @@ var teacherRoutes = (app) => {
 
         dbGrading.getAssignment(reportID, assignmentID).then((result) => {
 
-            console.log('getting assignment per student 10');
+            console.log(result.rows);
 
-            const status = result.rows[0].status;
-
-            if (status === 'COMMITTED') {
-                const {
+            const {
                 first_name,
-                    last_name,
-                    assignment_id,
-                    status,
-                    title_editable,
-                    title_content,
-                    title_comments,
-                    title_grade,
-                    question_editable,
-                    question_content,
-                    question_comments,
-                    question_grade,
-                    abstract_editable,
-                    abstract_content,
-                    abstract_comments,
-                    abstract_grade,
-                    hypothesis_editable,
-                    hypothesis_content,
-                    hypothesis_comments,
-                    hypothesis_grade,
-                    variable_editable,
-                    variable_content,
-                    variable_comments,
-                    variable_grade,
-                    material_editable,
-                    material_content,
-                    material_comments,
-                    material_grade,
-                    procedure_editable,
-                    procedure_content,
-                    procedure_comments,
-                    procedure_grade,
-                    data_editable,
-                    data_content,
-                    data_comments,
-                    data_grade,
-                    calculation_editable,
-                    calculation_content,
-                    calculation_comments,
-                    calculation_grade,
-                    discussion_editable,
-                    discussion_content,
-                    discussion_comments,
-                    discussion_grade
+                last_name,
+                assignment_id,
+                status,
+                title_editable,
+                title_content,
+                title_comments,
+                title_grade,
+                question_editable,
+                question_content,
+                question_comments,
+                question_grade,
+                abstract_editable,
+                abstract_content,
+                abstract_comments,
+                abstract_grade,
+                hypothesis_editable,
+                hypothesis_content,
+                hypothesis_comments,
+                hypothesis_grade,
+                variable_editable,
+                variable_content,
+                variable_comments,
+                variable_grade,
+                material_editable,
+                material_content,
+                material_comments,
+                material_grade,
+                procedure_editable,
+                procedure_content,
+                procedure_comments,
+                procedure_grade,
+                data_editable,
+                data_content,
+                data_comments,
+                data_grade,
+                calculation_editable,
+                calculation_content,
+                calculation_comments,
+                calculation_grade,
+                discussion_editable,
+                discussion_content,
+                discussion_comments,
+                discussion_grade
                     } = result.rows[0];
 
 
-                const title = {
-                    title_editable, title_content, title_comments, title_grade
-                }
+            const title = {
+                title_editable, title_content, title_comments, title_grade
+            }
 
-                const question = {
-                    question_editable, question_content, question_comments, question_grade
-                }
+            const question = {
+                question_editable, question_content, question_comments, question_grade
+            }
 
-                const abstract = {
-                    abstract_editable, abstract_content, abstract_comments, abstract_grade
-                }
+            const abstract = {
+                abstract_editable, abstract_content, abstract_comments, abstract_grade
+            }
 
-                const hypothesis = {
-                    hypothesis_editable, hypothesis_content, hypothesis_comments, hypothesis_grade
-                }
+            const hypothesis = {
+                hypothesis_editable, hypothesis_content, hypothesis_comments, hypothesis_grade
+            }
 
-                const variable = {
-                    variable_editable, variable_content, variable_comments, variable_grade
-                }
+            const variable = {
+                variable_editable, variable_content, variable_comments, variable_grade
+            }
 
-                const material = {
-                    material_editable, material_content, material_comments, material_grade
-                }
+            const material = {
+                material_editable, material_content, material_comments, material_grade
+            }
 
-                const procedure = {
-                    procedure_editable, procedure_content, procedure_comments, procedure_grade
-                }
+            const procedure = {
+                procedure_editable, procedure_content, procedure_comments, procedure_grade
+            }
 
-                const data = {
-                    data_editable, data_content, data_comments, data_grade
-                }
+            const data = {
+                data_editable, data_content, data_comments, data_grade
+            }
 
-                const calculation = {
-                    calculation_editable, calculation_content, calculation_comments, calculation_grade
-                }
+            const calculation = {
+                calculation_editable, calculation_content, calculation_comments, calculation_grade
+            }
 
-                const discussion = {
-                    discussion_editable, discussion_content, discussion_comments, discussion_grade
-                }
+            const discussion = {
+                discussion_editable, discussion_content, discussion_comments, discussion_grade
+            }
+
+            if (status === "COMMITTED") {
 
                 res.json({
 
@@ -771,19 +771,19 @@ var teacherRoutes = (app) => {
                     discussion_id
                     } belongs to result.rows[0];
         
-    
+     
                 - for loop with variable prop in grade
-    
+     
                     - log string 'prop', grade
-
+    
                     - condition if prop is strictly the same as string 'title_comment'
                       OR (||)
                       prop is strictly the same as string 'title_grade'
                     
                         - access to dbGrading updateTitles(from gradingFb.js file) with parameters:
                           title_id, grade.title_comment, grade.title_grade
-
-
+    
+    
                     - condition if prop is strictly the same as string 'question_comment'
                       OR (||)
                       prop is strictly the same as string 'question_grade'
@@ -791,7 +791,7 @@ var teacherRoutes = (app) => {
                         - access to dbGrading updateQuestions(from gradingFb.js file) with parameters:
                           question_id, grade.question_comment, grade.question_grade
                         
-
+    
                     - condition if prop is strictly the same as string 'abstract_comment'
                       OR (||)
                       prop is strictly the same as string 'abstract_grade'
@@ -799,47 +799,47 @@ var teacherRoutes = (app) => {
                         - access to dbGrading updateAbstracts(from gradingFb.js file) with parameters:
                           abstract_id, grade.abstract_comment, grade.abstract_grade
                         
-
+    
                     - condition if prop is strictly the same as string 'hypothesis_comment'
                       OR (||)
                       prop is strictly the same as string 'hypothesis_grade'
                     
                         - access to dbGrading updateHypotheses(from gradingFb.js file) with parameters:
                           hypothesis_id, grade.hypothesis_comment, grade.hypothesis_grade
-
-
+    
+    
                     - condition if prop is strictly the same as string 'variable_comment'
                       OR (||)
                       prop is strictly the same as string 'variable_grade'
                     
                         - access to dbGrading updateVariables(from gradingFb.js file) with parameters:
                           variables_id, grade.variable_comment, grade.variable_grade
-
-
+    
+    
                     - condition if prop is strictly the same as string 'material_comment'
                       OR (||)
                       prop is strictly the same as string 'material_grade'
                     
                         - access to dbGrading updateMaterials(from gradingFb.js file) with parameters:
                           materials_id, grade.material_comment, grade.material_grade
-
-
+    
+    
                     - condition if prop is strictly the same as string 'procedure_comment'
                       OR (||)
                       prop is strictly the same as string 'procedure_grade'
                     
                         - access to dbGrading updateProcedures(from gradingFb.js file) with parameters:
                           procedures_id, grade.procedure_comment, grade.procedure_grade
-
-
+    
+    
                     - condition if prop is strictly the same as string 'data_comment'
                       OR (||)
                       prop is strictly the same as string 'data_grade'
                     
                         - access to dbGrading updateData(from gradingFb.js file) with parameters:
                           data_id, grade.data_comment, grade.data_grade
-
-
+    
+    
                     - condition if prop is strictly the same as string 'calculation'
                       OR (||)
                       prop is strictly the same as string 'calculation_grade'
@@ -847,15 +847,15 @@ var teacherRoutes = (app) => {
                         - access to dbGrading updateCalculations(from gradingFb.js file) with parameters:
                           calculations_id, grade.calculation_comment, grade.calculation_grade
                  
-
+    
                     - condition if prop is strictly the same as string 'discussion'
                       OR (||)
                       prop is strictly the same as string 'discussion_grade'
                     
                         - access to dbGrading updatediscussions(from gradingFb.js file) with parameters:
-                          discussions_id, grade.discussion_comment, grade.discussion_grade
+                          discussion_id, grade.discussion_comment, grade.discussion_grade
                  
-
+    
         */
     app.post('/api/teacher/grading/grade/:id/student/:reportid', (req, res) => {
 
@@ -889,70 +889,70 @@ var teacherRoutes = (app) => {
 
                 if (prop === 'title_comment' || prop === 'title_grade') {
 
-                    dbGrading.updateTitles(title_id, grade.title_comment, grade.title_grade)
+                    dbGrading.updateTitles(title_id, grade.title_comment, grade.title_grade);
 
                 }
 
 
                 if (prop === 'question_comment' || prop === 'question_grade') {
 
-                    dbGrading.updateQuestions(question_id, grade.question_comment, grade.question_grade)
+                    dbGrading.updateQuestions(question_id, grade.question_comment, grade.question_grade);
 
                 }
 
 
                 if (prop === 'abstract_comment' || prop === 'abstract_grade') {
 
-                    dbGrading.updateAbstracts(abstract_id, grade.abstract_comment, grade.abstract_grade)
+                    dbGrading.updateAbstracts(abstract_id, grade.abstract_comment, grade.abstract_grade);
 
                 }
 
 
                 if (prop === 'hypothesis_comment' || prop === 'hypothesis_grade') {
 
-                    dbGrading.updateHypotheses(hypothesis_id, grade.hypothesis_comment, grade.hypothesis_grade)
+                    dbGrading.updateHypotheses(hypothesis_id, grade.hypothesis_comment, grade.hypothesis_grade);
 
                 }
 
 
                 if (prop === 'variable_comment' || prop === 'variable_grade') {
 
-                    dbGrading.updateVariables(variables_id, grade.variable_comment, grade.variable_grade)
+                    dbGrading.updateVariables(variables_id, grade.variable_comment, grade.variable_grade);
 
                 }
 
 
                 if (prop === 'material_comment' || prop === 'material_grade') {
 
-                    dbGrading.updateMaterials(materials_id, grade.material_comment, grade.material_grade)
+                    dbGrading.updateMaterials(materials_id, grade.material_comment, grade.material_grade);
 
                 }
 
 
                 if (prop === 'procedure_comment' || prop === 'procedure_grade') {
 
-                    dbGrading.updateProcedures(procedures_id, grade.procedure_comment, grade.procedure_grade)
+                    dbGrading.updateProcedures(procedures_id, grade.procedure_comment, grade.procedure_grade);
 
                 }
 
 
                 if (prop === 'data_comment' || prop === 'data_grade') {
 
-                    dbGrading.updateData(data_id, grade.data_comment, grade.data_grade)
+                    dbGrading.updateData(data_id, grade.data_comment, grade.data_grade);
 
                 }
 
 
                 if (prop === 'calculation' || prop === 'calculation_grade') {
 
-                    dbGrading.updateCalculations(calculations_id, grade.calculation_comment, grade.calculation_grade)
+                    dbGrading.updateCalculations(calculations_id, grade.calculation_comment, grade.calculation_grade);
 
                 }
 
 
                 if (prop === 'discussion' || prop === 'discussion_grade') {
 
-                    dbGrading.updatediscussions(discussions_id, grade.discussion_comment, grade.discussion_grade)
+                    dbGrading.updatediscussions(discussion_id, grade.discussion_comment, grade.discussion_grade);
 
                 }
 

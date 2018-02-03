@@ -21,9 +21,11 @@ var loggedOutRoutes = (app) => {
                 - log: string "success", 
                 - log: parameters first_name and last_name,
                 - dbHashing.hashPassword with parameter password, with word "then" we use function with parameter hash access to:
+
                     - return dbHashing.addStudent has parameters first_name, last_name, email, hash,
                     - then with word "then" access function with parameter result,
                         - constants id, first_name, last_name, email and role belong to result.rows[0];
+                        
                         - req.session.user has properties:
                                 id: id,
                                 first_name: first_name,
@@ -31,8 +33,25 @@ var loggedOutRoutes = (app) => {
                                 email: email,
                                 role: role
 
-                        - dbStudent addNewClass has parameters (id, course);
-                        - dbStudent addStudentsReports has parameters (id, course);
+                        - dbStudent addNewClass has parameters (id, course)
+                        - then with word 'then' with parameter result access to function
+
+                            - log string 'add new class get section id' and result.rows[0]
+                            - constant sectionID has value of result.rows[0].section_id
+                            - returns dbStudent getAssignmentsPerSection(from student.js file) with parameter sectionID
+
+                        - then with word 'then' with parameter results access to function
+
+                            - log string 'assignment list' and result
+                            - constant sectionID has value of result.rows[0].section_id
+                            - constant assignmentIDList has value of result.rows and use map with parameter assignment to access function
+
+                                - returns assignment.id
+
+                            - then assignmentIDList use forEach loop with parameter assignment to access to function
+
+                                - log parameter assignment
+                                - dbStudent addStudentsReports(from student.js file) and has parameters id, sectionID, assignment
 
                         - res.json has property success with value true
                 - catch access function with parameter err      
@@ -48,7 +67,7 @@ var loggedOutRoutes = (app) => {
 
         if (first_name && last_name && email && password && course) {
 
-            console.log("success")
+            console.log('success')
             console.log(first_name, last_name);
 
             dbHashing.hashPassword(password).then((hash) => {
@@ -65,18 +84,44 @@ var loggedOutRoutes = (app) => {
                         role: role
                     }
 
-                    dbStudent.addNewClass(id, course);
-                    dbStudent.addStudentsReports(id, course);
+                    dbStudent.addNewClass(id, course).then((result) => {
+
+                        console.log('add new class get section id', result.rows[0]);
+                        const sectionID = result.rows[0].section_id;
+                        return dbStudent.getAssignmentsPerSection(sectionID);
+
+                    }).then((result) => {
+
+                        console.log('assignment list', result);
+                        const sectionID = result.rows[0].section_id;
+
+                        const assignmentIDList = result.rows.map((assignment) => {
+
+                            return assignment.id;
+
+                        });
+
+                        assignmentIDList.forEach((assignment) => {
+
+                            console.log(assignment);
+                            dbStudent.addStudentsReports(id, sectionID, assignment);
+
+                        });
+
+                    });
 
                     res.json({
                         success: true
                     });
 
                 }).catch((err) => {
+
                     console.log(err);
+
                     res.json({
                         success: false
                     });
+
                 });
 
             }).catch((err) => {
@@ -86,6 +131,7 @@ var loggedOutRoutes = (app) => {
             });
 
         }
+
     });
 
     /*

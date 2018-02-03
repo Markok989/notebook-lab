@@ -11,8 +11,7 @@ const SAVE_COURSE_LIST = 'SAVE_COURSE_LIST',
     UPDATE_STUDENT_CATEGORY_DATA = 'UPDATE_STUDENT_CATEGORY_DATA',
     GET_COMMITS = 'GET_COMMITS',
     RECEIVE_ASSIGNMENT_PROPERTIES = 'RECEIVE_ASSIGNMENT_PROPERTIES',
-    ADD_COMMENT_CATEGORY = 'ADD_COMMENT_CATEGORY',
-    ADD_GRADE_CATEGORY = 'ADD_GRADE_CATEGORY',
+    ADD_GRADING = 'ADD_GRADING',
     ERROR = 'ERROR';
 
 
@@ -375,7 +374,7 @@ export function getCommittedAssignments(id, studentid) {
         - log string 'saving grade'
 
         - return 
-            - type as string ADD_COMMENT_CATEGORY
+            - type as string ADD_GRADING
             - assignment as result.data.assignment
 */
 export function saveGrading(id, reportid, grade) {
@@ -386,7 +385,7 @@ export function saveGrading(id, reportid, grade) {
             console.log('saving grade');
 
             return {
-                type: ADD_COMMENT_CATEGORY,
+                type: ADD_GRADING,
                 assignment: result.data.assignment
             }
 
