@@ -21,7 +21,7 @@ function getCategoriesForGrading(data) {
     console.log('Grading_DB: getCategoriesForGrading, ', data);
     let queryStr = 'SELECT titles.content, titles.id, titles.group_id, titles.comments, titles.grade, students_reports.id AS report_id, students_reports.student_id, students_reports.status FROM students_reports JOIN titles ON students_reports.title_id = titles.id WHERE students_reports.assignment_id = $1;';
     return db.query(queryStr, data);
-    
+
 }
 
 
@@ -224,7 +224,7 @@ module.exports.updateDiscussions = function (id, comments, grade) {
         LEFT JOIN data ON students_reports.assignment_id = data.assignment_id
         LEFT JOIN calculations ON students_reports.assignment_id = calculations.assignment_id
         LEFT JOIN discussions ON students_reports.assignment_id = discussions.assignment_id
-        WHERE students_reports.id = $1 AND students_reports.assignment_id = $2`
+        WHERE students_reports.id = $1 AND students_reports.assignment_id = $2`;
 
      - constant result has value of db.query(select, [report_id, assignment_id])
      - returns result
