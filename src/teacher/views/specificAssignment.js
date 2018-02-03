@@ -283,7 +283,7 @@ function makeInnerList(items, assignmentId) {
 
             <CollapsibleItem key={item.report_id.toString()}>
 
-                <Link to={`/teacher/category/assignment/${assignmentId}/student/${item.report_id}`}>
+                <Link to={`/teacher/grading/assignment/${assignmentId}/student/${item.report_id}`}>
                     {item.first_name}  {item.last_name}
                 </Link>
 
