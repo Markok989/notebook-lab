@@ -189,60 +189,107 @@ export default class Registration extends React.Component {
 
         const teacherRegistration = (
 
-            <Card title='Create a New Teacher Account'>
+            <Card title='Create a New Teacher Account' className="center-align">
 
-                {/* onChange - use method handleChange */}
-                <Input className="reg-input" name="first_name"
-                    placeholder="First Name" onChange={(e) => this.handleChange(e)} />
+                <Row>
 
-                <Input className="reg-input" name="last_name"
-                    placeholder="Last Name" onChange={(e) => this.handleChange(e)} />
+                    <Col s={12}>
 
-                <Input className="reg-input" name="email"
-                    placeholder="E-mail" onChange={(e) => this.handleChange(e)} />
+                        <Input
+                            s={12}
+                            m={6}
+                            className="reg-input"
+                            name="first_name"
+                            placeholder="First Name"
+                            onChange={e => this.handleChange(e)} />
 
-                <Input className="reg-input" name="password"
-                    placeholder="Password" type="password" onChange={(e) => this.handleChange(e)} />
+                        <Input
+                            s={12}
+                            m={6}
+                            className="reg-input"
+                            name="last_name"
+                            placeholder="Last Name"
+                            onChange={e => this.handleChange(e)} />
 
-                {/* onClick - use method handleStudentRegistration */}
-                <Button onClick={e => this.handleTeacherRegistration(e)}> Submit </Button>
+
+                        <Input
+                            s={12}
+                            m={6}
+                            className="reg-input"
+                            name="email"
+                            placeholder="E-mail"
+                            onChange={e => this.handleChange(e)} />
+
+                        <Input
+                            s={12}
+                            m={6}
+                            className="reg-input"
+                            name="password"
+                            placeholder="Password"
+                            type="password"
+                            onChange={e => this.handleChange(e)} />
+
+                    </Col>
+
+                </Row>
+
+                <div>
+
+                    <Button onClick={e => this.handleTeacherRegistration(e)}>
+                        Submit
+                    </Button>
+
+                </div>
 
             </Card>
 
         );
 
-        console.log(this.handleStudentRegistration);
+
 
         return (
 
             <Container>
 
-                <Card className="darken-1" title="Please select one of the following to register">
+                <Card
+                    className='darken-1'
+                    title='Please select one of the following to register'
+                    className="center-align"
+                >
 
                     <Row>
 
+                        <Col s={0} m={3}>
+                        </Col>
+
                         {/* onClick - use method handleTeacherSubmit */}
                         <Col s={12} m={3}>
+
                             <Button
                                 className="teacher-button"
                                 onClick={e => this.handleTeacherSubmit(e)}
                             >
                                 TEACHER
-                                </Button>
+                            </Button>
+
                         </Col>
 
                         {'       '}
 
                         {/* onClick - use method handleStudentSubmit */}
                         <Col s={12} m={3}>
+
                             <Button
                                 className="teacher-button"
                                 onClick={e => this.handleStudentSubmit(e)}
                             >
                                 STUDENT
-                             </Button>
+                            </Button>
+
                         </Col>
 
+                        <Col s={0} m={3}>
+                        </Col>
 
                     </Row>
 
@@ -255,7 +302,7 @@ export default class Registration extends React.Component {
                 <br />
                 <br />
 
-                <div>If already a member, please<Link to="/login"> LOGIN</Link></div>
+                <div className="center-align">If already a member, please<Link to="/login"> LOGIN</Link></div>
 
 
             </Container>
