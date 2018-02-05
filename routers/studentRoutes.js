@@ -240,8 +240,8 @@ var studentRoutes = (app) => {
 
                 }).then((result) => {
 
-                    console.log('assignment list', result);
-                    const sectionID = result.rows[0].section_id;
+                    console.log('assignment list', result.rows);
+                    // const sectionID = result.rows[0].section_id;
                     const assignmentIDList = result.rows.map((assignment) => {
 
                         return assignment.id
