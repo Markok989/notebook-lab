@@ -65,7 +65,7 @@ export default class Login extends React.Component {
                     } else {
                         location.replace('/teacher');
                     }
-                    
+
                 }
             });
         } else {
@@ -79,6 +79,9 @@ export default class Login extends React.Component {
         return (
 
             <Row className="reg-input-container">
+
+                <Col m={2} s={12}>
+                </Col>
 
                 <Col m={8} s={12}>
 
@@ -109,11 +112,19 @@ export default class Login extends React.Component {
 
                     </Card>
 
-                    <Link className="wel-links" to='/' >Register a New Account</Link>
+                    <div className="center-align">
+                        <Link className="wel-links" to='/' >Register a New Account</Link>
+                    </div>
 
                 </Col>
+
+                <Col m={2} s={12}>
+                </Col>
+
             </Row>
+
         );
+        
     }
 
 }
