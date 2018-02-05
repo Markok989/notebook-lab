@@ -162,26 +162,65 @@ export default class Registration extends React.Component {
 
         const studentRegistration = (
 
-            <Card s={12} m={4} title='Create a New Student Account'>
+            <Card s={12} m={4} title='Create a New Student Account' className="center-align">
 
                 {/* onChange - use method handleChange */}
-                <Input className="reg-input" name="first_name"
-                    placeholder="First Name" onChange={e => this.handleChange(e)} />
 
-                <Input className="reg-input" name="last_name"
-                    placeholder="Last Name" onChange={e => this.handleChange(e)} />
+                <Row>
 
-                <Input className="reg-input" name="email"
-                    placeholder="E-mail" onChange={e => this.handleChange(e)} />
+                    <Input
+                        s={12}
+                        m={6}
+                        className="reg-input"
+                        name="first_name"
+                        placeholder="First Name"
+                        onChange={e => this.handleChange(e)} />
 
-                <Input className="reg-input" name="password"
-                    placeholder="Password" type="password" onChange={e => this.handleChange(e)} />
+                    <Input
+                        s={12}
+                        m={6}
+                        className="reg-input"
+                        name="last_name"
+                        placeholder="Last Name"
+                        onChange={e => this.handleChange(e)} />
 
-                <Input className="reg-input" name="course"
-                    placeholder="Course Code" onChange={e => this.handleChange(e)} />
+                    <Input
+                        s={12}
+                        m={6}
+                        className="reg-input"
+                        name="email"
+                        placeholder="E-mail"
+                        onChange={e => this.handleChange(e)} />
 
-                {/* onClick - use method handleStudentRegistration */}
-                <Button className="reg-button" onClick={e => this.handleStudentRegistration(e)}> Submit </Button >
+                    <Input
+                        s={12}
+                        m={6}
+                        className="reg-input"
+                        name="password"
+                        placeholder="Password"
+                        type="password"
+                        onChange={e => this.handleChange(e)} />
+
+                    <Input
+                        s={12}
+                        m={12}
+                        className="reg-input"
+                        name="course"
+                        placeholder="Course Code"
+                        onChange={e => this.handleChange(e)} />
+
+                </Row>
+
+                <div>
+
+                    {/* onClick - use method handleStudentRegistration */}
+                    <Button
+                        className="reg-button"
+                        onClick={e => this.handleStudentRegistration(e)}>
+                        Submit
+                     </Button >
+
+                </div>
             </Card>
 
         );
