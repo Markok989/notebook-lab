@@ -330,107 +330,10 @@ var studentRoutes = (app) => {
             - log string 'assignment' and result.rows[0]
 
              constants {
-                    assignment_id,
-                    status,
-                    title_editable,
-                    title_content,
-                    title_comments,
-                    title_grade,
-                    question_editable,
-                    question_content,
-                    question_comments,
-                    question_grade,
-                    abstract_editable,
-                    abstract_content,
-                    abstract_comments,
-                    abstract_grade,
-                    hypothesis_editable,
-                    hypothesis_content,
-                    hypothesis_comments,
-                    hypothesis_grade,
-                    variable_editable,
-                    variable_content,
-                    variable_comments,
-                    variable_grade,
-                    material_editable,
-                    material_content,
-                    material_comments,
-                    material_grade,
-                    procedure_editable,
-                    procedure_content,
-                    procedure_comments,
-                    procedure_grade,
-                    data_editable,
-                    data_content,
-                    data_comments,
-                    data_grade,
-                    calculation_editable,
-                    calculation_content,
-                    calculation_comments,
-                    calculation_grade,
-                    discussion_editable,
-                    discussion_content,
-                    discussion_comments,
-                    discussion_grade
-                } belongs to result.rows[0];
-
-     
-            - constant title with propertues: title_editable, title_content, title_comments, title_grade
-                
-            - constant question with propertues: question_editable, question_content, question_comments, question_grade
-     
-            - constant abstract with propertues: abstract_editable, abstract_content, abstract_comments, abstract_grade
-     
-            - constant hypothesis with propertues: hypothesis_editable, hypothesis_content, hypothesis_comments, hypothesis_grade
-                
-            - constant variable with propertues: variable_editable, variable_content, variable_comments, variable_grade
-                
-            - constant material with propertues: material_editable, material_content, material_comments, material_grade
-        
-            - constant procedure with propertues: procedure_editable, procedure_content, procedure_comments, procedure_grade
-                
-            - constant data with propertues: data_editable, data_content, data_comments, data_grade
-                
-            - constant calculation with propertues: calculation_editable, calculation_content, calculation_comments, calculation_grade
-            
-            - constant discussion with propertues: discussion_editable, discussion_content, discussion_comments, discussion_grade
-            
-     
-               - res.json has properties:
-                 - success has value true
-                 - assignments has properties
-                        - assignment_id,
-                        - status,
-                        - title,
-                        - question,
-                        - abstract,
-                        - hypothesis,
-                        - variable,
-                        - material,
-                        - procedure,
-                        - data,
-                        - calculation,
-                        - discussion
-    */
-    app.get('/api/student/assignment/:id', (req, res) => {
-
-        const assignmentID = req.params.id;
-        const userID = req.session.user.id;
-
-        dbStudent.getReportByID(userID, assignmentID).then((result) => {
-
-            console.log(result.rows[0]);
-            const reportID = result.rows[0].id;
-            return dbStudent.getAssignment(reportID, assignmentID)
-
-        }).then((result) => {
-
-            console.log('assignment', result.rows[0]);
-
-
-            const {
-                    assignment_id,
+                assignment_id,
                 status,
+                report_comments,
+                report_grade,
                 title_editable,
                 title_content,
                 title_comments,
@@ -471,7 +374,110 @@ var studentRoutes = (app) => {
                 discussion_content,
                 discussion_comments,
                 discussion_grade
-                } = result.rows[0];
+            } belongs to result.rows[0];
+
+     
+            - constant title with propertues: title_editable, title_content, title_comments, title_grade
+                
+            - constant question with propertues: question_editable, question_content, question_comments, question_grade
+     
+            - constant abstract with propertues: abstract_editable, abstract_content, abstract_comments, abstract_grade
+     
+            - constant hypothesis with propertues: hypothesis_editable, hypothesis_content, hypothesis_comments, hypothesis_grade
+                
+            - constant variable with propertues: variable_editable, variable_content, variable_comments, variable_grade
+                
+            - constant material with propertues: material_editable, material_content, material_comments, material_grade
+        
+            - constant procedure with propertues: procedure_editable, procedure_content, procedure_comments, procedure_grade
+                
+            - constant data with propertues: data_editable, data_content, data_comments, data_grade
+                
+            - constant calculation with propertues: calculation_editable, calculation_content, calculation_comments, calculation_grade
+            
+            - constant discussion with propertues: discussion_editable, discussion_content, discussion_comments, discussion_grade
+            
+     
+                - res.json has properties:
+                    - success has value true
+                    - assignments has properties
+                        assignment_id,
+                        status,
+                        report_comments,
+                        report_grade,
+                        title,
+                        question,
+                        abstract,
+                        hypothesis,
+                        variable,
+                        material,
+                        procedure,
+                        data,
+                        calculation,
+                        discussion
+    */
+    app.get('/api/student/assignment/:id', (req, res) => {
+
+        const assignmentID = req.params.id;
+        const userID = req.session.user.id;
+
+        dbStudent.getReportByID(userID, assignmentID).then((result) => {
+
+            console.log(result.rows[0]);
+            const reportID = result.rows[0].id;
+            return dbStudent.getAssignment(reportID, assignmentID)
+
+        }).then((result) => {
+
+            console.log('assignment', result.rows[0]);
+
+
+            const {
+                assignment_id,
+                status,
+                report_comments,
+                report_grade,
+                title_editable,
+                title_content,
+                title_comments,
+                title_grade,
+                question_editable,
+                question_content,
+                question_comments,
+                question_grade,
+                abstract_editable,
+                abstract_content,
+                abstract_comments,
+                abstract_grade,
+                hypothesis_editable,
+                hypothesis_content,
+                hypothesis_comments,
+                hypothesis_grade,
+                variable_editable,
+                variable_content,
+                variable_comments,
+                variable_grade,
+                material_editable,
+                material_content,
+                material_comments,
+                material_grade,
+                procedure_editable,
+                procedure_content,
+                procedure_comments,
+                procedure_grade,
+                data_editable,
+                data_content,
+                data_comments,
+                data_grade,
+                calculation_editable,
+                calculation_content,
+                calculation_comments,
+                calculation_grade,
+                discussion_editable,
+                discussion_content,
+                discussion_comments,
+                discussion_grade
+            } = result.rows[0];
 
 
 
@@ -519,6 +525,8 @@ var studentRoutes = (app) => {
                 assignments: {
                     assignment_id,
                     status,
+                    report_comments,
+                    report_grade,
                     title,
                     question,
                     abstract,

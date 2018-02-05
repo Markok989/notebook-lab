@@ -220,24 +220,50 @@ class Assignment extends React.Component {
 
             </div>;
 
+        var gradedAssignment =
+
+            <div>
+
+                {graded(assignment.title, 'title')}
+                {graded(assignment.question, 'question')}
+                {graded(assignment.abstract, 'abstract')}
+                {graded(assignment.hypothesis, 'hypothesis')}
+                {graded(assignment.variable, 'variable')}
+                {graded(assignment.material, 'material')}
+                {graded(assignment.procedure, 'procedure')}
+                {graded(assignment.data, 'data')}
+                {graded(assignment.calculation, 'calculation')}
+                {graded(assignment.discussion, 'discussion')}
+
+                {finalComments(assignment.report_comments, assignment.report_grade)}
+
+            </div>
         /*
         - condition if assignment.status is strictly the same as string 'COMMITTED'
-          OR(||)
-          assignment.status is strictly the same as string 'GRADED'
           OR(||)
           assignment.status is strictly the same as string 'PENDING'
 
             - form has value of committedAssignment
 
+        - else condition if assignment.status is strictly the same as string 'GRADED'
+            - form has value of gradedAssignment
+        
+        
         - else
             - form has value of assignmentOptions
         */
-        if (assignment.status === 'COMMITTED' || assignment.status === 'GRADED' || assignment.status === 'PENDING') {
+        if (assignment.status === 'COMMITTED' || assignment.status === 'PENDING') {
 
             form = committedAssignment;
 
+        } else if (assignment.status === 'GRADED') {
+
+            form = gradedAssignment;
+
         } else {
+
             form = assignmentOptions;
+
         }
 
 
@@ -408,6 +434,65 @@ function committed(section, category) {
 
 
 /*
+- function graded with parameters section, category
+
+    - condition if section[category + '_content'] 
+      AND(&&) 
+      section[category + '_editable']
+
+        - returns 
+
+            - element Card with attribute title - {capitalize(category)} and next properties
+
+                -  element p with property - {section[category + '_content']}
+                -  element p with property - {section[category + '_comments']}
+                -  element p with property - {section[category + '_grade']}
+        
+    - eles 
+
+        - returns 
+
+            - element Card with attribute title={capitalize(category)} and properties
+
+                - element p with property - {section[category + '_content']}
+                - element p with property - {section[category + '_comments']}
+                - element p with property - {section[category + '_grade']}
+
+            </Card>
+
+*/
+function graded(section, category) {
+
+    if (section[category + '_content'] && section[category + '_editable']) {
+
+        return (
+
+            <Card title={capitalize(category)}>
+
+                <p>{section[category + '_content']}</p>
+                <p>{section[category + '_comments']}</p>
+                <p>{section[category + '_grade']}</p>
+
+            </Card>
+
+        );
+
+    } else {
+
+        return (
+
+            <Card title={capitalize(category)}>
+                <p>{section[category + '_content']}</p>
+            </Card>
+
+        );
+    }
+}
+
+
+
+
+/*
 - function capitalize with parameter word
 
     - returns word with charAt(0) and toUpperCase() +(plus) word.slice(1)
@@ -455,6 +540,138 @@ function getAssignmentName(assignmentId, classId, studentInfo) {
 
     return `${currCourse[0].course_name}:  ${currAssign[0].assignment_name}`;
 }
+
+
+
+/*
+- function finalComments with parameters comment, grade
+
+    - condition if comment AND(&&) grade
+
+        - returns div element with next properties
+
+            - element h4 with property of - text Final Comment
+
+            - element div with property - {comment}
+
+            - element h4 with property of - text Final Grade
+
+            - element div with property - {grade}
+
+    - else condition if grade
+
+        - returns div element with next properties 
+
+            - element h4 with property of - text Final Comment
+
+            - element div with property - empty
+
+            - element h4 with property of - text Final Grade
+
+            - element div with property - {grade}
+
+    - else condition if comment
+
+        - returns div element with next properties 
+
+            - element h4 with property of - text Final Comment
+
+            - element div with property - {comment}
+
+            - element h4 with property of - text Final Grade
+
+            - element div with property - empty
+
+    - else condition if comment
+
+        - returns div element with next properties 
+
+            - element h4 with property of - text Final Comment
+
+            - element div with property - empty
+
+            - element h4 with property of - text Final Grade
+
+            - element div with property - empty
+*/
+function finalComments(comment, grade) {
+
+    if (comment && grade) {
+
+        return (
+
+            <div>
+
+                <h4>Final Comment</h4>
+
+                <div>{comment}</div>
+
+                <h4>Final Grade</h4>
+
+                <div>{grade}</div>
+
+            </div>
+
+        );
+
+    } else if (grade) {
+
+        return (
+
+            <div>
+
+                <h4>Final Comment</h4>
+
+                <div></div>
+
+                <h4>Final Grade</h4>
+
+                <div>{grade}</div>
+
+            </div>
+
+        );
+
+    } else if (comment) {
+
+        return (
+
+            <div>
+
+                <h4>Final Comment</h4>
+
+                <div>{comment}</div>
+
+                <h4>Final Grade</h4>
+
+                <div></div>
+
+            </div>
+
+        );
+
+    } else {
+
+        return (
+
+            <div>
+
+                <h4>Final Comment</h4>
+
+                <div></div>
+
+                <h4>Final Grade</h4>
+
+                <div></div>
+
+            </div>
+
+        );
+
+    }
+
+}
+
 
 
 /********** COMPONENT CONNECTED **************/

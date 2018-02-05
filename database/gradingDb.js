@@ -48,7 +48,7 @@ module.exports.getCategoriesForGrading = getCategoriesForGrading;
 
 
 
-//*********************update grade/comments********/////
+//********************* update grade/comments ********/////
 
 
 /*
@@ -202,7 +202,7 @@ module.exports.updateDiscussions = function (id, comments, grade) {
 }
 
 
-//**********************commitGrade/Comment/Status**********//
+//********************** commitGrade/Comment/Status **********//
 
 /*
 - export finalReportGrade with value of function with parameters report_id, assignment_id, grade, comment, status
