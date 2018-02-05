@@ -52,9 +52,9 @@ module.exports.getCategoriesForGrading = getCategoriesForGrading;
 
 
 /*
-- export updateTitles with value of function with parameters id, comment, grade
+- export updateTitles with value of function with parameters id, comments, grade
 
-    - constant update has value of string `UPDATE titles SET comments = $2, grade = $3 WHERE id = $`
+    - constant update has value of string `UPDATE titles SET comments = $2, grade = $3 WHERE id = $1`
     - constant result has value of db.query(update, [report_id, assignment_id])
     - returns result
 */

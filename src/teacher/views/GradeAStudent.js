@@ -98,10 +98,16 @@ class GradeAssignment extends React.Component {
     /*
     - method handleCommit with parameter e
 
-       - constant { id } belongs to this.props.params
+        - constant { id, reportid } belongs to this.props.params
+        - log e.target.name
+        - variable field has value of e.target.name
 
-       - props dispatch to getAssignment with parameter id
-       - props dispatch to commitAssignment with parameters id, this.state
+        - variable send has properties
+            - [field + '_comment'] has value of this.state[field + '_comment']
+            - [field + '_grade'] has value of this.state[field + '_grade']
+
+        -  log variable send
+        - props dispatch to commitGrade with parameters id, reportid, send
     */
     handleCommit(e) {
 
@@ -122,10 +128,9 @@ class GradeAssignment extends React.Component {
     /*
     - method handleCommit with parameter e
 
-        - log string 'save all' and this.state
-        - constant { id } belongs to this.props.params
+        - constant { id, reportid } belongs to this.props.params
 
-        - props dispatch to saveAssignment with parameters id, this.state
+        - props dispatch to saveGrading with parameters id, reportid, this.state
     */
     handleSaveAll(e) {
 
