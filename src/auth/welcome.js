@@ -1,24 +1,42 @@
 import React from 'react';
-import { MediaBox, Container } from 'react-materialize';
+import { MediaBox, Container, Row, Col } from 'react-materialize';
 
 export default function (props) {
     // console.log('ucitaj')
     return (
-        <Container>
 
-            <div id="welcome">
+        <Container class="center-align">
 
-                <MediaBox src="/images/flaskIcon.png" caption="Logo" width="50px" />
+            <Row>
 
-                <h3>CloudNotebook</h3>
+                <Col m={4}>
+                </Col>
 
-                {
-                    // shows property of chhildren components
-                }
-                {props.children}
+                <Col m={4}>
+                    <MediaBox src="/images/Cloud_book_logo.png" caption="Logo" width="300px" className="centerAlign" />
+                </Col>
 
-            </div>
+                <Col m={4}>
+                </Col>
+
+            </Row>
+
+            <Row>
+
+                <Col m={1}>
+                </Col>
+
+                <Col m={10}>
+                    {props.children}
+                </Col>
+
+                <Col m={1}>
+                </Col>
+
+            </Row>
 
         </Container>
-    )
+
+    );
+
 }
