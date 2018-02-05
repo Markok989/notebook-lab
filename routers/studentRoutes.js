@@ -171,7 +171,7 @@ var studentRoutes = (app) => {
                             - assignmentIDList use forEach loop with parameter assignment to access to function
 
                                 - log assignment
-                                - dbStudent.addStudentsReports (from student.js file) with parameters id, sectionID, assignment
+                                - dbStudent.addStudentsReports (from student.js file) with parameters id, classID, assignment
 
 
                         - then with word 'then' with anonymous function
@@ -251,7 +251,7 @@ var studentRoutes = (app) => {
                     assignmentIDList.forEach((assignment) => {
 
                         console.log(assignment);
-                        dbStudent.addStudentsReports(id, sectionID, assignment);
+                        dbStudent.addStudentsReports(id, classID, assignment);
 
                     });
 

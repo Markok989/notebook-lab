@@ -12,6 +12,7 @@ const SAVE_COURSE_LIST = 'SAVE_COURSE_LIST',
     GET_COMMITS = 'GET_COMMITS',
     RECEIVE_ASSIGNMENT_PROPERTIES = 'RECEIVE_ASSIGNMENT_PROPERTIES',
     ADD_GRADING = 'ADD_GRADING',
+    COMMIT_GRADE = 'COMMIT_GRADE',
     ERROR = 'ERROR';
 
 
@@ -109,6 +110,7 @@ export function getAssignmentProperties(assignmentId) {
         });
 
     });
+
 }
 
 
@@ -198,7 +200,9 @@ export function saveNewAssignment(assignmentInfo) {
             };
 
         });
+
     }
+
 }
 
 
@@ -226,6 +230,7 @@ export function saveNewSection(courseId, name, start, end) {
         };
 
     }
+
 }
 
 // function getAllSections
@@ -254,6 +259,7 @@ export function getAllSections() {
         }
 
     });
+
 }
 
 /************ COURSES *************/
@@ -276,6 +282,7 @@ export function getCourseList() {
         };
 
     });
+
 }
 
 export function saveNewCourse(name, desc) {
@@ -300,7 +307,9 @@ export function saveNewCourse(name, desc) {
             // return axios.get('/api/teacher/courses');
             return getCourseList();
         }
+
     });
+
 }
 
 /*
@@ -332,7 +341,7 @@ export function getTeacherInfo() {
 
         }
 
-    })
+    });
 }
 
 /*
@@ -344,7 +353,7 @@ export function getTeacherInfo() {
         - log string 'got assignment per student report'
 
         - return 
-            - type as string 'GET_COMMITS'
+            - type as 'GET_COMMITS'
             - assignment as result.data.assignment
 */
 export function getCommittedAssignments(id, studentid) {
@@ -374,7 +383,7 @@ export function getCommittedAssignments(id, studentid) {
         - log string 'saving grade'
 
         - return 
-            - type as string ADD_GRADING
+            - type as ADD_GRADING
             - assignment as result.data.assignment
 */
 export function saveGrading(id, reportid, grade) {
@@ -390,5 +399,33 @@ export function saveGrading(id, reportid, grade) {
             }
 
         });
+
+}
+
+
+/*
+- function commitGrade with parameters id, reportid, commit
+
+    - return axios post with path '/api/teacher/grading/commit-grade', and properties
+      { id, reportid, commit }
+
+    - then with word 'then' access to function result
+
+        - return 
+            - type as COMMIT_GRADE
+            - payload as result.data.grade
+*/
+export function commitGrade(id, reportid, commit) {
+
+    return axios.post('/api/teacher/grading/commit-grade', { id, reportid, commit }).then((result) => {
+
+        return {
+
+            type: COMMIT_GRADE,
+            payload: result.data.grade
+
+        }
+
+    });
 
 }

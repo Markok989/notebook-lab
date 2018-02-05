@@ -245,7 +245,7 @@ class Assignment extends React.Component {
 
             <div className="blueBox">
 
-                <h5>{getAssignmenName(this.props.params.classid, this.props.params.id, this.props.studentInfo)}</h5>
+                <h5>{getAssignmentName(this.props.params.classid, this.props.params.id, this.props.studentInfo)}</h5>
 
                 {form}
 
@@ -287,7 +287,7 @@ class Assignment extends React.Component {
 
         - else
 
-            - return Card with attribute title {category} and properties
+            - return Card with attribute title {capitalize(category)} and properties
 
                 - element textarea with attributes
                     - name {category}
@@ -348,7 +348,7 @@ function editable(section, category, handleChange, handleSave, handleSaveAll, ha
 
             return (
 
-                <Card title={category}>
+                <Card title={capitalize(category)}>
 
                     <textarea name={category} placeholder="Type here.." cols="30" rows="5" onChange={handleChange} />
 
@@ -419,7 +419,7 @@ function capitalize(word) {
 }
 
 /*
-- function getAssignmenName with parameters assignmentId, classId, studentInfo
+- function getAssignmentName with parameters assignmentId, classId, studentInfo
 
     - log string 'getAssignName: ' and parameter studentInfo
 
@@ -435,7 +435,7 @@ function capitalize(word) {
 
     - on the end return JavaScript template `${currCourse[0].course_name}:  ${currAssign[0].assignment_name}`
 */
-function getAssignmenName(assignmentId, classId, studentInfo) {
+function getAssignmentName(assignmentId, classId, studentInfo) {
 
     console.log('getAssignName: ', studentInfo);
 
