@@ -162,23 +162,37 @@ class GradeAssignment extends React.Component {
 
             <div>
 
-                {committed(assignment.title, 'title', this.handleChange, this.handleSaveGrading)}
-                {committed(assignment.question, 'question', this.handleChange, this.handleSaveGrading)}
-                {committed(assignment.abstract, 'abstract', this.handleChange, this.handleSaveGrading)}
-                {committed(assignment.hypothesis, 'hypothesis', this.handleChange, this.handleSaveGrading)}
-                {committed(assignment.variable, 'variable', this.handleChange, this.handleSaveGrading)}
-                {committed(assignment.material, 'material', this.handleChange, this.handleSaveGrading)}
-                {committed(assignment.procedure, 'procedure', this.handleChange, this.handleSaveGrading)}
-                {committed(assignment.data, 'data', this.handleChange, this.handleSaveGrading)}
-                {committed(assignment.calculation, 'calculation', this.handleChange, this.handleSaveGrading)}
-                {committed(assignment.discussion, 'discussion', this.handleChange, this.handleSaveGrading)}
+                <div>
+
+                    {committed(assignment.title, 'title', this.handleChange, this.handleSaveGrading)}
+                    {committed(assignment.question, 'question', this.handleChange, this.handleSaveGrading)}
+                    {committed(assignment.abstract, 'abstract', this.handleChange, this.handleSaveGrading)}
+                    {committed(assignment.hypothesis, 'hypothesis', this.handleChange, this.handleSaveGrading)}
+                    {committed(assignment.variable, 'variable', this.handleChange, this.handleSaveGrading)}
+                    {committed(assignment.material, 'material', this.handleChange, this.handleSaveGrading)}
+                    {committed(assignment.procedure, 'procedure', this.handleChange, this.handleSaveGrading)}
+                    {committed(assignment.data, 'data', this.handleChange, this.handleSaveGrading)}
+                    {committed(assignment.calculation, 'calculation', this.handleChange, this.handleSaveGrading)}
+                    {committed(assignment.discussion, 'discussion', this.handleChange, this.handleSaveGrading)}
+
+                </div>
+
+                <div>
+                    <Button name='saveAll' onClick={this.handleSaveAll}>Save All</Button>
+                </div>
 
             </div>;
 
+
         var finalReportComments =
+
             <div>
 
-                {finalComments(assignment.report_comments, assignment.report_grade, this.handleChange)}
+                <div>
+
+                    {finalComments(assignment.report_comments, assignment.report_grade, this.handleChange, this.handleCommit)}
+
+                </div>
 
             </div>;
 
@@ -190,19 +204,11 @@ class GradeAssignment extends React.Component {
                 {committedAssignment}
                 {finalReportComments}
 
-                <div>
-                    <Button name='saveAll' onClick={this.handleSaveAll}>Save All</Button>
-                </div>
-
-                <div>
-                    <Button name='commit' onClick={this.handleCommit}>Commit To Student</Button>
-                </div>
-
             </div>
 
         ); // end return
 
-    } // end render 
+    } // end render
 
 }
 
@@ -212,134 +218,134 @@ class GradeAssignment extends React.Component {
 
     - condition if section[category + '_editable']
 
-        - condition ifsection[category + '_comments'] 
+        - condition ifsection[category + '_comments']
           AND(&&)
           section[category + '_grade']
 
             - returns div element with properties
 
-                - element Card with attriburte title={capitalize(category)} and with properties 
- 
+                - element Card with attriburte title={capitalize(category)} and with properties
+
                     - element Input with attributes :
                         - type - "textarea"
                         - label - "Comments"
-                        - name - {`${category}_comment`} 
-                        - onChange={handleChange}
-                        - property - {section[category + '_comments']}
+                        - name - {`${category}_comment`}
+                - onChange={handleChange}
+                - property - {section[category + '_comments']}
 
-                    - element Input with attributes :
+                - element Input with attributes :
                         - type - "text"
                         - label - "Grade"
-                        - name - {`${category}_comment`} 
-                        - onChange - {handleChange}
-                        - property - {section[category + '_grade']}
+                        - name - {`${category}_comment`}
+                - onChange - {handleChange}
+                - property - {section[category + '_grade']}
 
-                    - element div with property
+                - element div with property
 
                         - element button wtih attributes
                             - name - {category}
-                            - onClick - {handleSaveGrading}
-                            - property - text Save
+                - onClick - {handleSaveGrading}
+                - property - text Save
 
-                
+
 
         - else condition if section[category + '_grade']
 
             - returns div element with properties
 
-                - element Card with attriburte title={capitalize(category)} and with properties 
-  
-                - element Input with attributes
-                    - s - {12}
-                    - type - "textarea"
-                    - label - "Comment"
-                    - name - {`${category}_comment`} 
-                    - onChange - {handleChange}
+                - element Card with attriburte title={capitalize(category)} and with properties
 
                 - element Input with attributes
                     - s - {12}
-                    - type - "text"
+                - type - "textarea"
+                    - label - "Comment"
+                    - name - {`${category}_comment`}
+                - onChange - {handleChange}
+
+                - element Input with attributes
+                    - s - {12}
+                - type - "text"
                     - label - "Grade"
                     - name - {`${category}_grade`}
-                    - onChange - {handleChange}
-                    - property - {section[category + '_grade']}
+                - onChange - {handleChange}
+                - property - {section[category + '_grade']}
 
-                  - element div with property
+                - element div with property
 
                         - element button wtih attributes
                             - name - {category}
-                            - onClick - {handleSaveGrading}
-                            - property - text Save
-  
+                - onClick - {handleSaveGrading}
+                - property - text Save
+
 
         - else  condition if section[category + '_comments']
 
             - returns div element with properties
 
-                - element Card with attriburte title={capitalize(category)} and with properties 
-  
-                - element Input with attributes
-                    - s - {12}
-                    - type - "textarea"
-                    - label - "Comment"
-                    - name - {`${category}_comment`} 
-                    - onChange - {handleChange}
-                    - property - {section[category + '_comments']}
+                - element Card with attriburte title={capitalize(category)} and with properties
 
                 - element Input with attributes
                     - s - {12}
-                    - type - "text"
+                - type - "textarea"
+                    - label - "Comment"
+                    - name - {`${category}_comment`}
+                - onChange - {handleChange}
+                - property - {section[category + '_comments']}
+
+                - element Input with attributes
+                    - s - {12}
+                - type - "text"
                     - label - "Grade"
                     - name - {`${category}_grade`}
-                    - onChange - {handleChange}
+                - onChange - {handleChange}
 
-                  - element div with property
+                - element div with property
 
                         - element button wtih attributes
                             - name - {category}
-                            - onClick - {handleSaveGrading}
-                            - property - text Save
- 
-        - else 
- 
+                - onClick - {handleSaveGrading}
+                - property - text Save
+
+        - else
+
            - returns div element with properties
 
-                - element Card with attriburte title={capitalize(category)} and with properties 
+                - element Card with attriburte title={capitalize(category)} and with properties
 
                     - element Row with properties
 
-                        - element Col with attributes 
+                        - element Col with attributes
                             - s - {12}
-                            - m - {6}
-                            - property - element p with property {section[category + '_content']}
-                           
-                         - element Col with attributes 
+                - m - {6}
+                - property - element p with property {section[category + '_content']}
+
+                - element Col with attributes
                             - s - {12}
-                            - m - {6}
-                            - properties:
-  
+                - m - {6}
+                - properties:
+
                                 - element Input with attributes
                                     - s - {12}
-                                    - type - "textarea"
+                - type - "textarea"
                                     - label - "Comment"
-                                    - name - {`${category}_comment`} 
-                                    - onChange - {handleChange}
-                          
-                                - element Input with attributes
+                                    - name - {`${category}_comment`}
+                - onChange - {handleChange}
+
+                - element Input with attributes
                                     - s - {12}
-                                    - type - "text"
+                - type - "text"
                                     - label - "Grade"
                                     - name - {`${category}_grade`}
-                                    - onChange - {handleChange}
+                - onChange - {handleChange}
 
-                        - element div with property
+                - element div with property
 
                                 - element button wtih attributes
                                     - name - {category}
-                                    - onClick - {handleSaveGrading}
-                                    - property - text Save
- 
-                
+                - onClick - {handleSaveGrading}
+                - property - text Save
+
+
     - else condition if section[category + '_editable'] is strictly the same as null
       OR (||)
       section[category + '_content'] is strictly the same as null
@@ -352,9 +358,9 @@ class GradeAssignment extends React.Component {
 
             - element h5 with property {capitalize(category)}:
             - element p with property {section[category + '_content']}
-            
 
-*/
+
+                */
 function committed(section, category, handleChange, handleSaveGrading) {
 
     if (section[category + '_editable']) {
@@ -479,7 +485,7 @@ function committed(section, category, handleChange, handleSaveGrading) {
 
 
 /*
-- function finalComments with parameters comment, grade, handleChange
+- function finalComments with parameters comment, grade, handleChange, handleCommit
 
     - condition if comment AND(&&) grade
 
@@ -491,7 +497,7 @@ function committed(section, category, handleChange, handleSaveGrading) {
                     - s - {12}
                     - type - "textarea"
                     - label - "Comments"
-                    - name - "commit_comment"       
+                    - name - "commit_comment"
                     - onChange - {handleChange}
                     - property - {comment}
 
@@ -499,7 +505,7 @@ function committed(section, category, handleChange, handleSaveGrading) {
                     - s - {12}
                     - type - "text"
                     - label - "Overall Grade"
-                    - name - "commit_grade"       
+                    - name - "commit_grade"
                     - onChange - {handleChange}
                     - property - {grade}
 
@@ -514,7 +520,7 @@ function committed(section, category, handleChange, handleSaveGrading) {
                     - s - {12}
                     - type - "textarea"
                     - label - "Comments"
-                    - name - "commit_comment"       
+                    - name - "commit_comment"
                     - onChange - {handleChange}
 
 
@@ -522,7 +528,7 @@ function committed(section, category, handleChange, handleSaveGrading) {
                     - s - {12}
                     - type - "text"
                     - label - "Overall Grade"
-                    - name - "commit_grade"       
+                    - name - "commit_grade"
                     - onChange - {handleChange}
                     - property - {grade}
 
@@ -536,7 +542,7 @@ function committed(section, category, handleChange, handleSaveGrading) {
                     - s - {12}
                     - type - "textarea"
                     - label - "Comments"
-                    - name - "commit_comment"       
+                    - name - "commit_comment"
                     - onChange - {handleChange}
                     - property - {comment}
 
@@ -545,7 +551,7 @@ function committed(section, category, handleChange, handleSaveGrading) {
                     - s - {12}
                     - type - "text"
                     - label - "Overall Grade"
-                    - name - "commit_grade"       
+                    - name - "commit_grade"
                     - onChange - {handleChange}
 
 
@@ -559,7 +565,7 @@ function committed(section, category, handleChange, handleSaveGrading) {
                     - s - {12}
                     - type - "textarea"
                     - label - "Comments"
-                    - name - "commit_comment"       
+                    - name - "commit_comment"
                     - onChange - {handleChange}
 
 
@@ -567,11 +573,18 @@ function committed(section, category, handleChange, handleSaveGrading) {
                     - s - {12}
                     - type - "text"
                     - label - "Overall Grade"
-                    - name - "commit_grade"       
+                    - name - "commit_grade"
                     - onChange - {handleChange}
 
-*/
-function finalComments(comment, grade, handleChange) {
+                - element div with property 
+
+                    - element button with attributes
+                        - name - 'commit'
+                        - onClick - {handleCommit}
+                        - property - Commit To Student
+
+                */
+function finalComments(comment, grade, handleChange, handleCommit) {
 
     if (comment && grade) {
 
@@ -637,7 +650,11 @@ function finalComments(comment, grade, handleChange) {
 
                     <Input s={12} type="textarea" label="Comments" name="commit_comment" onChange={handleChange}></Input>
 
-                    <Input s={12} type="type" label="Overall Grade" name="commit_grade" onChange={handleChange}></Input>
+                    <Input s={12} type="text" label="Overall Grade" name="commit_grade" onChange={handleChange}></Input>
+
+                    <div>
+                        <Button name='commit' onClick={handleCommit}>Commit To Student</Button>
+                    </div>
 
                 </Card>
 

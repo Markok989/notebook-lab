@@ -730,33 +730,31 @@ var teacherRoutes = (app) => {
                 discussion_editable, discussion_content, discussion_comments, discussion_grade
             }
 
-            if (status === 'COMMITTED' || status === 'GRADED') {
+            // if (status === 'COMMITTED' || status === 'GRADED') {
 
-                res.json({
+            res.json({
 
-                    success: true,
-                    assignment: {
-                        first_name,
-                        last_name,
-                        assignment_id,
-                        status,
-                        report_comments,
-                        report_grade,
-                        title,
-                        question,
-                        abstract,
-                        hypothesis,
-                        variable,
-                        material,
-                        procedure,
-                        data,
-                        calculation,
-                        discussion
-                    }
+                success: true,
+                assignment: {
+                    first_name,
+                    last_name,
+                    assignment_id,
+                    status,
+                    report_comments,
+                    report_grade,
+                    title,
+                    question,
+                    abstract,
+                    hypothesis,
+                    variable,
+                    material,
+                    procedure,
+                    data,
+                    calculation,
+                    discussion
+                }
 
-                });
-
-            }
+            });
 
         });
 

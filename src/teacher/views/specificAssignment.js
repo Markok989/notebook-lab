@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link, browserHistory } from 'react-router';
 import axios from '../../api/axios';
 import { Row, Col, Button, Input, Card, Collection, CollectionItem, MenuItem, Breadcrumb } from 'react-materialize';
-import { getStudentAssignmentList, getAssignmentProperties } from '../actions';
+import { getStudentAssignmentList, getAssignmentProperties, getCourseList } from '../actions';
 import { capitalize } from '../../helpers';
 
 // component SpecificAssignment
@@ -60,6 +60,8 @@ class SpecificAssignment extends React.Component {
     /* 
     - componentWillMount is invoked immediately before a component is mounted
 
+        - props dispatch getCourseList(from actions)
+
         - props dispatch togetStudentAssignmentList(from actions) and parameter this.props.params.id
 
         - props dispatch getAssignmentProperties(from actions) and parameter this.props.params.id
@@ -70,6 +72,8 @@ class SpecificAssignment extends React.Component {
         //needt to get list of students in this section and the id of their students_report
 
         // console.log('Specific Assignment for a given section assignmentId', this.props.params.id);
+
+        this.props.dispatch(getCourseList());
 
         this.props.dispatch(getStudentAssignmentList(this.props.params.id));
 

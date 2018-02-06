@@ -309,7 +309,7 @@ class Assignment extends React.Component {
                     - name {category}
                     - onClick use method handleSave
                     - property
-                        - text Save
+                        - text Update
 
         - else
 
@@ -363,7 +363,7 @@ function editable(section, category, handleChange, handleSave, handleSaveAll, ha
                     </textarea>
 
                     <div>
-                        <Button name={category} onClick={handleSave}>Save</Button>
+                        <Button name={category} onClick={handleSave}>Update</Button>
                     </div>
 
                 </Card>
@@ -444,40 +444,65 @@ function committed(section, category) {
 
             - element Card with attribute title - {capitalize(category)} and next properties
 
-                -  element p with property - {section[category + '_content']}
-                -  element p with property - {section[category + '_comments']}
-                -  element p with property - {section[category + '_grade']}
+            - element Row with properties
+
+                - element Col with attributes
+                    - m - {6}
+                    - s - {12}
+                    - property - element p with property - {section[category + '_content']}
+
+                    - element Col with attributes
+                        - m - {6}
+                        - s - {12}
+                        - properties:
+                            - element p with property:
+                                - element span with attributes
+                                    - className - "blue-text text-darken-2"
+                                    - properrty - Comment: end of span(</span>) {section[category + '_comments']}
+
+                        - element p with property
+                            - element span with attributes
+                                - className - "blue-text text-darken-2"
+                                - property - Category Grade: end of span (</span>) {section[category + '_grade']}
         
-    - eles 
+    - eles condition if (section[category + '_content']
+      AND (&&)
+      not !section[category + '_editable']
 
         - returns 
 
             - element Card with attribute title={capitalize(category)} and properties
 
                 - element p with property - {section[category + '_content']}
-                - element p with property - {section[category + '_comments']}
-                - element p with property - {section[category + '_grade']}
-
-            </Card>
+         
 
 */
 function graded(section, category) {
 
-    if (section[category + '_content'] && section[category + '_editable']) {
+    if (section[category + '_editable']) {
 
         return (
 
             <Card title={capitalize(category)}>
 
-                <p>{section[category + '_content']}</p>
-                <p>{section[category + '_comments']}</p>
-                <p>{section[category + '_grade']}</p>
+                <Row>
+
+                    <Col m={6} s={12}><p>{section[category + '_content']}</p></Col>
+
+                    <Col m={6} s={12}>
+
+                        <p><span className="blue-text text-darken-2">Comment: </span> {section[category + '_comments']}</p>
+                        <p><span className="blue-text text-darken-2">Category Grade: </span>{section[category + '_grade']}</p>
+
+                    </Col>
+
+                </Row>
 
             </Card>
 
         );
 
-    } else {
+    } else if (section[category + '_content'] && !section[category + '_editable']) {
 
         return (
 
@@ -486,7 +511,9 @@ function graded(section, category) {
             </Card>
 
         );
+
     }
+
 }
 
 
