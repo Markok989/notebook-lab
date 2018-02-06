@@ -28,6 +28,10 @@ if (process.env.NODE_ENV != 'production') {
         target: 'http://localhost:7071'
 
     }));
+} else {
+
+    app.use(require('./build'));
+
 }
 
 // var secret = process.env.SESSION_SECRET || require('./secrets.json').sessionSecret;
