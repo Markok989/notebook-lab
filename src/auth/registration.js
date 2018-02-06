@@ -298,11 +298,11 @@ export default class Registration extends React.Component {
 
                     <Row>
 
-                        <Col s={0} m={3}>
+                        <Col s={0} m={1}>
                         </Col>
 
                         {/* onClick - use method handleTeacherSubmit */}
-                        <Col s={12} m={3}>
+                        <Col s={12} m={5}>
 
                             <Button
                                 className="teacher-button"
@@ -316,7 +316,7 @@ export default class Registration extends React.Component {
                         {'       '}
 
                         {/* onClick - use method handleStudentSubmit */}
-                        <Col s={12} m={3}>
+                        <Col s={12} m={5}>
 
                             <Button
                                 className="teacher-button"
@@ -327,7 +327,7 @@ export default class Registration extends React.Component {
 
                         </Col>
 
-                        <Col s={0} m={3}>
+                        <Col s={0} m={1}>
                         </Col>
 
                     </Row>

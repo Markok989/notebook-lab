@@ -9,14 +9,14 @@ export default function (props) {
 
             <Row>
 
-                <Col m={4}>
+                <Col m={3}>
                 </Col>
 
-                <Col m={4}>
+                <Col m={6}>
                     <MediaBox src="/images/Cloud_book_logo.png" caption="Logo" width="300px" className="centerAlign" />
                 </Col>
 
-                <Col m={4}>
+                <Col m={3}>
                 </Col>
 
             </Row>
