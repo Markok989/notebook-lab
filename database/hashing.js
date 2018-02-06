@@ -1,10 +1,21 @@
 var spicedPg = require('spiced-pg');
 var bcrypt = require('bcryptjs');
 //const secrets = require('../secrets.json');
-const secrets = 'test';
-// const db = spicedPg(`postgres:${secrets.dbuser}:${secrets.dbpassword}@localhost:5432/labnb`);
-const db = spicedPg(`postgres:qdzpwmxf:4QKHT0tKxYTWp02dCMPk6sCg0RExLYwj@dumbo.db.elephantsql.com:5432/qdzpwmxf`);
+// const secrets = 'test';
+// // const db = spicedPg(`postgres:${secrets.dbuser}:${secrets.dbpassword}@localhost:5432/labnb`);
+// const db = spicedPg(`postgres:qdzpwmxf:4QKHT0tKxYTWp02dCMPk6sCg0RExLYwj@dumbo.db.elephantsql.com:5432/qdzpwmxf`);
+var localUrl = '';
 
+if (!process.env.DATABASE_URL) {
+
+    const secrets = 'test';
+    localUrl = `postgres:qdzpwmxf:4QKHT0tKxYTWp02dCMPk6sCg0RExLYwj@dumbo.db.elephantsql.com:5432/qdzpwmxf`;
+
+}
+
+var dbUrl = process.env.DATABASE_URL || localUrl;
+
+var db = spicedPg(dbUrl);
 
 
 /*
@@ -100,7 +111,7 @@ module.exports.addTeacher = function (first_name, last_name, email, password) {
     const insert = `INSERT INTO users (first_name, last_name, email, password, role) VALUES ($1, $2, $3, $4, 'teacher') RETURNING id, first_name, last_name, email, role `;
     const result = db.query(insert, [first_name, last_name, email, password]);
     return result;
-    
+
 }
 
 /*

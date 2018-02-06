@@ -1,12 +1,24 @@
 var spicedPg = require('spiced-pg');
 var bcrypt = require('bcryptjs');
 
-// const secrets = require('../secrets.json');
-const secrets = 'test'
+// // const secrets = require('../secrets.json');
+// const secrets = 'test'
 
-// connected to base
-const db = spicedPg(`postgres://qdzpwmxf:4QKHT0tKxYTWp02dCMPk6sCg0RExLYwj@dumbo.db.elephantsql.com:5432/qdzpwmxf`);
+// // connected to base
+// const db = spicedPg(`postgres://qdzpwmxf:4QKHT0tKxYTWp02dCMPk6sCg0RExLYwj@dumbo.db.elephantsql.com:5432/qdzpwmxf`);
 
+
+var localUrl = '';
+
+if (!process.env.DATABASE_URL) {
+
+    const secrets = 'test';
+    localUrl = `postgres://qdzpwmxf:4QKHT0tKxYTWp02dCMPk6sCg0RExLYwj@dumbo.db.elephantsql.com:5432/qdzpwmxf`;
+
+}
+
+var dbUrl = process.env.DATABASE_URL || localUrl;
+var db = spicedPg(dbUrl);
 
 /*
 - function getCategoriesForGrading with parameter data

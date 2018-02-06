@@ -68,6 +68,6 @@ app.get('*', mw.loggedInCheck, function (req, res) {
 
 });
 
-app.listen(7070, function () {
-    console.log("I'm listening.");
+app.listen(process.env.PORT || 7070, () => {
+    console.log("I'm listening on port 7070.");
 });
