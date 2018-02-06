@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { getStudentData, addNewClass, getAssignmentList } from './actions';
 import AssignmentView from './components/AssignmentView';
 import {
+    MediaBox,
     Navbar,
     NavItem,
     Row,
@@ -144,7 +145,7 @@ class App extends React.Component {
             return null
         }
 
-        console.log('ucenik');
+        console.log('student');
 
         return (
 
@@ -154,6 +155,8 @@ class App extends React.Component {
                 {studentInfo.first_name} {studentInfo.last_name}
 
                 <Navbar>
+
+                    <NavItem><MediaBox src="/images/Cloud_book_logo.png" caption="Logo" width="90px" /></NavItem>
 
                     <NavItem><Link to='/student'>Home</Link></NavItem>
                     <NavItem>Courses</NavItem>
