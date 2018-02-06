@@ -22,11 +22,42 @@ import { connect } from 'react-redux';
 
 class HelloWorld extends React.Component {
 
+    // constructor
+    constructor(props) {
+        super(props);
+
+    }
+
+    /*
+    - componentDidMount is invoked immediately after a component is mounted,
+
+        - log string 'DASHBOARD TEACHER: will mount' and  this.props
+    */
+    componentDidMount() {
+
+        console.log('DASHBOARD TEACHER: will mount', this.props);
+
+    }
+
+
     render() {
+
+        /*
+        - condition if not !this.props.teacherInfo
+            - return null
+        */
+        if (!this.props.teacherInfo) {
+
+            return null;
+
+        }
+
 
         return (
 
-            <Card title={`Hello`}></Card>
+            <div>
+                <Card title={`Hello ${this.props.teacherInfo[0].first_name}`}></Card>
+            </div>
 
         );
 
@@ -34,10 +65,11 @@ class HelloWorld extends React.Component {
 
 }
 
+/********* COMPONENT CONNECTED *********/
 var mapStateToProps = function (state) {
 
     return {
-        currUser: state.teachers.currUser
+        teacherInfo: state.teachers.teacherInfo
     }
 
 }
