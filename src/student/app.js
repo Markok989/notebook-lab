@@ -235,7 +235,7 @@ class App extends React.Component {
                                             - waves - "light"
                             */
                         }
-                        <Modal header="Add A Class" trigger={<Button>Add A Class</Button>} actions={
+                        <Modal header="Add A Class" trigger={<Button>+ Class</Button>} actions={
 
                             <div>
 
