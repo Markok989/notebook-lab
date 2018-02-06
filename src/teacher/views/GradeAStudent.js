@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { getCommittedAssignments, saveGrading, commitGrade } from '../actions';
 import Logout from '../../auth/logout';
-// import { Row, Col, Button, Input, Card, Collection, CollectionItem, MenuItem, Breadcrumb } from 'react-materialize';
+import { Row, Col, Button, Input, Card, Collection, CollectionItem, MenuItem, Breadcrumb } from 'react-materialize';
 import { capitalize } from '../../helpers';
 
 // component GradeAssignment
@@ -188,12 +188,15 @@ class GradeAssignment extends React.Component {
             <div>
 
                 {committedAssignment}
-
-                <button name='saveAll' onClick={this.handleSaveAll}>Save All</button>
-
                 {finalReportComments}
 
-                <button name='commit' onClick={this.handleCommit}>Commit To Student</button>
+                <div>
+                    <Button name='saveAll' onClick={this.handleSaveAll}>Save All</Button>
+                </div>
+
+                <div>
+                    <Button name='commit' onClick={this.handleCommit}>Commit To Student</Button>
+                </div>
 
             </div>
 
@@ -213,118 +216,128 @@ class GradeAssignment extends React.Component {
           AND(&&)
           section[category + '_grade']
 
-            - returns div element with property
+            - returns div element with properties
 
-                - element label with property {capitalize(category)}:
-
-                - element div with property of text Teacher Comments
+                - element Card with attriburte title={capitalize(category)} and with properties 
  
+                    - element Input with attributes :
+                        - type - "textarea"
+                        - label - "Comments"
+                        - name - {`${category}_comment`} 
+                        - onChange={handleChange}
+                        - property - {section[category + '_comments']}
 
-                - element textarea with attributes
-                    - name - JavaScript template {`${category}_comment`} 
-                    - placeholder - "Type here.."
-                    - cols="30"
-                    - rows="5"
-                    - onChange={handleChange}
-                    - property - {section[category + '_comments']}
+                    - element Input with attributes :
+                        - type - "text"
+                        - label - "Grade"
+                        - name - {`${category}_comment`} 
+                        - onChange - {handleChange}
+                        - property - {section[category + '_grade']}
 
-                - element div with property of text Teacher Grade
+                    - element div with property
 
-                - element textarea with attributes
-                    - name - JavaScript template {`${category}_grade`} 
-                    - placeholder - "Type here.." 
-                    - cols - "30" 
-                    - rows - "5"
-                    - onChange - {handleChange}
-                    - property - {section[category + '_grade']}
+                        - element button wtih attributes
+                            - name - {category}
+                            - onClick - {handleSaveGrading}
+                            - property - text Save
+
+                
 
         - else condition if section[category + '_grade']
 
-            - returns element div with properties
+            - returns div element with properties
 
-                - element label with property {category}
- 
-                - element div with property of text: Teacher Comments
- 
-                - element textarea with attributes
-                    - name - JavaScript template {`${category}_comment`} 
-                    - placeholder - "Type here.." 
-                    - cols - "30"
-                    - rows - "5"
+                - element Card with attriburte title={capitalize(category)} and with properties 
+  
+                - element Input with attributes
+                    - s - {12}
+                    - type - "textarea"
+                    - label - "Comment"
+                    - name - {`${category}_comment`} 
                     - onChange - {handleChange}
- 
-                - element div with property of text: Teacher Grade
- 
-                - element textarea with attributes
-                    - name - JavaScript template {`${category}_grade`}
-                    - placeholder - "Type here.."
-                    - cols - "30"
-                    - rows - "5" 
+
+                - element Input with attributes
+                    - s - {12}
+                    - type - "text"
+                    - label - "Grade"
+                    - name - {`${category}_grade`}
                     - onChange - {handleChange}
                     - property - {section[category + '_grade']}
- 
+
+                  - element div with property
+
+                        - element button wtih attributes
+                            - name - {category}
+                            - onClick - {handleSaveGrading}
+                            - property - text Save
+  
 
         - else  condition if section[category + '_comments']
 
-            - return element div with properties:
+            - returns div element with properties
 
-                - element label with property {category}
- 
-                - element div with property of text Teacher Comments
- 
-                - element textarea with attributes
-                    - name - JavaScript template {`${category}_comment`} 
-                    - placeholder - "Type here.." 
-                    - cols - "30"
-                    - rows - "5" 
+                - element Card with attriburte title={capitalize(category)} and with properties 
+  
+                - element Input with attributes
+                    - s - {12}
+                    - type - "textarea"
+                    - label - "Comment"
+                    - name - {`${category}_comment`} 
                     - onChange - {handleChange}
                     - property - {section[category + '_comments']}
- 
-                - element div with property of text Teacher Grade
- 
-                - element textarea with attributes 
-                    - onChange - {handleChange}
+
+                - element Input with attributes
+                    - s - {12}
+                    - type - "text"
+                    - label - "Grade"
                     - name - {`${category}_grade`}
-                    - placeholder - "Type here.."
-                    - cols - "30" 
-                    - rows - "5"
- 
- 
-                - element button with attributes
-                    - name - {category}
-                    - onClick - {handleSaveGrading}
-                    - property - Save
+                    - onChange - {handleChange}
+
+                  - element div with property
+
+                        - element button wtih attributes
+                            - name - {category}
+                            - onClick - {handleSaveGrading}
+                            - property - text Save
  
         - else 
  
-            - returns div element with properties
-                 
-                - element h3 with property {category}
- 
-                - element p with property {section[category + '_content']}
- 
-                - element div with property of text Teacher Comments
- 
-                - element  textarea with attributes 
-                    - onChange - {handleChange}
-                    - name - {`${category}_comment`}
-                    - placeholder - "Type here.."
-                    - cols - "30"
-                    - rows - "5"
- 
-                - element div with property of text Teacher Grade
- 
-                - element textarea with attributes 
-                    - onChange - {handleChange} 
-                    - name - {`${category}_grade`} 
-                    - placeholder - "Type here.."
-                    - cols - "30" 
-                    - rows - "5"
- 
-                - element button with attribures
-                    - onClick - {handleSaveGrading}
-                    - name - {category}
-                    - property - Save
+           - returns div element with properties
+
+                - element Card with attriburte title={capitalize(category)} and with properties 
+
+                    - element Row with properties
+
+                        - element Col with attributes 
+                            - s - {12}
+                            - m - {6}
+                            - property - element p with property {section[category + '_content']}
+                           
+                         - element Col with attributes 
+                            - s - {12}
+                            - m - {6}
+                            - properties:
+  
+                                - element Input with attributes
+                                    - s - {12}
+                                    - type - "textarea"
+                                    - label - "Comment"
+                                    - name - {`${category}_comment`} 
+                                    - onChange - {handleChange}
+                          
+                                - element Input with attributes
+                                    - s - {12}
+                                    - type - "text"
+                                    - label - "Grade"
+                                    - name - {`${category}_grade`}
+                                    - onChange - {handleChange}
+
+                        - element div with property
+
+                                - element button wtih attributes
+                                    - name - {category}
+                                    - onClick - {handleSaveGrading}
+                                    - property - text Save
  
                 
     - else condition if section[category + '_editable'] is strictly the same as null
@@ -351,32 +364,21 @@ function committed(section, category, handleChange, handleSaveGrading) {
             return (
 
                 <div>
-                    <label>{capitalize(category)}:</label>
 
-                    <div>Teacher Comments</div>
+                    <Card title={capitalize(category)} >
 
-                    <textarea
-                        name={`${category}_comment`}
-                        placeholder="Type here.."
-                        cols="30"
-                        rows="5"
-                        onChange={handleChange}>
-                        {section[category + '_comments']}
-                    </textarea>
+                        {/*
+                        error greska
+                        */}
+                        <Input type="textarea" label="Comments" name={`${category}_comment`} onChange={handleChange}>{section[category + '_comments']}</Input>
 
-                    <div>Teacher Grade</div>
+                        <Input type="text" label="Grade" name={`${category}_grade`} onChange={handleChange}>{section[category + '_grade']}</Input>
 
-                    <textarea
-                        name={`${category}_grade`}
-                        placeholder="Type here.."
-                        cols="30"
-                        rows="5"
-                        onChange={handleChange}>
-                        {section[category + '_grade']}
-                    </textarea>
+                        <div>
+                            <Button name={category} onClick={handleSaveGrading}>Save</Button>
+                        </div>
 
-
-                    <button name={category} onClick={handleSaveGrading}>Save</button>
+                    </Card>
 
                 </div>
 
@@ -386,34 +388,16 @@ function committed(section, category, handleChange, handleSaveGrading) {
 
             return (
 
-                <div>
+                <Card title={capitalize(category)}>
 
-                    <label>{capitalize(category)}:</label>
+                    <Input s={12} type="textarea" label="Comment" name={`${category}_comment`} onChange={handleChange}></Input>
+                    <Input s={12} type="text" label="Grade" name={`${category}_grade`} onChange={handleChange}>{section[category + '_grade']}</Input>
 
-                    <div>Teacher Comments</div>
+                    <div>
+                        <Button name={category} onClick={handleSaveGrading}>Save</Button>
+                    </div>
 
-                    <textarea
-                        name={`${category}_comment`}
-                        placeholder="Type here.."
-                        cols="30" rows="5"
-                        onChange={handleChange}>
-                    </textarea>
-
-                    <div>Teacher Grade</div>
-
-                    <textarea
-                        name={`${category}_grade`}
-                        placeholder="Type here.."
-                        cols="30"
-                        rows="5"
-                        onChange={handleChange}>
-                        {section[category + '_grade']}
-                    </textarea>
-
-
-                    <button name={category} onClick={handleSaveGrading}>Save</button>
-
-                </div>
+                </Card>
 
             );
 
@@ -421,35 +405,17 @@ function committed(section, category, handleChange, handleSaveGrading) {
 
             return (
 
-                <div>
+                <Card title={capitalize(category)}>
 
-                    <label>{capitalize(category)}:</label>
+                    <Input s={12} type="textarea" name={`${category}_comment`} label="comments" onChange={handleChange}>{section[category + '_comments']}</Input>
 
-                    <div>Teacher Comments</div>
+                    <Input s={12} type="text" onChange={handleChange} name={`${category}_grade`} label="Grade" ></Input>
 
-                    <textarea
-                        name={`${category}_comment`}
-                        placeholder="Type here.."
-                        cols="30"
-                        rows="5"
-                        onChange={handleChange}>
-                        {section[category + '_comments']}
-                    </textarea>
+                    <div>
+                        <Button name={category} onClick={handleSaveGrading}>Save</Button>
+                    </div>
 
-                    <div>Teacher Grade</div>
-
-                    <textarea
-                        onChange={handleChange}
-                        name={`${category}_grade`}
-                        placeholder="Type here.."
-                        cols="30"
-                        rows="5" >
-                    </textarea>
-
-
-                    <button name={category} onClick={handleSaveGrading}>Save</button>
-
-                </div>
+                </Card>
 
             );
 
@@ -459,31 +425,29 @@ function committed(section, category, handleChange, handleSaveGrading) {
 
                 <div>
 
-                    <h3>{capitalize(category)}:</h3>
+                    <Card title={capitalize(category)}>
 
-                    <p>{section[category + '_content']}</p>
+                        <Row>
 
-                    <div>Teacher Comments</div>
+                            <Col s={12} m={6}>
+                                <p>{section[category + '_content']}</p>
+                            </Col>
 
-                    <textarea
-                        onChange={handleChange}
-                        name={`${category}_comment`}
-                        placeholder="Type here.."
-                        cols="30"
-                        rows="5" >
-                    </textarea>
+                            <Col s={12} m={6}>
 
-                    <div>Teacher Grade</div>
+                                <Input s={12} type="textarea" label="Comments" onChange={handleChange} name={`${category}_comment`}></Input>
 
-                    <textarea
-                        onChange={handleChange}
-                        name={`${category}_grade`}
-                        placeholder="Type here.."
-                        cols="30"
-                        rows="5" >
-                    </textarea>
+                                <Input s={12} type="text" onChange={handleChange} name={`${category}_grade`} label="Grade"></Input>
 
-                    <button onClick={handleSaveGrading} name={category} >Save</button>
+                                <div>
+                                    <Button onClick={handleSaveGrading} name={category} >Save</Button>
+                                </div>
+
+                            </Col>
+
+                        </Row>
+
+                    </Card>
 
                 </div>
 
@@ -521,93 +485,91 @@ function committed(section, category, handleChange, handleSaveGrading) {
 
         - returns element div with properties
 
-            - element div with propperty of tehxt Final Comment
+            - element Card with attribute title - "Final Comments"
 
-                - element textarea with attributes
-                    - name - "commit_comment"
-                    - placeholder - "Type here.."
-                    - cols - "30"
-                    - rows - "5"
+                - element Input with attributes
+                    - s - {12}
+                    - type - "textarea"
+                    - label - "Comments"
+                    - name - "commit_comment"       
                     - onChange - {handleChange}
                     - property - {comment}
-             
-                - element div with propperty of tehxt Final Grade
 
-                - element textarea with attributes
-                    - name - "commit_grade"
-                    - placeholder - "Type here.."
-                    - cols - "30"
-                    - rows - "5"
+                - element Input with attributes
+                    - s - {12}
+                    - type - "text"
+                    - label - "Overall Grade"
+                    - name - "commit_grade"       
                     - onChange - {handleChange}
                     - property - {grade}
+
 
     - else condition if grade
 
         - returns element div with properties
 
-            - element div with property of text Final Comment
- 
-            - element textarea with attributes
-                - name - "commit_comment"
-                - placeholder - "Type here.."
-                - cols - "30"
-                - rows - "5"
-                - onChange - {handleChange}
- 
-            - element div with property of text Final Grade
- 
-            - element textarea with attributes
-                - name - "commit_grade" 
-                - placeholder - "Type here.."
-                - cols - "30"
-                - rows - "5"
-                - onChange - {handleChange}
-                - property - {grade}
+            - element Card with attribute title - "Final Comments"
+
+                - element Input with attributes
+                    - s - {12}
+                    - type - "textarea"
+                    - label - "Comments"
+                    - name - "commit_comment"       
+                    - onChange - {handleChange}
+
+
+                - element Input with attributes
+                    - s - {12}
+                    - type - "text"
+                    - label - "Overall Grade"
+                    - name - "commit_grade"       
+                    - onChange - {handleChange}
+                    - property - {grade}
 
     - else condition if grade - comment
- 
-        - returns element div with properties
 
-            - element div with property of text Final Comment
- 
-            - element textarea with attributes
-                - name - "commit_comment"
-                - placeholder - "Type here.."
-                - cols - "30"
-                - rows - "5"
-                - onChange - {handleChange}
-                - property - {comment}
- 
-            - element div with property of text Final Grade
- 
-            - element textarea with attributes
-                - name - "commit_grade" 
-                - placeholder - "Type here.."
-                - cols - "30"
-                - rows - "5"
-                - onChange - {handleChange}
+       - returns element div with properties
 
-    - else 
+            - element Card with attribute title - "Final Comments"
+
+                - element Input with attributes
+                    - s - {12}
+                    - type - "textarea"
+                    - label - "Comments"
+                    - name - "commit_comment"       
+                    - onChange - {handleChange}
+                    - property - {comment}
+
+
+                - element Input with attributes
+                    - s - {12}
+                    - type - "text"
+                    - label - "Overall Grade"
+                    - name - "commit_grade"       
+                    - onChange - {handleChange}
+
+
+    - else
 
            - returns element div with properties
 
-            - element div with property of text Final Comment
- 
-            - element textarea with attributes
-                - name - "commit_comment"
-                - placeholder - "Type here.."
-                - cols - "30"
-                - rows - "5"
-                - onChange - {handleChange}
- 
-            - element div with property of text Final Grade
- 
-            - element textarea with attributes
-                - name - "commit_grade" 
-                - placeholder - "Type here.."
-                - cols - "30"
-                - rows - "5"
-                - onChange - {handleChange}
+            - element Card with attribute title - "Final Comments"
+
+                - element Input with attributes
+                    - s - {12}
+                    - type - "textarea"
+                    - label - "Comments"
+                    - name - "commit_comment"       
+                    - onChange - {handleChange}
+
+
+                - element Input with attributes
+                    - s - {12}
+                    - type - "text"
+                    - label - "Overall Grade"
+                    - name - "commit_grade"       
+                    - onChange - {handleChange}
+
 */
 function finalComments(comment, grade, handleChange) {
 
@@ -617,29 +579,13 @@ function finalComments(comment, grade, handleChange) {
 
             <div>
 
-                <div>Final Comment</div>
+                <Card title="Final Comments">
 
-                <textarea
-                    name="commit_comment"
-                    placeholder="Type here.."
-                    cols="30"
-                    rows="5"
-                    onChange={handleChange}
-                >
-                    {comment}
-                </textarea>
+                    <Input s={12} type="textarea" label="Comments" name="commit_comment" onChange={handleChange}>{comment}</Input>
 
-                <div>Final Grade</div>
+                    <Input s={12} type="text" label="Overall Grade" name="commit_grade" onChange={handleChange}>{grade}</Input>
 
-                <textarea
-                    name="commit_grade"
-                    placeholder="Type here.."
-                    cols="30"
-                    rows="5"
-                    onChange={handleChange}
-                >
-                    {grade}
-                </textarea>
+                </Card>
 
             </div>
 
@@ -651,27 +597,13 @@ function finalComments(comment, grade, handleChange) {
 
             <div>
 
-                <div>Final Comment</div>
+                <Card title="Final Comments">
 
-                <textarea
-                    name="commit_comment"
-                    placeholder="Type here.."
-                    cols="30"
-                    rows="5"
-                    onChange={handleChange}>
-                </textarea>
+                    <Input s={12} type="textarea" label="Comments" name="commit_comment" onChange={handleChange}></Input>
 
-                <div>Final Grade</div>
+                    <Input s={12} type="text" name="commit_grade" onChange={handleChange}>{grade}</Input>
 
-                <textarea
-                    name="commit_grade"
-                    placeholder="Type here.."
-                    cols="30"
-                    rows="5"
-                    onChange={handleChange}
-                >
-                    {grade}
-                </textarea>
+                </Card>
 
             </div>
 
@@ -683,27 +615,13 @@ function finalComments(comment, grade, handleChange) {
 
             <div>
 
-                <div>Final Comment</div>
+                <Card title="Final Comments">
 
-                <textarea
-                    name="commit_comment"
-                    placeholder="Type here.."
-                    cols="30"
-                    rows="5"
-                    onChange={handleChange}
-                >
-                    {comment}
-                </textarea>
+                    <Input s={12} type="textarea" label="Comments" name="commit_comment" onChange={handleChange}>{comment}</Input>
 
-                <div>Final Grade</div>
+                    <Input s={12} type="text" label="Overall Grade" name="commit_grade" onChange={handleChange}></Input>
 
-                <textarea
-                    name="commit_grade"
-                    placeholder="Type here.."
-                    cols="30"
-                    rows="5"
-                    onChange={handleChange}>
-                </textarea>
+                </Card>
 
             </div>
 
@@ -715,25 +633,13 @@ function finalComments(comment, grade, handleChange) {
 
             <div>
 
-                <div>Final Comment</div>
+                <Card title="Final Comments">
 
-                <textarea
-                    name="commit_comment"
-                    placeholder="Type here.."
-                    cols="30"
-                    rows="5"
-                    onChange={handleChange}>
-                </textarea>
+                    <Input s={12} type="textarea" label="Comments" name="commit_comment" onChange={handleChange}></Input>
 
-                <div>Final Grade</div>
+                    <Input s={12} type="type" label="Overall Grade" name="commit_grade" onChange={handleChange}></Input>
 
-                <textarea
-                    name="commit_grade"
-                    placeholder="Type here.."
-                    cols="30"
-                    rows="5"
-                    onChange={handleChange}>
-                </textarea>
+                </Card>
 
             </div>
 
