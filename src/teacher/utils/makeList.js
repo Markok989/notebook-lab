@@ -5,8 +5,13 @@ return item.course_id when has the same value as id,
 on the end return filterList
 */
 export function filterList(list, id) {
+
     var filterList = list.filter((item) => {
+
         return item.course_id == id;
+
     });
+
     return filterList;
+
 }

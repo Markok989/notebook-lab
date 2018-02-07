@@ -23,7 +23,6 @@ export default function (state = {}, action) {
 
     if (action.type === 'GET_STUDENT_DATA') {
 
-
         state = Object.assign({}, state, {
             studentInfo: action.studentInfo
 
@@ -41,19 +40,21 @@ export default function (state = {}, action) {
 
             })
 
-        })
+        });
+
     }
 
     if (action.type === 'GET_ASSIGNMENT') {
 
         state = Object.assign({}, state, {
             assignment: action.assignment
-        })
-        
+        });
+
     }
 
 
     console.log("state", state);
 
     return state;
+
 }

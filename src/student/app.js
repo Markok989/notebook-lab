@@ -38,8 +38,10 @@ class App extends React.Component {
     // componentDidMount is invoked immediately after a component is mounted,
     // props dipsatch to getStudentData
     componentDidMount() {
+
         this.props.dispatch(getStudentData());
         // this.props.dispatch(getAssignmentList())
+
     }
 
 
@@ -95,10 +97,10 @@ class App extends React.Component {
 
             this.props.dispatch(addNewClass(this.state.course));
 
-
             this.emptyField(e);
 
         }
+
     }
 
     /*
@@ -142,7 +144,9 @@ class App extends React.Component {
 
         // condition if not studentInfo, return null
         if (!studentInfo) {
+
             return null
+
         }
 
         console.log('student');
@@ -204,8 +208,9 @@ class App extends React.Component {
                                                     {assignment.assignment_name}
                                                 </Link>
 
-                                            </li>)
-                                        )}
+                                            </li>
+
+                                        ))}
 
                                     </ul>
 
@@ -302,6 +307,7 @@ const mapStateToProps = function (state) {
     return {
         studentInfo: state.students.studentInfo
     }
+
 }
 
 export default connect(mapStateToProps)(App);

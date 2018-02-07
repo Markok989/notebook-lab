@@ -5,7 +5,17 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { saveNewCourse, getCourseList, getAllSections } from '../actions';
-import { Button, Row, Col, Collapsible, CollapsibleItem, Collection, CollectionItem, Breadcrumb, MenuItem } from 'react-materialize';
+import {
+    Button,
+    Row,
+    Col,
+    Collapsible,
+    CollapsibleItem,
+    Collection,
+    CollectionItem,
+    Breadcrumb,
+    MenuItem
+} from 'react-materialize';
 import AssignmentList from '../components/assignmentList';
 
 // TeacherAssignments component
@@ -57,6 +67,7 @@ class TeacherAssignments extends React.Component {
         }
 
         return (
+
             <div>
 
                 <Row>
@@ -82,7 +93,9 @@ class TeacherAssignments extends React.Component {
                     </Collapsible>
 
                 }
+
             </div>
+
         );
 
     }
@@ -157,9 +170,11 @@ function makeCourseList(courses, sections) {
             return (
 
                 <CollapsibleItem header={course.name}>
+
                     <ul>
                         {sectionList}
                     </ul>
+
                 </CollapsibleItem>
 
             );
@@ -176,7 +191,7 @@ function makeCourseList(courses, sections) {
 
         }
 
-    })
+    });
 
 }
 
@@ -230,8 +245,8 @@ const mapStateToProps = function (state) {
 
     return {
         courses: state.teachers.courses,
-        sections: state.teachers.sections,
-    }
+        sections: state.teachers.sections
+    };
 
 }
 

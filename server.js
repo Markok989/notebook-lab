@@ -57,7 +57,7 @@ app.use(cookieSession({
 // });
 
 //get static files from public directory
-app.use(express.static('./public'));
+app.use(express.static('/public/'));
 
 loggedOutRoutes(app);
 studentRoutes(app);

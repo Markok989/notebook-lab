@@ -51,7 +51,7 @@ class GradeACategory extends React.Component {
 
         const { assignmentid, category } = this.props.params;
 
-        this.props.dispatch(getCategoriesForGrading(assignmentid, category))
+        this.props.dispatch(getCategoriesForGrading(assignmentid, category));
 
     } //end component did mount
 
@@ -79,11 +79,7 @@ class GradeACategory extends React.Component {
     */
     handleChange(e) {
 
-        this.setState({
-
-            [e.target.name]: e.target.value
-
-        }, () => console.log(this.state));
+        this.setState({ [e.target.name]: e.target.value }, () => console.log(this.state));
 
     }
 
@@ -175,7 +171,7 @@ class GradeACategory extends React.Component {
                             <MenuItem>Assignments</MenuItem>
                             <MenuItem>{assignmentName}</MenuItem>
                             <MenuItem>{capCat}</MenuItem>
-                            
+
                         </Breadcrumb>
 
                     </Col>

@@ -55,22 +55,33 @@ export default class Login extends React.Component {
                 const data = res.data;
 
                 if (!data.success) {
+
                     error: true
+
                 } else {
 
                     console.log(data.role);
 
                     if (data.role == 'student') {
+
                         location.replace('/student');
+
                     } else {
+
                         location.replace('/teacher');
+
                     }
 
                 }
+
             });
+
         } else {
+
             alert('The email or password are invalid');
+
         }
+
     }
 
     render() {
@@ -85,7 +96,7 @@ export default class Login extends React.Component {
 
                 <Col m={8} s={12}>
 
-                    <Card title='Login'>
+                    <Card title="Login">
 
                         {
                             /*
@@ -124,7 +135,7 @@ export default class Login extends React.Component {
             </Row>
 
         );
-        
+
     }
 
 }

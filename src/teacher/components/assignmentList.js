@@ -48,11 +48,13 @@ export default class AssignmentList extends React.Component {
         console.log('Component did mount: Asssignment List');
 
         var url = '/api/teacher/assignments/' + this.props.sectionId;
+
         console.log('URL', url);
 
         axios.get('/api/teacher/assignments/' + this.props.sectionId).then((results) => {
 
             console.log('Back from getting assignments: ', results);
+
             if (results.data.success) {
 
                 console.log(results.data.assignmentList);
@@ -73,9 +75,10 @@ export default class AssignmentList extends React.Component {
 
             this.setState({
                 error: 'Could not get list of assignments'
-            })
+            });
 
         });
+
     }
 
     // render method
@@ -109,14 +112,19 @@ export default class AssignmentList extends React.Component {
             return (
 
                 <div>
+
                     <ul>
                         {listAssignments}
                     </ul>
+
                 </div>
 
             );
+
         } //end else for returns
+
     } //end render
+
 } //end class
 
 /*
@@ -142,12 +150,17 @@ function makeListAssignments(items) {
         console.log(item);
 
         return (
+            
             <CollectionItem key={item.id.toString()}>
 
-                <Link to={`/teacher/assignment/${item.id}`}>{item.name}</Link>
+                <Link to={`/teacher/assignment/${item.id}`}>
+                    {item.name}
+                </Link>
+
                 <p style={dueStyle}>Due: {item.due}</p>
 
             </CollectionItem >
+
         );
 
     });

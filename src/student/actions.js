@@ -18,6 +18,7 @@ export function getStudentData() {
         }
 
     });
+
 }
 
 //******************addCourse*****************//
@@ -35,7 +36,9 @@ export function getStudentData() {
 export function addNewClass(classID) {
 
     return axios.post('/api/student/class', {
+
         classID
+
     }).then((result) => {
 
         return {
@@ -44,6 +47,7 @@ export function addNewClass(classID) {
         }
 
     });
+
 }
 
 //******************getAssignment*****************//
@@ -60,8 +64,7 @@ export function addNewClass(classID) {
 */
 export function getAssignment(id) {
 
-    return axios.get('/api/student/assignment/' + id, {
-    }).then((result) => {
+    return axios.get('/api/student/assignment/' + id, {}).then((result) => {
 
         return {
             type: 'GET_ASSIGNMENT',
@@ -94,7 +97,7 @@ export function saveAssignment(id, part) {
 
     // return axios.post('/api/student/assignment/' + id + '/' + part, {
     // }).then((result) => {
-    return axios.post('/api/student/assignment/', { id, part }).then((result) => {
+    return axios.post('/api/student/save-assignment/', { id, part }).then((result) => {
 
         return {
             type: 'UPDATE_ASSIGNMENT',
@@ -118,11 +121,7 @@ export function saveAssignment(id, part) {
 */
 export function commitAssignment(id, part) {
 
-    return axios.post('/api/student/commit-assignment/', {
-
-        id, part
-
-    }).then((result) => {
+    return axios.post('/api/student/commit-assignment/', { id, part }).then((result) => {
 
         return {
             type: 'COMMIT_ASSIGNMENT',

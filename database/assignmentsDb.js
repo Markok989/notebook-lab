@@ -216,42 +216,19 @@ function newDiscussion(data) {
 
 }
 
-// modul export getStudentsAssignmentIdsBySection has value getStudentsAssignmentIdsBySection
+// modul export for functions
 module.exports.getStudentsAssignmentIdsBySection = getStudentsAssignmentIdsBySection;
-
-// modul export saveNewStudentReport has value saveNewStudentReport
 module.exports.saveNewStudentReport = saveNewStudentReport;
-
-// modul export newTitle has value newTitle
 module.exports.newTitle = newTitle;
-
-// modul export newQuestion has value newQuestion
 module.exports.newQuestion = newQuestion;
-
-// modul export newAbstract has value newAbstract
 module.exports.newAbstract = newAbstract;
-
-// modul export newHypothesis has value newHypothesis
 module.exports.newHypothesis = newHypothesis;
-
-// modul export newVariables has value newVariables
 module.exports.newVariables = newVariables;
-
-// modul export newMaterials has value newMaterials
 module.exports.newMaterials = newMaterials;
-
-// modul export newProcedure has value newProcedure
 module.exports.newProcedure = newProcedure;
-
-// modul export newData has value newData
 module.exports.newData = newData;
-
-// modul export newCalculations has value newCalculations
 module.exports.newCalculations = newCalculations;
-
-// modul export newDiscussion has value newDiscussion
 module.exports.newDiscussion = newDiscussion;
-
 
 // TEST:
 

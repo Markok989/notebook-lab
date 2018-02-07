@@ -30,9 +30,10 @@ export default class Registration extends React.Component {
     handleTeacherSubmit(e) {
 
         console.log('teacher button selected');
+
         this.setState({
             role: 'teacher'
-        })
+        });
 
     };
 
@@ -45,9 +46,10 @@ export default class Registration extends React.Component {
     handleStudentSubmit() {
 
         console.log('student button selected');
+
         this.setState({
             role: 'student'
-        })
+        });
 
     };
 
@@ -88,21 +90,26 @@ export default class Registration extends React.Component {
         if (first_name && last_name && email && password && course) {
 
             axios.post('/api/student/register', {
+
                 first_name, last_name, email, password, course
-            })
-                .then((res) => {
 
-                    const data = res.data;
+            }).then((res) => {
 
-                    if (!data.success) {
-                        error: true
-                    } else {
-                        location.replace('/student');
-                    }
-                })
-                .catch((err) => {
-                    console.log(err);
-                })
+                const data = res.data;
+
+                if (!data.success) {
+
+                    error: true
+
+                } else {
+
+                    location.replace('/student');
+
+                }
+
+            }).catch((err) => {
+                console.log(err);
+            });
 
         } else {
 
@@ -136,21 +143,26 @@ export default class Registration extends React.Component {
         if (first_name && last_name && email && password) {
 
             axios.post('/api/teacher/register', {
+
                 first_name, last_name, email, password
-            })
-                .then((res) => {
 
-                    const data = res.data;
+            }).then((res) => {
 
-                    if (!data.success) {
-                        error: true
-                    } else {
-                        location.replace('/teacher');
-                    }
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
+                const data = res.data;
+
+                if (!data.success) {
+
+                    error: true
+
+                } else {
+
+                    location.replace('/teacher');
+
+                }
+
+            }).catch((err) => {
+                console.log(err);
+            });
 
         }
 
@@ -216,11 +228,13 @@ export default class Registration extends React.Component {
                     {/* onClick - use method handleStudentRegistration */}
                     <Button
                         className="reg-button"
-                        onClick={e => this.handleStudentRegistration(e)}>
+                        onClick={e => this.handleStudentRegistration(e)}
+                    >
                         Submit
                      </Button >
 
                 </div>
+
             </Card>
 
         );
@@ -347,9 +361,12 @@ export default class Registration extends React.Component {
             </Container>
 
         );
+
     }
+
 }
 
+/********** STYLE *************/
 var btnStyle = {
     paddingRight: '10px'
 }

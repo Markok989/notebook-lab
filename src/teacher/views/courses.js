@@ -31,7 +31,7 @@ class TeacherCourses extends React.Component {
         // state
         this.state = {
             courseName: ''
-        }
+        };
 
         // binding
         this.handleInput = this.handleInput.bind(this);
@@ -53,10 +53,10 @@ class TeacherCourses extends React.Component {
     // [e.target.name] takes value of path e.target.value
     handleInput(e) {
 
-        this.setState({
-            [e.target.name]: e.target.value
-        }, () => {
+        this.setState({ [e.target.name]: e.target.value }, () => {
+
             console.log('state', this.state);
+
         });
 
     }
@@ -70,19 +70,18 @@ class TeacherCourses extends React.Component {
     // else
     //      - set the state error has string 'Please provide a course name.'
     submit() {
+
         if (this.state.courseName) {
 
             this.props.dispatch(saveNewCourse(this.state.courseName));
             this.courseNameInput.value = '';
-            this.setState({
-                courseName: ''
-            });
+            this.setState({ courseName: '' });
 
         } else {
 
             this.setState({
                 error: 'Please provide a course name.'
-            })
+            });
 
         }
     }
@@ -134,12 +133,14 @@ class TeacherCourses extends React.Component {
                     </Modal>
 
                 </Card>
+
                 {
                     /*
-                    - courses and 
-                    - element Collapsible with property {courseList}
+                        - courses and 
+                        - element Collapsible with property {courseList}
                     */
-                    courses &&
+                }
+                {courses &&
                     <Collapsible>
 
                         {courseList}
@@ -150,7 +151,9 @@ class TeacherCourses extends React.Component {
             </Container>
 
         );
+
     }
+
 }
 
 
@@ -174,9 +177,12 @@ function filterListByCourseId(sections, courseId) {
         return section.course_id == courseId;
 
     });
+
     return filteredList;
 
 }
+
+
 /*
 - function makeList with paramerer items
     - itemList has value of items which goes through .map with parameter item,
@@ -194,9 +200,10 @@ function filterListByCourseId(sections, courseId) {
                 */
 function makeList(items) {
 
-    var itemList = items.map((item) => {
+    var itemList = items.map(item => {
 
         console.log('item', item);
+
         return (
 
             <li key={item.id.toString()}>
@@ -216,6 +223,7 @@ function makeList(items) {
             </li>
 
         );
+
     });
 
     return (
@@ -225,6 +233,7 @@ function makeList(items) {
         </Collection>
 
     );
+
 }
 
 /*
@@ -260,6 +269,7 @@ function makeCourseList(courses, sections) {
                 <CollapsibleItem header={course.name}>
 
                     <AddSection courseId={course.id} />
+
                     <ul>
                         {sectionList}
                     </ul>
@@ -267,6 +277,7 @@ function makeCourseList(courses, sections) {
                 </CollapsibleItem>
 
             );
+
         } else {
 
             return (
@@ -274,9 +285,11 @@ function makeCourseList(courses, sections) {
                 <li key={course.id.toString()}>{course.name}</li>
 
             );
+
         }
 
     });
+
 }
 
 

@@ -8,7 +8,9 @@ import { Link, browserHistory } from 'react-router';
 export default function Logout() {
 
     return (
+
         <a href="/logout">Logout</a>
+        
     );
 
 }

@@ -22,7 +22,6 @@ class GradeAssignment extends React.Component {
         this.handleSaveAll = this.handleSaveAll.bind(this);
         this.handleCommit = this.handleCommit.bind(this);
 
-
     }
 
     /*
@@ -52,9 +51,7 @@ class GradeAssignment extends React.Component {
     */
     handleChange(e) {
 
-        this.setState({
-            [e.target.name]: e.target.value
-        }, () => {
+        this.setState({ [e.target.name]: e.target.value }, () => {
 
             console.log(this.state);
 
@@ -122,6 +119,7 @@ class GradeAssignment extends React.Component {
 
         console.log(send);
         this.props.dispatch(commitGrade(id, reportid, send));
+
     }
 
 

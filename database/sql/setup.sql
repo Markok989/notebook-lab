@@ -20,6 +20,7 @@ DROP TABLE IF EXISTS sections;
 DROP TABLE IF EXISTS courses;
 DROP TABLE IF EXISTS users;
 
+
 CREATE TABLE users
 (
     id SERIAL PRIMARY KEY,
@@ -63,7 +64,7 @@ CREATE TABLE groups
 (
     id SERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
-    description VARCHAR(255),
+    description VARCHAR (255),
     section_id INTEGER REFERENCES sections(id),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

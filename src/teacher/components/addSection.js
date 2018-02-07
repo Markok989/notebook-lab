@@ -77,6 +77,7 @@ class AddSection extends React.Component {
         const { courseId, error } = this.props;
 
         return (
+
             <div>
 
                 {
@@ -122,10 +123,16 @@ class AddSection extends React.Component {
                 </Modal>
 
             </div>
+
         );
+
     }
+
 }
 
+
+
+/********* CONNECTED COMPONENT ********/
 const mapStateToProps = function (state) {
 
     return {
@@ -134,5 +141,5 @@ const mapStateToProps = function (state) {
 
 }
 
-/********* CONNECTED COMPONENT ********/
+
 export default connect(mapStateToProps)(AddSection);

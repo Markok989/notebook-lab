@@ -118,7 +118,8 @@ class Assignment extends React.Component {
         const { id } = this.props.params;
 
         this.props.dispatch(getAssignment(id));
-        this.props.dispatch(commitAssignment(id, this.state))
+
+        this.props.dispatch(commitAssignment(id, this.state));
 
     }
 
@@ -161,6 +162,7 @@ class Assignment extends React.Component {
         // variable assignmentOptions with properties
         // div element contain set of functions
         var assignmentOptions =
+
             <div>
 
                 <div>
@@ -201,6 +203,7 @@ class Assignment extends React.Component {
                     </Col>
 
                 </Row>
+
             </div>;
 
         var committedAssignment =
@@ -238,6 +241,8 @@ class Assignment extends React.Component {
                 {finalComments(assignment.report_comments, assignment.report_grade)}
 
             </div>
+
+
         /*
         - condition if assignment.status is strictly the same as string 'COMMITTED'
           OR(||)
@@ -290,8 +295,6 @@ class Assignment extends React.Component {
     - condition if section with parmaters [category +(plus) string '_editable' ]
 
         - condition if section with parmaters [category +(plus) string '_content' ]
-
-            - log string 'YAAAW'
 
             - return div element with properties
 
@@ -352,8 +355,6 @@ function editable(section, category, handleChange, handleSave, handleSaveAll, ha
 
         if (section[category + '_content']) {
 
-            console.log('YAAAW');
-
             return (
 
                 <Card title={capitalize(category)}>
@@ -401,6 +402,7 @@ function editable(section, category, handleChange, handleSave, handleSaveAll, ha
             </Card>
 
         );
+
     }
 
 }
@@ -551,7 +553,7 @@ function getAssignmentName(assignmentId, classId, studentInfo) {
 
     console.log('getAssignName: ', studentInfo);
 
-    var currCourse = studentInfo.courses.filter(course => {
+    var currCourse = studentInfo.courses.filter((course) => {
 
         return course.course_id = classId;
 
@@ -566,6 +568,7 @@ function getAssignmentName(assignmentId, classId, studentInfo) {
     });
 
     return `${currCourse[0].course_name}:  ${currAssign[0].assignment_name}`;
+    
 }
 
 

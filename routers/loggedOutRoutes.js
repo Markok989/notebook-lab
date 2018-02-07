@@ -9,7 +9,7 @@ var loggedOutRoutes = (app) => {
     // res sand file to the path with join __dirname + /index.html
     app.get('/', mw.registerLoginCheck, (req, res) => {
 
-        return res.sendFile(path.join(__dirname, '../public/index.html'));
+        return res.sendFile(path.join(__dirname, '/public/index.html'));
 
     });
 
@@ -67,7 +67,7 @@ var loggedOutRoutes = (app) => {
 
         if (first_name && last_name && email && password && course) {
 
-            console.log('success')
+            console.log('success');
             console.log(first_name, last_name);
 
             dbHashing.hashPassword(password).then((hash) => {
@@ -167,40 +167,38 @@ var loggedOutRoutes = (app) => {
 
         if (first_name && last_name && email && password) {
 
-            dbHashing.hashPassword(password)
-                .then((hash) => {
+            dbHashing.hashPassword(password).then((hash) => {
 
-                    console.log('adding user to DB', hash);
-                    return dbHashing.addTeacher(first_name, last_name, email, hash)
-                        .then((result) => {
+                console.log('adding user to DB', hash);
+                return dbHashing.addTeacher(first_name, last_name, email, hash).then((result) => {
 
-                            console.log('teacher', result);
+                    console.log('teacher', result);
 
-                            const { id, first_name, last_name, email, role } = result.rows[0]
+                    const { id, first_name, last_name, email, role } = result.rows[0];
 
-                            req.session.user = {
-                                id: id,
-                                first_name: first_name,
-                                last_name: last_name,
-                                email: email,
-                                role: role
-                            }
+                    req.session.user = {
+                        id: id,
+                        first_name: first_name,
+                        last_name: last_name,
+                        email: email,
+                        role: role
+                    }
 
-                            res.json({
-                                success: true
-                            });
-                        })
-                        .catch((err) => {
-                            console.log(err.stack);
-                        })
+                    res.json({
+                        success: true
+                    });
 
-                })
-                .catch((err) => {
+                }).catch((err) => {
                     console.log(err.stack);
-                })
+                });
+
+            }).catch((err) => {
+                console.log(err.stack);
+            });
 
         }
-    })
+
+    });
 
     /*
     - app post have path '/api/login' and function with parameters: req and res,
@@ -229,41 +227,37 @@ var loggedOutRoutes = (app) => {
 
         const { email, password } = req.body;
 
-        dbHashing.getUserByEmail(email)
-            .then((result) => {
+        dbHashing.getUserByEmail(email).then((result) => {
 
-                dbHashing.checkPassword(password, result.rows[0].password)
-                    .then((doesMatch) => {
+            dbHashing.checkPassword(password, result.rows[0].password).then((doesMatch) => {
 
-                        if (!doesMatch) {
+                if (!doesMatch) {
 
-                            throw 'Password is incorrect.';
-                            alert('Your email or password are incorrect');
+                    throw 'Password is incorrect.';
+                    alert('Your email or password are incorrect');
 
-                        } else {
+                } else {
 
-                            console.log('password is correct', result.rows);
+                    console.log('password is correct', result.rows);
 
-                            const { id, first_name, last_name, email, role } = result.rows[0];
+                    const { id, first_name, last_name, email, role } = result.rows[0];
 
-                            req.session.user = {
-                                id, first_name, last_name, email, role
-                            }
+                    req.session.user = { id, first_name, last_name, email, role }
 
-                            res.json({
-                                success: true,
-                                role: role
-                            });
+                    res.json({
+                        success: true,
+                        role: role
+                    });
 
-                        }
-
-                    }).catch((err) => {
-                        console.log(err);
-                    })
+                }
 
             }).catch((err) => {
                 console.log(err);
-            })
+            });
+
+        }).catch((err) => {
+            console.log(err);
+        });
 
     })
 

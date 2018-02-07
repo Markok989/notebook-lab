@@ -3,7 +3,19 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import Logout from '../../auth/logout';
 import { getTeacherInfo } from '../actions';
-import { Navbar, NavItem, Row, Col, MediaBox, Container, SideNav, SideNavItem, Button, Collection, CollectionItem } from 'react-materialize';
+import {
+    Navbar,
+    NavItem,
+    Row,
+    Col,
+    MediaBox,
+    Container,
+    SideNav,
+    SideNavItem,
+    Button,
+    Collection,
+    CollectionItem
+} from 'react-materialize';
 
 //import { connect } from 'react-redux';
 
@@ -28,8 +40,11 @@ class App extends React.Component {
             // return div with property Loadinig...
         }
         if (false) {
+
             return <div className='loading'>Loading...</div>;
+
         } else {
+
             {
                 // else
             }
@@ -43,6 +58,7 @@ class App extends React.Component {
             //});
 
             return (
+
                 <Container>
 
                     <Navbar className="indigo">
@@ -81,8 +97,11 @@ class App extends React.Component {
 
                 </Container>
             );
+
         }
+
     };
+
 }
 
 // connect to store

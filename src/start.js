@@ -48,16 +48,19 @@ const store = createStore(reducers, composeWithDevTools(applyMiddleware(reduxPro
 
 // loggedOutRouter component with routhes
 const loggedOutRouter = (
+
     <Router history={hashHistory}>
         <Route path="/" component={Welcome}>
             <IndexRoute component={Registration} />
-            <Route path="/login" component={Login} />
+            <Route path="login" component={Login} />
         </Route>
     </Router>
+
 );
 
 // studentRouter component with routhes
 const studentRouter = (
+
     <Provider store={store}>
         <Router history={browserHistory}>
             <Route path="/student" component={StudentApp}>
@@ -66,10 +69,12 @@ const studentRouter = (
             </Route>
         </Router>
     </Provider>
-)
+
+);
 
 // teacherRouter component with routhes
 const teacherRouter = (
+
     <Provider store={store}>
         <Router history={browserHistory}>
             <Route path="/teacher" component={TeacherApp}>
@@ -83,6 +88,7 @@ const teacherRouter = (
             </Route>
         </Router>
     </Provider>
+
 )
 
 /*
@@ -123,6 +129,8 @@ if (location.pathname == '/' || location.pathname == '/register' || location.pat
 }
 
 ReactDOM.render(
+
     route,
     document.querySelector('main')
+
 );

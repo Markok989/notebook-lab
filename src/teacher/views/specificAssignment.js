@@ -177,6 +177,7 @@ class SpecificAssignment extends React.Component {
 
                                 <MenuItem>Assignments</MenuItem>
                                 <MenuItem>{assignmentName}</MenuItem>
+
                             </Breadcrumb>
 
                         </Col>
@@ -201,6 +202,7 @@ class SpecificAssignment extends React.Component {
                         <Col m={12}>
 
                             {showCategories &&
+
                                 <div>
 
                                     <Row>
@@ -219,7 +221,10 @@ class SpecificAssignment extends React.Component {
 
                                     </Row>
 
-                                </div>}
+                                </div>
+
+                            }
+
                         </Col>
 
                     </Row>
@@ -249,6 +254,7 @@ class SpecificAssignment extends React.Component {
             return null;
 
         }
+
     }
 
 }
@@ -383,7 +389,7 @@ function getCategoryList(assignmentProps) {
 */
 function makeSelector(options, handleCatPick) {
 
-    var optionList = options.map(option => {
+    var optionList = options.map((option) => {
 
         return (
 

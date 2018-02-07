@@ -44,7 +44,7 @@ const SAVE_COURSE_LIST = 'SAVE_COURSE_LIST',
 */
 export function getCategoriesForGrading(assignmentId, category) {
 
-    return axios.get(`/api/t/category/${assignmentId}/${category}`).then(results => {
+    return axios.get(`/api/t/category/${assignmentId}/${category}`).then((results) => {
 
         console.log('Back from getting Category Data', results);
 
@@ -94,7 +94,7 @@ export function getAssignmentProperties(assignmentId) {
 
     console.log('ACTIONS: getAssignmentProperties', assignmentId);
 
-    return axios.get('/api/teacher/assignment/properties/' + assignmentId).then(results => {
+    return axios.get('/api/teacher/assignment/properties/' + assignmentId).then((results) => {
 
         console.log('Back from getting Assignment Properties', results);
 
@@ -184,7 +184,8 @@ export function saveNewAssignment(assignmentInfo) {
 
             if (results.data.success) {
 
-                browserHistory.push('/teacher/assignments')
+                browserHistory.push('/teacher/assignments');
+
                 return {
                     type: UPDATE_RECENT_ASSIGNMENTS,
                     payload: results.data.assignmentId
@@ -219,14 +220,16 @@ export function saveNewSection(courseId, name, start, end) {
     if (name) {
 
         return axios.post('/api/teacher/section', { courseId, name, start, end }).then(() => {
+
             return getAllSections();
+
         });
 
     } else {
 
         return {
             type: ERROR,
-            payload: "You must give a name for the section"
+            payload: 'You must give a name for the section'
         };
 
     }
@@ -328,7 +331,7 @@ export function saveNewCourse(name, desc) {
 export function getTeacherInfo() {
 
     console.log('ACTIONS: getUserInfo');
-    return axios.get('/api/teacher').then(results => {
+    return axios.get('/api/teacher').then((results) => {
 
         if (results.data.success) {
 
@@ -337,7 +340,7 @@ export function getTeacherInfo() {
             return {
                 type: ADD_TEACHER_INFO,
                 payload: results.data.teacherInfo
-            }
+            };
 
         }
 
@@ -388,17 +391,16 @@ export function getCommittedAssignments(id, studentid) {
 */
 export function saveGrading(id, reportid, grade) {
 
-    return axios.post(`/api/teacher/grading/grade/${id}/student/${reportid}`,
-        { id, reportid, grade }).then((result) => {
+    return axios.post(`/api/teacher/grading/grade/${id}/student/${reportid}`, { id, reportid, grade }).then((result) => {
 
-            console.log('saving grade');
+        console.log('saving grade');
 
-            return {
-                type: ADD_GRADING,
-                assignment: result.data.assignment
-            }
+        return {
+            type: ADD_GRADING,
+            assignment: result.data.assignment
+        }
 
-        });
+    });
 
 }
 

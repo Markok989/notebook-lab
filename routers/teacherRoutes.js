@@ -10,14 +10,15 @@ const {
     getSectionsByCourseId,
     saveNewSection,
     getStudentIdsBySectionId,
-    getTeacherInfoById,
-    getStudentsAssignmentIdsBySection
-    } = require('../database/teacherDb');
+    getTeacherInfoById
+     } = require('../database/teacherDb');
+
 
 const {
     saveNewAssignmentTemplate,
     saveNewStudentReport,
-    newTitle, newQuestion,
+    newTitle,
+    newQuestion,
     newAbstract,
     newHypothesis,
     newVariables,
@@ -28,8 +29,10 @@ const {
     newDiscussion,
     getAssignmentNameIdBySection,
     getCategoriesForGrading,
+    getStudentsAssignmentIdsBySection,
     getAssignmentProperties
-            } = require('../database/assignmentsDb');
+        } = require('../database/assignmentsDb')
+
 
 
 
@@ -42,7 +45,7 @@ var teacherRoutes = (app) => {
 
     app.get('/teacher', mw.loggedInCheck, mw.checkIfTeacher, (req, res) => {
 
-        return res.sendFile(path.join(__dirname, '../public/index.html'));
+        return res.sendFile(path.join(__dirname, '/public/index.html'));
 
     });
 
@@ -75,6 +78,7 @@ var teacherRoutes = (app) => {
             });
 
         });
+
     });
 
 
@@ -240,9 +244,9 @@ var teacherRoutes = (app) => {
         console.log('TEACHER ROUTES: getting Assignments by section id');
 
         let data = [req.params.sectionId];
-        return getAssignmentNameIdBySection(data).then((results) => {
+        return getAssignmentNameIdBySection(data).then(results => {
 
-            console.log('Got Assignments Info', results.rows);
+            console.log('Got Assignments Info', results.rows);;
 
             res.json({
                 success: true,
@@ -263,6 +267,7 @@ var teacherRoutes = (app) => {
     // app post with path '/api/teacher/assignment', mw.loggedInCheck and mw.checkIfTeacher (from middleware) and use parameters req and res
     // res with json access to success with value true and assignmentId with value of results.rows[0]
     app.post('/api/teacher/assignment', mw.loggedInCheck, mw.checkIfTeacher, (req, res) => {
+
         //make assignment row in assignments database.
 
         // variable assignments has value of empty array
@@ -293,7 +298,6 @@ var teacherRoutes = (app) => {
                 //now get list of students and for each student make a student report, using user_id make student assignment
                 assignments.push({ section, assignmentId });
 
-                //now get list of students and for each student make a student report, using user_id make student assignment
                 return getStudentIdsBySectionId([section]).then(results => {
 
                     console.log('assignments: ', assignments);
@@ -357,6 +361,7 @@ var teacherRoutes = (app) => {
             });
 
         });
+
     });
 
     // get all the sections a teaher has
@@ -1081,7 +1086,7 @@ function makeNewAssignment(sectionId, info) {
 
     return saveNewAssignmentTemplate(data).then((results) => {
 
-        console.log('Resulting AssignmentId: ', results.rows[0].id)
+        console.log('Resulting AssignmentId: ', results.rows[0].id);
         return results.rows[0].id;
 
     }).catch(e => {
@@ -1246,7 +1251,7 @@ function makeStudentAssignments(students, sectionId, assignmentId, include, edit
 
         for (var key in include) {
 
-            console.log('***** makingStudentAssigns: key:', key);
+            console.log('***** makingStudentAssigns: key: ', key);
 
             if (include[key]) {
 
@@ -1493,7 +1498,7 @@ function newStudentReport(studentId, sectionId, assignmentId, categoryIds) {
 }
 
 
-
+/* 
     // TESTS
 
     /*
@@ -1517,6 +1522,8 @@ function newStudentReport(studentId, sectionId, assignmentId, categoryIds) {
             - 'catch' word with parameter e
                 - log parameter e 
     */
+    
+    /*
     // function makeNewAssignmentAll(req) {
 
     //     var assignments = [];
@@ -1657,3 +1664,6 @@ function newStudentReport(studentId, sectionId, assignmentId, categoryIds) {
  // }
  //
  // getCatsForGradingTest();
+
+ */
+
