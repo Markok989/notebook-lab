@@ -144,9 +144,7 @@ class App extends React.Component {
 
         // condition if not studentInfo, return null
         if (!studentInfo) {
-
             return null
-
         }
 
         console.log('student');

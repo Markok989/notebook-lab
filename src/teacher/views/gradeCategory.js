@@ -21,6 +21,7 @@ class GradeACategory extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.saveEach = this.saveEach.bind(this);
         this.saveAll = this.saveAll.bind(this);
+
     }
 
 

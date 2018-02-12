@@ -19,23 +19,22 @@ class Courses extends React.Component {
 
         return (
 
-            const courseList = (
+          const courseList = (
 
-            <div className="menu-courses">
+                <div className="courses">
 
-                {props.courses.map(course => (
+                    {data.courses.map((course) => (
 
-                    <li className="menu-course-list">
-                        {course.name}
-                    </li>
+                        <li className="course-list">{course.name}</li>
 
-                ))}
+                    ))}
 
-            </div>
-        );
+                </div>
+
+            )
 
         );
 
     }
-
+    
 }

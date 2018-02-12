@@ -15,7 +15,8 @@ export default class AssignmentList extends React.Component {
         // state
         this.state = {
             assignmentList: []
-        }
+        };
+
     }
 
     /*
@@ -46,21 +47,21 @@ export default class AssignmentList extends React.Component {
     componentDidMount() {
 
         console.log('Component did mount: Asssignment List');
-
         var url = '/api/teacher/assignments/' + this.props.sectionId;
-
         console.log('URL', url);
 
-        axios.get('/api/teacher/assignments/' + this.props.sectionId).then((results) => {
+        axios.get('/api/teacher/assignments/' + this.props.sectionId).then(results => {
 
-            console.log('Back from getting assignments: ', results);
+            console.log('Back from getting assignments:,', results);
 
             if (results.data.success) {
 
                 console.log(results.data.assignmentList);
 
                 this.setState({
+
                     assignmentList: results.data.studentAssignmentList
+
                 });
 
             } else {
@@ -105,7 +106,7 @@ export default class AssignmentList extends React.Component {
 
         } else {
 
-            console.log('AssignmentList state: ', this.state);
+            console.log('AssignmentList state:', this.state);
             const { assignmentList } = this.state;
             var listAssignments = makeListAssignments(assignmentList);
 
@@ -126,6 +127,7 @@ export default class AssignmentList extends React.Component {
     } //end render
 
 } //end class
+
 
 /*
 - function makeListAssignments with parameter items
@@ -150,16 +152,13 @@ function makeListAssignments(items) {
         console.log(item);
 
         return (
-            
+
             <CollectionItem key={item.id.toString()}>
 
-                <Link to={`/teacher/assignment/${item.id}`}>
-                    {item.name}
-                </Link>
-
+                <Link to={`/teacher/assignment/${item.id}`}>{item.name}</Link>
                 <p style={dueStyle}>Due: {item.due}</p>
 
-            </CollectionItem >
+            </CollectionItem>
 
         );
 

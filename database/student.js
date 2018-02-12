@@ -84,6 +84,7 @@ module.exports.getStudentData = function (email) {
     WHERE email=$1`;
 
     const result = db.query(select, [email]);
+    console.log("rezultat", result);
 
     return result;
 

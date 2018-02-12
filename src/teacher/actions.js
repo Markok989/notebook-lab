@@ -160,7 +160,7 @@ export function getStudentAssignmentList(assignmentId) {
 
 /*
 - function saveNewAssignment with property assignmentInfo
-    - log string "ACTIONS: in save assignment" and parameter assignmentInfo
+    - log string 'ACTIONS: in save assignment' and parameter assignmentInfo
     - condition if parameter assignmentInfo
         - return axios post with path '/api/teacher/assignment', and object {assignmentInfo}
         - then with word then with parameter results we access to function
@@ -212,9 +212,9 @@ export function saveNewAssignment(assignmentInfo) {
 // function saveNewSection with parameters: courseId, name, start, end
 //  - condition if name 
 //      - return axios post with path /api/teacher/section and properties: courseId, name, start, end,
-//      - then with word "then" return function getAllSections
+//      - then with word 'then' return function getAllSections
 //  - else 
-//      - return type: ERROR and payload with string "You must give a name for the section"
+//      - return type: ERROR and payload with string 'You must give a name for the section'
 export function saveNewSection(courseId, name, start, end) {
 
     if (name) {
@@ -240,7 +240,7 @@ export function saveNewSection(courseId, name, start, end) {
 export function getAllSections() {
 
     // return axios get with path '/api/teacher/section'
-    // then with word "then" access next line of code with parameter results,
+    // then with word 'then' access next line of code with parameter results,
     //      type with value SAVE_SECTION_LIST,
     //      payload with value results.data.sections
     // after that goes catch with parameter e
@@ -271,7 +271,7 @@ export function getAllSections() {
 export function getCourseList() {
 
     // return axios get with path '/api/teacher/courses',
-    // then with "then" with parameter results access next code,
+    // then with 'then' with parameter results access next code,
     //  - log: 'Actions: back from getting courses'
     //  - return  type: SAVE_COURSE_LIST,
     //            payload: results.data.courses
@@ -340,11 +340,12 @@ export function getTeacherInfo() {
             return {
                 type: ADD_TEACHER_INFO,
                 payload: results.data.teacherInfo
-            };
+            }
 
         }
 
     });
+
 }
 
 /*

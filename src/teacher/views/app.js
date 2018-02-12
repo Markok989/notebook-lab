@@ -16,7 +16,6 @@ import {
     Collection,
     CollectionItem
 } from 'react-materialize';
-
 //import { connect } from 'react-redux';
 
 // TEACHER APP
@@ -35,10 +34,12 @@ class App extends React.Component {
     render() {
 
         console.log('profesor');
+
         {
-            // if is false,
+            // condition if is false,
             // return div with property Loadinig...
         }
+
         if (false) {
 
             return <div className='loading'>Loading...</div>;
@@ -62,7 +63,7 @@ class App extends React.Component {
                 <Container>
 
                     <Navbar className="indigo">
-
+                    
                         <NavItem><MediaBox src="/images/Cloud_book_logo.png" caption="Logo" width="90px" /></NavItem>
 
                         <NavItem href="/teacher">Home</NavItem>
@@ -96,6 +97,7 @@ class App extends React.Component {
                     </Row>
 
                 </Container>
+
             );
 
         }

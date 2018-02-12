@@ -47,7 +47,6 @@ export function addNewClass(classID) {
         }
 
     });
-
 }
 
 //******************getAssignment*****************//

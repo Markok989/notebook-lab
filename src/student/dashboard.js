@@ -39,7 +39,6 @@ var mapStateToProps = function (state) {
     return {
         currUser: state.students.studentInfo
     }
-
 }
 
 export default connect(mapStateToProps)(HelloWorld);

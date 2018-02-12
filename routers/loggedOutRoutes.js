@@ -9,7 +9,7 @@ var loggedOutRoutes = (app) => {
     // res sand file to the path with join __dirname + /index.html
     app.get('/', mw.registerLoginCheck, (req, res) => {
 
-        return res.sendFile(path.join(__dirname, '/public/index.html'));
+        return res.sendFile(path.join(__dirname, '../public/index.html'));
 
     });
 
@@ -174,7 +174,7 @@ var loggedOutRoutes = (app) => {
 
                     console.log('teacher', result);
 
-                    const { id, first_name, last_name, email, role } = result.rows[0];
+                    const { id, first_name, last_name, email, role } = result.rows[0]
 
                     req.session.user = {
                         id: id,
@@ -189,11 +189,15 @@ var loggedOutRoutes = (app) => {
                     });
 
                 }).catch((err) => {
+
                     console.log(err.stack);
+
                 });
 
             }).catch((err) => {
+
                 console.log(err.stack);
+
             });
 
         }
@@ -242,7 +246,9 @@ var loggedOutRoutes = (app) => {
 
                     const { id, first_name, last_name, email, role } = result.rows[0];
 
-                    req.session.user = { id, first_name, last_name, email, role }
+                    req.session.user = {
+                        id, first_name, last_name, email, role
+                    }
 
                     res.json({
                         success: true,
@@ -259,7 +265,7 @@ var loggedOutRoutes = (app) => {
             console.log(err);
         });
 
-    })
+    });
 
     /*
     - app get have path '/logout' and function with parameters: req and res,
@@ -279,6 +285,7 @@ var loggedOutRoutes = (app) => {
         res.redirect('/');
 
     });
+
 };
 
 //should put app.get with restrictions for req.session.user to not access the teacher side and vice versa.

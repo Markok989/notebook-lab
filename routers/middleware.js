@@ -17,6 +17,7 @@ function registerLoginCheck(req, res, next) {
     if (req.session.user) {
 
         // logged in
+
         console.log('REGISTER LOGIN CHECK', req.session);
 
         if (req.session.user.role == 'teacher') {
@@ -59,7 +60,9 @@ function loggedInCheck(req, res, next) {
         next();
 
     } else {
+
         res.redirect('/');
+
     }
 
 }
@@ -120,6 +123,7 @@ function checkIfStudent(req, res, next) {
         res.redirect('/teacher');
 
     }
+
 }
 
 // export as modul

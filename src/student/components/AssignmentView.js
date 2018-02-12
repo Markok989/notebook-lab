@@ -118,7 +118,6 @@ class Assignment extends React.Component {
         const { id } = this.props.params;
 
         this.props.dispatch(getAssignment(id));
-
         this.props.dispatch(commitAssignment(id, this.state));
 
     }
@@ -355,6 +354,7 @@ function editable(section, category, handleChange, handleSave, handleSaveAll, ha
 
         if (section[category + '_content']) {
 
+
             return (
 
                 <Card title={capitalize(category)}>
@@ -568,7 +568,7 @@ function getAssignmentName(assignmentId, classId, studentInfo) {
     });
 
     return `${currCourse[0].course_name}:  ${currAssign[0].assignment_name}`;
-    
+
 }
 
 

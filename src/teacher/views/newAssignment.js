@@ -197,9 +197,7 @@ class TeacherNewAssignment extends React.Component {
         const value = target.checked;
         const name = target.name.substring(0, target.name.length - 8);
 
-        var editable = Object.assign({}, this.state.editable, {
-            [name]: value
-        });
+        var editable = Object.assign({}, this.state.editable, { [name]: value });
 
         this.setState({ editable }, () => {
 
@@ -281,12 +279,9 @@ class TeacherNewAssignment extends React.Component {
 
         } else {
 
-            this.setState({
-                sectionError: 'Please select a class'
-            });
+            this.setState({ sectionError: 'Please select a class' });
 
         }
-
         // validation!
 
         // console.log(this.state);
@@ -328,6 +323,7 @@ class TeacherNewAssignment extends React.Component {
         // variable assignmentOptions has value :
         // function: which on has div element with properties
         var assignmentOptions =
+
             <Row>
 
                 <Row>
@@ -386,7 +382,7 @@ class TeacherNewAssignment extends React.Component {
                               {this.state.sectionError}
                             */
                         }
-                        {this.state.sectionError && <p className='red-text darken-4'>{this.state.sectionError}</p>}
+                        {this.state.sectionError && <p className="red darken-4">{this.state.sectionError}</p>}
                         {
                             /*
                             - function makeSectionList use sections and property sections of this cpomponent 
@@ -400,7 +396,7 @@ class TeacherNewAssignment extends React.Component {
 
                         <h5>Assignment Basics</h5>
 
-                        {this.state.assignError && <p className="red-text darken-4">{this.state.assignError}</p>}
+                        {this.state.assignError && <p className='red-text darken-4'>{this.state.assignError}</p>}
 
                         <Input m={12} type="text" name="assignmentName"
                             onChange={this.handleInput} label="Assignment Name" />
@@ -428,6 +424,7 @@ class TeacherNewAssignment extends React.Component {
                     </Row>
 
                 </div>
+
             );
 
         }
@@ -445,7 +442,6 @@ class TeacherNewAssignment extends React.Component {
 function createAssignmentCategoryDiv(category, events) {
 
     return (
-
         <Row>
 
             <Input m={2} type="checkbox" name={`${category.toLowerCase()}`}
@@ -478,10 +474,13 @@ function createAssignmentCategoryDiv(category, events) {
 function makeSectionList(items, save) {
 
     var itemList = items.map((item) => {
+
         console.log(item);
 
         return (
+
             <Input type="checkbox" name={`sectioncb${item.id}`} onChange={save} label={item.name} />
+
         );
 
     });
@@ -499,30 +498,22 @@ function makeSectionList(items, save) {
 /************** STYLES ****************/
 
 var assignmentGridStyle = {
-
     display: "grid",
     gridTemplateColumns: '100px 100px auto 100px 100px'
-
 }
 
 var inputStyle = {
-
     width: '400px'
-
 }
 
 
 
 /********* CONNECTED COMPONENT ********/
 const mapStateToProps = function (state) {
-
     // state
     return {
         error: state.teachers.error,
         sections: state.teachers.sections
     };
-
 }
-
-
 export default connect(mapStateToProps)(TeacherNewAssignment);

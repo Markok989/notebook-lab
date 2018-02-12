@@ -12,7 +12,7 @@ var studentRoutes = (app) => {
     app.get('/student', mw.loggedInCheck, mw.checkIfStudent, (req, res) => {
 
         console.log('req.session.user.email: ', req.session.user.email);
-        return res.sendFile(path.join(__dirname, '/public/index.html'));
+        return res.sendFile(path.join(__dirname, '../public/index.html'));
 
     });
 
@@ -104,9 +104,11 @@ var studentRoutes = (app) => {
 
             dbStudent.getAssignmentList(id).then((result) => {
 
+                console.log('rezultat1', JSON.stringify(result));
+
                 studentInfo.courses.forEach((course) => {
 
-                    course.assignments = result.rows.filter(ass => ass.section_id == course.section_id);
+                    course.assignments = result.rows.filter((ass) => ass.section_id == course.section_id);
 
                 });
 
@@ -116,11 +118,15 @@ var studentRoutes = (app) => {
                 });
 
             }).catch((err) => {
+
                 console.log(err);
+
             });
 
         }).catch((err) => {
+
             console.log(err);
+
         });
 
     });
@@ -272,7 +278,7 @@ var studentRoutes = (app) => {
 
                     });
 
-                    return courses
+                    return courses;
 
                 }).then((courses) => {
 
@@ -280,7 +286,7 @@ var studentRoutes = (app) => {
 
                         courses.forEach((course) => {
 
-                            course.assignments = result.rows.filter(ass => ass.section_id == course.section_id);
+                            course.assignments = result.rows.filter((ass) => ass.section_id == course.section_id);
 
                         });
 
@@ -702,6 +708,7 @@ var studentRoutes = (app) => {
         const { part } = req.body;
         const { id } = req.session.user;
         console.log(id, assignmentID);
+
 
         dbStudent.getAssignmentStatus(id, assignmentID).then((result) => {
 

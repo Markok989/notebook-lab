@@ -108,7 +108,9 @@ export default class Registration extends React.Component {
                 }
 
             }).catch((err) => {
+
                 console.log(err);
+
             });
 
         } else {
@@ -161,7 +163,9 @@ export default class Registration extends React.Component {
                 }
 
             }).catch((err) => {
+
                 console.log(err);
+
             });
 
         }
@@ -228,10 +232,11 @@ export default class Registration extends React.Component {
                     {/* onClick - use method handleStudentRegistration */}
                     <Button
                         className="reg-button"
-                        onClick={e => this.handleStudentRegistration(e)}
-                    >
+                        onClick={e => this.handleStudentRegistration(e)}>
+
                         Submit
-                     </Button >
+
+                    </Button >
 
                 </div>
 
@@ -365,6 +370,7 @@ export default class Registration extends React.Component {
     }
 
 }
+
 
 /********** STYLE *************/
 var btnStyle = {

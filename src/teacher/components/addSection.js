@@ -131,7 +131,6 @@ class AddSection extends React.Component {
 }
 
 
-
 /********* CONNECTED COMPONENT ********/
 const mapStateToProps = function (state) {
 
@@ -140,6 +139,5 @@ const mapStateToProps = function (state) {
     };
 
 }
-
 
 export default connect(mapStateToProps)(AddSection);

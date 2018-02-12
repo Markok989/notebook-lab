@@ -39,6 +39,7 @@ class TeacherCourses extends React.Component {
 
     }
 
+
     // component did mount: is invoked immediately after a component is mounted
     componentDidMount() {
 
@@ -75,7 +76,10 @@ class TeacherCourses extends React.Component {
 
             this.props.dispatch(saveNewCourse(this.state.courseName));
             this.courseNameInput.value = '';
-            this.setState({ courseName: '' });
+
+            this.setState({
+                courseName: ''
+            });
 
         } else {
 
@@ -84,6 +88,7 @@ class TeacherCourses extends React.Component {
             });
 
         }
+
     }
 
     render() {
@@ -136,8 +141,8 @@ class TeacherCourses extends React.Component {
 
                 {
                     /*
-                        - courses and 
-                        - element Collapsible with property {courseList}
+                    - courses and 
+                    - element Collapsible with property {courseList}
                     */
                 }
                 {courses &&
@@ -177,12 +182,9 @@ function filterListByCourseId(sections, courseId) {
         return section.course_id == courseId;
 
     });
-
     return filteredList;
 
 }
-
-
 /*
 - function makeList with paramerer items
     - itemList has value of items which goes through .map with parameter item,
@@ -200,7 +202,7 @@ function filterListByCourseId(sections, courseId) {
                 */
 function makeList(items) {
 
-    var itemList = items.map(item => {
+    var itemList = items.map((item) => {
 
         console.log('item', item);
 

@@ -11,7 +11,7 @@ const {
     saveNewSection,
     getStudentIdsBySectionId,
     getTeacherInfoById
-     } = require('../database/teacherDb');
+} = require('../database/teacherDb');
 
 
 const {
@@ -31,7 +31,7 @@ const {
     getCategoriesForGrading,
     getStudentsAssignmentIdsBySection,
     getAssignmentProperties
-        } = require('../database/assignmentsDb')
+} = require('../database/assignmentsDb')
 
 
 
@@ -45,7 +45,7 @@ var teacherRoutes = (app) => {
 
     app.get('/teacher', mw.loggedInCheck, mw.checkIfTeacher, (req, res) => {
 
-        return res.sendFile(path.join(__dirname, '/public/index.html'));
+        return res.sendFile(path.join(__dirname, '../public/index.html'));
 
     });
 
@@ -63,7 +63,7 @@ var teacherRoutes = (app) => {
     */
     app.get('/api/teacher', mw.loggedInCheck, mw.checkIfTeacher, (req, res) => {
 
-        return getTeacherInfoById([req.session.user.id]).then((results) => {
+        return getTeacherInfoById([req.session.user.id]).then(results => {
 
             res.json({
                 success: true,
@@ -73,6 +73,7 @@ var teacherRoutes = (app) => {
         }).catch(e => {
 
             console.log(e);
+
             res.json({
                 error: e
             });
@@ -80,7 +81,6 @@ var teacherRoutes = (app) => {
         });
 
     });
-
 
     /********** ASSIGNMENTS *********/
 
@@ -110,22 +110,23 @@ var teacherRoutes = (app) => {
 
         let data = [req.params.assignmentId];
 
-        return getAssignmentProperties(data).then((results) => {
+        return getAssignmentProperties(data).then(results => {
 
-            console.log('TEACHER ROUTER: categories for grading: ', results.rows);
+            console.log('TEACHER ROUTER: categories for grading:', results.rows);
 
             res.json({
                 success: true,
                 assignmentProps: results.rows
             });
 
-        }).catch((e) => {
+        }).catch(e => {
 
-            console.log('Getting assignment properties error: ', e);
+            console.log('Getting assignment properties error:', e);
 
             res.json({
                 error: e,
                 meessage: 'Getting assingment properites error, route:/api/teacher/assignment/properties/:assignmentId'
+
             });
 
         });
@@ -161,7 +162,7 @@ var teacherRoutes = (app) => {
 
         return getCategoriesForGrading(req.params.category, data).then(results => {
 
-            console.log('TEACHER ROUTER: categories for grading: ', results.rows);
+            console.log('TEACHER ROUTER: categories for grading:', results.rows);
 
             res.json({
                 success: true,
@@ -170,7 +171,8 @@ var teacherRoutes = (app) => {
 
         }).catch(e => {
 
-            console.log('Getting categories for grading error: ', e);
+            console.log('Getting categories for grading error:', e);
+
             res.json({
                 error: e
             });
@@ -242,18 +244,18 @@ var teacherRoutes = (app) => {
     app.get('/api/teacher/assignments/:sectionId', mw.loggedInCheck, mw.checkIfTeacher, (req, res) => {
 
         console.log('TEACHER ROUTES: getting Assignments by section id');
-
         let data = [req.params.sectionId];
+
         return getAssignmentNameIdBySection(data).then(results => {
 
-            console.log('Got Assignments Info', results.rows);;
+            console.log('Got Assignments Info', results.rows);
 
             res.json({
                 success: true,
                 studentAssignmentList: results.rows
             });
 
-        }).catch((e) => {
+        }).catch(e => {
 
             res.json({
                 error: e
@@ -293,7 +295,7 @@ var teacherRoutes = (app) => {
        */
         req.body.assignmentInfo.sections.forEach((section) => {
 
-            return makeNewAssignment(section, req.body.assignmentInfo).then((assignmentId) => {
+            return makeNewAssignment(section, req.body.assignmentInfo).then(assignmentId => {
 
                 //now get list of students and for each student make a student report, using user_id make student assignment
                 assignments.push({ section, assignmentId });
@@ -303,11 +305,8 @@ var teacherRoutes = (app) => {
                     console.log('assignments: ', assignments);
 
                     var students = results.rows;
-
                     var { include, editable, defaults } = req.body.assignmentInfo;
-
                     console.log('MAKING STUDENT ASSINGMENTS!!!');
-
                     return makeStudentAssignments(students, section, assignmentId, include, editable, defaults);
 
                 });
@@ -346,6 +345,7 @@ var teacherRoutes = (app) => {
 
         let data = [req.body.courseId, req.body.name, req.body.start, req.body.end];
         console.log(data);
+
         return saveNewSection(data).then(() => {
 
             res.json({
@@ -355,7 +355,6 @@ var teacherRoutes = (app) => {
         }).catch(e => {
 
             res.json({
-
                 error: e
 
             });
@@ -380,7 +379,8 @@ var teacherRoutes = (app) => {
         // log string 'sending error'
         // res.json contains error with value e
         let data = [req.session.user.id];
-        return getAllSections(data).then((results) => {
+
+        return getAllSections(data).then(results => {
 
             return res.json({
                 success: true,
@@ -390,10 +390,9 @@ var teacherRoutes = (app) => {
         }).catch(e => {
 
             console.log('sending error');
+
             res.json({
-
                 error: e
-
             });
 
         });
@@ -414,14 +413,15 @@ var teacherRoutes = (app) => {
         // catch with parameter e access res.json ,
         // res.json contains error with value e
         let data = [req.params.id];
-        return getSectionsByCourseId(data).then((results) => {
+
+        return getSectionsByCourseId(data).then(results => {
 
             return res.json({
                 success: true,
                 sections: results.rows
             });
 
-        }).catch((e) => {
+        }).catch(e => {
 
             res.json({
                 error: e
@@ -446,6 +446,7 @@ var teacherRoutes = (app) => {
     app.post('/api/teacher/course', mw.loggedInCheck, mw.checkIfTeacher, (req, res) => {
 
         let data = [req.session.user.id, req.body.name];
+
         return saveNewCourse(data).then(() => {
 
             res.json({
@@ -456,6 +457,7 @@ var teacherRoutes = (app) => {
 
             res.json({
                 error: e
+
             });
 
         });
@@ -471,7 +473,8 @@ var teacherRoutes = (app) => {
     app.get('/api/teacher/courses', mw.loggedInCheck, mw.checkIfTeacher, (req, res) => {
 
         let data = [req.session.user.id];
-        // call db
+
+        //call db
         return getCoursesByTeacher(data).then((results) => {
 
             res.json({
@@ -486,6 +489,7 @@ var teacherRoutes = (app) => {
             });
 
         });
+
     });
 
     // app delete with path '/app/teacher/course/:id' , mw loggedInCheck and mw.checkIfTeacher(from midlleware)
@@ -500,17 +504,17 @@ var teacherRoutes = (app) => {
         // catch with parameter e access res.json ,
         // res.json contains error with value e
         let data = [req.params.id];
+
         return deleteCourse(data).then(() => {
 
             res.json({
                 success: true
             });
 
-        }).catch((e) => {
+        }).catch(e => {
 
             res.json({
                 error: e
-
             });
 
         });
@@ -642,15 +646,14 @@ var teacherRoutes = (app) => {
 
             console.log(result.rows);
 
-            const {
 
+            const {
                 first_name,
                 last_name,
                 assignment_id,
                 status,
                 report_comments,
-                report_grade,
-                title_editable,
+                report_grade, title_editable,
                 title_content,
                 title_comments,
                 title_grade,
@@ -690,9 +693,7 @@ var teacherRoutes = (app) => {
                 discussion_content,
                 discussion_comments,
                 discussion_grade
-
             } = result.rows[0];
-
 
 
             const title = {
@@ -735,10 +736,8 @@ var teacherRoutes = (app) => {
                 discussion_editable, discussion_content, discussion_comments, discussion_grade
             }
 
-            // if (status === 'COMMITTED' || status === 'GRADED') {
 
             res.json({
-
                 success: true,
                 assignment: {
                     first_name,
@@ -903,7 +902,7 @@ var teacherRoutes = (app) => {
                 data_id,
                 calculations_id,
                 discussion_id
-                         } = result.rows[0];
+            } = result.rows[0];
 
             for (var prop in grade) {
 
@@ -915,13 +914,11 @@ var teacherRoutes = (app) => {
 
                 }
 
-
                 if (prop === 'question_comment' || prop === 'question_grade') {
 
                     dbGrading.updateQuestions(question_id, grade.question_comment, grade.question_grade);
 
                 }
-
 
                 if (prop === 'abstract_comment' || prop === 'abstract_grade') {
 
@@ -929,13 +926,11 @@ var teacherRoutes = (app) => {
 
                 }
 
-
                 if (prop === 'hypothesis_comment' || prop === 'hypothesis_grade') {
 
                     dbGrading.updateHypotheses(hypothesis_id, grade.hypothesis_comment, grade.hypothesis_grade);
 
                 }
-
 
                 if (prop === 'variable_comment' || prop === 'variable_grade') {
 
@@ -943,13 +938,11 @@ var teacherRoutes = (app) => {
 
                 }
 
-
                 if (prop === 'material_comment' || prop === 'material_grade') {
 
                     dbGrading.updateMaterials(materials_id, grade.material_comment, grade.material_grade);
 
                 }
-
 
                 if (prop === 'procedure_comment' || prop === 'procedure_grade') {
 
@@ -957,20 +950,17 @@ var teacherRoutes = (app) => {
 
                 }
 
-
                 if (prop === 'data_comment' || prop === 'data_grade') {
 
                     dbGrading.updateData(data_id, grade.data_comment, grade.data_grade);
 
                 }
 
-
                 if (prop === 'calculation' || prop === 'calculation_grade') {
 
                     dbGrading.updateCalculations(calculations_id, grade.calculation_comment, grade.calculation_grade);
 
                 }
-
 
                 if (prop === 'discussion' || prop === 'discussion_grade') {
 
@@ -1004,6 +994,7 @@ var teacherRoutes = (app) => {
         //id is assignmentID
         const { id, reportid, commit } = req.body;
         console.log(id, reportid, commit);
+
         dbGrading.finalReportGrade(reportid, id, commit.commit_grade, commit.commit_comment, 'GRADED').then((result) => {
 
             console.log('update status to graded', result.rows);
@@ -1013,8 +1004,7 @@ var teacherRoutes = (app) => {
 
     });
 
-
-}
+};
 
 
 // export module 
@@ -1064,7 +1054,6 @@ function makeNewAssignment(sectionId, info) {
 
     var newInclude = massageIncludeObject(include, shared);
 
-
     var data = [
         sectionId,
         info.group_lab,
@@ -1083,10 +1072,9 @@ function makeNewAssignment(sectionId, info) {
         newInclude.discussion, defaults.default_discussion
     ];
 
-
     return saveNewAssignmentTemplate(data).then((results) => {
 
-        console.log('Resulting AssignmentId: ', results.rows[0].id);
+        console.log('Resulting AssignmentId: ', results.rows[0].id)
         return results.rows[0].id;
 
     }).catch(e => {
@@ -1094,6 +1082,7 @@ function makeNewAssignment(sectionId, info) {
     });
 
 }
+
 
 /* 
 - function massageIncludeObject with parameters include and shared
@@ -1119,20 +1108,26 @@ function massageIncludeObject(include, shared) {
         if (include[key]) {
 
             if (shared[key]) {
+
                 include[key] = 'group';
+
             } else {
+
                 include[key] = 'individual';
+
             }
 
         } else {
+
             include[key] = null;
+
         }
 
     }
 
     console.log(include);
-
     return include;
+
 }
 
 
@@ -1241,17 +1236,15 @@ At the end it calls the function make a row in the student report table
 */
 function makeStudentAssignments(students, sectionId, assignmentId, include, editable, defaults) {
 
-    students.forEach((student) => {
+    students.forEach(student => {
 
         console.log('(((students)))', student);
         console.log('defaults', defaults);
-
-
         var promiseArr = [];
 
         for (var key in include) {
 
-            console.log('***** makingStudentAssigns: key: ', key);
+            console.log('***** makingStudentAssigns: key:', key);
 
             if (include[key]) {
 
@@ -1273,79 +1266,61 @@ function makeStudentAssignments(students, sectionId, assignmentId, include, edit
 
                     promiseArr.push(newTitle(data).then(results => {
 
-                        return {
-                            title: results.rows[0].id
-                        };
+                        return { title: results.rows[0].id };
 
                     }));
 
                 }
-
 
                 if (key == 'question') {
 
                     promiseArr.push(newQuestion(data).then(results => {
 
-                        return {
-                            question: results.rows[0].id
-                        };
+                        return { question: results.rows[0].id };
 
                     }));
 
                 }
-
 
                 if (key == 'abstract') {
 
                     promiseArr.push(newAbstract(data).then(results => {
 
-                        return {
-                            abstract: results.rows[0].id
-                        };
+                        return { abstract: results.rows[0].id };
 
                     }));
 
                 }
-
 
                 if (key == 'hypothesis') {
 
                     promiseArr.push(newHypothesis(data).then(results => {
 
-                        return {
-                            hypothesis: results.rows[0].id
-                        };
+                        return { hypothesis: results.rows[0].id };
 
                     }));
 
                 }
-
 
                 if (key == 'variables') {
 
                     promiseArr.push(newVariables(data).then(results => {
 
-                        return {
-                            variables: results.rows[0].id
-                        };
+                        return { variables: results.rows[0].id };
 
                     }));
 
                 }
-
 
                 if (key == 'materials') {
 
                     promiseArr.push(newMaterials(data).then(results => {
 
-                        return {
-                            materials: results.rows[0].id
-                        };
+                        return { materials: results.rows[0].id };
 
                     }));
 
                 }
-
 
                 if (key == 'procedures') {
 
@@ -1353,71 +1328,64 @@ function makeStudentAssignments(students, sectionId, assignmentId, include, edit
 
                     promiseArr.push(newProcedure(data).then(results => {
 
-                        return {
-                            procedures: results.rows[0].id
-                        };
+                        return { procedures: results.rows[0].id };
 
                     }));
 
                 }
-
 
                 if (key == 'data') {
 
                     promiseArr.push(newData(data).then(results => {
 
-                        return {
-                            data: results.rows[0].id
-                        };
+                        return { data: results.rows[0].id };
 
                     }));
 
                 }
-
 
                 if (key == 'calculations') {
 
                     promiseArr.push(newCalculations(data).then(results => {
 
-                        return {
-                            caluclations: results.rows[0].id
-                        };
+                        return { calculations: results.rows[0].id };
 
                     }));
 
                 }
 
-
                 if (key == 'discussion') {
 
                     promiseArr.push(newDiscussion(data).then(results => {
 
-                        return {
-                            discussion: results.rows[0].id
-                        };
+                        return { discussion: results.rows[0].id };
 
                     }));
 
                 } //end long if check
 
+
             } //end if(includes[key])
+
         } //end for loop
         //make new student assignment with categoryIds, student_id and assignment_id
 
-
-        return Promise.all(promiseArr).then((results) => {
+        return Promise.all(promiseArr).then(results => {
 
             console.log('Results from Promise.all', results);
-
             return newStudentReport(student.user_id, sectionId, assignmentId, results);
 
-        }).catch((e) => {
-            console.log('Promise.all error: ', e);
-        }); // ent catch for promise.all
+        }).catch(e => {
 
-    }); // end forEach
+            console.log('Promise.all error: ', e);
+
+        }); //end catch for promise.all
+
+
+    }); //end forEach
 
 }
+
 
 /*
 - function newStudentReport with parameters studentId, assignmentId, categoryIds
@@ -1467,10 +1435,11 @@ function newStudentReport(studentId, sectionId, assignmentId, categoryIds) {
 
     var data = [studentId, sectionId, assignmentId, group_id];
 
-    categories.forEach((category) => {
+    categories.forEach(category => {
 
         var gotOne = false;
         console.log('category: ', category)
+
         categoryIds.forEach(id => {
 
             console.log('id', id);
@@ -1482,23 +1451,26 @@ function newStudentReport(studentId, sectionId, assignmentId, categoryIds) {
                 data.push(id[category]);
 
             }
+
         });
 
         if (!gotOne) {
-            console.log('pusshing null');
+
+            console.log('pusshing null')
+
             data.push(null);
+
         }
 
     });
 
     console.log('STUDENT REPORT DATA:', data);
-
     return saveNewStudentReport(data);
 
 }
 
 
-/* 
+
     // TESTS
 
     /*
@@ -1522,8 +1494,6 @@ function newStudentReport(studentId, sectionId, assignmentId, categoryIds) {
             - 'catch' word with parameter e
                 - log parameter e 
     */
-    
-    /*
     // function makeNewAssignmentAll(req) {
 
     //     var assignments = [];
@@ -1664,6 +1634,3 @@ function newStudentReport(studentId, sectionId, assignmentId, categoryIds) {
  // }
  //
  // getCatsForGradingTest();
-
- */
-

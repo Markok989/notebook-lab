@@ -83,7 +83,7 @@ class TeacherAssignments extends React.Component {
                 </Row>
 
                 <div>
-                    <Button waves='light' node='a' href='/teacher/new/assignment'>New Assignment</Button>
+                    <Button waves="light" node="a" href="/teacher/new/assignment">New Assignment</Button>
                 </div>
 
                 {courses &&
@@ -214,6 +214,7 @@ function makeInnerList(items) {
     var itemList = items.map((item) => {
 
         console.log('item: ', item);
+        console.log('String aaaaa: ', toString());
 
         return (
 
@@ -245,8 +246,8 @@ const mapStateToProps = function (state) {
 
     return {
         courses: state.teachers.courses,
-        sections: state.teachers.sections
-    };
+        sections: state.teachers.sections,
+    }
 
 }
 
